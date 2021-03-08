@@ -1,0 +1,21 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-08 17:03:42
+ * @author TrongDatVu <trongdat1505@gmail.com>
+ */
+
+@import "src/styles/mixins";
+
+.paddingBottom {
+  padding-bottom: 16px;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  height: 200px;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  background-color: map-get($colors, "secondary");
+}

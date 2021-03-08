@@ -1,0 +1,73 @@
+@import "src/styles/mixins";
+
+.text {
+  font-family: map-get($fonts, "regular");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.bold {
+  font-family: map-get($fonts, "bold");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.italic {
+  font-family: map-get($fonts, "italic");
+  font-weight: normal;
+  font-style: italic;
+}
+
+.light {
+  font-family: map-get($fonts, "regular");
+  font-weight: 300;
+  font-style: normal;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.textPrimary {
+  color: map-get($colors, "primary");
+}
+
+.textDark {
+  color: map-get($colors, "black");
+}
+
+.textBlue {
+  color: map-get($colors, "blue");
+}
+
+.textWhite {
+  color: map-get($colors, "white");
+}
+
+.textEggBlue {
+  color: map-get($colors, "robins-egg-blue");
+}
+
+.textSuccess {
+  color: map-get($colors, "green-lit");
+}
+
+.textError {
+  color: map-get($colors, "red");
+}
+
+.textNobel {
+  color: map-get($colors, "nobel");
+}
+
+.textGray {
+  color: map-get($colors, "gray");
+}
+
+.textValue {
+  color: rgba(0, 0, 0, 0.6);;
+}

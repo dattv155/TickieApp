@@ -1,0 +1,37 @@
+@import "src/styles/mixins";
+
+.bgTransparent {
+  background: transparent;
+}
+
+.bgPrimary {
+  background-color: map-get($colors, "primary");
+}
+
+.bgSecondary {
+  background-color: map-get($colors, "secondary");
+}
+
+.bgWhite {
+  background-color: map-get($colors, "white");
+}
+
+.bgDark {
+  background-color: map-get($colors, "dark");
+}
+
+.bgLightGray {
+  background-color: map-get($colors, "light-gray");
+}
+
+.bgSuccess {
+  background-color: map-get($colors, "success");
+}
+
+.bgDanger {
+  background-color: map-get($colors, "danger");
+}
+
+.bgWarning {
+  background-color: map-get($colors, "warning");
+}

@@ -1,0 +1,30 @@
+@import "src/styles/mixins";
+
+@include spacing(padding, "p", 9px);
+
+@include spacing(margin, "m", 9px);
+
+@include spacing(padding, "p", 10px);
+
+@include spacing(margin, "m", 10px);
+
+@include spacing(margin, "m", 35px);
+
+@include spacing(padding, "p", $spacing);
+
+@include spacing(margin, "m", $spacing);
+
+@include spacing(padding, "p", $spacing / 2);
+
+@include spacing(margin, "m", $spacing / 2);
+
+@include spacing(padding, "p", $spacing / 4);
+
+@include spacing(margin, "m", $spacing / 4);
+
+@include spacing(padding, "p", 0);
+
+@include spacing(margin, "m", 0);
+
+@include spacing(padding, "p", $login-spacing * 0.4);
+

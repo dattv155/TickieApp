@@ -1,0 +1,47 @@
+@import "src/styles/partials/text";
+@import "src/styles/functions";
+
+@mixin typo($font-size, $line-height, $letter-spacing) {
+  font-size: $font-size;
+  @if (is-percentage($line-height)) {
+    line-height: $font-size * ($line-height / 100%);
+  } @else {
+    line-height: $line-height;
+  }
+  letter-spacing: $letter-spacing;
+}
+
+.h1 {
+  @extend .text;
+  @include typo($font-default + 10px, 180%, 0.5px);
+}
+
+.h2 {
+  @extend .text;
+  @include typo($font-default + 8px, 180%, 0.5px);
+}
+
+.h3 {
+  @extend .text;
+  @include typo($font-default + 6px, 180%, 0.5px);
+}
+
+.h4 {
+  @extend .text;
+  @include typo($font-default + 4px, 180%, 0.5px);
+}
+
+.h5 {
+  @extend .text;
+  @include typo($font-default + 2px, 120%, 0.5px);
+}
+
+.h6 {
+  @extend .text;
+  @include typo($font-default, 120%, 0.5px);
+}
+
+.h7 {
+  @extend .text;
+  @include typo($font-default - 2px, 120%, 0.5px);
+}

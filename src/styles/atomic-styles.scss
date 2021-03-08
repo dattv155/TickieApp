@@ -1,0 +1,12 @@
+@import "mixins";
+
+@import "src/styles/partials/spacing";
+@import "src/styles/partials/text";
+@import "src/styles/partials/flexbox";
+@import "src/styles/partials/background";
+@import "src/styles/partials/typography";
+@import "src/styles/partials/layout";
+
+.opacity0 {
+  opacity: 0;
+}

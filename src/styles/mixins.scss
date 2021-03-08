@@ -1,0 +1,35 @@
+@import "variables";
+@import "functions";
+
+@mixin spacing($property, $prefix, $size) {
+  .#{$prefix}#{$size} {
+    #{$property}-left: $size;
+    #{$property}-right: $size;
+    #{$property}-top: $size;
+    #{$property}-bottom: $size;
+  }
+  .#{$prefix + "x"}#{$size} {
+    #{$property}-left: $size;
+    #{$property}-right: $size;
+  }
+  .#{$prefix + "y"}#{$size} {
+    #{$property}-top: $size;
+    #{$property}-bottom: $size;
+  }
+  .#{$prefix + "l"}#{$size} {
+    #{$property}-left: $size;
+  }
+  .#{$prefix + "r"}#{$size} {
+    #{$property}-right: $size;
+  }
+  .#{$prefix + "b"}#{$size} {
+    #{$property}-bottom: $size;
+  }
+  .#{$prefix + "t"}#{$size} {
+    #{$property}-top: $size;
+  }
+}
+
+@mixin radius50Percentage($dimension) {
+  border-radius: $dimension * 0.5;
+}

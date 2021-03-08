@@ -1,0 +1,21 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-08 17:15:29
+ * @author TrongDatVu <trongdat1505@gmail.com>
+ */
+@import "src/styles/atomic-styles";
+
+.header {
+  margin-right: 16px;
+}
+
+.headerContent {
+  @extend .w100;
+  @extend .px8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  margin-top: -8px;
+}

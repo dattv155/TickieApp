@@ -9,7 +9,6 @@ target 'TickieApp' do
   use_react_native!(:path => config["reactNativePath"])
   
   #icons
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'TickieAppTests' do
     inherit! :complete

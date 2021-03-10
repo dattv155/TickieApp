@@ -56,6 +56,8 @@
 
 	<key>UIAppFonts</key>
     <array>
+      <string>SVN-GilroyBold.otf</string>
+      <string>SVN-GilroyLight.otf</string>
       <string>AntDesign.ttf</string>
       <string>Entypo.ttf</string>
       <string>EvilIcons.ttf</string>

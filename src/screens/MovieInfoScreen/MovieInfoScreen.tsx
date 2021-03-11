@@ -1,6 +1,8 @@
-import React, { FC, PropsWithChildren, ReactElement } from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import './MovieInfoScreen.scss';
+import {Text, View} from 'react-native';
+import {StackScreenProps} from '@react-navigation/stack';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -11,14 +13,20 @@ import './MovieInfoScreen.scss';
 const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   props: PropsWithChildren<MovieInfoScreenProps>,
 ): ReactElement => {
+  // const {navigation, route} = props;
   return (
-    <>
-      {props.children}
-    </>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text>Settings!</Text>
+    </View>
   );
 };
 
-export interface MovieInfoScreenProps {
+export interface MovieInfoScreenProps extends StackScreenProps<any> {
   //
 }
 

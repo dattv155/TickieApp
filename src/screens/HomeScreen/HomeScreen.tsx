@@ -1,12 +1,10 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './HomeScreen.scss';
-import axios from 'axios';
-import {Image, SafeAreaView, View, Text} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {SafeAreaView, Text} from 'react-native';
 import MainTabBar from '../../components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
-// import CategoryComponent from 'src/components/CategoryComponent/CategoryComponent';
-// import UnsplashAPI from 'src/unsplashAPI/UnsplashAPI';
 
 /**
  * File: HomeScreen.tsx
@@ -18,23 +16,11 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   props: PropsWithChildren<HomeScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-  // function getAxios() {
-  //   return axios({
-  //     method: 'GET',
-  //     url: 'https://source.unsplash.com/random?sig=1/&flower',
-  //     data: null,
-  //   }).then((response) => {
-  //     return (
-  //       <View>
-  //         <Image style={styles.tinyLogo} source={response} />
-  //       </View>
-  //     );
-  //   });
-  // }
+  const [translate] = useTranslation();
   return (
     <SafeAreaView style={styles.container}>
       {/*<CategoryComponent />*/}
-      <Text>Home</Text>
+      <Text>{translate('homeScreen.title')}</Text>
       <MainTabBar navigation={navigation} route={route} />
     </SafeAreaView>
   );

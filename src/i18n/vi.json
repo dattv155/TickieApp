@@ -1,7 +1,8 @@
 {
-  "tab.home": "Home",
-  "tab.shop": "",
-  "tab.auto": "",
-  "tab.notification": "",
-  "tab.profile": ""
+  "general.action.ok": "",
+  "general.action.cancel": "",
+  "homeScreen.title": "Trang chủ",
+  "tab.home": "Trang chủ",
+  "tab.profile": "Hồ sơ",
+  "tab.notification": "Thông báo"
 }

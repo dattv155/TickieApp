@@ -2,7 +2,6 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import {StatusBar} from 'react-native';
 import nameof from 'ts-nameof.macro';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import SettingPage from '../../screens/SettingPage/SettingPage';
 import ProfilePage from '../../screens/ProfilePage/ProfilePage';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import NotificationScreen from '../../screens/NotificationScreen/NotificationScreen';
@@ -37,11 +36,6 @@ const TabNavigator: FC<
           initialParams={{}}
         />
         <Screen
-          name={SettingPage.displayName}
-          component={SettingPage}
-          initialParams={{}}
-        />
-        <Screen
           name={NotificationScreen.displayName}
           component={NotificationScreen}
           initialParams={{}}
@@ -66,44 +60,3 @@ TabNavigator.propTypes = {
 TabNavigator.displayName = nameof(TabNavigator);
 
 export default TabNavigator;
-
-// export default () => {
-//   return (
-//     <NavigationContainer>
-//       <Navigator
-//         screenOptions={({route}) => ({
-//           tabBarIcon: ({focused, color, size}) => {
-//             let iconName;
-//
-//             if (route.name === 'Home') {
-//               iconName = focused ? 'home' : 'home-outline';
-//             } else if (route.name === 'Settings') {
-//               iconName = focused ? 'settings' : 'settings-outline';
-//             } else if (route.name === 'Todo Page') {
-//               iconName = focused ? 'today' : 'today-outline';
-//             } else if (route.name === 'Profile') {
-//               iconName = focused ? 'person-circle' : 'person-circle-outline';
-//             }
-//
-//             // You can return any component that you like here!
-//             // @ts-ignore
-//             return <Ionicons name={iconName} size={22} color={color} />;
-//           },
-//         })}
-//         tabBarOptions={{
-//           activeTintColor: 'tomato',
-//           inactiveTintColor: 'gray',
-//           labelStyle: {
-//             fontSize: 11,
-//             marginBottom: 2,
-//             padding: 0,
-//           },
-//         }}>
-//         <Screen name="Home" component={HomePage} />
-//         <Screen name="Settings" component={SettingPage} />
-//         <Screen name="Todo Page"  component={TodoPage} />
-//         <Screen name="Profile" component={ProfilePage} />
-//       </Navigator>
-//     </NavigationContainer>
-//   );
-// };

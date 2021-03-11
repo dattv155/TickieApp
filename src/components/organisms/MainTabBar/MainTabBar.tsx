@@ -8,6 +8,8 @@ import {useTranslation} from 'react-i18next';
 import HomeScreen from 'src/screens/HomeScreen/HomeScreen';
 import {atomicStyles} from 'src/styles';
 import TabBarIcon from 'src/components/organisms/MainTabBar/TabBarIcon/TabBarIcon';
+import ProfilePage from 'src/screens/ProfilePage/ProfilePage';
+import NotificationScreen from 'src/screens/NotificationScreen/NotificationScreen';
 
 /**
  * File: MainTabBar.tsx
@@ -36,50 +38,31 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
     return [
       {
         routeName: HomeScreen.displayName,
-        icon: require('/assets/MainTabBar/Home.svg'),
-        activeIcon: require('/assets/MainTabBar/HomeW.svg'),
+        icon: require('/assets/TabBarIcon/Home.svg'),
+        activeIcon: require('/assets/TabBarIcon/HomeW.svg'),
         onPress: () => {
           navigation.navigate(HomeScreen.displayName);
         },
-        // iconName: translate('tab.home'),
-        iconName: 'Home',
+        iconName: translate('tab.home'),
       },
-      // {
-      //   routeName: HomeScreen.displayName,
-      //   icon: require('assets/MainTabBar/Shop.svg'),
-      //   activeIcon: require('assets/MainTabBar/ShopW.svg'),
-      //   onPress: () => {
-      //     navigation.navigate(HomeScreen.displayName);
-      //   },
-      //   iconName: translate('tab.shop'),
-      // },
-      // {
-      //   routeName: HomeScreen.displayName,
-      //   icon: require('assets/MainTabBar/Play.svg'),
-      //   activeIcon: require('assets/MainTabBar/AutoW.svg'),
-      //   onPress: () => {
-      //     navigation.navigate(HomeScreen.displayName);
-      //   },
-      //   iconName: translate('tab.auto'),
-      // },
-      // {
-      //   routeName: HomeScreen.displayName,
-      //   icon: require('assets/MainTabBar/Notification.svg'),
-      //   activeIcon: require('assets/MainTabBar/NotificationW.svg'),
-      //   onPress: () => {
-      //     navigation.navigate(HomeScreen.displayName);
-      //   },
-      //   iconName: translate('tab.notification'),
-      // },
-      // {
-      //   routeName: HomeScreen.displayName,
-      //   icon: require('assets/MainTabBar/Profile.svg'),
-      //   activeIcon: require('assets/MainTabBar/ProfileW.svg'),
-      //   onPress: () => {
-      //     navigation.navigate(HomeScreen.displayName);
-      //   },
-      //   iconName: translate('tab.profile'),
-      // },
+      {
+        routeName: NotificationScreen.displayName,
+        icon: require('assets/TabBarIcon/Notification.svg'),
+        activeIcon: require('assets/TabBarIcon/NotificationW.svg'),
+        onPress: () => {
+          navigation.navigate(NotificationScreen.displayName);
+        },
+        iconName: translate('tab.notification'),
+      },
+      {
+        routeName: ProfilePage.displayName,
+        icon: require('assets/TabBarIcon/Profile.svg'),
+        activeIcon: require('assets/TabBarIcon/ProfileW.svg'),
+        onPress: () => {
+          navigation.navigate(ProfilePage.displayName);
+        },
+        iconName: translate('tab.profile'),
+      },
     ];
   }, [navigation, translate]);
 
@@ -91,6 +74,10 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
           atomicStyles.flexRow,
           atomicStyles.justifyContentAround,
           atomicStyles.alignItemsCenter,
+          {
+            borderTopWidth: 0,
+            elevation: 10,
+          },
         ]}>
         {tabs.map((tab, index: number) => (
           <TabBarIcon

@@ -1,7 +1,6 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './TabBarIcon.scss';
-import LinearGradient from 'react-native-linear-gradient';
 import {SvgComponent} from 'react-native-svg-types';
 import {
   Animated,
@@ -12,7 +11,6 @@ import {
   Text,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Colors} from 'src/styles/colors';
 import {atomicStyles} from 'src/styles';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 
@@ -47,38 +45,24 @@ const TabBarIcon: FC<PropsWithChildren<TabBarIconProps>> = (
       ]}
       onPress={handlePress}>
       {isActive ? (
-        <LinearGradient
-          style={[styles.tabIcon]}
-          colors={[Colors.BlackPearl, Colors.RobinsEggBlue]}
-          useAngle={true}
-          start={{
-            x: 0,
-            y: 1,
-          }}
-          end={{
-            x: 1,
-            y: 0,
-          }}
-          angle={300}>
-          <View style={[styles.active]}>
-            <SvgIcon component={activeIcon} />
-            <Animated.View
-              style={[
-                styles.textView,
-                {
-                  transform: [
-                    {
-                      scaleY: 1,
-                    },
-                  ],
-                },
-              ]}>
-              <Text style={[atomicStyles.textWhite, atomicStyles.bold]}>
-                {iconName}
-              </Text>
-            </Animated.View>
-          </View>
-        </LinearGradient>
+        <View style={[styles.active]}>
+          <SvgIcon component={activeIcon} />
+          <Animated.View
+            style={[
+              styles.textView,
+              {
+                transform: [
+                  {
+                    scaleY: 1,
+                  },
+                ],
+              },
+            ]}>
+            <Text style={[atomicStyles.textDark, atomicStyles.bold]}>
+              {iconName}
+            </Text>
+          </Animated.View>
+        </View>
       ) : (
         <View style={[styles.tabIcon]}>
           <SvgIcon component={icon} />
@@ -109,8 +93,6 @@ TabBarIcon.defaultProps = {};
 TabBarIcon.propTypes = {
   isActive: PropTypes.bool,
 };
-
-TabBarIcon.displayName = nameof(TabBarIcon);
 
 TabBarIcon.displayName = nameof(TabBarIcon);
 

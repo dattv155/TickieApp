@@ -25,13 +25,18 @@
 
 .active {
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  width: 120px;
+  height: 45px;
+  border-radius: 20px;
+  background-color: #EAEAEA;
+  padding: 0 10px;
 }
 
 .activeIcon {
 }
 
 .textView {
-  margin-left: 10px;
+  font-size: 14px;
 }

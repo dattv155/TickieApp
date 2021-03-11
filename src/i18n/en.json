@@ -1,7 +1,8 @@
 {
+  "general.action.ok": "",
+  "general.action.cancel": "",
+  "homeScreen.title": "Home",
   "tab.home": "",
-  "tab.shop": "",
-  "tab.auto": "",
-  "tab.notification": "",
-  "tab.profile": ""
+  "tab.profile": "",
+  "tab.notification": ""
 }

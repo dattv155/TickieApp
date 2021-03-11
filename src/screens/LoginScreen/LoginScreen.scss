@@ -1,0 +1,17 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-11 23:12:50
+ * @author TrongDatVu <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.container {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  border-width: 2px;
+  border-color: map-get($colors, "primary");
+}

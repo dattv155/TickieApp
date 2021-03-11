@@ -112,6 +112,4 @@ TabBarIcon.propTypes = {
 
 TabBarIcon.displayName = nameof(TabBarIcon);
 
-TabBarIcon.displayName = nameof(TabBarIcon);
-
 export default React.memo(TabBarIcon);

@@ -2,8 +2,6 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import {StatusBar} from 'react-native';
 import nameof from 'ts-nameof.macro';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import SettingPage from '../../screens/SettingPage/SettingPage';
-import ProfilePage from '../../screens/ProfilePage/ProfilePage';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import NotificationScreen from '../../screens/NotificationScreen/NotificationScreen';
 
@@ -25,20 +23,10 @@ const TabNavigator: FC<
           allowFontScaling: true,
         }}
         tabBar={TabBar}
-        initialRouteName={HomeScreen.displayName}>
+        initialRouteName={NotificationScreen.displayName}>
         <Screen
           name={HomeScreen.displayName}
           component={HomeScreen}
-          initialParams={{}}
-        />
-        <Screen
-          name={ProfilePage.displayName}
-          component={ProfilePage}
-          initialParams={{}}
-        />
-        <Screen
-          name={SettingPage.displayName}
-          component={SettingPage}
           initialParams={{}}
         />
         <Screen

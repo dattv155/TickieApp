@@ -10,6 +10,8 @@ target 'TickieApp' do
   
   #icons
 
+  pod 'RNTextGradientView', :path => '../node_modules/react-native-text-gradient'
+
   target 'TickieAppTests' do
     inherit! :complete
     # Pods for testing

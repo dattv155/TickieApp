@@ -3,6 +3,8 @@ import nameof from 'ts-nameof.macro';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import TabNavigator from '../TabNavigator/TabNavigator';
+import MovieInfoScreen from 'src/screens/MovieInfoScreen/MovieInfoScreen';
+import LoginScreen from 'src/screens/LoginScreen/LoginScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -11,20 +13,25 @@ const RootNavigator: FC<
 > = (): ReactElement => {
   return (
     <Navigator
-      initialRouteName={HomeScreen.displayName}
+      initialRouteName={LoginScreen.displayName}
       headerMode="none"
       screenOptions={{
         gestureEnabled: true,
         animationEnabled: false,
       }}>
       <Screen
-        name={HomeScreen.displayName}
-        component={HomeScreen}
+        name={LoginScreen.displayName}
+        component={LoginScreen}
         initialParams={{}}
       />
       <Screen
         name={TabNavigator.displayName}
         component={TabNavigator}
+        initialParams={{}}
+      />
+      <Screen
+        name={MovieInfoScreen.displayName}
+        component={MovieInfoScreen}
         initialParams={{}}
       />
     </Navigator>

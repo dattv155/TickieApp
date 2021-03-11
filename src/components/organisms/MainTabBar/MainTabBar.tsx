@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import HomeScreen from 'src/screens/HomeScreen/HomeScreen';
 import {atomicStyles} from 'src/styles';
 import TabBarIcon from 'src/components/organisms/MainTabBar/TabBarIcon/TabBarIcon';
+import NotificationScreen from 'src/screens/NotificationScreen/NotificationScreen';
 
 /**
  * File: MainTabBar.tsx
@@ -20,7 +21,7 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const [translate] = useTranslation();
+  // const [translate] = useTranslation();
 
   const tabs: {
     routeName: string;
@@ -44,33 +45,16 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
         // iconName: translate('tab.home'),
         iconName: 'Home',
       },
-      // {
-      //   routeName: HomeScreen.displayName,
-      //   icon: require('assets/MainTabBar/Shop.svg'),
-      //   activeIcon: require('assets/MainTabBar/ShopW.svg'),
-      //   onPress: () => {
-      //     navigation.navigate(HomeScreen.displayName);
-      //   },
-      //   iconName: translate('tab.shop'),
-      // },
-      // {
-      //   routeName: HomeScreen.displayName,
-      //   icon: require('assets/MainTabBar/Play.svg'),
-      //   activeIcon: require('assets/MainTabBar/AutoW.svg'),
-      //   onPress: () => {
-      //     navigation.navigate(HomeScreen.displayName);
-      //   },
-      //   iconName: translate('tab.auto'),
-      // },
-      // {
-      //   routeName: HomeScreen.displayName,
-      //   icon: require('assets/MainTabBar/Notification.svg'),
-      //   activeIcon: require('assets/MainTabBar/NotificationW.svg'),
-      //   onPress: () => {
-      //     navigation.navigate(HomeScreen.displayName);
-      //   },
-      //   iconName: translate('tab.notification'),
-      // },
+      {
+        routeName: NotificationScreen.displayName,
+        icon: require('assets/MainTabBar/Notification.svg'),
+        activeIcon: require('assets/MainTabBar/NotificationW.svg'),
+        onPress: () => {
+          navigation.navigate(NotificationScreen.displayName);
+        },
+        // iconName: translate('tab.notification'),
+        iconName: 'Notification',
+      },
       // {
       //   routeName: HomeScreen.displayName,
       //   icon: require('assets/MainTabBar/Profile.svg'),
@@ -81,7 +65,7 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
       //   iconName: translate('tab.profile'),
       // },
     ];
-  }, [navigation, translate]);
+  }, [navigation]);
 
   return (
     <SafeAreaView style={[styles.bottomTabContainer]}>

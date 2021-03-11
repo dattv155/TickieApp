@@ -1,6 +1,9 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './NotificationScreen.scss';
+import {View, Text} from 'react-native';
+import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
+import {StackScreenProps} from '@react-navigation/stack';
 
 /**
  * File: NotificationScreen.tsx
@@ -11,10 +14,16 @@ import styles from './NotificationScreen.scss';
 const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
   props: PropsWithChildren<NotificationScreenProps>,
 ): ReactElement => {
-  return <>{props.children}</>;
+  const {navigation, route} = props;
+  return (
+    <View style={styles.container}>
+      <Text>Notification</Text>
+      <MainTabBar navigation={navigation} route={route} />
+    </View>
+  );
 };
 
-export interface NotificationScreenProps {
+export interface NotificationScreenProps extends StackScreenProps<any> {
   //
 }
 

@@ -23,7 +23,7 @@ const TabNavigator: FC<
           allowFontScaling: true,
         }}
         tabBar={TabBar}
-        initialRouteName={NotificationScreen.displayName}>
+        initialRouteName={HomeScreen.displayName}>
         <Screen
           name={HomeScreen.displayName}
           component={HomeScreen}

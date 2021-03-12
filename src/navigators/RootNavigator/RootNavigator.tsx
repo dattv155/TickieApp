@@ -5,6 +5,8 @@ import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import TabNavigator from '../TabNavigator/TabNavigator';
 import ProfilePage from 'src/screens/ProfilePage/ProfilePage';
 import NotificationScreen from 'src/screens/NotificationScreen/NotificationScreen';
+import LoginScreen from 'src/screens/LoginScreen/LoginScreen';
+import WelcomeScreen from 'src/screens/WelcomeScreen/WelcomeScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -13,7 +15,7 @@ const RootNavigator: FC<
 > = (): ReactElement => {
   return (
     <Navigator
-      initialRouteName={HomeScreen.displayName}
+      initialRouteName={WelcomeScreen.displayName}
       headerMode="none"
       screenOptions={{
         gestureEnabled: true,
@@ -37,6 +39,16 @@ const RootNavigator: FC<
       <Screen
         name={NotificationScreen.displayName}
         component={NotificationScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={WelcomeScreen.displayName}
+        component={WelcomeScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={LoginScreen.displayName}
+        component={LoginScreen}
         initialParams={{}}
       />
     </Navigator>

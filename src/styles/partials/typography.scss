@@ -12,7 +12,7 @@
 }
 
 .h1 {
-  @extend .text;
+  @extend .bold;
   @include typo($font-default + 10px, 180%, 0.5px);
 }
 

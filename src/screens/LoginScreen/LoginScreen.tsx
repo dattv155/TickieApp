@@ -24,7 +24,16 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
   return (
     <SafeAreaView style={styles.screenContainer}>
       <View>
-        <Text style={[styles.title]}>Chào mừng bạn!</Text>
+        <Text
+          style={[
+            styles.title,
+            atomicStyles.h1,
+            {
+              fontSize: 30,
+            },
+          ]}>
+          Chào mừng bạn!
+        </Text>
         <Text style={[styles.subtitle, atomicStyles.h7]}>
           Đã đến với Tickie. Đăng nhập để tiếp tục
         </Text>

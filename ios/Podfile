@@ -9,7 +9,8 @@ target 'TickieApp' do
   use_react_native!(:path => config["reactNativePath"])
   
   #icons
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'RNTextGradientView', :path => '../node_modules/react-native-text-gradient'
 
   target 'TickieAppTests' do
     inherit! :complete

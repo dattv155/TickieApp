@@ -5,6 +5,14 @@
  */
 .container {
   flex: 1;
-  justify-content: center;
-  align-items: center;
+
+}
+
+.seperatorLine {
+  height: 1px;
+  background-color: black;
+}
+
+.scrollView {
+  padding-bottom: 25%;
 }

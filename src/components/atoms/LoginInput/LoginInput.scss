@@ -1,0 +1,16 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-13 22:49:02
+ * @author tannt <ngotientan811@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.textStyle {
+  font-weight: 100;
+}
+
+.bottomInputStyle {
+  border: 1px solid rgba(130, 130, 130, 0.25);
+
+}

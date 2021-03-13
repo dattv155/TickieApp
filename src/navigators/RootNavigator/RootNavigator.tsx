@@ -7,6 +7,9 @@ import ProfilePage from 'src/screens/ProfilePage/ProfilePage';
 import NotificationScreen from 'src/screens/NotificationScreen/NotificationScreen';
 import LoginScreen from 'src/screens/LoginScreen/LoginScreen';
 import WelcomeScreen from 'src/screens/WelcomeScreen/WelcomeScreen';
+import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswordScreen';
+import VerifyCodeScreen from 'src/screens/VerifyCodeScreen/VerifyCodeScreen';
+import ChangePasswordScreen from 'src/screens/ChangePasswordScreen/ChangePasswordScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -49,6 +52,21 @@ const RootNavigator: FC<
       <Screen
         name={LoginScreen.displayName}
         component={LoginScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={ForgotPasswordScreen.displayName}
+        component={ForgotPasswordScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={VerifyCodeScreen.displayName}
+        component={VerifyCodeScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={ChangePasswordScreen.displayName}
+        component={ChangePasswordScreen}
         initialParams={{}}
       />
     </Navigator>

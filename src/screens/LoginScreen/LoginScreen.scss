@@ -6,18 +6,50 @@
 @import "src/styles/mixins";
 @import "src/styles/atomic-styles";
 
+
 .screenContainer {
   padding: 0 20px;
-  padding-top: 80px;
+  padding-top: 50px;
   border: 1px solid black;
   height: 100%;
 }
 
-.title {
-  font-size: 30px;
-  font-weight: bold;
+.headerArea {
+  margin-bottom: 40px;
+}
+
+.textStyle {
+  font-weight: 100;
+}
+
+
+
+.chooseArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 
 }
-.subtitle {
-  color: #828282;
+
+.lineArea {
+  width: 159px;
+  border: 2px solid map-get($colors, "blue");
+}
+
+.borderComp {
+  border: 1px solid map-get($colors, "black");
+}
+
+.loginArea {
+  margin-top: 50px;
+}
+
+.bottomInputStyle {
+  border: 1px solid rgba(130, 130, 130, 0.25);
+
+}
+
+.forgotPass {
+  text-align: right;
+  margin-top: 30px;
 }

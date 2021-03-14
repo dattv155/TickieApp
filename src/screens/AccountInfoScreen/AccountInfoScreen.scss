@@ -1,52 +1,30 @@
 /**
  * Styles for Component.tsx
- * @created 2021-03-13 09:52:46
+ * @created 2021-03-14 21:11:22
  * @author tannt <ngotientan811@gmail.com>
  */
+
 @import "src/styles/mixins";
 @import "src/styles/atomic-styles";
-
 
 .textStyle {
   font-weight: 100;
 }
-
 .screenContainer {
   padding: 0 20px;
-  padding-top: 60px;
+  padding-top: 40px;
 }
-
-.infoSection {
-  flex-direction: row;
-}
-
-.avatarFrame {
-  width: 65px;
-  height: 65px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  elevation: 5;
-}
-
-.profile {
-  margin-left: 16px;
-}
-
-.optionSection {
-  margin-top: 35px;
-}
-
-
 //view block
 .viewContainer {
 
   background-color: map-get($colors, "white");
-  padding: 8px 16px;
+  padding: 20px 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   elevation: 4;
   border-radius: 10px;
   margin-bottom: 25px;
+}
+
+.box {
+  padding: 6px 16px;
 }

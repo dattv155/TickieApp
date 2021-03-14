@@ -1,7 +1,4 @@
 {
-  "general.action.ok": "",
-  "general.action.cancel": "",
-  "homeScreen.title": "Home",
   "loginScreen.changePassword": "",
   "loginScreen.changePasswordSubtitle": "",
   "loginScreen.newPassword": "",
@@ -23,8 +20,5 @@
   "loginScreen.loginFB": "",
   "loginScreen.loginGoogle": "",
   "loginScreen.forgotPasswordSubtitle2": "",
-  "loginScreen.verifyCode": "",
-  "tab.home": "",
-  "tab.notification": "",
-  "tab.profile": ""
+  "loginScreen.verifyCode": ""
 }

@@ -10,6 +10,7 @@ import WelcomeScreen from 'src/screens/WelcomeScreen/WelcomeScreen';
 import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswordScreen';
 import VerifyCodeScreen from 'src/screens/VerifyCodeScreen/VerifyCodeScreen';
 import ChangePasswordScreen from 'src/screens/ChangePasswordScreen/ChangePasswordScreen';
+import AccountInfoScreen from 'src/screens/AccountInfoScreen/AccountInfoScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -67,6 +68,11 @@ const RootNavigator: FC<
       <Screen
         name={ChangePasswordScreen.displayName}
         component={ChangePasswordScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={AccountInfoScreen.displayName}
+        component={AccountInfoScreen}
         initialParams={{}}
       />
     </Navigator>

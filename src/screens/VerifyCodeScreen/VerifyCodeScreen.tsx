@@ -9,6 +9,7 @@ import {SafeAreaView} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import ChangePasswordScreen from 'src/screens/ChangePasswordScreen/ChangePasswordScreen';
 import ButtonLink from 'src/components/atoms/ButtonLink/ButtonLink';
+import {useTranslation} from 'react-i18next';
 
 /**
  * File: VerifyCodeScreen.tsx
@@ -21,6 +22,8 @@ const VerifyCodeScreen: FC<PropsWithChildren<VerifyCodeScreenProps>> = (
 ): ReactElement => {
   const {navigation} = props;
 
+  const [translate] = useTranslation();
+
   const handleGoToChangePasswordScreen = React.useCallback(() => {
     navigation.navigate(ChangePasswordScreen.displayName);
   }, [navigation]);
@@ -28,20 +31,20 @@ const VerifyCodeScreen: FC<PropsWithChildren<VerifyCodeScreenProps>> = (
   return (
     <SafeAreaView style={styles.screenContainer}>
       <LoginHeader
-        title="Quên mật khẩu"
-        subtitle="Nhập mã xác nhận để thay đổi mật khẩu"
+        title={translate('loginScreen.forgotPassword')}
+        subtitle={translate('loginScreen.forgotPasswordSubtitle2')}
       />
 
       <LoginInput
         style={{marginBottom: 30, marginTop: 60}}
-        title="Mã xác nhận"
+        title={translate('loginScreen.verifyCode')}
         onChange={() => {}}
-        placeholder="Mã xác nhận"
+        placeholder={translate('loginScreen.verifyCode')}
         keyboardType="number-pad"
       />
 
       <ButtonMain
-        label="Thay đổi mật khẩu"
+        label={translate('loginScreen.changePassword')}
         onPress={handleGoToChangePasswordScreen}
       />
       <ButtonLink label="Gửi lại mã xác nhận" onPress={() => {}} />

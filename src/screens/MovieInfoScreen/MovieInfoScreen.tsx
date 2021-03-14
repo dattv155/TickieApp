@@ -10,9 +10,9 @@ import {StackScreenProps} from '@react-navigation/stack';
  * @author TrongDatVu <trongdat1505@gmail.com>
  * @type {FC<PropsWithChildren<MovieInfoScreenProps>>}
  */
-const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
-  props: PropsWithChildren<MovieInfoScreenProps>,
-): ReactElement => {
+const MovieInfoScreen: FC<
+  PropsWithChildren<MovieInfoScreenProps>
+> = (): ReactElement => {
   // const {navigation, route} = props;
   return (
     <View

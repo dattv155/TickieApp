@@ -1,0 +1,40 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-14 20:43:44
+ * @author tannt <ngotientan811@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+
+.textStyle {
+  font-weight: 100;
+}
+
+
+.iconView {
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+  width: 5%;
+
+}
+
+.label {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-self: center;
+  width: 85%;
+  padding-left: 20px;
+}
+
+.rightIcon {
+  flex-direction: row;
+  justify-content: flex-end;
+  align-self: center;
+  width: 10%;
+}
+
+.dash {
+  opacity: 0.3;
+}

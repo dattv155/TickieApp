@@ -6,6 +6,7 @@ import LoginHeader from 'src/components/atoms/LoginHeader/LoginHeader';
 import LoginInput from 'src/components/atoms/LoginInput/LoginInput';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import {StackScreenProps} from '@react-navigation/stack';
+import {useTranslation} from 'react-i18next';
 
 /**
  * File: ChangePasswordScreen.tsx
@@ -16,32 +17,37 @@ import {StackScreenProps} from '@react-navigation/stack';
 const ChangePasswordScreen: FC<
   PropsWithChildren<ChangePasswordScreenProps>
 > = (): ReactElement => {
+  const [translate] = useTranslation();
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <LoginHeader
-        title="Thay đổi mật khẩu"
-        subtitle="Hãy thay đổi thành mật khẩu mới"
+        title={translate('loginScreen.changePassword')}
+        subtitle={translate('loginScreen.changePasswordSubtitle')}
       />
 
       <LoginInput
         style={{marginTop: 60}}
-        title="Mật khẩu mới"
+        title={translate('loginScreen.newPassword')}
         onChange={() => {}}
-        placeholder="Mật khẩu mới"
+        placeholder={translate('loginScreen.newPassword')}
         secureTextEntry={true}
         keyboardType="default"
       />
 
       <LoginInput
         style={{marginBottom: 30, marginTop: 30}}
-        title="Nhập lại mật khẩu mới"
+        title={translate('loginScreen.reNewPassword')}
         onChange={() => {}}
-        placeholder="Nhập lại mật khẩu mới"
+        placeholder={translate('loginScreen.reNewPassword')}
         secureTextEntry={true}
         keyboardType="default"
       />
 
-      <ButtonMain label="Xác nhận" onPress={() => {}} />
+      <ButtonMain
+        label={translate('loginScreen.confirmNewPassword')}
+        onPress={() => {}}
+      />
     </SafeAreaView>
   );
 };

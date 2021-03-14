@@ -1,7 +1,7 @@
 export enum Colors {
   White = '#FFFFFF',
   Black = '#343434',
-  Light_Gray = '#F2F2F2',
+  Light_Gray = '#F7F8FA',
   Gray = '#828282',
   RobinsEggBlue = '#00C7CC',
   // Blue = '#2E499C',

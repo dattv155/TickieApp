@@ -7,6 +7,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import LoginInput from 'src/components/atoms/LoginInput/LoginInput';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import VerifyCodeScreen from 'src/screens/VerifyCodeScreen/VerifyCodeScreen';
+import {useTranslation} from 'react-i18next';
 
 /**
  * File: ForgotPasswordScreen.tsx
@@ -19,14 +20,16 @@ const ForgotPasswordScreen: FC<PropsWithChildren<ForgotPasswordScreenProps>> = (
 ): ReactElement => {
   const {navigation} = props;
 
+  const [translate] = useTranslation();
+
   const handleGoToVerifyScreen = React.useCallback(() => {
     navigation.navigate(VerifyCodeScreen.displayName);
   }, [navigation]);
   return (
     <SafeAreaView style={styles.screenContainer}>
       <LoginHeader
-        title="Quên mật khẩu"
-        subtitle="Nhập địa chỉ Email hoặc số điện thoại để nhận mã xác nhận"
+        title={translate('loginScreen.forgotPassword')}
+        subtitle={translate('loginScreen.forgotPasswordSubtitle')}
       />
 
       <LoginInput
@@ -34,13 +37,16 @@ const ForgotPasswordScreen: FC<PropsWithChildren<ForgotPasswordScreenProps>> = (
           marginBottom: 30,
           marginTop: 60,
         }}
-        title="Email hoặc số điện thoại"
+        title={translate('loginScreen.inputEmail')}
         onChange={() => {}}
-        placeholder="Email hoặc số điện thoại"
+        placeholder={translate('loginScreen.inputEmail')}
         keyboardType="email-address"
       />
 
-      <ButtonMain label="Nhận mã xác nhận" onPress={handleGoToVerifyScreen} />
+      <ButtonMain
+        label={translate('loginScreen.receiveVerifyCode')}
+        onPress={handleGoToVerifyScreen}
+      />
     </SafeAreaView>
   );
 };

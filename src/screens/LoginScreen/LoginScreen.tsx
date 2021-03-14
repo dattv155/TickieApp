@@ -10,6 +10,7 @@ import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import LoginInput from 'src/components/atoms/LoginInput/LoginInput';
 import LoginHeader from 'src/components/atoms/LoginHeader/LoginHeader';
 import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswordScreen';
+import {useTranslation} from 'react-i18next';
 
 /**
  * File: LoginScreen.tsx
@@ -21,6 +22,8 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
   props: PropsWithChildren<LoginScreenProps>,
 ): ReactElement => {
   const {navigation} = props;
+
+  const [translate] = useTranslation();
 
   const handleGoToHomeScreen = React.useCallback(() => {
     navigation.navigate(HomeScreen.displayName);
@@ -44,8 +47,8 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
     return (
       <SafeAreaView style={styles.screenContainer}>
         <LoginHeader
-          title="Chào mừng bạn"
-          subtitle="Đã đến với Tickie. Đăng nhập để tiếp tục"
+          title={translate('loginScreen.headerTitle')}
+          subtitle={translate('loginScreen.signupHeaderSubtitle')}
         />
         <View style={styles.chooseArea}>
           <Pressable onPress={handleLogin}>
@@ -58,7 +61,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
                 atomicStyles.mb8px,
                 styles.textStyle,
               ]}>
-              Đăng nhập
+              {translate('loginScreen.login')}
             </Text>
             {isChoosed ? (
               <View style={styles.lineArea} />
@@ -76,7 +79,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
                 atomicStyles.mb8px,
                 styles.textStyle,
               ]}>
-              Đăng ký
+              {translate('loginScreen.signup')}
             </Text>
             {isChoosed ? (
               <View style={{width: 159}} />
@@ -88,36 +91,41 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
         <View style={{marginTop: 20}}>
           <LoginInput
             style={{marginBottom: 20}}
-            title="Email hoặc số điện thoại"
+            title={translate('loginScreen.inputEmail')}
             onChange={() => {}}
-            placeholder="Email hoặc số điện thoại"
+            placeholder={translate('loginScreen.inputEmail')}
             keyboardType="email-address"
           />
           <LoginInput
             style={{marginBottom: 20}}
-            title="Mật khẩu"
+            title={translate('loginScreen.inputPassword')}
             onChange={() => {}}
-            placeholder="Mật khẩu"
+            placeholder={translate('loginScreen.inputPassword')}
             secureTextEntry={true}
+            keyboardType="default"
           />
 
           <LoginInput
             style={{marginBottom: 10}}
-            title="Nhập lại mật khẩu"
+            title={translate('loginScreen.reInputPassword')}
             onChange={() => {}}
-            placeholder="Nhập lại mật khẩu"
+            placeholder={translate('loginScreen.reInputPassword')}
             secureTextEntry={true}
+            keyboardType="default"
           />
         </View>
 
-        <ButtonMain label="Đăng ký" onPress={handleGoToHomeScreen} />
+        <ButtonMain
+          label={translate('loginScreen.signup')}
+          onPress={handleGoToHomeScreen}
+        />
         <ButtonLink
-          label="Đăng ký với Facebook"
+          label={translate('loginScreen.signupFB')}
           icon={require('assets/icons/FBIcon.svg')}
           onPress={handleGoToHomeScreen}
         />
         <ButtonLink
-          label="Đăng ký với Google"
+          label={translate('loginScreen.signupGoogle')}
           icon={require('assets/icons/GoogleIcon.svg')}
           onPress={handleGoToHomeScreen}
         />
@@ -129,8 +137,8 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
     return (
       <SafeAreaView style={styles.screenContainer}>
         <LoginHeader
-          title="Chào mừng bạn"
-          subtitle="Đã đến với Tickie. Đăng nhập để tiếp tục"
+          title={translate('loginScreen.headerTitle')}
+          subtitle={translate('loginScreen.headerSubtitle')}
         />
 
         <View style={styles.chooseArea}>
@@ -144,7 +152,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
                 atomicStyles.mb8px,
                 styles.textStyle,
               ]}>
-              Đăng nhập
+              {translate('loginScreen.login')}
             </Text>
             {isChoosed ? (
               <View style={styles.lineArea} />
@@ -162,7 +170,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
                 atomicStyles.mb8px,
                 styles.textStyle,
               ]}>
-              Đăng ký
+              {translate('loginScreen.signup')}
             </Text>
             {isChoosed ? (
               <View style={{width: 159}} />
@@ -175,16 +183,17 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
         <View style={{marginTop: 50}}>
           <LoginInput
             style={{marginBottom: 40}}
-            title="Email hoặc số điện thoại"
+            title={translate('loginScreen.inputEmail')}
             onChange={() => {}}
-            placeholder="Email hoặc số điện thoại"
+            placeholder={translate('loginScreen.inputEmail')}
             keyboardType="email-address"
           />
           <LoginInput
-            title="Mật khẩu"
+            title={translate('loginScreen.inputPassword')}
             onChange={() => {}}
-            placeholder="Mật khẩu"
+            placeholder={translate('loginScreen.inputPassword')}
             secureTextEntry={true}
+            keyboardType="default"
           />
         </View>
         <Pressable onPress={handleGoToForgotPasswordScreen}>
@@ -197,17 +206,20 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
               styles.textStyle,
               styles.forgotPass,
             ]}>
-            Quên mật khẩu
+            {translate('loginScreen.forgotPassword')}
           </Text>
         </Pressable>
-        <ButtonMain label="Đăng nhập" onPress={handleGoToHomeScreen} />
+        <ButtonMain
+          label={translate('loginScreen.login')}
+          onPress={handleGoToHomeScreen}
+        />
         <ButtonLink
-          label="Đăng nhập với Facebook"
+          label={translate('loginScreen.loginFB')}
           icon={require('assets/icons/FBIcon.svg')}
           onPress={handleGoToHomeScreen}
         />
         <ButtonLink
-          label="Đăng nhập với Google"
+          label={translate('loginScreen.loginGoogle')}
           icon={require('assets/icons/GoogleIcon.svg')}
           onPress={handleGoToHomeScreen}
         />

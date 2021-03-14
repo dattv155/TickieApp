@@ -3,8 +3,7 @@ import nameof from 'ts-nameof.macro';
 import 'src/components/atoms/HeaderBackButton/HeaderBackButton.scss';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import HeaderIconButton from 'src/components/atoms/HeaderIconButton/HeaderIconButton';
-import {Colors} from 'src/styles';
-import LeftIcon from 'assets/icons/LeftIcon';
+import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 
 /**
  * File: HeaderBackButton.tsx
@@ -19,7 +18,7 @@ const HeaderBackButton: FC<PropsWithChildren<HeaderBackButtonProps>> = (
 
   return (
     <HeaderIconButton onPress={navigation.goBack}>
-      <LeftIcon color={Colors.Blue} />
+      <SvgIcon component={require('assets/icons/backIconRound.svg')} />
     </HeaderIconButton>
   );
 };

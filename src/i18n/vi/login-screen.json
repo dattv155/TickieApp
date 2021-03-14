@@ -1,7 +1,4 @@
 {
-  "general.action.ok": "",
-  "general.action.cancel": "",
-  "homeScreen.title": "Trang chủ",
   "loginScreen.changePassword": "Thay đổi mật khẩu",
   "loginScreen.changePasswordSubtitle": "Hãy thay đổi mật khẩu mới",
   "loginScreen.newPassword": "Mật khẩu mới",
@@ -23,8 +20,5 @@
   "loginScreen.loginFB": "Đăng nhập với Facebook",
   "loginScreen.loginGoogle": "Đăng nhập với Google",
   "loginScreen.forgotPasswordSubtitle2": "Hãy nhập mã xác nhận để thay đổi mật khẩu",
-  "loginScreen.verifyCode": "Mã xác nhận",
-  "tab.home": "Trang chủ",
-  "tab.notification": "Thông báo",
-  "tab.profile": "Hồ sơ"
+  "loginScreen.verifyCode": "Mã xác nhận"
 }

@@ -2,10 +2,16 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './WelcomeScreen.scss';
 import {StackScreenProps} from '@react-navigation/stack';
-import {View, Text, SafeAreaView, Button, StatusBar} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StatusBar,
+  Pressable,
+} from 'react-native';
 import HomeScreen from 'src/screens/HomeScreen/HomeScreen';
 import LoginScreen from 'src/screens/LoginScreen/LoginScreen';
-import {Colors} from 'src/styles';
+import {atomicStyles, Colors} from 'src/styles';
 
 /**
  * File: WelcomeScreen.tsx
@@ -27,14 +33,59 @@ const WelcomeScreen: FC<PropsWithChildren<WelcomeScreenProps>> = (
   }, [navigation]);
 
   return (
-    <SafeAreaView style={styles.screenContainer}>
-      <View>
-        <StatusBar barStyle="light-content" backgroundColor={Colors.Blue} />
-        <Text>Tickie</Text>
-        <Button onPress={handleGoToLoginScreen} title="Go To Login Screen" />
-        <Button onPress={handleGoToHomeScreen} title="Go To Home Screen" />
-      </View>
-    </SafeAreaView>
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
+      <SafeAreaView style={styles.screenContainer}>
+        <View style={styles.textBox}>
+          <Text
+            style={[
+              atomicStyles.h1,
+              atomicStyles.bold,
+              atomicStyles.textCenter,
+              atomicStyles.textWhite,
+              styles.textStyle,
+              styles.bigTitle,
+
+              {
+                fontSize: 64,
+              },
+            ]}>
+            Tickie
+          </Text>
+        </View>
+
+        <Pressable
+          style={[
+            styles.buttonStyle,
+            {
+              bottom: 30,
+            },
+          ]}
+          onPress={handleGoToLoginScreen}>
+          <Text
+            style={[
+              atomicStyles.h5,
+              atomicStyles.bold,
+              styles.textStyle,
+              atomicStyles.textBlue,
+            ]}>
+            Go To Login Screen
+          </Text>
+        </Pressable>
+
+        <Pressable style={styles.buttonStyle} onPress={handleGoToHomeScreen}>
+          <Text
+            style={[
+              atomicStyles.h5,
+              atomicStyles.bold,
+              styles.textStyle,
+              atomicStyles.textBlue,
+            ]}>
+            Go To Home Screen
+          </Text>
+        </Pressable>
+      </SafeAreaView>
+    </>
   );
 };
 

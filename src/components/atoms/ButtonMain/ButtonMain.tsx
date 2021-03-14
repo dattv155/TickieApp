@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ButtonMain.scss';
-import {Text, TouchableOpacity} from 'react-native';
+import {Pressable, Text} from 'react-native';
 import {atomicStyles} from 'src/styles';
 
 /**
@@ -16,7 +16,7 @@ const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
   const {label, onPress} = props;
 
   return (
-    <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
+    <Pressable style={styles.buttonStyle} onPress={onPress}>
       <Text
         style={[
           atomicStyles.h5,
@@ -26,7 +26,7 @@ const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
         ]}>
         {label}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -1,6 +1,9 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import TabNavigator from '../TabNavigator/TabNavigator';
 import ProfilePage from 'src/screens/ProfilePage/ProfilePage';
@@ -11,8 +14,16 @@ import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswor
 import VerifyCodeScreen from 'src/screens/VerifyCodeScreen/VerifyCodeScreen';
 import ChangePasswordScreen from 'src/screens/ChangePasswordScreen/ChangePasswordScreen';
 import AccountInfoScreen from 'src/screens/AccountInfoScreen/AccountInfoScreen';
+import ChangePasswordProfileScreen from 'src/screens/ChangePasswordProfileScreen/ChangePasswordProfileScreen';
+import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
+// import {forNoAnimation} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
+import {StackCardInterpolatedStyle} from '@react-navigation/stack/src/types';
 
 const {Navigator, Screen} = createStackNavigator();
+
+function forNoAnimation(): StackCardInterpolatedStyle {
+  return {};
+}
 
 const RootNavigator: FC<
   PropsWithChildren<RootNavigatorProps>
@@ -22,28 +33,35 @@ const RootNavigator: FC<
       initialRouteName={WelcomeScreen.displayName}
       headerMode="none"
       screenOptions={{
-        gestureEnabled: true,
-        animationEnabled: false,
+        cardOverlayEnabled: true,
+        animationEnabled: true,
+        // gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <Screen
         name={HomeScreen.displayName}
         component={HomeScreen}
         initialParams={{}}
+        options={{cardStyleInterpolator: forNoAnimation}}
       />
       <Screen
         name={TabNavigator.displayName}
         component={TabNavigator}
         initialParams={{}}
+        options={{cardStyleInterpolator: forNoAnimation}}
       />
       <Screen
         name={ProfilePage.displayName}
         component={ProfilePage}
         initialParams={{}}
+        options={{cardStyleInterpolator: forNoAnimation}}
       />
       <Screen
         name={NotificationScreen.displayName}
         component={NotificationScreen}
         initialParams={{}}
+        options={{cardStyleInterpolator: forNoAnimation}}
       />
       <Screen
         name={WelcomeScreen.displayName}
@@ -73,6 +91,16 @@ const RootNavigator: FC<
       <Screen
         name={AccountInfoScreen.displayName}
         component={AccountInfoScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={ChangePasswordProfileScreen.displayName}
+        component={ChangePasswordProfileScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={MyTicketScreen.displayName}
+        component={MyTicketScreen}
         initialParams={{}}
       />
     </Navigator>

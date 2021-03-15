@@ -6,9 +6,10 @@ import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/He
 import {View, Text, SafeAreaView} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
-import InputProfile from 'src/screens/AccountInfoScreen/components/InputProfile/InputProfile';
+import InputProfile from 'src/components/morecules/InputProfile/InputProfile';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
+import ChangePasswordProfileScreen from 'src/screens/ChangePasswordProfileScreen/ChangePasswordProfileScreen';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -20,6 +21,10 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
   props: PropsWithChildren<AccountInfoScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const handleGoToChangePasswordProfileScreen = React.useCallback(() => {
+    navigation.navigate(ChangePasswordProfileScreen.displayName);
+  }, [navigation]);
 
   return (
     <DefaultLayout
@@ -66,7 +71,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
         <View style={[styles.viewContainer, styles.box]}>
           <LineBlock
             label="Thay đổi mật khẩu"
-            onPress={() => {}}
+            onPress={handleGoToChangePasswordProfileScreen}
             icon={require('assets/icons/LockIcon.svg')}
           />
         </View>

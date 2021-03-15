@@ -28,7 +28,7 @@ const WelcomeScreen: FC<PropsWithChildren<WelcomeScreenProps>> = (
 
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
+      <StatusBar barStyle="light-content" backgroundColor={Colors.Blue} />
       <SafeAreaView style={styles.screenContainer}>
         <View style={styles.textBox}>
           <Text

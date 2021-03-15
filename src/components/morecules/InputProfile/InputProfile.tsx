@@ -15,7 +15,7 @@ import Dash from 'react-native-dash';
 const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
   props: PropsWithChildren<InputProfileProps>,
 ): ReactElement => {
-  const {label, placeholder, keyboardType} = props;
+  const {label, placeholder, keyboardType, secureTextEntry} = props;
   return (
     <View style={[atomicStyles.mb16px]}>
       <Text style={[atomicStyles.h5, atomicStyles.bold, styles.textStyle]}>
@@ -25,6 +25,7 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
         <TextInput
           keyboardType={keyboardType}
           defaultValue={placeholder}
+          secureTextEntry={secureTextEntry}
           style={[
             atomicStyles.h5,
             atomicStyles.bold,
@@ -54,6 +55,7 @@ export interface InputProfileProps {
   label?: string;
   placeholder?: string;
   keyboardType?: string;
+  secureTextEntry?: boolean;
 }
 
 InputProfile.defaultProps = {

@@ -2,13 +2,7 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './WelcomeScreen.scss';
 import {StackScreenProps} from '@react-navigation/stack';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StatusBar,
-  Pressable,
-} from 'react-native';
+import {View, Text, SafeAreaView, StatusBar, Pressable} from 'react-native';
 import HomeScreen from 'src/screens/HomeScreen/HomeScreen';
 import LoginScreen from 'src/screens/LoginScreen/LoginScreen';
 import {atomicStyles, Colors} from 'src/styles';

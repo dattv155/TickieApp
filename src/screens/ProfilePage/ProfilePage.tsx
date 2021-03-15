@@ -5,10 +5,11 @@ import styles from './ProfilePage.scss';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
-import {useTranslation} from 'react-i18next';
+// import {useTranslation} from 'react-i18next';
 import {atomicStyles} from 'src/styles';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import AccountInfoScreen from 'src/screens/AccountInfoScreen/AccountInfoScreen';
+import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
 
 /**
  * File: ProfilePage.tsx
@@ -25,6 +26,10 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
   const handleGoToAccountInfoScreen = React.useCallback(() => {
     navigation.navigate(AccountInfoScreen.displayName);
+  }, [navigation]);
+
+  const handleGoToMyTicketScreen = React.useCallback(() => {
+    navigation.navigate(MyTicketScreen.displayName);
   }, [navigation]);
 
   return (
@@ -74,7 +79,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
             />
             <LineBlock
               label="Vé của tôi"
-              onPress={() => {}}
+              onPress={handleGoToMyTicketScreen}
               icon={require('assets/icons/Profile/TicketW.svg')}
             />
           </View>

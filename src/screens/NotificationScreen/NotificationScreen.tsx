@@ -4,6 +4,7 @@ import nameof from 'ts-nameof.macro';
 import {SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
+import {atomicStyles} from 'src/styles';
 
 /**
  * File: NotificationScreen.tsx
@@ -17,11 +18,14 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
   const {navigation, route} = props;
   return (
     <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+      style={[
+        {
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        atomicStyles.container,
+      ]}>
       <View>
         <Text>Notification Page</Text>
       </View>

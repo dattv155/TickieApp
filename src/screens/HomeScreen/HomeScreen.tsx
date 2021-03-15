@@ -1,10 +1,11 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import styles from './HomeScreen.scss';
+// import styles from './HomeScreen.scss';
 import {useTranslation} from 'react-i18next';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 import MainTabBar from '../../components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
+import {atomicStyles, Colors} from 'src/styles';
 
 /**
  * File: HomeScreen.tsx
@@ -20,12 +21,23 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   const [translate] = useTranslation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.scrollView}>
-        <Text>{translate('homeScreen.title')}</Text>
-      </View>
-      <MainTabBar navigation={navigation} route={route} />
-    </SafeAreaView>
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
+      <SafeAreaView style={atomicStyles.container}>
+        <View
+          style={[
+            {
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+            atomicStyles.container,
+          ]}>
+          <Text>{translate('homeScreen.title')}</Text>
+        </View>
+        <MainTabBar navigation={navigation} route={route} />
+      </SafeAreaView>
+    </>
   );
 };
 

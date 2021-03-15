@@ -18,6 +18,7 @@ import ChangePasswordProfileScreen from 'src/screens/ChangePasswordProfileScreen
 import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
 // import {forNoAnimation} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
 import {StackCardInterpolatedStyle} from '@react-navigation/stack/src/types';
+import DetailTicketScreen from 'src/screens/DetailTicketScreen/DetailTicketScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -101,6 +102,11 @@ const RootNavigator: FC<
       <Screen
         name={MyTicketScreen.displayName}
         component={MyTicketScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={DetailTicketScreen.displayName}
+        component={DetailTicketScreen}
         initialParams={{}}
       />
     </Navigator>

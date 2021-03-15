@@ -1,0 +1,46 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-15 22:40:24
+ * @author tannt <ngotientan811@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.textStyle {
+  font-weight: 100;
+}
+
+.viewContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: map-get($colors, "white");
+  padding: 16px 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  elevation: 4;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.imageView {
+  width: 30%;
+  height: 90%;
+  border-radius: 10px;
+}
+
+.infoSection {
+  margin-left: 16px;
+  margin-right: 16px;
+  width: 60%;
+}
+
+.miniButton {
+  background-color: map-get($colors, "blue");
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  width: 100%;
+  margin-top: 10px;
+}

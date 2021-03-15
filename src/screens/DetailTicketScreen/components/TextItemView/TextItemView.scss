@@ -1,19 +1,18 @@
 /**
  * Styles for Component.tsx
- * @created 2021-03-15 11:00:46
+ * @created 2021-03-15 23:56:03
  * @author tannt <ngotientan811@gmail.com>
  */
 
 @import "src/styles/mixins";
 @import "src/styles/atomic-styles";
 
+
 .textStyle {
   font-weight: 100;
 }
-
-.screenContainer {
-  padding: 0 20px;
-  padding-top: 40px;
-  padding-bottom: 15%;
-  height: 100%;
+.textItem {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 25px;
 }

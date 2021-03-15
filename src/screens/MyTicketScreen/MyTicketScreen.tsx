@@ -3,15 +3,11 @@ import nameof from 'ts-nameof.macro';
 import styles from './MyTicketScreen.scss';
 import {StackScreenProps} from '@react-navigation/stack';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
-import {
-  Image,
-  Pressable,
-  SafeAreaView,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, Text} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
+import TicketItemView from 'src/screens/MyTicketScreen/components/TicketItemView/TicketItemView';
+import DetailTicketScreen from 'src/screens/DetailTicketScreen/DetailTicketScreen';
 
 /**
  * File: MyTicketScreen.tsx
@@ -23,6 +19,10 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
   props: PropsWithChildren<MyTicketScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const handleGoToDetailTicketScreen = React.useCallback(() => {
+    navigation.navigate(DetailTicketScreen.displayName);
+  }, [navigation]);
 
   return (
     <DefaultLayout
@@ -43,49 +43,40 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
       }
       gradient={false}
       customHeader={false}>
-      <SafeAreaView style={styles.screenContainer}>
-        <View style={styles.viewContainer}>
-          <Image
-            resizeMode="cover"
-            style={styles.imageView}
-            source={require('assets/images/mulan-poster.png')}
+      <ScrollView>
+        <SafeAreaView style={styles.screenContainer}>
+          <TicketItemView
+            film="Mulan(2020)"
+            theater="Tickie Giải Phóng"
+            time="7:00 13/10"
+            seat="D06, D07"
+            image={require('assets/images/mulan-poster.png')}
+            onPress={handleGoToDetailTicketScreen}
           />
-          <View style={styles.infoSection}>
-            <Text
-              style={[
-                atomicStyles.h4,
-                atomicStyles.bold,
-                atomicStyles.mb8px,
-                styles.textStyle,
-              ]}>
-              Mulan(2020)
-            </Text>
-            <Text
-              style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>
-              Rạp: Tickie Giải Phóng
-            </Text>
-            <Text
-              style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>
-              Thời gian: 7:00 13/10
-            </Text>
-            <Text
-              style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>
-              Chỗ ngồi: D06, D07
-            </Text>
-            <Pressable style={styles.miniButton}>
-              <Text
-                style={[
-                  styles.textStyle,
-                  atomicStyles.h76,
-                  atomicStyles.bold,
-                  atomicStyles.textWhite,
-                ]}>
-                Xem vé
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      </SafeAreaView>
+          <TicketItemView
+            film="Blade Runner 2049"
+            theater="Tickie Giải Phóng"
+            time="7:00 13/10"
+            seat="D03, D04"
+            image={require('assets/images/bladeRunner-poster.png')}
+          />
+          <TicketItemView
+            film="Mulan(2020)"
+            theater="Tickie Giải Phóng"
+            time="7:00 13/10"
+            seat="D06, D07"
+            image={require('assets/images/mulan-poster.png')}
+            onPress={handleGoToDetailTicketScreen}
+          />
+          <TicketItemView
+            film="Blade Runner 2049"
+            theater="Tickie Giải Phóng"
+            time="7:00 13/10"
+            seat="D03, D04"
+            image={require('assets/images/bladeRunner-poster.png')}
+          />
+        </SafeAreaView>
+      </ScrollView>
     </DefaultLayout>
   );
 };

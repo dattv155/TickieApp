@@ -16,6 +16,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {name as appName} from 'app.json';
 import nameof from 'ts-nameof.macro';
 
+
 const RootComponent: FC = () => {
   return (
     <SafeAreaProvider>

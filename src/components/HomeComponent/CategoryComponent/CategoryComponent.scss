@@ -1,6 +1,6 @@
 
 .carouselContainer {
-    margin-top: 100px;
+    margin-top: 30px;
 }
 
 .headerText {
@@ -19,7 +19,7 @@ color: black;
 }
 .release {
   padding-top: 3px;
-  font-family: 'SVN-Gilroy';
+  font-family: SVN-Gilroy;
   color: #828282;
   font-size: 15;
   font-weight: 500;
@@ -32,4 +32,16 @@ color: black;
   background-color: rgba(130, 130, 130, 0.25);
   margin-left: auto;
   margin-right: auto;
+}
+
+.header {
+  margin: 30px 6% 0px 6%;
+  padding: 5px 0px;
+  font-family: SVN-Gilroy;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 27px;
+  align-items: flex-end;
+  letter-spacing: 0.02;
 }

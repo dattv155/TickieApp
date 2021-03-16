@@ -6,7 +6,7 @@ import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 import MainTabBar from '../../components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
-
+import CategoryComponent from '../../components/CategoryComponent/CategoryComponent';
 /**
  * File: HomeScreen.tsx
  * @created 2021-03-09 16:40:00
@@ -25,15 +25,12 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
       <SafeAreaView style={atomicStyles.container}>
         <View
-          style={[
-            {
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-            atomicStyles.container,
-          ]}>
-          <Text>{translate('homeScreen.title')}</Text>
+        
+        style={[
+          atomicStyles.container,
+        ]}>
+          {/* <Text>{translate('homeScreen.title')}</Text> */}
+          <CategoryComponent/>
         </View>
         <MainTabBar navigation={navigation} route={route} />
       </SafeAreaView>

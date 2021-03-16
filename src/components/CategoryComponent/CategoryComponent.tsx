@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-import {View, Text, Dimensions, StyleSheet, Image, Animated, Easing} from 'react-native';
+import {View, Text, Dimensions, StyleSheet, Image, Animated, Easing, FlatList} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 import {scrollInterpolator, animatedStyles} from './utils/animations';
@@ -74,34 +74,75 @@ export default function CategoryComponent(props) {
         <Text style={styles.release}>{"Ngày ra mắt: "+`${list[index].release}`}</Text>
       </View>
       <View style={styles.line}/>
-      <View>
+      <View style={{height: 'auto',width: 'auto', marginHorizontal: '5.8%'}}> 
         <View>
           <Text style={{
               fontSize: 22,
               fontWeight: 'bold',
               fontStyle: 'normal',
-              lineHeight: 23
+              lineHeight: 23,
+              marginVertical: 20
                       }}>
             Đang có tại Rạp
           </Text>
         </View>
-        <ScrollView style={{display: 'flex', flexDirection: 'column-reverse', overflow: 'hidden'}}>
-          {
-            list.map((item) => {
-              return <View >
-                      <Image
-                          style={{width: ITEM_WIDTH *1 /2,
-                                  height: ITEM_HEIGHT*1/2,
-                                  borderRadius: 22
-                                  }}
-                          source={{
-                            uri: item.img
-                          }}>
-                        </Image>
-                      </View>
-            })
-          }
-        </ScrollView>
+          <FlatList
+            data={list}
+            renderItem={({ item }) => (
+              <View>
+                  <Image
+                      style={{width: ITEM_WIDTH *1 /2,
+                              height: ITEM_HEIGHT*1/2,
+                              borderRadius: 22,
+                              marginRight: SLIDER_WIDTH* 0.051
+                              }}
+                      source={{
+                        uri: item.img
+                      }}>
+                  </Image>
+                  <Text>{item.name}</Text>
+                  <Text>{item.release}</Text>
+              </View>
+            )}
+            keyExtractor={item => item.id}
+            horizontal={true}
+            />
+            <View style={styles.line}/>
+      </View>
+      <View style={{height: 'auto',width: 'auto', marginHorizontal: '5.8%', marginBottom: 100}}> 
+        <View>
+          <Text style={{
+              fontSize: 22,
+              fontWeight: 'bold',
+              fontStyle: 'normal',
+              lineHeight: 23,
+              marginVertical: 20
+                      }}>
+            Sắp chiếu
+          </Text>
+        </View>
+          <FlatList
+            data={list}
+            renderItem={({ item }) => (
+              <View>
+                <Image
+                    style={{width: ITEM_WIDTH *1 /2,
+                            height: ITEM_HEIGHT*1/2,
+                            borderRadius: 22,
+                            marginRight: SLIDER_WIDTH* 0.051
+                            }}
+                    source={{
+                      uri: item.img
+                    }}>
+                </Image>
+                <Text>{item.name}</Text>
+                <Text>{item.release}</Text>
+              </View>
+            )}
+            keyExtractor={item => item.id}
+            horizontal={true}
+            />
+            <View style={styles.line}/>
       </View>
     </ScrollView>
   );

@@ -14,7 +14,9 @@ import GeneralSettingScreen from 'src/screens/GeneralSettingScreen/GeneralSettin
 import UpdateAppScreen from 'src/screens/UpdateAppScreen/UpdateAppScreen';
 import HelperScreen from 'src/screens/HelperScreen/HelperScreen';
 import InformationScreen from 'src/screens/InformationScreen/InformationScreen';
-import TestScreen from 'src/screens/TestScreen/TestScreen';
+import BottomSheet from 'reanimated-bottom-sheet';
+import Animated from 'react-native-reanimated';
+import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 
 /**
  * File: ProfilePage.tsx
@@ -53,90 +55,137 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
     navigation.navigate(InformationScreen.displayName);
   }, [navigation]);
 
-  const handleGoToTestScreen = React.useCallback(() => {
-    navigation.navigate(TestScreen.displayName);
-  }, [navigation]);
+  const sheetRef = React.useRef(null);
+  const fall = new Animated.Value<number>(1);
+
+  const renderContent = () => (
+    <SafeAreaView style={styles.bottomBoxContainer}>
+      <View style={{alignItems: 'center'}}>
+        <Text style={[atomicStyles.h3, atomicStyles.bold, styles.textStyle]}>
+          Tải ảnh lên
+        </Text>
+        <Text style={[atomicStyles.h5, styles.textStyle]}>
+          Chọn ảnh Profile
+        </Text>
+      </View>
+      <ButtonMain
+        label="Chọn từ Thư viện"
+        onPress={() => sheetRef.current.snapTo(1)}
+      />
+      <ButtonMain label="Chụp Ảnh" onPress={() => sheetRef.current.snapTo(1)} />
+
+      <Pressable
+        style={styles.buttonStyle}
+        onPress={() => sheetRef.current.snapTo(1)}>
+        <Text
+          style={[
+            atomicStyles.h5,
+            atomicStyles.bold,
+            styles.textStyle,
+            atomicStyles.textError,
+          ]}>
+          Thoát
+        </Text>
+      </Pressable>
+    </SafeAreaView>
+  );
 
   return (
     <>
-      <SafeAreaView style={[styles.container, styles.screenContainer]}>
-        <View style={styles.infoSection}>
-          <Pressable onPress={handleGoToTestScreen} style={styles.avatarFrame}>
-            <SvgIcon
-              component={require('assets/icons/ProfileAvatarIcon.svg')}
-            />
-          </Pressable>
-          <View style={styles.profile}>
-            <Text
-              style={[
-                atomicStyles.h4,
-                atomicStyles.bold,
-                atomicStyles.textDark,
-                {
-                  fontSize: 22,
-                  fontWeight: '100',
-                },
-              ]}>
-              Vu Trong Dat
-            </Text>
-            <Text
-              style={[
-                atomicStyles.h6,
-                atomicStyles.bold,
-                atomicStyles.textBlue,
-                {
-                  fontSize: 16,
-                  fontWeight: '100',
-                  marginTop: 5,
-                },
-              ]}>
-              Member
-            </Text>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[300, 0, 0]}
+        initialSnap={1}
+        renderHeader={renderContent}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+        enabledContentTapInteraction={false}
+      />
+      <Animated.View
+        style={{
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+        }}>
+        <SafeAreaView style={[styles.container, styles.screenContainer]}>
+          <View style={styles.infoSection}>
+            <Pressable
+              onPress={() => sheetRef.current.snapTo(0)}
+              style={styles.avatarFrame}>
+              <SvgIcon
+                component={require('assets/icons/ProfileAvatarIcon.svg')}
+              />
+            </Pressable>
+            <View style={styles.profile}>
+              <Text
+                style={[
+                  atomicStyles.h4,
+                  atomicStyles.bold,
+                  atomicStyles.textDark,
+                  {
+                    fontSize: 22,
+                    fontWeight: '100',
+                  },
+                ]}>
+                Vu Trong Dat
+              </Text>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.bold,
+                  atomicStyles.textBlue,
+                  {
+                    fontSize: 16,
+                    fontWeight: '100',
+                    marginTop: 5,
+                  },
+                ]}>
+                Member
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.optionSection}>
-          <View style={styles.viewContainer}>
-            <LineBlock
-              label="Thông tin tài khoản"
-              onPress={handleGoToAccountInfoScreen}
-              icon={require('assets/icons/Profile/PersonW.svg')}
-              hasDash={true}
-            />
-            <LineBlock
-              label="Vé của tôi"
-              onPress={handleGoToMyTicketScreen}
-              icon={require('assets/icons/Profile/TicketW.svg')}
-            />
+          <View style={styles.optionSection}>
+            <View style={styles.viewContainer}>
+              <LineBlock
+                label="Thông tin tài khoản"
+                onPress={handleGoToAccountInfoScreen}
+                icon={require('assets/icons/Profile/PersonW.svg')}
+                hasDash={true}
+              />
+              <LineBlock
+                label="Vé của tôi"
+                onPress={handleGoToMyTicketScreen}
+                icon={require('assets/icons/Profile/TicketW.svg')}
+              />
+            </View>
+            <View style={styles.viewContainer}>
+              <LineBlock
+                label="Cài đặt chung"
+                onPress={handleGoToGeneralSettingScreen}
+                icon={require('assets/icons/Profile/SettingW.svg')}
+                hasDash={true}
+              />
+              <LineBlock
+                label="Cập nhật"
+                onPress={handleGoToUpdateAppScreen}
+                icon={require('assets/icons/Profile/UpdateW.svg')}
+              />
+            </View>
+            <View style={styles.viewContainer}>
+              <LineBlock
+                label="Trợ giúp và phản hồi"
+                onPress={handleGoToHelperScreen}
+                icon={require('assets/icons/Profile/HelpW.svg')}
+                hasDash={true}
+              />
+              <LineBlock
+                label="Thông tin"
+                onPress={handleGoToInformationScreen}
+                icon={require('assets/icons/Profile/InfoW.svg')}
+              />
+            </View>
           </View>
-          <View style={styles.viewContainer}>
-            <LineBlock
-              label="Cài đặt chung"
-              onPress={handleGoToGeneralSettingScreen}
-              icon={require('assets/icons/Profile/SettingW.svg')}
-              hasDash={true}
-            />
-            <LineBlock
-              label="Cập nhật"
-              onPress={handleGoToUpdateAppScreen}
-              icon={require('assets/icons/Profile/UpdateW.svg')}
-            />
-          </View>
-          <View style={styles.viewContainer}>
-            <LineBlock
-              label="Trợ giúp và phản hồi"
-              onPress={handleGoToHelperScreen}
-              icon={require('assets/icons/Profile/HelpW.svg')}
-              hasDash={true}
-            />
-            <LineBlock
-              label="Thông tin"
-              onPress={handleGoToInformationScreen}
-              icon={require('assets/icons/Profile/InfoW.svg')}
-            />
-          </View>
-        </View>
-        <MainTabBar navigation={navigation} route={route} />
-      </SafeAreaView>
+          <MainTabBar navigation={navigation} route={route} />
+        </SafeAreaView>
+      </Animated.View>
     </>
   );
 };

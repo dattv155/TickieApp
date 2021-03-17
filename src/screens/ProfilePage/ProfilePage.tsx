@@ -1,6 +1,6 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Pressable, SafeAreaView, Text, View} from 'react-native';
 import styles from './ProfilePage.scss';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -14,6 +14,7 @@ import GeneralSettingScreen from 'src/screens/GeneralSettingScreen/GeneralSettin
 import UpdateAppScreen from 'src/screens/UpdateAppScreen/UpdateAppScreen';
 import HelperScreen from 'src/screens/HelperScreen/HelperScreen';
 import InformationScreen from 'src/screens/InformationScreen/InformationScreen';
+import TestScreen from 'src/screens/TestScreen/TestScreen';
 
 /**
  * File: ProfilePage.tsx
@@ -52,15 +53,19 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
     navigation.navigate(InformationScreen.displayName);
   }, [navigation]);
 
+  const handleGoToTestScreen = React.useCallback(() => {
+    navigation.navigate(TestScreen.displayName);
+  }, [navigation]);
+
   return (
     <>
       <SafeAreaView style={[styles.container, styles.screenContainer]}>
         <View style={styles.infoSection}>
-          <View style={styles.avatarFrame}>
+          <Pressable onPress={handleGoToTestScreen} style={styles.avatarFrame}>
             <SvgIcon
               component={require('assets/icons/ProfileAvatarIcon.svg')}
             />
-          </View>
+          </Pressable>
           <View style={styles.profile}>
             <Text
               style={[

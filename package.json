@@ -57,6 +57,7 @@
     "react-native-text-gradient": "^0.1.7",
     "react-native-vector-icons": "^8.1.0",
     "reactn": "^2.2.7",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.6",
     "yup": "^0.32.9"

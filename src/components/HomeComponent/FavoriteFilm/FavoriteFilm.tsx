@@ -1,21 +1,21 @@
 import React, { FC, PropsWithChildren, ReactElement } from 'react';
 import nameof from 'ts-nameof.macro';
-import styles from './AvailableFilm.scss';
+import styles from './FavoriteFilm.scss';
 import {useState} from 'react';
 import {View, Text, FlatList, Image, Dimensions} from 'react-native';
 import {atomicStyles} from '../../../styles';
-import { useTranslation } from 'react-i18next/';
+import { useTranslation } from 'react-i18next';
 /**
- * File: AvailableFilm.tsx
+ * File: FavoriteFilm.tsx
  * @created 2021-03-16 20:30:56
  * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
- * @type {FC<PropsWithChildren<AvailableFilmProps>>}
+ * @type {FC<PropsWithChildren<FavoriteFilmProps>>}
  */
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
-const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
-  props: PropsWithChildren<AvailableFilmProps>,
+const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
+  props: PropsWithChildren<FavoriteFilmProps>,
 ): ReactElement => {
   const [list, setList]= useState([
     {
@@ -48,7 +48,7 @@ const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
     <View style={styles.mainComponent}> 
         <View>
           <Text style={[atomicStyles.bold, styles.header]}>
-            {translate("homeScreen.available")}
+            {translate("homeScreen.favorite")}
           </Text>
         </View>
         <FlatList
@@ -76,20 +76,20 @@ const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
   );
 };
 
-export interface AvailableFilmProps {
+export interface FavoriteFilmProps {
   //
 }
 
-AvailableFilm.defaultProps = {
+FavoriteFilm.defaultProps = {
   //
 };
 
-AvailableFilm.propTypes = {
+FavoriteFilm.propTypes = {
   //
 };
 
-AvailableFilm.displayName = nameof(AvailableFilm);
+FavoriteFilm.displayName = nameof(FavoriteFilm);
 
-export default React.memo(AvailableFilm);
+export default React.memo(FavoriteFilm);
 
 

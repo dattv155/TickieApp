@@ -5,6 +5,7 @@
  */
  @import '../../../styles/atomic-styles';
  @import '../../../styles/variables.scss';
+
 .mainComponent {
     height: auto;
     width: auto;
@@ -25,6 +26,7 @@
     padding: 0px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 100px;
 }
 .text1 {
     padding: 7px 0px 0px 0px;
@@ -32,7 +34,7 @@
     font-weight: bold;
     font-size: 15px;
     line-height: 15px;
-    color: black
+    color: black;
 }
 .text2 {
     padding: 5px 0px 0px 0px;

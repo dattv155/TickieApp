@@ -6,6 +6,8 @@ import {scrollInterpolator, animatedStyles} from '../CategoryComponent/utils/ani
 
 // import SvgComponent from './SvgComponent'
 import styles from './CategoryComponent.scss';
+import {atomicStyles} from '../../../styles';
+import { useTranslation } from 'react-i18next/';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -14,6 +16,7 @@ const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
 
 export default function CategoryComponent(props) {
   const [carousel, setCarousel]= useState();
+  const [translate] = useTranslation();
   const [list, setList]= useState([
     {
       id: 1,
@@ -56,7 +59,7 @@ export default function CategoryComponent(props) {
 
   return (
     <View>
-      <Text style={styles.header}>Mới phát hành</Text> 
+      <Text style={[atomicStyles.bold,styles.header]}>{translate("homeScreen.latest")}</Text> 
     
       <Carousel
         ref={(c) => (setCarousel(c))}
@@ -73,7 +76,7 @@ export default function CategoryComponent(props) {
       />
       <View style={styles.info}>
         <Text style={styles.headerText}>{list[index].name}</Text> 
-        <Text style={styles.release}>{"Ngày ra mắt: "+`${list[index].release}`}</Text>
+        <Text style={styles.release}>{translate("homeScreen.releaseDay") +": " + `${list[index].release}`}</Text>
       </View>
       <View style={styles.line}/>
     </View>

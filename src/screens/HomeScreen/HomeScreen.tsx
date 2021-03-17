@@ -8,7 +8,8 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
 import CategoryComponent from '../../components/HomeComponent/CategoryComponent/CategoryComponent';
 import AvailableFilm from '../../components/HomeComponent/AvailableFilm/AvailableFilm';
-import ABCXYZ from '../../components/HomeComponent/ABCXYZ/ABCXYZ';
+import FavoriteFilm from '../../components/HomeComponent/FavoriteFilm/FavoriteFilm';
+import UpcomingFilm from '../../components/HomeComponent/UpcomingFilm/UpcomingFilm';
 /**
  * File: HomeScreen.tsx
  * @created 2021-03-09 16:40:00
@@ -29,8 +30,8 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
         <ScrollView>
           <CategoryComponent/>  
           <AvailableFilm/>
-          <AvailableFilm/>
-          <AvailableFilm/>
+          <UpcomingFilm/>
+          <FavoriteFilm/>
         </ScrollView>
         <MainTabBar navigation={navigation} route={route} />
       </SafeAreaView>

@@ -1,0 +1,64 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-16 16:43:08
+ * @author tannt <ngotientan811@gmail.com>
+ */
+
+@import "src/styles/atomic-styles";
+
+.modalView {
+  @extend .bgWhite;
+  @extend .p16px;
+  @extend .flexColumn;
+  @extend .justifyContentBetween;
+  @extend .alignItemsCenter;
+  width: 85%;
+  border-radius: $border-radius;
+}
+
+.content {
+  @extend .flexColumn;
+  @extend .justifyContentCenter;
+  width: 100%;
+}
+
+.contentWithoutTitle {
+  @extend .flexColumn;
+  @extend .justifyContentCenter;
+  width: 100%;
+}
+
+.buttonModal {
+  width: 100%;
+  @extend .flexRow;
+  @extend .justifyContentBetween;
+  @extend .alignItemsCenter;
+}
+
+.buttonPress {
+  @extend .mt16px;
+  @extend .flexRow;
+  @extend .justifyContentCenter;
+  @extend .alignItemsCenter;
+  padding: 10px 16px;
+  width: 48%;
+  border-radius: 20px;
+  border-color: map-get($colors, "primary");
+  box-shadow: 0 0 5px rgba(188, 44, 61, 0.5);
+}
+
+.buttonPressGradient {
+  @extend .mt16px;
+  @extend .flexRow;
+  @extend .justifyContentCenter;
+  @extend .alignItemsCenter;
+  padding: 10px 16px;
+  width: 90%;
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(188, 44, 61, 0.5);
+}
+
+.buttonText {
+  @extend .h6;
+}
+

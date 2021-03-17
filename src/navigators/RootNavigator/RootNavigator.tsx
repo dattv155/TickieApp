@@ -19,6 +19,10 @@ import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
 // import {forNoAnimation} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
 import {StackCardInterpolatedStyle} from '@react-navigation/stack/src/types';
 import DetailTicketScreen from 'src/screens/DetailTicketScreen/DetailTicketScreen';
+import GeneralSettingScreen from 'src/screens/GeneralSettingScreen/GeneralSettingScreen';
+import HelperScreen from 'src/screens/HelperScreen/HelperScreen';
+import UpdateAppScreen from 'src/screens/UpdateAppScreen/UpdateAppScreen';
+import InformationScreen from 'src/screens/InformationScreen/InformationScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -107,6 +111,26 @@ const RootNavigator: FC<
       <Screen
         name={DetailTicketScreen.displayName}
         component={DetailTicketScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={GeneralSettingScreen.displayName}
+        component={GeneralSettingScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={HelperScreen.displayName}
+        component={HelperScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={UpdateAppScreen.displayName}
+        component={UpdateAppScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={InformationScreen.displayName}
+        component={InformationScreen}
         initialParams={{}}
       />
     </Navigator>

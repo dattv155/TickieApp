@@ -10,6 +10,10 @@ import {atomicStyles} from 'src/styles';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import AccountInfoScreen from 'src/screens/AccountInfoScreen/AccountInfoScreen';
 import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
+import GeneralSettingScreen from 'src/screens/GeneralSettingScreen/GeneralSettingScreen';
+import UpdateAppScreen from 'src/screens/UpdateAppScreen/UpdateAppScreen';
+import HelperScreen from 'src/screens/HelperScreen/HelperScreen';
+import InformationScreen from 'src/screens/InformationScreen/InformationScreen';
 
 /**
  * File: ProfilePage.tsx
@@ -30,6 +34,22 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
   const handleGoToMyTicketScreen = React.useCallback(() => {
     navigation.navigate(MyTicketScreen.displayName);
+  }, [navigation]);
+
+  const handleGoToGeneralSettingScreen = React.useCallback(() => {
+    navigation.navigate(GeneralSettingScreen.displayName);
+  }, [navigation]);
+
+  const handleGoToUpdateAppScreen = React.useCallback(() => {
+    navigation.navigate(UpdateAppScreen.displayName);
+  }, [navigation]);
+
+  const handleGoToHelperScreen = React.useCallback(() => {
+    navigation.navigate(HelperScreen.displayName);
+  }, [navigation]);
+
+  const handleGoToInformationScreen = React.useCallback(() => {
+    navigation.navigate(InformationScreen.displayName);
   }, [navigation]);
 
   return (
@@ -86,32 +106,32 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
           <View style={styles.viewContainer}>
             <LineBlock
               label="Cài đặt chung"
-              onPress={() => {}}
+              onPress={handleGoToGeneralSettingScreen}
               icon={require('assets/icons/Profile/SettingW.svg')}
               hasDash={true}
             />
             <LineBlock
               label="Cập nhật"
-              onPress={() => {}}
+              onPress={handleGoToUpdateAppScreen}
               icon={require('assets/icons/Profile/UpdateW.svg')}
             />
           </View>
           <View style={styles.viewContainer}>
             <LineBlock
               label="Trợ giúp và phản hồi"
-              onPress={() => {}}
+              onPress={handleGoToHelperScreen}
               icon={require('assets/icons/Profile/HelpW.svg')}
               hasDash={true}
             />
             <LineBlock
               label="Thông tin"
-              onPress={() => {}}
+              onPress={handleGoToInformationScreen}
               icon={require('assets/icons/Profile/InfoW.svg')}
             />
           </View>
         </View>
+        <MainTabBar navigation={navigation} route={route} />
       </SafeAreaView>
-      <MainTabBar navigation={navigation} route={route} />
     </>
   );
 };

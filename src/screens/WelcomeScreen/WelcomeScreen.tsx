@@ -52,7 +52,7 @@ const WelcomeScreen: FC<PropsWithChildren<WelcomeScreenProps>> = (
           style={[
             styles.buttonStyle,
             {
-              bottom: 30,
+              bottom: '20%',
             },
           ]}
           onPress={handleGoToLoginScreen}>

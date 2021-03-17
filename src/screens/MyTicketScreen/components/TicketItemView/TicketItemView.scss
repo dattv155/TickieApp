@@ -16,6 +16,8 @@
   align-items: center;
   background-color: map-get($colors, "white");
   padding: 16px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   elevation: 4;
   border-radius: 10px;
@@ -43,4 +45,16 @@
   border-radius: 7px;
   width: 100%;
   margin-top: 10px;
+}
+
+.buttonDelete {
+  background-color: map-get($colors, "red");
+  border-radius: $border-radius;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: -10px;
+  margin-right: 20px;
+  width: 80px;
+  height: 90%;
 }

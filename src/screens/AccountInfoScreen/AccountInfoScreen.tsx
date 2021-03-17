@@ -12,6 +12,7 @@ import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import ChangePasswordProfileScreen from 'src/screens/ChangePasswordProfileScreen/ChangePasswordProfileScreen';
 // @ts-ignore
 import DatePicker from 'react-native-datepicker';
+// import DatePicker from '@react-native-community/datetimepicker';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import {Picker} from '@react-native-picker/picker';
 import Dash from 'react-native-dash';
@@ -114,6 +115,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                     setChangeDate(time);
                   }}
                 />
+
                 <SvgIcon component={require('assets/icons/ArrowDown.svg')} />
               </View>
             </View>
@@ -142,6 +144,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
               </View>
             </View>
           </View>
+
           <Dash
             dashGap={0}
             dashLength={3}

@@ -29,3 +29,57 @@
 .box {
   padding: 6px 16px;
 }
+
+.dateSexSection {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dateBox {
+  width: 100%;
+}
+
+.dateInput {
+  border: none;
+  width: 100%;
+  //padding-right: -50px;
+  margin-right: -75%;
+}
+
+.dateSection {
+  width: 75%;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.halfSplit {
+  width: 50%;
+}
+
+.dateText {
+  padding: 0;
+
+}
+
+.dateTouchBody {
+
+  width: 44%;
+  text-align: left;
+}
+
+.genderPicker {
+  width: 40%;
+  margin-left: 15%;
+}
+
+.dash {
+  opacity: 0.5;
+}
+
+.provincePicker {
+  width: 108%;
+  margin-left: -3%;
+}
+

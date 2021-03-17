@@ -6,14 +6,12 @@
  * @flow strict-local
  */
 
-import React, {FC, Suspense} from 'react';
-import TabNavigator from './navigators/TabNavigator/TabNavigator';
+import React, {FC} from 'react';
 import RootNavigator from '../src/navigators/RootNavigator/RootNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 import {navigationContainerRef} from 'src/config/navigation';
-import {AppRegistry, StatusBar} from 'react-native';
+import {StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {name as appName} from 'app.json';
 import nameof from 'ts-nameof.macro';
 
 const RootComponent: FC = () => {

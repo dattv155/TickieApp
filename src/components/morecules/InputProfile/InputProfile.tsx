@@ -28,7 +28,6 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
           secureTextEntry={secureTextEntry}
           style={[
             atomicStyles.h5,
-            atomicStyles.bold,
             styles.textStyle,
             styles.textInput,
             atomicStyles.textGray,

@@ -1,4 +1,6 @@
 
+@import '../../../styles/atomic-styles';
+
 .carouselContainer {
     margin-top: 30px;
 }
@@ -20,7 +22,7 @@ color: black;
 .release {
   padding-top: 3px;
   font-family: SVN-Gilroy;
-  color: #828282;
+  color: map-get($colors, "gray");
   font-size: 15;
   font-weight: 500;
   font-style: normal;
@@ -30,6 +32,7 @@ color: black;
   width: 80%;
   height: 2px;
   background-color: rgba(130, 130, 130, 0.25);
+  padding: 0px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -40,7 +43,7 @@ color: black;
   font-family: SVN-Gilroy;
   font-style: normal;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 30px;
   line-height: 27px;
   align-items: flex-end;
   letter-spacing: 0.02;

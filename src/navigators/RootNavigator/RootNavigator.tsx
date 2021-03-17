@@ -23,6 +23,7 @@ import GeneralSettingScreen from 'src/screens/GeneralSettingScreen/GeneralSettin
 import HelperScreen from 'src/screens/HelperScreen/HelperScreen';
 import UpdateAppScreen from 'src/screens/UpdateAppScreen/UpdateAppScreen';
 import InformationScreen from 'src/screens/InformationScreen/InformationScreen';
+import TestScreen from 'src/screens/TestScreen/TestScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -131,6 +132,11 @@ const RootNavigator: FC<
       <Screen
         name={InformationScreen.displayName}
         component={InformationScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={TestScreen.displayName}
+        component={TestScreen}
         initialParams={{}}
       />
     </Navigator>

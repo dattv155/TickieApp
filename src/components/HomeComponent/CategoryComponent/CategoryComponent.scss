@@ -1,50 +1,48 @@
 
 @import '../../../styles/atomic-styles';
 
+.textStyle {
+  font-weight: 100;
+}
+
 .carouselContainer {
     margin-top: 30px;
 }
 
 .headerText {
-font-family: Arial;
-font-style: normal;
-font-weight: bold;
-font-size: 19px;
-line-height: 19px;
-display: flex;
-letter-spacing: 0.2px;
-color: black;
+  font-size: 19px;
+  line-height: 19px;
+  display: flex;
+  letter-spacing: 0.2px;
+  color: black;
 }
+
 .info {
   padding-top: 4.5%;
   padding-left: 16.4%;
 }
 .release {
   padding-top: 3px;
-  font-family: SVN-Gilroy;
   color: map-get($colors, "gray");
   font-size: 15;
-  font-weight: 500;
-  font-style: normal;
+  font-weight: 100;
 }
 .line {
   margin-top: 27px;
-  width: 80%;
-  height: 2px;
+  width: 88%;
+  height: 1px;
   background-color: rgba(130, 130, 130, 0.25);
-  padding: 0px;
+  padding: 0;
   margin-left: auto;
   margin-right: auto;
 }
 
 .header {
-  margin: 30px 6% 0px 6%;
-  padding: 5px 0px;
-  font-family: SVN-Gilroy;
-  font-style: normal;
-  font-weight: bold;
+  margin: 30px 6% 0 6%;
+  padding: 5px 0;
   font-size: 30px;
   line-height: 27px;
   align-items: flex-end;
   letter-spacing: 0.02;
+
 }

@@ -3,16 +3,11 @@
  * @created 2021-03-09 16:40:00
  * @author TrongDatVu <trongdat1505@gmail.com>
  */
-.container {
-  flex: 1;
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
 
-}
-
-.seperatorLine {
-  height: 1px;
-  background-color: black;
-}
-
-.scrollView {
+.containerView {
+  height: 100%;
   padding-bottom: 25%;
+  padding-top: 10%;
 }

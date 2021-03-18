@@ -26,5 +26,12 @@
   "loginScreen.verifyCode": "Mã xác nhận",
   "tab.home": "Trang chủ",
   "tab.notification": "Thông báo",
-  "tab.profile": "Hồ sơ"
+  "tab.profile": "Hồ sơ",
+  "homeScreen.latest": "Mới phát hành",
+  "homeScreen.available": "Đang có tại rạp",
+  "homeScreen.upcoming": "Sắp ra mắt",
+  "homeScreen.favorite": "Yêu thích",
+  "homeScreen.releaseDay": "Ngày ra mắt",
+  "homeScreen.duration": "Độ dài"
+
 }

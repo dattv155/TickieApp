@@ -2,11 +2,14 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 // import styles from './HomeScreen.scss';
 import {useTranslation} from 'react-i18next';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, Text, View, ScrollView} from 'react-native';
 import MainTabBar from '../../components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
-
+import CategoryComponent from '../../components/HomeComponent/CategoryComponent/CategoryComponent';
+import AvailableFilm from '../../components/HomeComponent/AvailableFilm/AvailableFilm';
+import FavoriteFilm from '../../components/HomeComponent/FavoriteFilm/FavoriteFilm';
+import UpcomingFilm from '../../components/HomeComponent/UpcomingFilm/UpcomingFilm';
 /**
  * File: HomeScreen.tsx
  * @created 2021-03-09 16:40:00
@@ -24,17 +27,12 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
       <SafeAreaView style={atomicStyles.container}>
-        <View
-          style={[
-            {
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-            atomicStyles.container,
-          ]}>
-          <Text>{translate('homeScreen.title')}</Text>
-        </View>
+        <ScrollView>
+          <CategoryComponent/>  
+          <AvailableFilm/>
+          <UpcomingFilm/>
+          <FavoriteFilm/>
+        </ScrollView>
         <MainTabBar navigation={navigation} route={route} />
       </SafeAreaView>
     </>

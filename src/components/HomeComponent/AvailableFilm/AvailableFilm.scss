@@ -1,0 +1,44 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-16 20:30:56
+ * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
+ */
+ @import '../../../styles/atomic-styles';
+ @import '../../../styles/variables.scss';
+.mainComponent {
+    height: auto;
+    width: auto;
+    margin: 0px 5.8%;
+}
+.header {
+    font-size: 22px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 23px;
+    margin: 20px 0px;
+}
+.line {
+    margin-top: 4%;
+    width: 90%;
+    height: 2px;
+    background-color: map-get($colors, "line-gray");
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.text1 {
+    padding: 7px 0px 0px 0px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 15px;
+    color: black
+}
+.text2 {
+    padding: 5px 0px 0px 0px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 12px;
+    color: map-get($colors, "nobel");
+}

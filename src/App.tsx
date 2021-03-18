@@ -14,6 +14,7 @@ import {StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import nameof from 'ts-nameof.macro';
 
+
 const RootComponent: FC = () => {
   return (
     <SafeAreaProvider>

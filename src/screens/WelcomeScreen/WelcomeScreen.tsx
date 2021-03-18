@@ -33,7 +33,7 @@ const WelcomeScreen: FC<PropsWithChildren<WelcomeScreenProps>> = (
         <View style={styles.textBox}>
           <Text
             style={[
-              atomicStyles.h1,
+              // atomicStyles.h1,
               atomicStyles.bold,
               atomicStyles.textCenter,
               atomicStyles.textWhite,

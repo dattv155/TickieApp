@@ -8,6 +8,7 @@ import {scrollInterpolator, animatedStyles} from '../CategoryComponent/utils/ani
 import styles from './CategoryComponent.scss';
 import {atomicStyles} from '../../../styles';
 import { useTranslation } from 'react-i18next/';
+import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -59,8 +60,14 @@ export default function CategoryComponent(props) {
 
   return (
     <View>
-      <Text style={[atomicStyles.bold,styles.header]}>{translate("homeScreen.latest")}</Text> 
-    
+      <View style={styles.head}>
+        <Text style={[atomicStyles.bold,styles.header]}>
+          {translate("homeScreen.latest")}
+        </Text> 
+        <View style={{marginRight: '6%', marginLeft: 'auto'}}>
+        <SvgIcon component={require('../../../../assets/icons/FindIcon.svg')} />
+        </View>
+      </View>
       <Carousel
         ref={(c) => (setCarousel(c))}
         data={list}

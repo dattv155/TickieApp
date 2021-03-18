@@ -1,10 +1,9 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import {Pressable, SafeAreaView, Text, View} from 'react-native';
+import {Image, Pressable, SafeAreaView, Text, View} from 'react-native';
 import styles from './ProfilePage.scss';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
-import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 // import {useTranslation} from 'react-i18next';
 import {atomicStyles} from 'src/styles';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
@@ -17,6 +16,7 @@ import InformationScreen from 'src/screens/InformationScreen/InformationScreen';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
+import ImagePicker from 'react-native-image-crop-picker';
 
 /**
  * File: ProfilePage.tsx
@@ -58,6 +58,36 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
   const sheetRef = React.useRef(null);
   const fall = new Animated.Value<number>(1);
 
+  const [image, setImage] = React.useState(
+    'https://img.favpng.com/17/19/1/business-google-account-organization-service-png-favpng-sUuKmS4aDNRzxDKx8kJciXdFp.jpg',
+  );
+
+  const takePhotoFromCamera = () => {
+    ImagePicker.openCamera({
+      compressImageMaxWidth: 300,
+      compressImageMaxHeight: 300,
+      cropping: true,
+      compressImageQuality: 0.7,
+    }).then((image) => {
+      console.log(image);
+      setImage(image.path);
+      sheetRef.current.snapTo(1);
+    });
+  };
+
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+      compressImageQuality: 0.7,
+    }).then((image) => {
+      console.log(image);
+      setImage(image.path);
+      sheetRef.current.snapTo(1);
+    });
+  };
+
   const renderContent = () => (
     <SafeAreaView style={styles.bottomBoxContainer}>
       <View style={{alignItems: 'center'}}>
@@ -68,11 +98,8 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
           Chọn ảnh Profile
         </Text>
       </View>
-      <ButtonMain
-        label="Chọn từ Thư viện"
-        onPress={() => sheetRef.current.snapTo(1)}
-      />
-      <ButtonMain label="Chụp Ảnh" onPress={() => sheetRef.current.snapTo(1)} />
+      <ButtonMain label="Chọn từ Thư viện" onPress={choosePhotoFromLibrary} />
+      <ButtonMain label="Chụp Ảnh" onPress={takePhotoFromCamera} />
 
       <Pressable
         style={styles.buttonStyle}
@@ -105,86 +132,91 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
         style={{
           opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
         }}>
-        <SafeAreaView style={[styles.container, styles.screenContainer]}>
-          <View style={styles.infoSection}>
-            <Pressable
-              onPress={() => sheetRef.current.snapTo(0)}
-              style={styles.avatarFrame}>
-              <SvgIcon
-                component={require('assets/icons/ProfileAvatarIcon.svg')}
-              />
-            </Pressable>
-            <View style={styles.profile}>
-              <Text
-                style={[
-                  atomicStyles.h4,
-                  atomicStyles.bold,
-                  atomicStyles.textDark,
-                  {
-                    fontSize: 22,
-                    fontWeight: '100',
-                  },
-                ]}>
-                Vu Trong Dat
-              </Text>
-              <Text
-                style={[
-                  atomicStyles.h6,
-                  atomicStyles.bold,
-                  atomicStyles.textBlue,
-                  {
-                    fontSize: 16,
-                    fontWeight: '100',
-                    marginTop: 5,
-                  },
-                ]}>
-                Member
-              </Text>
+        <Pressable onPress={() => sheetRef.current.snapTo(1)}>
+          <SafeAreaView style={[styles.container, styles.screenContainer]}>
+            <View style={styles.infoSection}>
+              <Pressable
+                onPress={() => sheetRef.current.snapTo(0)}
+                style={styles.avatarFrame}>
+                <Image
+                  source={{
+                    uri: image,
+                  }}
+                  style={styles.avatarImage}
+                />
+              </Pressable>
+              <View style={styles.profile}>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    atomicStyles.textDark,
+                    {
+                      fontSize: 22,
+                      fontWeight: '100',
+                    },
+                  ]}>
+                  Vu Trong Dat
+                </Text>
+                <Text
+                  style={[
+                    atomicStyles.h6,
+                    atomicStyles.bold,
+                    atomicStyles.textBlue,
+                    {
+                      fontSize: 16,
+                      fontWeight: '100',
+                      marginTop: 5,
+                    },
+                  ]}>
+                  Member
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.optionSection}>
-            <View style={styles.viewContainer}>
-              <LineBlock
-                label="Thông tin tài khoản"
-                onPress={handleGoToAccountInfoScreen}
-                icon={require('assets/icons/Profile/PersonW.svg')}
-                hasDash={true}
-              />
-              <LineBlock
-                label="Vé của tôi"
-                onPress={handleGoToMyTicketScreen}
-                icon={require('assets/icons/Profile/TicketW.svg')}
-              />
+            <View style={styles.optionSection}>
+              <View style={styles.viewContainer}>
+                <LineBlock
+                  label="Thông tin tài khoản"
+                  onPress={handleGoToAccountInfoScreen}
+                  icon={require('assets/icons/Profile/PersonW.svg')}
+                  hasDash={true}
+                />
+                <LineBlock
+                  label="Vé của tôi"
+                  onPress={handleGoToMyTicketScreen}
+                  icon={require('assets/icons/Profile/TicketW.svg')}
+                />
+              </View>
+              <View style={styles.viewContainer}>
+                <LineBlock
+                  label="Cài đặt chung"
+                  onPress={handleGoToGeneralSettingScreen}
+                  icon={require('assets/icons/Profile/SettingW.svg')}
+                  hasDash={true}
+                />
+                <LineBlock
+                  label="Cập nhật"
+                  onPress={handleGoToUpdateAppScreen}
+                  icon={require('assets/icons/Profile/UpdateW.svg')}
+                />
+              </View>
+              <View style={styles.viewContainer}>
+                <LineBlock
+                  label="Trợ giúp và phản hồi"
+                  onPress={handleGoToHelperScreen}
+                  icon={require('assets/icons/Profile/HelpW.svg')}
+                  hasDash={true}
+                />
+                <LineBlock
+                  label="Thông tin"
+                  onPress={handleGoToInformationScreen}
+                  icon={require('assets/icons/Profile/InfoW.svg')}
+                />
+              </View>
             </View>
-            <View style={styles.viewContainer}>
-              <LineBlock
-                label="Cài đặt chung"
-                onPress={handleGoToGeneralSettingScreen}
-                icon={require('assets/icons/Profile/SettingW.svg')}
-                hasDash={true}
-              />
-              <LineBlock
-                label="Cập nhật"
-                onPress={handleGoToUpdateAppScreen}
-                icon={require('assets/icons/Profile/UpdateW.svg')}
-              />
-            </View>
-            <View style={styles.viewContainer}>
-              <LineBlock
-                label="Trợ giúp và phản hồi"
-                onPress={handleGoToHelperScreen}
-                icon={require('assets/icons/Profile/HelpW.svg')}
-                hasDash={true}
-              />
-              <LineBlock
-                label="Thông tin"
-                onPress={handleGoToInformationScreen}
-                icon={require('assets/icons/Profile/InfoW.svg')}
-              />
-            </View>
-          </View>
-          <MainTabBar navigation={navigation} route={route} />
-        </SafeAreaView>
+            <MainTabBar navigation={navigation} route={route} />
+          </SafeAreaView>
+        </Pressable>
       </Animated.View>
     </>
   );

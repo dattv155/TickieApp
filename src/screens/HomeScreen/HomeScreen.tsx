@@ -1,12 +1,15 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-// import styles from './HomeScreen.scss';
-import {useTranslation} from 'react-i18next';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
-import MainTabBar from '../../components/organisms/MainTabBar/MainTabBar';
+import styles from './HomeScreen.scss';
+// import {useTranslation} from 'react-i18next';
+import {SafeAreaView, StatusBar, ScrollView, View} from 'react-native';
+import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
-
+import CategoryComponent from 'src/components/HomeComponent/CategoryComponent/CategoryComponent';
+import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableFilm';
+import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
+import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
 /**
  * File: HomeScreen.tsx
  * @created 2021-03-09 16:40:00
@@ -18,23 +21,20 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   props: PropsWithChildren<HomeScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-  const [translate] = useTranslation();
+  // const [translate] = useTranslation();
 
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
-      <SafeAreaView style={atomicStyles.container}>
-        <View
-          style={[
-            {
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-            atomicStyles.container,
-          ]}>
-          <Text>{translate('homeScreen.title')}</Text>
-        </View>
+      <SafeAreaView style={[atomicStyles.container]}>
+        <ScrollView>
+          <View style={[styles.containerView]}>
+            <CategoryComponent />
+            <AvailableFilm />
+            <UpcomingFilm />
+            <FavoriteFilm />
+          </View>
+        </ScrollView>
         <MainTabBar navigation={navigation} route={route} />
       </SafeAreaView>
     </>

@@ -7,6 +7,8 @@ import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import {StackScreenProps} from '@react-navigation/stack';
 
+import firestore from '@react-native-firebase/firestore';
+
 /**
  * File: GeneralSettingScreen.tsx
  * @created 2021-03-16 16:16:30
@@ -17,6 +19,9 @@ const GeneralSettingScreen: FC<PropsWithChildren<GeneralSettingScreenProps>> = (
   props: PropsWithChildren<GeneralSettingScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  // const usersCollection = firestore().collection('users');
+
   return (
     <DefaultLayout
       navigation={navigation}

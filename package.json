@@ -17,6 +17,7 @@
     "adb:reverse": "adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/datetimepicker": "^3.3.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-picker/picker": "^1.9.12",

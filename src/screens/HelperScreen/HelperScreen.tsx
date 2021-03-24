@@ -6,6 +6,8 @@ import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/He
 import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
+// @ts-ignore
+import {DatePicker} from 'react-native-wheel-pick';
 
 /**
  * File: HelperScreen.tsx
@@ -39,6 +41,15 @@ const HelperScreen: FC<PropsWithChildren<HelperScreenProps>> = (
       <View>
         <Text>ABC</Text>
       </View>
+      <DatePicker
+        style={{
+          backgroundColor: 'white',
+          height: 215,
+        }}
+        date={new Date()}
+        // android not support width
+        onDateChange={() => {}}
+      />
     </DefaultLayout>
   );
 };

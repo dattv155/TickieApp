@@ -98,3 +98,12 @@
   border-radius: 8px;
 
 }
+
+.swipeDown {
+  height: 5px;
+  width: 20%;
+  border-radius: 10px;
+  background: map-get($colors, "line-gray");
+  margin-bottom: 15px;
+  margin-top: 5px;
+}

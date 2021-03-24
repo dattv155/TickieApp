@@ -17,8 +17,12 @@
     "adb:reverse": "adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/datetimepicker": "^3.3.0",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-firebase/app": "^11.1.2",
+    "@react-native-firebase/firestore": "^11.1.2",
+    "@react-native-firebase/storage": "^11.1.2",
     "@react-native-picker/picker": "^1.9.12",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/native": "^5.9.3",
@@ -32,6 +36,7 @@
     "@types/react-native-snap-carousel": "^3.8.2",
     "@types/yup": "^0.29.11",
     "axios": "^0.21.1",
+    "firebase": "^8.3.1",
     "i18next": "^19.9.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",

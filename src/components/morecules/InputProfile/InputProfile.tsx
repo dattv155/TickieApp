@@ -16,6 +16,32 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
   props: PropsWithChildren<InputProfileProps>,
 ): ReactElement => {
   const {label, placeholder, keyboardType, secureTextEntry} = props;
+
+  const [input, setInput] = React.useState(placeholder);
+
+  const [show, setShow] = React.useState(true);
+
+  const handleHideClearButton = React.useCallback(() => {
+    setShow(false);
+  }, [setShow]);
+
+  const handleShowClearButton = React.useCallback(() => {
+    setShow(true);
+  }, [setShow]);
+
+  const handleChangeText = React.useCallback(
+    (text) => {
+      setInput(text);
+      handleShowClearButton();
+    },
+    [handleShowClearButton, setInput],
+  );
+
+  const handleDeleteInput = React.useCallback(() => {
+    setInput('');
+    handleHideClearButton();
+  }, [handleHideClearButton, setInput]);
+
   return (
     <View style={[atomicStyles.mb16px]}>
       <Text style={[atomicStyles.h5, atomicStyles.bold, styles.textStyle]}>
@@ -24,7 +50,8 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
       <View style={[atomicStyles.flexRow, atomicStyles.alignItemsCenter]}>
         <TextInput
           keyboardType={keyboardType}
-          defaultValue={placeholder}
+          defaultValue={input}
+          onChangeText={handleChangeText}
           secureTextEntry={secureTextEntry}
           style={[
             atomicStyles.h5,
@@ -33,9 +60,13 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
             atomicStyles.textGray,
           ]}
         />
-        <Pressable>
-          <SvgIcon component={require('assets/icons/SmallRemoveIcon.svg')} />
-        </Pressable>
+        {show ? (
+          <Pressable onPress={handleDeleteInput}>
+            <SvgIcon component={require('assets/icons/SmallRemoveIcon.svg')} />
+          </Pressable>
+        ) : (
+          <View />
+        )}
       </View>
 
       <Dash

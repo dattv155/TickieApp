@@ -6822,7 +6822,7 @@ mockdate@^3.0.2:
   resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.3.tgz#944e655bde9d1d35046601adb00aeb09c98a5ee7"
   integrity sha512-4h01Zjz0Cm57mQsEzaoZtjGzqZk15YS4yujc5k4xGGNQYaxlaJSaNZ20FkFhFWjv6YB7ZyU8+UioB8l6Fw892Q==
 
-moment@^2.22.0, moment@^2.27.0, moment@^2.29.1:
+moment@^2.19.1, moment@^2.22.0, moment@^2.27.0, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -7882,6 +7882,13 @@ react-native-vector-icons@^8.1.0:
     lodash.template "^4.5.0"
     prop-types "^15.7.2"
     yargs "^16.1.1"
+
+react-native-wheel-pick@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-wheel-pick/-/react-native-wheel-pick-1.1.0.tgz#9607ee1aca85f0de8bd840bf913393eae480a889"
+  integrity sha512-zk6FIx6t930jr4BWR8A49vMxiX7SUqn+IULZ67m4ulycb4Ixc02SnBAx/lBpk/LPLpFT0+SKzGXhLZShiM74Ww==
+  dependencies:
+    moment "^2.19.1"
 
 react-native@0.63.4:
   version "0.63.4"

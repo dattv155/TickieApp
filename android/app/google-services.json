@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "882927407357",
+    "project_id": "tickie-app",
+    "storage_bucket": "tickie-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882927407357:android:c57d4399bf8b18cea72e94",
+        "android_client_info": {
+          "package_name": "com.tickieapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882927407357-42g1r9e2e49p1pke081lfn3crpkdvgha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANRRDKPwFrrVfZV8zzlrbZK1mu2AcwF6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882927407357-42g1r9e2e49p1pke081lfn3crpkdvgha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

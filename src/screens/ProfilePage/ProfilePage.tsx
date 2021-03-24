@@ -1,6 +1,15 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import {Image, Pressable, SafeAreaView, Text, View} from 'react-native';
+import {
+  // Alert,
+  // ActivityIndicator,
+  Image,
+  Platform,
+  Pressable,
+  SafeAreaView,
+  Text,
+  View,
+} from 'react-native';
 import styles from './ProfilePage.scss';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -17,6 +26,8 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import ImagePicker from 'react-native-image-crop-picker';
+
+import storage from '@react-native-firebase/storage';
 
 /**
  * File: ProfilePage.tsx
@@ -56,22 +67,26 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
   }, [navigation]);
 
   const sheetRef = React.useRef(null);
+  const confirmRef = React.useRef(null);
   const fall = new Animated.Value<number>(1);
 
-  const [image, setImage] = React.useState(
-    'https://img.favpng.com/17/19/1/business-google-account-organization-service-png-favpng-sUuKmS4aDNRzxDKx8kJciXdFp.jpg',
-  );
+  const [image, setImage] = React.useState(null);
+  const [avatar, setAvatar] = React.useState(null);
+  const [uploading, setUploading] = React.useState(false);
+  const [transferred, setTransferred] = React.useState(0);
 
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
       compressImageMaxWidth: 300,
       compressImageMaxHeight: 300,
       cropping: true,
-      compressImageQuality: 0.7,
+      compressImageQuality: 1,
     }).then((image) => {
       console.log(image);
-      setImage(image.path);
+      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+      setImage(imageUri);
       sheetRef.current.snapTo(1);
+      confirmRef.current.snapTo(0);
     });
   };
 
@@ -80,17 +95,20 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       width: 300,
       height: 300,
       cropping: true,
-      compressImageQuality: 0.7,
+      compressImageQuality: 1,
     }).then((image) => {
       console.log(image);
-      setImage(image.path);
+      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+      setImage(imageUri);
       sheetRef.current.snapTo(1);
+      confirmRef.current.snapTo(0);
     });
   };
 
   const renderContent = () => (
     <SafeAreaView style={styles.bottomBoxContainer}>
       <View style={{alignItems: 'center'}}>
+        <View style={styles.swipeDown} />
         <Text style={[atomicStyles.h3, atomicStyles.bold, styles.textStyle]}>
           Tải ảnh lên
         </Text>
@@ -100,10 +118,30 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       </View>
       <ButtonMain label="Chọn từ Thư viện" onPress={choosePhotoFromLibrary} />
       <ButtonMain label="Chụp Ảnh" onPress={takePhotoFromCamera} />
+    </SafeAreaView>
+  );
 
+  const renderConfirm = () => (
+    <SafeAreaView style={styles.bottomBoxContainer}>
+      <View style={{alignItems: 'center'}}>
+        <View style={styles.swipeDown} />
+        <Text style={[atomicStyles.h3, atomicStyles.bold, styles.textStyle]}>
+          Xác nhận
+        </Text>
+        <Text style={[atomicStyles.h5, styles.textStyle]}>Thay đổi Avatar</Text>
+      </View>
+      <ButtonMain
+        label="Đồng ý"
+        onPress={() => {
+          uploadImage();
+          confirmRef.current.snapTo(1);
+        }}
+      />
       <Pressable
         style={styles.buttonStyle}
-        onPress={() => sheetRef.current.snapTo(1)}>
+        onPress={() => {
+          confirmRef.current.snapTo(1);
+        }}>
         <Text
           style={[
             atomicStyles.h5,
@@ -111,23 +149,79 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
             styles.textStyle,
             atomicStyles.textError,
           ]}>
-          Thoát
+          Hủy bỏ
         </Text>
       </Pressable>
     </SafeAreaView>
   );
 
+  const uploadImage = async () => {
+    if (image == null) {
+      return null;
+    }
+    const uploadUri = image;
+    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+
+    // Add timestamp to File Name
+    const extension = filename.split('.').pop();
+    const name = filename.split('.').slice(0, -1).join('.');
+    filename = name + Date.now() + '.' + extension;
+
+    setUploading(true);
+    setTransferred(0);
+
+    const storageRef = storage().ref(`photos/${filename}`);
+    const task = storageRef.putFile(uploadUri);
+
+    // Set transferred state
+    task.on('state_changed', (taskSnapshot) => {
+      console.log(
+        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}.`,
+      );
+
+      setTransferred(
+        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
+          100,
+      );
+    });
+
+    try {
+      await task;
+
+      const url = await storageRef.getDownloadURL();
+
+      setUploading(false);
+      setImage(url);
+      setAvatar(url);
+      return url;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  };
+
   return (
     <>
       <BottomSheet
+        ref={confirmRef}
+        snapPoints={[250, 0, 0]}
+        initialSnap={1}
+        renderHeader={renderConfirm}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+        enabledContentTapInteraction={false}
+      />
+
+      <BottomSheet
         ref={sheetRef}
-        snapPoints={[300, 0, 0]}
+        snapPoints={[250, 0, 0]}
         initialSnap={1}
         renderHeader={renderContent}
         callbackNode={fall}
         enabledGestureInteraction={true}
         enabledContentTapInteraction={false}
       />
+
       <Animated.View
         style={{
           opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
@@ -140,7 +234,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                 style={styles.avatarFrame}>
                 <Image
                   source={{
-                    uri: image,
+                    uri: avatar,
                   }}
                   style={styles.avatarImage}
                 />

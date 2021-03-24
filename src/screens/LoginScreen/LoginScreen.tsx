@@ -43,6 +43,13 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
     setChoosed(false);
   }, []);
 
+  const [text, setText] = React.useState('');
+
+  const handleSetText = React.useCallback(() => {
+    setText('alo');
+    console.log('set text');
+  }, [setText]);
+
   const signInSection = () => {
     return (
       <SafeAreaView style={styles.screenContainer}>
@@ -211,7 +218,10 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
         </Pressable>
         <ButtonMain
           label={translate('loginScreen.login')}
-          onPress={handleGoToHomeScreen}
+          onPress={() => {
+            handleSetText();
+            handleGoToHomeScreen;
+          }}
         />
         <ButtonLink
           label={translate('loginScreen.loginFB')}

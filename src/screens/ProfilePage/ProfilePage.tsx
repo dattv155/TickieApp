@@ -67,9 +67,11 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
   }, [navigation]);
 
   const sheetRef = React.useRef(null);
+  const confirmRef = React.useRef(null);
   const fall = new Animated.Value<number>(1);
 
   const [image, setImage] = React.useState(null);
+  const [avatar, setAvatar] = React.useState(null);
   const [uploading, setUploading] = React.useState(false);
   const [transferred, setTransferred] = React.useState(0);
 
@@ -84,6 +86,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
       sheetRef.current.snapTo(1);
+      confirmRef.current.snapTo(0);
     });
   };
 
@@ -98,6 +101,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
       sheetRef.current.snapTo(1);
+      confirmRef.current.snapTo(0);
     });
   };
 
@@ -114,6 +118,40 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       </View>
       <ButtonMain label="Chọn từ Thư viện" onPress={choosePhotoFromLibrary} />
       <ButtonMain label="Chụp Ảnh" onPress={takePhotoFromCamera} />
+    </SafeAreaView>
+  );
+
+  const renderConfirm = () => (
+    <SafeAreaView style={styles.bottomBoxContainer}>
+      <View style={{alignItems: 'center'}}>
+        <View style={styles.swipeDown} />
+        <Text style={[atomicStyles.h3, atomicStyles.bold, styles.textStyle]}>
+          Xác nhận
+        </Text>
+        <Text style={[atomicStyles.h5, styles.textStyle]}>Thay đổi Avatar</Text>
+      </View>
+      <ButtonMain
+        label="Đồng ý"
+        onPress={() => {
+          uploadImage();
+          confirmRef.current.snapTo(1);
+        }}
+      />
+      <Pressable
+        style={styles.buttonStyle}
+        onPress={() => {
+          confirmRef.current.snapTo(1);
+        }}>
+        <Text
+          style={[
+            atomicStyles.h5,
+            atomicStyles.bold,
+            styles.textStyle,
+            atomicStyles.textError,
+          ]}>
+          Hủy bỏ
+        </Text>
+      </Pressable>
     </SafeAreaView>
   );
 
@@ -154,6 +192,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
       setUploading(false);
       setImage(url);
+      setAvatar(url);
       return url;
     } catch (e) {
       console.log(e);
@@ -163,6 +202,16 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
   return (
     <>
+      <BottomSheet
+        ref={confirmRef}
+        snapPoints={[250, 0, 0]}
+        initialSnap={1}
+        renderHeader={renderConfirm}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+        enabledContentTapInteraction={false}
+      />
+
       <BottomSheet
         ref={sheetRef}
         snapPoints={[250, 0, 0]}
@@ -185,7 +234,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                 style={styles.avatarFrame}>
                 <Image
                   source={{
-                    uri: image,
+                    uri: avatar,
                   }}
                   style={styles.avatarImage}
                 />

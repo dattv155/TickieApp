@@ -3,7 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './AccountInfoScreen.scss';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, Pressable} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
 import InputProfile from 'src/components/morecules/InputProfile/InputProfile';
@@ -11,12 +11,13 @@ import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import ChangePasswordProfileScreen from 'src/screens/ChangePasswordProfileScreen/ChangePasswordProfileScreen';
 // @ts-ignore
-import DatePicker from 'react-native-datepicker';
-// import DatePicker from '@react-native-community/datetimepicker';
+import {Picker} from 'react-native-wheel-pick';
+import DatePicker from 'react-native-date-picker';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
-import {Picker} from '@react-native-picker/picker';
 import Dash from 'react-native-dash';
 import {Provinces} from 'src/sample/provinces';
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -29,164 +30,276 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const [gender, setGender] = React.useState('Gay');
+  const [newDate, setNewDate] = React.useState(new Date());
+  const [province, setProvince] = React.useState('');
+  const [gender, setGender] = React.useState('');
 
-  const [province, setProvince] = React.useState('Hà Nội');
+  const sheetRef = React.useRef(null);
+  const provinceRef = React.useRef(null);
+  const genderRef = React.useRef(null);
+  const fall = new Animated.Value<number>(1);
+
+  const renderContent = () => (
+    <SafeAreaView style={styles.bottomBoxContainer}>
+      <View style={{alignItems: 'center'}}>
+        <View style={styles.swipeDown} />
+        <DatePicker
+          style={[
+            {
+              height: 150,
+              width: 350,
+            },
+          ]}
+          date={newDate}
+          onDateChange={(date: Date) => {
+            setNewDate(date);
+          }}
+          mode={'date'}
+        />
+      </View>
+    </SafeAreaView>
+  );
+
+  const provincePick = () => (
+    <SafeAreaView style={styles.bottomBoxContainer}>
+      <View style={{alignItems: 'center'}}>
+        <View style={styles.swipeDown} />
+        <Picker
+          style={{backgroundColor: 'white', width: 300, height: 150}}
+          selectedValue={province}
+          pickerData={Provinces.map((province: any) => province.name)}
+          onValueChange={(value: string) => {
+            setProvince(value);
+          }}
+        />
+      </View>
+    </SafeAreaView>
+  );
+
+  const genderPick = () => (
+    <SafeAreaView style={styles.bottomBoxContainer}>
+      <View style={{alignItems: 'center'}}>
+        <View style={styles.swipeDown} />
+        <Picker
+          style={{
+            backgroundColor: 'white',
+            width: 300,
+            height: 150,
+          }}
+          selectedValue={gender}
+          pickerData={['Nam', 'Nữ', 'Khác']}
+          onValueChange={(value: string) => {
+            setGender(value);
+          }}
+        />
+      </View>
+    </SafeAreaView>
+  );
 
   const handleGoToChangePasswordProfileScreen = React.useCallback(() => {
     navigation.navigate(ChangePasswordProfileScreen.displayName);
   }, [navigation]);
 
-  const [realDate, setChangeDate] = React.useState(new Date());
+  const handleOpenBottomSheet = React.useCallback(() => {
+    sheetRef.current.snapTo(0);
+  }, []);
+
+  const handleCloseBottomSheet = React.useCallback(() => {
+    sheetRef.current.snapTo(1);
+    provinceRef.current.snapTo(1);
+    genderRef.current.snapTo(1);
+  }, []);
+
+  const handleOpenProvinceChoice = React.useCallback(() => {
+    provinceRef.current.snapTo(0);
+  }, []);
+
+  const handleOpenGenderChoice = React.useCallback(() => {
+    genderRef.current.snapTo(0);
+  }, []);
 
   return (
-    <DefaultLayout
-      navigation={navigation}
-      route={route}
-      left="back-button"
-      right={<HeaderIconPlaceholder />}
-      title={
-        <Text
-          style={[
-            atomicStyles.h3,
-            atomicStyles.bold,
-            styles.textStyle,
-            atomicStyles.mt16px,
-          ]}>
-          Thông tin tài khoản
-        </Text>
-      }
-      gradient={false}
-      customHeader={false}>
-      <SafeAreaView style={styles.screenContainer}>
-        <View style={styles.viewContainer}>
-          <InputProfile
-            label="Họ và tên"
-            keyboardType="default"
-            placeholder="Vu Trong Dat"
-          />
-          <InputProfile
-            label="Số điện thoại"
-            keyboardType="number-pad"
-            placeholder="012343543534"
-          />
-          <InputProfile
-            label="Email"
-            keyboardType="email-address"
-            placeholder="account@gmail.com"
-          />
+    <>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[200, 0, 0]}
+        initialSnap={1}
+        renderHeader={renderContent}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+        enabledContentTapInteraction={false}
+      />
 
-          <View style={styles.dateSexSection}>
-            <View style={[atomicStyles.w50]}>
+      <BottomSheet
+        ref={provinceRef}
+        snapPoints={[200, 0, 0]}
+        initialSnap={1}
+        renderHeader={provincePick}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+        enabledContentTapInteraction={false}
+      />
+
+      <BottomSheet
+        ref={genderRef}
+        snapPoints={[200, 0, 0]}
+        initialSnap={1}
+        renderHeader={genderPick}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+        enabledContentTapInteraction={false}
+      />
+      <Animated.View
+        style={{
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+        }}>
+        <Pressable onPress={handleCloseBottomSheet}>
+          <DefaultLayout
+            navigation={navigation}
+            route={route}
+            left="back-button"
+            right={<HeaderIconPlaceholder />}
+            title={
               <Text
                 style={[
-                  atomicStyles.h5,
+                  atomicStyles.h3,
                   atomicStyles.bold,
                   styles.textStyle,
-                  atomicStyles.mb8px,
+                  atomicStyles.mt16px,
                 ]}>
-                Ngày sinh
+                Thông tin tài khoản
               </Text>
-              <View style={[styles.dateSection]}>
-                <DatePicker
-                  style={[{width: 200}, styles.dateBox]}
-                  date={realDate}
-                  mode="date"
-                  format="DD-MM-YYYY"
-                  androidMode="spinner"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  showIcon={false}
-                  onOpenModal={() => {}}
-                  onCloseModel={() => {}}
-                  onPressMask={() => {}}
-                  allowFontScaling={false}
-                  customStyles={{
-                    dateInput: [styles.dateInput],
-                    dateText: [
-                      styles.textStyle,
-                      atomicStyles.h5,
-                      atomicStyles.textGray,
-                      styles.dateText,
-                    ],
-                    dateTouchBody: [styles.dateTouchBody],
-                  }}
-                  onDateChange={(time: Date) => {
-                    setChangeDate(time);
-                  }}
+            }
+            gradient={false}
+            customHeader={false}>
+            <SafeAreaView style={styles.screenContainer}>
+              <View style={styles.viewContainer}>
+                <InputProfile
+                  label="Họ và tên"
+                  keyboardType="default"
+                  placeholder="Vu Trong Dat"
+                />
+                <InputProfile
+                  label="Số điện thoại"
+                  keyboardType="number-pad"
+                  placeholder="012343543534"
+                />
+                <InputProfile
+                  label="Email"
+                  keyboardType="email-address"
+                  placeholder="account@gmail.com"
                 />
 
-                <SvgIcon component={require('assets/icons/ArrowDown.svg')} />
-              </View>
-            </View>
-            <SvgIcon component={require('assets/icons/LineHorizontal.svg')} />
-            <View style={[atomicStyles.w100]}>
-              <Text
-                style={[
-                  atomicStyles.w50,
-                  atomicStyles.textRight,
-                  atomicStyles.h5,
-                  atomicStyles.bold,
-                  styles.textStyle,
-                  atomicStyles.mb4px,
-                ]}>
-                Giới tính
-              </Text>
-              <View style={[styles.genderPicker]}>
-                <Picker
-                  selectedValue={gender}
-                  style={[atomicStyles.textGray]}
-                  onValueChange={(itemValue) => setGender(itemValue)}>
-                  <Picker.Item label="Nam" value="man" />
-                  <Picker.Item label="Nữ" value="girl" />
-                  <Picker.Item label="Khác" value="other" />
-                </Picker>
-              </View>
-            </View>
-          </View>
-
-          <Dash
-            dashGap={0}
-            dashLength={3}
-            dashThickness={1}
-            style={[styles.dash, atomicStyles.mb16px]}
-            dashColor={Colors.Gray}
-          />
-
-          <View>
-            <Text
-              style={[atomicStyles.h5, atomicStyles.bold, styles.textStyle]}>
-              Khu vực
-            </Text>
-            <View style={styles.provincePicker}>
-              <Picker
-                // prompt="abcxyz"
-                selectedValue={province}
-                style={[atomicStyles.textGray]}
-                itemStyle={[atomicStyles.textBlue]}
-                onValueChange={(itemValue) => setProvince(itemValue)}>
-                {Provinces?.map((item, index) => (
-                  <Picker.Item
-                    label={item.name}
-                    value={item.slug}
-                    key={index}
+                <View style={styles.dateSexSection}>
+                  <View style={[atomicStyles.w50]}>
+                    <Text
+                      style={[
+                        atomicStyles.h5,
+                        atomicStyles.bold,
+                        styles.textStyle,
+                        atomicStyles.mb8px,
+                      ]}>
+                      Ngày sinh
+                    </Text>
+                    <Pressable onPress={handleOpenBottomSheet}>
+                      <Text
+                        style={[
+                          atomicStyles.h5,
+                          atomicStyles.bold,
+                          styles.textStyle,
+                          atomicStyles.textGray,
+                          atomicStyles.mb16px,
+                          atomicStyles.mt8px,
+                        ]}>
+                        {newDate.toLocaleDateString()}
+                      </Text>
+                    </Pressable>
+                  </View>
+                  <SvgIcon
+                    component={require('assets/icons/LineHorizontal.svg')}
                   />
-                ))}
-              </Picker>
-            </View>
-          </View>
-        </View>
-        <View style={[styles.viewContainer, styles.box]}>
-          <LineBlock
-            label="Thay đổi mật khẩu"
-            onPress={handleGoToChangePasswordProfileScreen}
-            icon={require('assets/icons/LockIcon.svg')}
-          />
-        </View>
+                  <View style={[atomicStyles.w100]}>
+                    <Text
+                      style={[
+                        atomicStyles.w50,
+                        atomicStyles.textRight,
+                        atomicStyles.h5,
+                        atomicStyles.bold,
+                        styles.textStyle,
+                        atomicStyles.mb4px,
+                      ]}>
+                      Giới tính
+                    </Text>
 
-        <ButtonMain onPress={() => {}} label="Lưu thông tin" />
-      </SafeAreaView>
-    </DefaultLayout>
+                    <Pressable onPress={handleOpenGenderChoice}>
+                      <Text
+                        style={[
+                          atomicStyles.h5,
+                          atomicStyles.bold,
+                          atomicStyles.textRight,
+                          styles.textStyle,
+                          atomicStyles.textGray,
+                          atomicStyles.mb16px,
+                          atomicStyles.mt8px,
+                          atomicStyles.w50,
+                        ]}>
+                        {gender}
+                      </Text>
+                    </Pressable>
+                  </View>
+                </View>
+
+                <Dash
+                  dashGap={0}
+                  dashLength={3}
+                  dashThickness={1}
+                  style={[styles.dash, atomicStyles.mb16px]}
+                  dashColor={Colors.Gray}
+                />
+
+                <View
+                  style={[
+                    atomicStyles.flexRow,
+                    atomicStyles.justifyContentBetween,
+                    atomicStyles.mt8px,
+                  ]}>
+                  <Text
+                    style={[
+                      atomicStyles.h5,
+                      atomicStyles.bold,
+                      styles.textStyle,
+                      atomicStyles.mb8px,
+                    ]}>
+                    Khu vực
+                  </Text>
+
+                  <Pressable onPress={handleOpenProvinceChoice}>
+                    <Text
+                      style={[
+                        atomicStyles.h5,
+                        atomicStyles.bold,
+                        styles.textStyle,
+                        atomicStyles.textGray,
+                      ]}>
+                      {province}
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={[styles.viewContainer, styles.box]}>
+                <LineBlock
+                  label="Thay đổi mật khẩu"
+                  onPress={handleGoToChangePasswordProfileScreen}
+                  icon={require('assets/icons/LockIcon.svg')}
+                />
+              </View>
+
+              <ButtonMain onPress={() => {}} label="Lưu thông tin" />
+            </SafeAreaView>
+          </DefaultLayout>
+        </Pressable>
+      </Animated.View>
+    </>
   );
 };
 

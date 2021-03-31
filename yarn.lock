@@ -6822,7 +6822,7 @@ mockdate@^3.0.2:
   resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.3.tgz#944e655bde9d1d35046601adb00aeb09c98a5ee7"
   integrity sha512-4h01Zjz0Cm57mQsEzaoZtjGzqZk15YS4yujc5k4xGGNQYaxlaJSaNZ20FkFhFWjv6YB7ZyU8+UioB8l6Fw892Q==
 
-moment@^2.22.0, moment@^2.27.0, moment@^2.29.1:
+moment@^2.19.1, moment@^2.22.0, moment@^2.27.0, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -7761,6 +7761,11 @@ react-native-datepicker@^1.7.2:
   dependencies:
     moment "^2.22.0"
 
+react-native-device-info@^8.0.7:
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.0.7.tgz#c04f5dd50a977da21305b99088c0b42b588d07f9"
+  integrity sha512-CSGosqvESXWKTfYa+6gYd3HRQOkJm6C+TSXfaipat4Q0BzUHWWNaS5M5z7x72hg6FRk25rJ4zxSmSCQvizHzzQ==
+
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz#942bbf2963bbf49fa79593600ee9d7b5dab3cfc0"
@@ -7882,6 +7887,13 @@ react-native-vector-icons@^8.1.0:
     lodash.template "^4.5.0"
     prop-types "^15.7.2"
     yargs "^16.1.1"
+
+react-native-wheel-pick@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-wheel-pick/-/react-native-wheel-pick-1.1.0.tgz#9607ee1aca85f0de8bd840bf913393eae480a889"
+  integrity sha512-zk6FIx6t930jr4BWR8A49vMxiX7SUqn+IULZ67m4ulycb4Ixc02SnBAx/lBpk/LPLpFT0+SKzGXhLZShiM74Ww==
+  dependencies:
+    moment "^2.19.1"
 
 react-native@0.63.4:
   version "0.63.4"

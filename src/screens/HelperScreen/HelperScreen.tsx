@@ -6,6 +6,8 @@ import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/He
 import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
+// @ts-ignore
+import {Picker} from 'react-native-wheel-pick';
 
 /**
  * File: HelperScreen.tsx
@@ -17,29 +19,32 @@ const HelperScreen: FC<PropsWithChildren<HelperScreenProps>> = (
   props: PropsWithChildren<HelperScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
   return (
-    <DefaultLayout
-      navigation={navigation}
-      route={route}
-      left="back-button"
-      right={<HeaderIconPlaceholder />}
-      title={
-        <Text
-          style={[
-            atomicStyles.h3,
-            atomicStyles.bold,
-            styles.textStyle,
-            atomicStyles.mt16px,
-          ]}>
-          Trợ giúp và phản hồi
-        </Text>
-      }
-      gradient={false}
-      customHeader={false}>
-      <View>
-        <Text>ABC</Text>
-      </View>
-    </DefaultLayout>
+    <>
+      <DefaultLayout
+        navigation={navigation}
+        route={route}
+        left="back-button"
+        right={<HeaderIconPlaceholder />}
+        title={
+          <Text
+            style={[
+              atomicStyles.h3,
+              atomicStyles.bold,
+              styles.textStyle,
+              atomicStyles.mt16px,
+            ]}>
+            Trợ giúp và phản hồi
+          </Text>
+        }
+        gradient={false}
+        customHeader={false}>
+        <View>
+          <Text>Press</Text>
+        </View>
+      </DefaultLayout>
+    </>
   );
 };
 

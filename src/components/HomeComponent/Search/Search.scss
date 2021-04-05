@@ -3,3 +3,79 @@
  * @created 2021-04-04 23:23:39
  * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
  */
+ @import '../../../styles/atomic-styles'; 
+ .container {
+    width: 90%;
+    margin-top: 20px;
+    align-self: center;
+    height: auto;
+    overflow: hidden;
+ }
+
+ .header {
+    text-transform: uppercase;
+    font: {
+        size: 28px;
+        weight: bold;
+    }
+    overflow: hidden;
+    height: 30px
+ }
+ .box {
+    width: 40px;
+    height: 40px;
+    background-color: map-get($colors, 'second-gray');
+    border-radius: 50px;
+    position: absolute;
+    right: 6px;
+    justify-content: center;
+    align-items: center
+}
+.search {
+    width: 100%;
+    height: 40px;
+    background-color: map-get($colors, 'second-gray');
+    border-radius: 50px;
+    padding-left: 10px;
+    color: black,
+}
+.line {
+    margin-top: 2%;
+    width: 90%;
+    height: 2px;
+    background-color: map-get($colors, 'line-gray');
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    // marginBottom: 100,
+  }
+.headContainer {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0px;
+    position: relative;
+}
+.textInput {
+    height: 49px;
+    background-color: map-get($colors, 'third-gray' );
+    border-radius: 50px;
+    padding-right: 50px;
+    padding-left: 15px;
+}
+.text1 {
+    padding: 7px 0px 0px 0px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 15px;
+    color: black
+}
+.text2 {
+    padding: 5px 0px 0px 0px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 12px;
+    color: map-get($colors, "nobel");
+}
+

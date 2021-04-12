@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './LoginInput.scss';
-import {Text, TextInput, View, ViewStyle} from 'react-native';
+import {Text, TextInput, TextInputProps, View, ViewStyle} from 'react-native';
 import {atomicStyles} from 'src/styles';
 /**
  * File: LoginInput.tsx
@@ -12,14 +12,7 @@ import {atomicStyles} from 'src/styles';
 const LoginInput: FC<PropsWithChildren<LoginInputProps>> = (
   props: PropsWithChildren<LoginInputProps>,
 ): ReactElement => {
-  const {
-    style,
-    onChange,
-    title,
-    placeholder,
-    keyboardType,
-    ...restProps
-  } = props;
+  const {style, title, placeholder, keyboardType, ...restProps} = props;
   return (
     <View style={style}>
       <Text
@@ -32,23 +25,20 @@ const LoginInput: FC<PropsWithChildren<LoginInputProps>> = (
         {title}
       </Text>
       <TextInput
+        {...restProps}
         style={[atomicStyles.h5, styles.textStyle]}
         placeholder={placeholder}
-        onChange={onChange}
         keyboardType={keyboardType}
-        {...restProps}
       />
       <View style={styles.bottomInputStyle} />
     </View>
   );
 };
 
-export interface LoginInputProps {
+export interface LoginInputProps extends TextInputProps {
   //
-  onChange?: () => void;
   title?: string;
   style?: ViewStyle;
-  restProps?: JSX.Element;
   placeholder?: string;
   keyboardType: any;
   secureTextEntry?: boolean;

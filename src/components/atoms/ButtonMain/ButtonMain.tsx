@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ButtonMain.scss';
-import {Pressable, Text} from 'react-native';
+import {Pressable, PressableProps, Text} from 'react-native';
 import {atomicStyles} from 'src/styles';
 
 /**
@@ -13,10 +13,10 @@ import {atomicStyles} from 'src/styles';
 const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
   props: PropsWithChildren<ButtonMainProps>,
 ): ReactElement => {
-  const {label, onPress} = props;
+  const {label, ...restProps} = props;
 
   return (
-    <Pressable style={styles.buttonStyle} onPress={onPress}>
+    <Pressable {...restProps} style={styles.buttonStyle}>
       <Text
         style={[
           atomicStyles.h5,
@@ -30,7 +30,7 @@ const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
   );
 };
 
-export interface ButtonMainProps {
+export interface ButtonMainProps extends PressableProps {
   //
   label?: string;
   onPress?: () => void;

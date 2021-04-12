@@ -6,8 +6,6 @@ import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/He
 import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
-// @ts-ignore
-import {Picker} from 'react-native-wheel-pick';
 
 /**
  * File: HelperScreen.tsx

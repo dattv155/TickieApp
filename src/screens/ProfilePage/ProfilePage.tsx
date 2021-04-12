@@ -28,6 +28,7 @@ import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import storage from '@react-native-firebase/storage';
+import {logoutUser} from 'src/services/firebase-service';
 
 /**
  * File: ProfilePage.tsx
@@ -307,6 +308,12 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                   icon={require('assets/icons/Profile/InfoW.svg')}
                 />
               </View>
+
+              <ButtonMain
+                style={styles.logoutButton}
+                label={'Đăng xuất'}
+                onPress={logoutUser}
+              />
             </View>
             <MainTabBar navigation={navigation} route={route} />
           </SafeAreaView>

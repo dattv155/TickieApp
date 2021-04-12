@@ -185,6 +185,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":@react-native-firebase_auth")
     implementation project(':react-native-safe-area-context')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

@@ -1,6 +1,9 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import {CardStyleInterpolators, createStackNavigator,} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import TabNavigator from '../TabNavigator/TabNavigator';
 import ProfilePage from 'src/screens/ProfilePage/ProfilePage';

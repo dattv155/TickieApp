@@ -2,8 +2,7 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './LoginScreen.scss';
 import {StackScreenProps} from '@react-navigation/stack';
-import {SafeAreaView, View, Text, Pressable} from 'react-native';
-import HomeScreen from 'src/screens/HomeScreen/HomeScreen';
+import {Pressable, SafeAreaView, Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import ButtonLink from 'src/components/atoms/ButtonLink/ButtonLink';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
@@ -11,6 +10,8 @@ import LoginInput from 'src/components/atoms/LoginInput/LoginInput';
 import LoginHeader from 'src/components/atoms/LoginHeader/LoginHeader';
 import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswordScreen';
 import {useTranslation} from 'react-i18next';
+import {loginUser, signInUser} from 'src/services/firebase-service';
+import {emailValidator, passwordValidator} from 'src/core/utils';
 
 /**
  * File: LoginScreen.tsx
@@ -25,9 +26,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const handleGoToHomeScreen = React.useCallback(() => {
-    navigation.navigate(HomeScreen.displayName);
-  }, [navigation]);
+  const handleGoToHomeScreen = React.useCallback(() => {}, []);
 
   const handleGoToForgotPasswordScreen = React.useCallback(() => {
     navigation.navigate(ForgotPasswordScreen.displayName);
@@ -43,12 +42,71 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
     setChoosed(false);
   }, []);
 
-  const [text, setText] = React.useState('');
+  const [email, setEmail] = React.useState({value: '', error: ''});
+  const [password, setPassword] = React.useState({value: '', error: ''});
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
 
-  const handleSetText = React.useCallback(() => {
-    setText('alo');
-    console.log('set text');
-  }, [setText]);
+  const _onLoginPressed = async () => {
+    if (loading) {
+      return;
+    }
+
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+
+    if (emailError || passwordError) {
+      setEmail({...email, error: emailError});
+      setPassword({...password, error: passwordError});
+      return;
+    }
+
+    setLoading(true);
+
+    const response = await loginUser({
+      email: email.value,
+      password: password.value,
+    });
+
+    if (response.error) {
+      setError(response.error);
+    }
+
+    console.log('Log in!!!!');
+
+    setLoading(false);
+  };
+
+  const _onSignUpPressed = async () => {
+    if (loading) {
+      return;
+    }
+
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+
+    if (emailError || passwordError) {
+      setEmail({...email, error: emailError});
+      setPassword({...password, error: passwordError});
+      return;
+    }
+
+    setLoading(true);
+
+    const response = await signInUser({
+      email: email.value,
+      password: password.value,
+    });
+
+    if (response.error) {
+      setError(response.error);
+    }
+
+    console.log('Sign in!!!!');
+    setLoading(false);
+  };
+
+  // ------------SIGN UP SECTION----------------------
 
   const signInSection = () => {
     return (
@@ -99,23 +157,26 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
           <LoginInput
             style={{marginBottom: 20}}
             title={translate('loginScreen.inputEmail')}
-            onChange={() => {}}
             placeholder={translate('loginScreen.inputEmail')}
             keyboardType="email-address"
+            onChangeText={(email: string) => {
+              setEmail({value: email, error: ''});
+            }}
           />
           <LoginInput
             style={{marginBottom: 20}}
             title={translate('loginScreen.inputPassword')}
-            onChange={() => {}}
             placeholder={translate('loginScreen.inputPassword')}
             secureTextEntry={true}
             keyboardType="default"
+            onChangeText={(password: string) => {
+              setPassword({value: password, error: ''});
+            }}
           />
 
           <LoginInput
             style={{marginBottom: 10}}
             title={translate('loginScreen.reInputPassword')}
-            onChange={() => {}}
             placeholder={translate('loginScreen.reInputPassword')}
             secureTextEntry={true}
             keyboardType="default"
@@ -124,7 +185,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
 
         <ButtonMain
           label={translate('loginScreen.signup')}
-          onPress={handleGoToHomeScreen}
+          onPress={_onSignUpPressed}
         />
         <ButtonLink
           label={translate('loginScreen.signupFB')}
@@ -139,6 +200,8 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
       </SafeAreaView>
     );
   };
+
+  // ------------LOG IN SECTION----------------------
 
   const logInSection = () => {
     return (
@@ -191,16 +254,20 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
           <LoginInput
             style={{marginBottom: 40}}
             title={translate('loginScreen.inputEmail')}
-            onChange={() => {}}
             placeholder={translate('loginScreen.inputEmail')}
             keyboardType="email-address"
+            onChangeText={(email: string) => {
+              setEmail({value: email, error: ''});
+            }}
           />
           <LoginInput
             title={translate('loginScreen.inputPassword')}
-            onChange={() => {}}
             placeholder={translate('loginScreen.inputPassword')}
             secureTextEntry={true}
             keyboardType="default"
+            onChangeText={(password: string) => {
+              setPassword({value: password, error: ''});
+            }}
           />
         </View>
         <Pressable onPress={handleGoToForgotPasswordScreen}>
@@ -218,10 +285,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
         </Pressable>
         <ButtonMain
           label={translate('loginScreen.login')}
-          onPress={() => {
-            handleSetText();
-            handleGoToHomeScreen;
-          }}
+          onPress={_onLoginPressed}
         />
         <ButtonLink
           label={translate('loginScreen.loginFB')}

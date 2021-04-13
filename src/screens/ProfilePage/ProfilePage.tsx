@@ -1,15 +1,6 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import {
-  // Alert,
-  // ActivityIndicator,
-  Image,
-  Platform,
-  Pressable,
-  SafeAreaView,
-  Text,
-  View,
-} from 'react-native';
+import {Image, Platform, Pressable, SafeAreaView, Text, View,} from 'react-native';
 import styles from './ProfilePage.scss';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -26,7 +17,6 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import ImagePicker from 'react-native-image-crop-picker';
-
 import storage from '@react-native-firebase/storage';
 import {logoutUser} from 'src/services/firebase-service';
 

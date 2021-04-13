@@ -12,6 +12,7 @@ import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswor
 import {useTranslation} from 'react-i18next';
 import {loginUser, signInUser} from 'src/services/firebase-service';
 import {emailValidator, passwordValidator} from 'src/core/utils';
+import Toast from 'react-native-simple-toast';
 
 /**
  * File: LoginScreen.tsx
@@ -72,7 +73,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
       setError(response.error);
     }
 
-    console.log('Log in!!!!');
+    Toast.show(error);
 
     setLoading(false);
   };
@@ -102,7 +103,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
       setError(response.error);
     }
 
-    console.log('Sign in!!!!');
+    Toast.show(error);
     setLoading(false);
   };
 

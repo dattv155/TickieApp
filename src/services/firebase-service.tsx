@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import {AuthDetails} from '../types';
 import firestore from '@react-native-firebase/firestore';
+import React from 'react';
 
 export const logoutUser = () => {
   auth().signOut();
@@ -15,12 +16,16 @@ export const signInUser = async ({email, password}: AuthDetails) => {
           .collection('users')
           .doc(auth().currentUser.uid)
           .set({
+            uid: auth().currentUser.uid,
             fullname: '',
             email: email,
+            phoneNumber: '',
+            dateOfBirth: new Date(),
+            gender: '',
+            province: '',
             createAt: firestore.Timestamp.fromDate(new Date()),
           });
       });
-
     return {};
   } catch (error) {
     switch (error.code) {

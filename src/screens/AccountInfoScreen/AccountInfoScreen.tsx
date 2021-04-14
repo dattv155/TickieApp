@@ -3,7 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './AccountInfoScreen.scss';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
-import {View, Text, SafeAreaView, Pressable} from 'react-native';
+import {Pressable, SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
 import InputProfile from 'src/components/morecules/InputProfile/InputProfile';
@@ -18,6 +18,10 @@ import Dash from 'react-native-dash';
 import {Provinces} from 'src/sample/provinces';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import Toast from 'react-native-simple-toast';
+import {getAccount} from 'src/services/get-account';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -31,8 +35,38 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
   const {navigation, route} = props;
 
   const [newDate, setNewDate] = React.useState(new Date());
-  const [province, setProvince] = React.useState('');
-  const [gender, setGender] = React.useState('');
+
+  const [
+    email,
+    fullname,
+    phoneNumber,
+    province,
+    gender,
+    handleChangeFullname,
+    handleChangeEmail,
+    handleChangePhoneNumber,
+    handleChangeProvince,
+    handleChangeGender,
+  ] = getAccount.getAccountInfo();
+
+  const updateProfile = React.useCallback(() => {
+    firestore()
+      .collection('users')
+      .doc(auth().currentUser.uid)
+      .update({
+        email: email,
+        fullname: fullname,
+        phoneNumber: phoneNumber,
+        gender: gender,
+        province: province,
+      })
+      .then(() => {
+        Toast.show('Lưu thông tin thành công');
+      })
+      .catch((e) => {
+        Toast.show(e.toString());
+      });
+  }, [email, fullname, gender, phoneNumber, province]);
 
   const sheetRef = React.useRef(null);
   const provinceRef = React.useRef(null);
@@ -68,9 +102,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
           style={{backgroundColor: 'white', width: 300, height: 150}}
           selectedValue={province}
           pickerData={Provinces.map((province: any) => province.name)}
-          onValueChange={(value: string) => {
-            setProvince(value);
-          }}
+          onValueChange={handleChangeProvince}
         />
       </View>
     </SafeAreaView>
@@ -88,9 +120,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
           }}
           selectedValue={gender}
           pickerData={['Nam', 'Nữ', 'Khác']}
-          onValueChange={(value: string) => {
-            setGender(value);
-          }}
+          onValueChange={handleChangeGender}
         />
       </View>
     </SafeAreaView>
@@ -112,10 +142,14 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
 
   const handleOpenProvinceChoice = React.useCallback(() => {
     provinceRef.current.snapTo(0);
+    sheetRef.current.snapTo(1);
+    genderRef.current.snapTo(1);
   }, []);
 
   const handleOpenGenderChoice = React.useCallback(() => {
     genderRef.current.snapTo(0);
+    sheetRef.current.snapTo(1);
+    provinceRef.current.snapTo(1);
   }, []);
 
   return (
@@ -177,17 +211,20 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                 <InputProfile
                   label="Họ và tên"
                   keyboardType="default"
-                  placeholder="Vu Trong Dat"
+                  placeholder={fullname}
+                  onChangeText={handleChangeFullname}
                 />
                 <InputProfile
                   label="Số điện thoại"
                   keyboardType="number-pad"
-                  placeholder="012343543534"
+                  placeholder={phoneNumber}
+                  onChangeText={handleChangePhoneNumber}
                 />
                 <InputProfile
                   label="Email"
                   keyboardType="email-address"
-                  placeholder="account@gmail.com"
+                  placeholder={email}
+                  onChangeText={handleChangeEmail}
                 />
 
                 <View style={styles.dateSexSection}>
@@ -294,7 +331,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                 />
               </View>
 
-              <ButtonMain onPress={() => {}} label="Lưu thông tin" />
+              <ButtonMain onPress={updateProfile} label="Lưu thông tin" />
             </SafeAreaView>
           </DefaultLayout>
         </Pressable>

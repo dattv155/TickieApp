@@ -12,6 +12,8 @@ module.exports = {
       'error',
       'always-multiline',
     ],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
     'no-shadow': 'off',
     'no-console': 'error',
     'no-debugger': 'error',
@@ -24,5 +26,5 @@ module.exports = {
       }
     ]
   },
-
+  settings: {},
 };

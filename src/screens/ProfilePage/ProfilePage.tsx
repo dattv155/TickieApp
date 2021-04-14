@@ -1,8 +1,6 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import {
-  // Alert,
-  // ActivityIndicator,
   Image,
   Platform,
   Pressable,
@@ -26,9 +24,9 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import ImagePicker from 'react-native-image-crop-picker';
-
 import storage from '@react-native-firebase/storage';
 import {logoutUser} from 'src/services/firebase-service';
+import Toast from 'react-native-simple-toast';
 
 /**
  * File: ProfilePage.tsx
@@ -196,7 +194,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       setAvatar(url);
       return url;
     } catch (e) {
-      console.log(e);
+      Toast.show(e.toString());
       return null;
     }
   };

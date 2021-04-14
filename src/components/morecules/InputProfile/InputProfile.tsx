@@ -1,7 +1,14 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './InputProfile.scss';
-import {TextInput, View, Text, Pressable} from 'react-native';
+import {
+  KeyboardTypeOptions,
+  Pressable,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+} from 'react-native';
 import {atomicStyles, Colors} from 'src/styles';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import Dash from 'react-native-dash';
@@ -15,9 +22,13 @@ import Dash from 'react-native-dash';
 const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
   props: PropsWithChildren<InputProfileProps>,
 ): ReactElement => {
-  const {label, placeholder, keyboardType, secureTextEntry} = props;
-
-  const [input, setInput] = React.useState(placeholder);
+  const {
+    label,
+    placeholder,
+    keyboardType,
+    secureTextEntry,
+    ...restProps
+  } = props;
 
   const [show, setShow] = React.useState(true);
 
@@ -25,22 +36,9 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
     setShow(false);
   }, [setShow]);
 
-  const handleShowClearButton = React.useCallback(() => {
-    setShow(true);
-  }, [setShow]);
-
-  const handleChangeText = React.useCallback(
-    (text) => {
-      setInput(text);
-      handleShowClearButton();
-    },
-    [handleShowClearButton, setInput],
-  );
-
   const handleDeleteInput = React.useCallback(() => {
-    setInput('');
     handleHideClearButton();
-  }, [handleHideClearButton, setInput]);
+  }, [handleHideClearButton]);
 
   return (
     <View style={[atomicStyles.mb16px]}>
@@ -50,8 +48,7 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
       <View style={[atomicStyles.flexRow, atomicStyles.alignItemsCenter]}>
         <TextInput
           keyboardType={keyboardType}
-          defaultValue={input}
-          onChangeText={handleChangeText}
+          defaultValue={show ? placeholder : ''}
           secureTextEntry={secureTextEntry}
           style={[
             atomicStyles.h5,
@@ -60,6 +57,7 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
             styles.textInput,
             atomicStyles.textGray,
           ]}
+          {...restProps}
         />
         {show ? (
           <Pressable onPress={handleDeleteInput}>
@@ -81,11 +79,11 @@ const InputProfile: FC<PropsWithChildren<InputProfileProps>> = (
   );
 };
 
-export interface InputProfileProps {
+export interface InputProfileProps extends TextInputProps {
   //
   label?: string;
   placeholder?: string;
-  keyboardType?: string;
+  keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
 }
 

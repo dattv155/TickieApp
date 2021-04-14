@@ -21,7 +21,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
-import {AppUser} from 'src/models/AppUser';
+import {getAccount} from 'src/services/get-account';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -36,59 +36,18 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
 
   const [newDate, setNewDate] = React.useState(new Date());
 
-  const [userData, setUserData] = React.useState<AppUser>({});
-
-  const [province, setProvince] = React.useState<string>('');
-  const [email, setEmail] = React.useState<string>('');
-  const [gender, setGender] = React.useState<string>('');
-  const [phoneNumber, setPhoneNumber] = React.useState<string>('');
-  const [fullname, setFullname] = React.useState<string>('');
-
-  React.useEffect(() => {
-    const subscriber = firestore()
-      .collection('users')
-      .doc(auth().currentUser.uid)
-      .onSnapshot(
-        (documentSnapshot) => {
-          setUserData(documentSnapshot.data());
-          setFullname(userData.fullname);
-          setPhoneNumber(userData.phoneNumber);
-          setEmail(userData.email);
-          setGender(userData.gender);
-          setProvince(userData.province);
-        },
-        (e) => {
-          Toast.show(e);
-        },
-      );
-    return () => subscriber();
-  }, [
-    userData.email,
-    userData.fullname,
-    userData.gender,
-    userData.phoneNumber,
-    userData.province,
-  ]);
-
-  const handleChangeFullname = React.useCallback((name: string) => {
-    setFullname(name);
-  }, []);
-
-  const handleChangePhoneNumber = React.useCallback((number: string) => {
-    setPhoneNumber(number);
-  }, []);
-
-  const handleChangeEmail = React.useCallback((email: string) => {
-    setEmail(email);
-  }, []);
-
-  const handleChangeGender = React.useCallback((gender: string) => {
-    setGender(gender);
-  }, []);
-
-  const handleChangeProvince = React.useCallback((province: string) => {
-    setProvince(province);
-  }, []);
+  const [
+    email,
+    fullname,
+    phoneNumber,
+    province,
+    gender,
+    handleChangeFullname,
+    handleChangeEmail,
+    handleChangePhoneNumber,
+    handleChangeProvince,
+    handleChangeGender,
+  ] = getAccount.getAccountInfo();
 
   const updateProfile = React.useCallback(() => {
     firestore()
@@ -105,7 +64,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
         Toast.show('Lưu thông tin thành công');
       })
       .catch((e) => {
-        console.log(e);
+        Toast.show(e.toString());
       });
   }, [email, fullname, gender, phoneNumber, province]);
 

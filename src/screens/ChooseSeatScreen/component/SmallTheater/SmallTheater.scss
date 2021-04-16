@@ -1,0 +1,46 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-04-10 22:35:47
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.container {
+  padding: 0 8px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: map-get($colors, 'white');
+}
+.seatArea {
+  flex: 2;
+}
+.labelLeft {
+  align-items: center;
+  width: 18px;
+  height: 100%;
+  justify-content: space-around;
+}
+.labelRight {
+  align-items: center;
+  width: 18px;
+  height: 100%;
+  justify-content: space-around;
+}
+.labelText {
+  color: map-get($colors, 'gray');
+}
+.rowA {
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 30px;
+}
+.rowBF {
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 5px;
+  flex-wrap: wrap;
+}

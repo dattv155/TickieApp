@@ -1,0 +1,26 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-04-04 10:21:48
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.recommendArea {
+  margin-right: 13px;
+}
+.imageView {
+  width: 91px;
+  height: 138px;
+  border-radius: 14px;
+}
+.textArea {
+  margin-top: 11px;
+}
+.filmName {
+
+}
+.filmType {
+  color: map-get($colors, "gray");
+  font-weight: 500;
+}

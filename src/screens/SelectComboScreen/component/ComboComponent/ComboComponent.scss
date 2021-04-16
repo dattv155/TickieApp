@@ -1,0 +1,79 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-04-12 00:14:49
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+
+.container {
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  margin: 18px 0;
+  //background-color: map-get($colors, 'white');
+
+}
+.infoArea {
+
+}
+.name {
+
+}
+.detailText {
+  font-weight: 500;
+  width: 226px;
+}
+.description {
+
+}
+.countArea {
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+.buttonSelectNumber {
+  flex-direction: row;
+  align-items: center;
+  width: 96px;
+  height: 32px;
+  border: 0.5px solid map-get($colors, 'blue');
+  border-radius: 6px;
+}
+.costNumber {
+
+}
+.buttonCountPlus {
+  border-radius: 6px;
+  //border: 0.5px map-get($colors, 'blue');
+  height: 100%;
+  width: 33%;
+  justify-content: center;
+  align-items: center;
+  background-color: map-get($colors, 'blue');
+}
+.buttonCountMinus {
+  border-radius: 6px;
+  border: 0.5px map-get($colors, 'blue');
+  height: 100%;
+  width: 33%;
+  justify-content: center;
+  align-items: center;
+  background-color: map-get($colors, 'white');
+}
+.textMinus {
+  color: map-get($colors, 'blue');
+}
+.textPlus {
+  color: map-get($colors, 'white');
+}
+.comboNumber {
+  width: 32px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.textComboNumber {
+
+}

@@ -12,7 +12,6 @@ import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout'
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
-import Seat from 'src/screens/ChooseSeatScreen/component/Seat/Seat';
 import SmallTheater from 'src/screens/ChooseSeatScreen/component/SmallTheater/SmallTheater';
 import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
 
@@ -88,7 +87,9 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
             </Text>
             <View style={styles.totalSeatArea}>
               <Text style={[atomicStyles.h5, styles.seatChosen]}>D01, D02</Text>
-              <SvgIcon component={require('assets/icons/Clear.svg')} />
+              <TouchableOpacity>
+                <SvgIcon component={require('assets/icons/Clear.svg')} />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.summaryTotal}>

@@ -14,31 +14,36 @@ const Seat: FC<PropsWithChildren<SeatProps>> = (
   props: PropsWithChildren<SeatProps>,
 ): ReactElement => {
   const {state} = props;
-  const [seatState, setSeatState] = React.useState<
-    'blank' | 'occupied' | 'selected'
-  >('blank');
   const [isChoose, setChoose] = React.useState(false);
   const handleChooseSeat = React.useCallback(() => {
-    !isChoose
-      ? (setSeatState('selected'), setChoose(true))
-      : (setSeatState('blank'), setChoose(false));
+    !isChoose ? setChoose(true) : setChoose(false);
   }, [isChoose]);
   return (
     <>
-      <View>
-        <TouchableOpacity onPress={handleChooseSeat}>
-          {seatState === 'blank' ? (
-            <SvgIcon component={require('assets/icons/seat/BlankSeat.svg')} />
-          ) : seatState === 'occupied' ? (
-            <SvgIcon
-              component={require('assets/icons/seat/SelectedSeat.svg')}
-            />
-          ) : (
-            <SvgIcon
-              component={require('assets/icons/seat/SelectedSeat.svg')}
-            />
-          )}
-        </TouchableOpacity>
+      <View style={styles.container}>
+        {state !== 0 ? (
+          <View>
+            {state === 2 ? (
+              <SvgIcon
+                component={require('assets/icons/seat/OccupiedSeat.svg')}
+              />
+            ) : (
+              <TouchableOpacity onPress={handleChooseSeat}>
+                {!isChoose ? (
+                  <SvgIcon
+                    component={require('assets/icons/seat/BlankSeat.svg')}
+                  />
+                ) : (
+                  <SvgIcon
+                    component={require('assets/icons/seat/SelectedSeat.svg')}
+                  />
+                )}
+              </TouchableOpacity>
+            )}
+          </View>
+        ) : (
+          <View style={styles.noSeat} />
+        )}
       </View>
     </>
   );

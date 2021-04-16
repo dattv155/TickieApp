@@ -4,43 +4,49 @@
  * @author TrongDat <trongdat1505@gmail.com>
  */
 @import "src/styles/mixins";
-@import "src/styles/atomic-styles";
 
 .container {
-  padding: 0 8px;
+  height: 100%;
+
+}
+.containerViewRow {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background-color: map-get($colors, 'white');
+  height: 100%;
+  width: 100%;
 }
 .seatArea {
   flex: 2;
 }
-.labelLeft {
+.labelView {
   align-items: center;
-  width: 18px;
+  width: 30px;
   height: 100%;
   justify-content: space-around;
 }
-.labelRight {
-  align-items: center;
-  width: 18px;
-  height: 100%;
+.labelContainer {
+  flex-direction: column;
   justify-content: space-around;
 }
 .labelText {
   color: map-get($colors, 'gray');
 }
-.rowA {
-  flex-direction: row;
-  justify-content: space-around;
+.rowStyle {
+  justify-content: space-between;
   align-items: center;
-  margin: 0 30px;
+  width: 100%;
 }
-.rowBF {
+.labelRowContainer {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin: 5px;
-  flex-wrap: wrap;
+  width: 100%;
+  height: 20px;
+  padding: 0 28px;
+}
+.labelRow {
+  width: 24px;
+  text-align: center;
 }

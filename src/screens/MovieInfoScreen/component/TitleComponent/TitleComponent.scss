@@ -1,0 +1,47 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-24 14:43:42
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.container {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 44px;
+  background-color: map-get($colors, 'white');
+  border-top-width: 0.5px;
+  border-top-color: #828282;
+  padding-top: 20px;
+  margin-bottom: 18px;
+}
+.reviewTitleView {
+  flex-direction: row;
+  align-items: center;
+}
+.title {
+
+}
+.numOfReviewItem {
+  font-weight: 500;
+  color: map-get($colors, 'gray');
+  margin-top: 0px;
+}
+.rate {
+  flex-direction: row;
+  align-items: center;
+  margin-left: 16px;
+}
+.numberOfRate {
+  margin-left: 4px;
+  color: map-get($colors, 'blue');
+  font-weight: 400;
+}
+.rateNumber {
+
+}
+.more {
+  color: map-get($colors, 'blue');
+}

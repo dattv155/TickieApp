@@ -10,6 +10,8 @@ import CategoryComponent from 'src/components/HomeComponent/CategoryComponent/Ca
 import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableFilm';
 import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
 import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
+import {useTranslation} from 'react-i18next/';
+
 /**
  * File: HomeScreen.tsx
  * @created 2021-03-09 16:40:00
@@ -21,7 +23,6 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   props: PropsWithChildren<HomeScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-  // const [translate] = useTranslation();
 
   return (
     <>
@@ -29,7 +30,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
       <SafeAreaView style={[atomicStyles.container]}>
         <ScrollView>
           <View style={[styles.containerView]}>
-            <CategoryComponent />
+            <CategoryComponent navigation={navigation} route={route} />
             <AvailableFilm />
             <UpcomingFilm />
             <FavoriteFilm />

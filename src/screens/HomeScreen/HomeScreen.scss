@@ -11,3 +11,8 @@
   padding-bottom: 25%;
   padding-top: 10%;
 }
+
+.button {
+  border-width: 2px;
+  border-color: map-get($colors, 'primary');
+}

@@ -19,10 +19,16 @@ import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
 // import {forNoAnimation} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
 import {StackCardInterpolatedStyle} from '@react-navigation/stack/src/types';
 import DetailTicketScreen from 'src/screens/DetailTicketScreen/DetailTicketScreen';
+import MovieInfoScreen from 'src/screens/MovieInfoScreen/MovieInfoScreen';
 import GeneralSettingScreen from 'src/screens/GeneralSettingScreen/GeneralSettingScreen';
 import HelperScreen from 'src/screens/HelperScreen/HelperScreen';
 import UpdateAppScreen from 'src/screens/UpdateAppScreen/UpdateAppScreen';
 import InformationScreen from 'src/screens/InformationScreen/InformationScreen';
+import BookingScreen from 'src/screens/BookingScreen/BookingScreen';
+import ChooseSeatScreen from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
+import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
+import PaymentScreen from 'src/screens/PaymentScreen/PaymentScreen';
+import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -114,6 +120,11 @@ const RootNavigator: FC<
         initialParams={{}}
       />
       <Screen
+        name={MovieInfoScreen.displayName}
+        component={MovieInfoScreen}
+        initialParams={{}}
+      />
+      <Screen
         name={GeneralSettingScreen.displayName}
         component={GeneralSettingScreen}
         initialParams={{}}
@@ -131,6 +142,31 @@ const RootNavigator: FC<
       <Screen
         name={InformationScreen.displayName}
         component={InformationScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={BookingScreen.displayName}
+        component={BookingScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={ChooseSeatScreen.displayName}
+        component={ChooseSeatScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={SelectComboScreen.displayName}
+        component={SelectComboScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={PaymentScreen.displayName}
+        component={PaymentScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={SuccessBookingScreen.displayName}
+        component={SuccessBookingScreen}
         initialParams={{}}
       />
     </Navigator>

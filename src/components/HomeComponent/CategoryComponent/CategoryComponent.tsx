@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {View, Text, Dimensions, StyleSheet, Image} from 'react-native';
+import React, {FC, PropsWithChildren, ReactElement, useState} from 'react';
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 import {
@@ -11,15 +18,23 @@ import {
 import styles from './CategoryComponent.scss';
 import {atomicStyles} from '../../../styles';
 import {useTranslation} from 'react-i18next/';
+import nameof from 'ts-nameof.macro';
+import MovieInfoScreen from 'src/screens/MovieInfoScreen/MovieInfoScreen';
+import {StackScreenProps} from '@react-navigation/stack';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.672);
 const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
 
-export default function CategoryComponent(props) {
+const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
+  props: PropsWithChildren<CategoryComponentProps>,
+): ReactElement => {
+  const {navigation, route} = props;
+
   const [carousel, setCarousel] = useState();
   const [translate] = useTranslation();
+
   const [list, setList] = useState([
     {
       id: 1,
@@ -51,15 +66,22 @@ export default function CategoryComponent(props) {
     },
   ]);
   const [index, setIndex] = useState(0);
-  const renderItem = ({item}) => {
+
+  const handleGotoMovieScreen = React.useCallback(() => {
+    navigation.navigate(MovieInfoScreen.displayName);
+  }, [navigation]);
+
+  const renderItem = ({item}: any) => {
     return (
       <View>
-        <Image
-          style={itemStyles.imageContainer}
-          source={{
-            uri: item.img,
-          }}
-        />
+        <TouchableOpacity onPress={handleGotoMovieScreen}>
+          <Image
+            style={itemStyles.imageContainer}
+            source={{
+              uri: item.img,
+            }}
+          />
+        </TouchableOpacity>
       </View>
     );
   };
@@ -79,7 +101,7 @@ export default function CategoryComponent(props) {
       <Carousel
         ref={(c) => setCarousel(c)}
         data={list}
-        renderItem={(item) => renderItem(item)}
+        renderItem={(item: object) => renderItem(item)}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         containerCustomStyle={styles.carouselContainer}
@@ -106,7 +128,7 @@ export default function CategoryComponent(props) {
       <View style={styles.line} />
     </View>
   );
-}
+};
 
 const itemStyles = StyleSheet.create({
   imageContainer: {
@@ -122,3 +144,19 @@ const itemStyles = StyleSheet.create({
     fontStyle: 'normal',
   },
 });
+
+export interface CategoryComponentProps extends StackScreenProps<any> {
+  //
+}
+
+CategoryComponent.defaultProps = {
+  //
+};
+
+CategoryComponent.propTypes = {
+  //
+};
+
+CategoryComponent.displayName = nameof(CategoryComponent);
+
+export default React.memo(CategoryComponent);

@@ -3,8 +3,99 @@
  * @created 2021-03-09 17:22:26
  * @author TrongDatVu <trongdat1505@gmail.com>
  */
-.container {
-  flex: 1;
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.containerView {
+  //flex: 1;
+  margin-top: -104px;
+  width: 100%;
+}
+.imageView {
+  height: 345px;
+  width: 100%;
+  position: relative;
+}
+.infoArea {
+  //position: absolute;
+  //top: 300px;
+  top: -40px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 40px;
+  background-color: map-get($colors, 'white');
+  height: 100%;
+  width: 100%;
+}
+.title {
+  margin-top: 50px;
+  flex-direction: row;
+  align-items: center;
+}
+.textStyle {
+  font-weight: 900;
+}
+.playButton {
+  position: absolute;
+  top: 260px;
+  align-items: center;
+  width: 100%;
+}
+.rate {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  margin-top: 55px;
+  right: 0;
+  width: 48px;
+}
+.category {
+  color: map-get($colors, "gray");
+}
+.time {
+  color: map-get($colors, "gray");
+  margin-top: 8px;
+}
+.info {
+  margin-top: 9px;
+}
+.description {
+  margin-top: 20px;
+}
+.actorView {
+  margin-top: 35px;
+}
+.imageFilmItem {
+  height: 94px;
+  width: 147px;
+  border-radius: 11px;
+  margin-right: 11px;
+}
+.reviewArea {
+  margin-bottom: 54px;
+}
+.bookingView {
+  position: absolute;
+  bottom: 40px;
+  background-color: map-get($colors, "white");
+  width: 100%;
+  height: 82px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.markButton {
+
+}
+.bookingButton {
+  background-color: map-get($colors, "blue");
+  width: 275px;
+  height: 54px;
+  border-radius: 13px;
   justify-content: center;
   align-items: center;
+}
+.bookingText {
+  color: map-get($colors, "white");
 }

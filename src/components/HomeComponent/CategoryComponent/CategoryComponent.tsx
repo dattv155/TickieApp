@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren, ReactElement, useState} from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import {
   View,
   Text,
@@ -13,15 +13,12 @@ import {
   scrollInterpolator,
   animatedStyles,
 } from '../CategoryComponent/utils/animations';
-
-// import SvgComponent from './SvgComponent'
 import styles from './CategoryComponent.scss';
 import {atomicStyles} from '../../../styles';
 import {useTranslation} from 'react-i18next/';
 import nameof from 'ts-nameof.macro';
 import MovieInfoScreen from 'src/screens/MovieInfoScreen/MovieInfoScreen';
 import {StackScreenProps} from '@react-navigation/stack';
-import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -31,17 +28,21 @@ const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
 const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   props: PropsWithChildren<CategoryComponentProps>,
 ): ReactElement => {
-  const {navigation, route} = props;
+  const {navigation} = props;
 
-  const [carousel, setCarousel] = useState();
+  const {list} = props;
+
   const [translate] = useTranslation();
-  const [width, setWidth]= useState(300);
-  const [list, setList]= useState(props.list);
-  const [index, setIndex]= useState(0);
+
+  const [carousel, setCarousel] = React.useState<Carousel<any>>(null);
+
+  const [index, setIndex] = React.useState<number>(0);
+
   const handleGotoMovieScreen = React.useCallback(() => {
     navigation.navigate(MovieInfoScreen.displayName);
   }, [navigation]);
-  const renderItem  = ({item}) => {
+
+  const renderItem = ({item}: any) => {
     return (
       <View>
         <TouchableOpacity onPress={handleGotoMovieScreen}>
@@ -80,6 +81,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
         scrollInterpolator={scrollInterpolator}
         slideInterpolatedStyle={animatedStyles}
         useScrollView={true}
+        keyExtractor={(item, index) => item.toString() + index.toString()}
       />
       <View style={styles.info}>
         <Text
@@ -117,6 +119,7 @@ const itemStyles = StyleSheet.create({
 
 export interface CategoryComponentProps extends StackScreenProps<any> {
   //
+  list?: any[];
 }
 
 CategoryComponent.defaultProps = {

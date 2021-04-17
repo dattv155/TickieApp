@@ -38,8 +38,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const keyExtractor = ({key}: any) => key;
-
   const [mark, setMark] = React.useState(false);
 
   const handleMarkFilm = React.useCallback(() => {
@@ -149,7 +147,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                   data={ListReview}
                   renderItem={renderItem}
                   showsVerticalScrollIndicator={false}
-                  keyExtractor={keyExtractor}
+                  keyExtractor={(item) => item.id.toString()}
                 />
               </View>
             </View>

@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren, ReactElement, useState} from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import {
   View,
   Text,
@@ -13,8 +13,6 @@ import {
   scrollInterpolator,
   animatedStyles,
 } from '../CategoryComponent/utils/animations';
-
-// import SvgComponent from './SvgComponent'
 import styles from './CategoryComponent.scss';
 import {atomicStyles} from '../../../styles';
 import {useTranslation} from 'react-i18next/';
@@ -30,42 +28,15 @@ const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
 const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   props: PropsWithChildren<CategoryComponentProps>,
 ): ReactElement => {
-  const {navigation, route} = props;
+  const {navigation} = props;
 
-  const [carousel, setCarousel] = useState();
+  const {list} = props;
+
   const [translate] = useTranslation();
 
-  const [list, setList] = useState([
-    {
-      id: 1,
-      img:
-        'https://ae01.alicdn.com/kf/HTB1Va5mQXXXXXcnXXXXq6xXFXXXV/La-La-Land-Film-Aquarelle-Tissu-jet-d-encre-affiche-20-X13-07.jpg',
-      name: 'La La Land',
-      release: '12-12-2021',
-    },
-    {
-      id: 2,
-      img:
-        'https://resizing.flixster.com/JSQhj07oIhsYdTaPu6iZ_ldKJa8=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzL2RlNzI0MGQyLTQ2ZTktNGMyYi05N2VmLTFjMDhiY2VlMDQ2Ni53ZWJw',
-      name: 'Blade Runner 2049',
-      release: '12-2-2021',
-    },
-    {
-      id: 3,
-      img:
-        'https://fcine.net/uploads/monthly_2019_06/2pikachu-_vietnamese_poster.jpg.015075262656d06602221295e8ef16cf.jpg',
-      name: 'Detective Pikachu',
-      release: '12-02-2022',
-    },
-    {
-      id: 4,
-      img:
-        'https://i.pinimg.com/originals/a6/6d/93/a66d93b32698ef7d7f6aea369ab4d196.jpg',
-      name: 'Demon Slayer: Infinitive train',
-      release: '12-02-2020',
-    },
-  ]);
-  const [index, setIndex] = useState(0);
+  const [carousel, setCarousel] = React.useState<Carousel<any>>(null);
+
+  const [index, setIndex] = React.useState<number>(0);
 
   const handleGotoMovieScreen = React.useCallback(() => {
     navigation.navigate(MovieInfoScreen.displayName);
@@ -110,6 +81,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
         scrollInterpolator={scrollInterpolator}
         slideInterpolatedStyle={animatedStyles}
         useScrollView={true}
+        keyExtractor={(item, index) => item.toString() + index.toString()}
       />
       <View style={styles.info}>
         <Text
@@ -147,6 +119,7 @@ const itemStyles = StyleSheet.create({
 
 export interface CategoryComponentProps extends StackScreenProps<any> {
   //
+  list?: any[];
 }
 
 CategoryComponent.defaultProps = {

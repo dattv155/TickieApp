@@ -17,10 +17,10 @@ const SLIDER_HEIGHT = Dimensions.get('window').height;
 const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
   props: PropsWithChildren<FavoriteFilmProps>,
 ): ReactElement => {
-  const [list, setList]= useState(props.list);
+  const {list, display}= props;
   const [translate]= useTranslation();
   return (
-    <View style={{...styles.mainComponent, display: props.display}}> 
+    <View style={{...styles.mainComponent, display: display}}> 
         <View>
           <Text style={[atomicStyles.bold, styles.header]}>
             {translate("homeScreen.favorite")}
@@ -53,6 +53,8 @@ const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
 
 export interface FavoriteFilmProps {
   //
+  display?: string;
+  list?: any[];
 }
 
 FavoriteFilm.defaultProps = {

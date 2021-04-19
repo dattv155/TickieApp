@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
-import {View, Text, Dimensions, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, Text, Dimensions, Image} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 import {scrollInterpolator, animatedStyles} from '../CategoryComponent/utils/animations';
-
-// import SvgComponent from './SvgComponent'
 import styles from './CategoryComponent.scss';
-import {atomicStyles} from '../../../styles';
+// import {atomicStyles} from '../../../styles';
 import { useTranslation } from 'react-i18next/';
-import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -16,16 +13,21 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.672);
 const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
 
 export default function CategoryComponent(props) {
-  const [carousel, setCarousel]= useState();
+  const {list, display}= props;
+  const [carousel, setCarousel]= React.useState();
   const [translate] = useTranslation();
-  const [width, setWidth]= useState(300);
-  const [list, setList]= useState(props.list)
-  const [index, setIndex]= useState(0);
+  const [width, setWidth]= React.useState(300);
+  const [index, setIndex]= React.useState(0);
   const renderItem  = ({item}) => {
     return (
       <View>
         <Image
-          style={itemStyles.imageContainer}
+          style={[styles.imageContainer, 
+                  {
+                    width: ITEM_WIDTH,
+                    height: ITEM_HEIGHT
+                  }
+                ]}
           source={{
             uri: item.img
           }}>
@@ -35,7 +37,7 @@ export default function CategoryComponent(props) {
   }
 
   return (
-    <View style={{display: props.display}}>
+    <View style={{display: display}}>
       <Carousel
         ref={(c) => (setCarousel(c))}
         data={list}
@@ -59,18 +61,3 @@ export default function CategoryComponent(props) {
   
 }
 
-const itemStyles = StyleSheet.create({
-
-  imageContainer: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
-    borderRadius: 39,
-    borderWidth: 3
-  },
-  release: {
-    paddingTop: 3,
-    color: '#828282',
-    fontWeight: "500",
-    fontStyle: 'normal',
-}
-});

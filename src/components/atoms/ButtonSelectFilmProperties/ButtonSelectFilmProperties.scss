@@ -1,0 +1,29 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-04-06 08:24:51
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.buttonContainer {
+  height: 45px;
+  width: 90px;
+  background-color: map-get($colors, 'white');
+  border-width: 1px;
+  border-color: map-get($colors, 'gray');
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+}
+.pickedButton {
+  background-color: map-get($colors, 'blue');
+}
+.unPickedText {
+  color: map-get($colors, 'gray');
+  font-weight: 700;
+}
+.pickedText {
+  color: map-get($colors, 'white');
+  font-weight: 700;
+}

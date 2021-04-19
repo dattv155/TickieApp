@@ -1,0 +1,24 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-04-12 12:43:43
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+
+.container {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.5px solid map-get($colors, 'blue');
+  border-radius: 7px;
+  width: 140px;
+  margin: 3px;
+  //padding: 0 13px;
+}
+.text {
+  margin-left: 13px;
+  font-weight: 500;
+}
+.clearButton {
+
+}

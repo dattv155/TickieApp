@@ -1,16 +1,16 @@
 import React, {FC, PropsWithChildren, ReactElement, useState} from 'react';
 import nameof from 'ts-nameof.macro';
-// import styles from './HomeScreen.scss';
-import {useTranslation} from 'react-i18next';
-import {SafeAreaView, StatusBar, Text, View, ScrollView} from 'react-native';
-import MainTabBar from '../../components/organisms/MainTabBar/MainTabBar';
+import styles from './HomeScreen.scss';
+import {SafeAreaView, StatusBar, ScrollView, View} from 'react-native';
+import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
-import CategoryComponent from '../../components/HomeComponent/CategoryComponent/CategoryComponent';
-import AvailableFilm from '../../components/HomeComponent/AvailableFilm/AvailableFilm';
-import FavoriteFilm from '../../components/HomeComponent/FavoriteFilm/FavoriteFilm';
-import UpcomingFilm from '../../components/HomeComponent/UpcomingFilm/UpcomingFilm';
+import CategoryComponent from 'src/components/HomeComponent/CategoryComponent/CategoryComponent';
+import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableFilm';
+import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
+import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
 import Search from '../../components/HomeComponent/Search/Search';
+
 /**
  * File: HomeScreen.tsx
  * @created 2021-03-09 16:40:00
@@ -22,50 +22,60 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   props: PropsWithChildren<HomeScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-  const [translate] = useTranslation();
-  const [display, setDisplay]= useState('flex');
-  const onClick = ()=>{
-    if(display == 'flex')
-      setDisplay('none');
-    else
-      setDisplay('flex');
+
+  const [display, setDisplay] = useState('flex');
+
+  const onClick = () => {
+    display === 'flex' ? setDisplay('none') : setDisplay('flex');
   };
-  const [list, setList]= useState([
+
+  const list = [
     {
       id: 1,
-      img: 'https://ae01.alicdn.com/kf/HTB1Va5mQXXXXXcnXXXXq6xXFXXXV/La-La-Land-Film-Aquarelle-Tissu-jet-d-encre-affiche-20-X13-07.jpg',
+      img:
+        'https://ae01.alicdn.com/kf/HTB1Va5mQXXXXXcnXXXXq6xXFXXXV/La-La-Land-Film-Aquarelle-Tissu-jet-d-encre-affiche-20-X13-07.jpg',
       name: 'La La Land',
-      release: '12-12-2021'
+      release: '12-12-2021',
     },
     {
       id: 2,
-      img: 'https://resizing.flixster.com/JSQhj07oIhsYdTaPu6iZ_ldKJa8=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzL2RlNzI0MGQyLTQ2ZTktNGMyYi05N2VmLTFjMDhiY2VlMDQ2Ni53ZWJw',
+      img:
+        'https://resizing.flixster.com/JSQhj07oIhsYdTaPu6iZ_ldKJa8=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzL2RlNzI0MGQyLTQ2ZTktNGMyYi05N2VmLTFjMDhiY2VlMDQ2Ni53ZWJw',
       name: 'Blade Runner 2049',
-      release: '12-2-2021'
+      release: '12-2-2021',
     },
     {
       id: 3,
-      img: 'https://fcine.net/uploads/monthly_2019_06/2pikachu-_vietnamese_poster.jpg.015075262656d06602221295e8ef16cf.jpg',
+      img:
+        'https://fcine.net/uploads/monthly_2019_06/2pikachu-_vietnamese_poster.jpg.015075262656d06602221295e8ef16cf.jpg',
       name: 'Detective Pikachu',
-      release: '12-02-2022'
+      release: '12-02-2022',
     },
     {
       id: 4,
-      img: 'https://i.pinimg.com/originals/a6/6d/93/a66d93b32698ef7d7f6aea369ab4d196.jpg',
+      img:
+        'https://i.pinimg.com/originals/a6/6d/93/a66d93b32698ef7d7f6aea369ab4d196.jpg',
       name: 'Demon Slayer',
-      release: '12-02-2020'
-    }
-  ])
+      release: '12-02-2020',
+    },
+  ];
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
-      <SafeAreaView style={atomicStyles.container}>
+      <SafeAreaView style={[atomicStyles.container]}>
         <ScrollView>
-          <Search handleClick={onClick} display={display} list={list}/>
-          <CategoryComponent display={display} list={list}/>  
-          <AvailableFilm display={display} list={list}/>
-          <UpcomingFilm display={display} list={list}/>
-          <FavoriteFilm display={display} list={list}/>
+          <View style={[styles.containerView]}>
+            <Search handleClick={onClick} display={display} list={list} />
+            <CategoryComponent
+              navigation={navigation}
+              route={route}
+              list={list}
+            />
+            <AvailableFilm display={display} list={list} />
+            <UpcomingFilm display={display} list={list} />
+            <FavoriteFilm display={display} list={list} />
+          </View>
         </ScrollView>
         <MainTabBar navigation={navigation} route={route} />
       </SafeAreaView>

@@ -17,10 +17,10 @@ const SLIDER_HEIGHT = Dimensions.get('window').height;
 const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
   props: PropsWithChildren<UpcomingFilmProps>,
 ): ReactElement => {
-  const [list, setList]= useState(props.list);
+  const {list, display}= props;
   const [translate]= useTranslation();
   return (
-    <View style={{...styles.mainComponent, display: props.display}}> 
+    <View style={{...styles.mainComponent, display: display}}> 
         <View>
           <Text style={[atomicStyles.regular,styles.header]}>
             {translate("homeScreen.upcoming")}
@@ -53,6 +53,8 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
 
 export interface UpcomingFilmProps {
   //
+  list?: any[];
+  display?: string;
 }
 
 UpcomingFilm.defaultProps = {

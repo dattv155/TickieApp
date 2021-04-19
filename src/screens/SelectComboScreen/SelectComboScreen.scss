@@ -1,0 +1,81 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-04-11 17:32:52
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+
+.containerView {
+  width: 100%;
+  height: 100%;
+  background-color: map-get($colors, 'white');
+  padding: 0 18px;
+}
+.listComboArea {
+  //height: 300px;
+}
+.voucherContainer {
+  margin-top: 16px;
+}
+.voucherTitle {
+  color: map-get($colors, 'gray');
+  margin-bottom: -5px;
+  font-style: italic;
+}
+.line {
+  border: 0.5px solid map-get($colors, 'gray');
+  padding: 0 20px;
+
+}
+.text {
+  font-weight: 500;
+  margin-top: 5px;
+  color: map-get($colors, 'gray');
+}
+.summaryContainer {
+  box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 46px;
+  border-width: 1px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: -400px;
+  padding: 15px 25px;
+}
+.sumaryTitle {
+
+}
+.comboArea {
+  flex-direction: row;
+  justify-content: space-between;
+}
+.comboText {
+  font-weight: 500;
+}
+.summaryTotal {
+  margin-top: 6px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.costSummary {
+  align-items: center;
+}
+.costTitle {
+  font-weight: 500;
+}
+.cost {
+  color: map-get($colors, 'blue');
+}
+.bookingButton {
+  background-color: map-get($colors, 'blue');
+  height: 48px;
+  width: 150px;
+  border-radius: 7px;
+  justify-content: center;
+  align-items: center;
+}
+.buttonText {
+  color: map-get($colors, 'white');
+  font-weight: 500;
+}

@@ -1,10 +1,9 @@
-import React, { FC, PropsWithChildren, ReactElement } from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './AvailableFilm.scss';
-import {useState} from 'react';
 import {View, Text, FlatList, Image, Dimensions} from 'react-native';
 import {atomicStyles} from '../../../styles';
-import { useTranslation } from 'react-i18next/';
+import {useTranslation} from 'react-i18next/';
 /**
  * File: AvailableFilm.tsx
  * @created 2021-03-16 20:30:56
@@ -14,9 +13,11 @@ import { useTranslation } from 'react-i18next/';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
+
 const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
   props: PropsWithChildren<AvailableFilmProps>,
 ): ReactElement => {
+<<<<<<< HEAD
   const {list, display}= props;
   const [translate]= useTranslation();
   return (
@@ -47,13 +48,54 @@ const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
           horizontal={true}
           />
           <View style={styles.line}/>
+=======
+  const {list, display} = props;
+  const [translate] = useTranslation();
+
+  return (
+    <View style={{...styles.mainComponent, display: display}}>
+      <View>
+        <Text style={[atomicStyles.bold, styles.header]}>
+          {translate('homeScreen.available')}
+        </Text>
+>>>>>>> 071e4b1d12a9f9ace39136f95ad489fc03edd3ce
       </View>
+      <FlatList
+        data={list}
+        renderItem={({item}) => (
+          <View
+            style={{alignItems: 'center', marginRight: SLIDER_WIDTH * 0.051}}>
+            <Image
+              style={{
+                width: SLIDER_WIDTH * 0.4,
+                height: SLIDER_HEIGHT * 0.32,
+                borderRadius: 22,
+              }}
+              source={{
+                uri: item.img,
+              }}
+            />
+            <Text style={[atomicStyles.bold, styles.text1]}>{item.name}</Text>
+            <Text style={[atomicStyles.bold, styles.text2]}>
+              {item.release}
+            </Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal={true}
+      />
+      <View style={styles.line} />
+    </View>
   );
 };
 
 export interface AvailableFilmProps {
   //
   list?: any[];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 071e4b1d12a9f9ace39136f95ad489fc03edd3ce
   display?: string;
 }
 
@@ -68,5 +110,3 @@ AvailableFilm.propTypes = {
 AvailableFilm.displayName = nameof(AvailableFilm);
 
 export default React.memo(AvailableFilm);
-
-

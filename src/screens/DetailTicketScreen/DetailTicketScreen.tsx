@@ -33,7 +33,7 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
             style={[
               atomicStyles.h3,
               atomicStyles.bold,
-              styles.textStyle,
+              // styles.textStyle,
               atomicStyles.mt16px,
             ]}>
             Thông tin vé

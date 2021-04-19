@@ -1,0 +1,33 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-03-24 16:39:39
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+.actorArea {
+  flex-direction: row;
+  align-items: center;
+  width: 180px;
+  height: 60px;
+  border-radius: 10px;
+  background-color: map-get($colors, "light-gray");
+  margin-right: 14px;
+
+}
+.imageView {
+  height: 48px;
+  width: 48px;
+  border-radius: 15px;
+}
+.textArea {
+  margin-left: 8px;
+}
+.actorName {
+  font-weight: 500;
+}
+.actorRole {
+  color: map-get($colors, "gray");
+  font-weight: 500;
+}

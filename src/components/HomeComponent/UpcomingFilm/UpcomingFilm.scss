@@ -26,5 +26,7 @@
     height: 1px;
     background-color: map-get($colors, "line-gray");
     padding: 0px;
-
+}
+.text2{
+    color: map-get($colors, "nobel")
 }

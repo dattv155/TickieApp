@@ -1,7 +1,8 @@
 import React, { FC, PropsWithChildren, ReactElement, useEffect } from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
-import {View, Text, Animated, TouchableOpacity} from 'react-native';
+import {atomicStyles} from '../../../styles'
+import {View, Text, Animated, TouchableOpacity, StyleSheet} from 'react-native';
 /**
  * File: ./Notibox.tsx
  * @created 2021-04-19 21:48:55
@@ -13,8 +14,8 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
 ): ReactElement => {
   const [height, setHeight]= React.useState(new Animated.Value(85));
   const [title, setTitle]= React.useState("");
-  const {type, span, content} = props.data;
-
+  const {data}= props;
+    const {type, span, content} = data;
   const press = ()=>{
       Animated.timing(
           height,
@@ -27,7 +28,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
 
   }
   useEffect(() =>{
-      if(data === undefined) return ;
+      if(props.data === undefined) return ;
       switch (type){
           case "bookingsuccess": {
               setTitle("Đặt vé thành công");
@@ -55,7 +56,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
       }
   },[]);
   return (
-      <TouchableOpacity style={{width: '100%', alignItems:'center'}} onPress={press}>
+      <TouchableOpacity style={styles.touchable} onPress={press}>
       <Animated.View style={[
           {
               height: height
@@ -64,15 +65,15 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
       ]}
           >
           <View style={styles.bigwrapper}>
-              <Text style={styles.type}>
+              <Text style={[styles.type, atomicStyles.bold]}>
                   {title}
               </Text>
               <View style={styles.wrapper}>
-                  <Text style={styles.content}>
+                  <Text style={[styles.content, atomicStyles.regular]}>
                       {content}
                   </Text>
               </View> 
-              <Text style={styles.content}>
+              <Text style={[styles.content, atomicStyles.regular]}>
                       {span}
               </Text>
           </View>
@@ -104,6 +105,7 @@ export interface NotiboxProps {
   type?: string;
   content?: string;
   span?: string;
+  data?: object;
 }
 
 Notibox.defaultProps = {

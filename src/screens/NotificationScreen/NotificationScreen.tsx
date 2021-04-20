@@ -7,7 +7,7 @@ import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {atomicStyles} from 'src/styles';
 import Notibox from '../../components/atoms/Notibox/Notibox';
 import firestore from '@react-native-firebase/firestore';
-import styles from './notification.scss';
+import styles from './NotificationScreen.scss';
 /**
  * File: NotificationScreen.tsx
  * @created 2021-03-09 17:09:49
@@ -63,7 +63,7 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         {
-        renderData()
+          renderData()
         }
         <View style={styles.padding}/>
       </ScrollView>
@@ -82,7 +82,6 @@ NotificationScreen.defaultProps = {
 
 NotificationScreen.propTypes = {
   //
-  exp: 'string';
   
 };
 

@@ -21,7 +21,7 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
   return (
     <View style={{...styles.mainComponent, display: display}}>
       <View>
-        <Text style={[atomicStyles.regular, styles.header]}>
+        <Text style={[atomicStyles.bold, styles.header]}>
           {translate('homeScreen.upcoming')}
         </Text>
       </View>
@@ -40,10 +40,10 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
                 uri: item.img,
               }}
             />
-            <Text style={[atomicStyles.regular, styles.text1]}>
+            <Text style={[atomicStyles.bold, styles.text1]}>
               {item.name}
             </Text>
-            <Text style={[atomicStyles.regular, styles.text2]}>
+            <Text style={[atomicStyles.bold, styles.text2]}>
               {item.release}
             </Text>
           </View>

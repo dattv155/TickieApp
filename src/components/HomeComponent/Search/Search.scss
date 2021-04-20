@@ -6,7 +6,6 @@
  @import '../../../styles/atomic-styles'; 
  .container {
     width: 90%;
-    margin-top: 20px;
     align-self: center;
     height: auto;
     overflow: hidden;
@@ -65,7 +64,7 @@
 .text1 {
     padding: 7px 0px 0px 0px;
     font-style: normal;
-    font-weight: bold;
+    
     font-size: 15px;
     line-height: 15px;
     color: black
@@ -73,7 +72,7 @@
 .text2 {
     padding: 5px 0px 0px 0px;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 400;
     font-size: 12px;
     line-height: 12px;
     color: map-get($colors, "nobel");

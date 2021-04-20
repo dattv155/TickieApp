@@ -3,6 +3,7 @@
  * @created 2021-03-09 17:09:49
  * @author TrongDatVu <trongdat1505@gmail.com>
  */
+ @import '../../styles/atomic-styles';
 .container {
   flex: 1;
   justify-content: center;
@@ -10,7 +11,7 @@
 .day {
   font-weight: 700;
   font-size: 16px;
-  color: #DADADA;
+  color: map-get($colors, "third-gray" );
   margin: 13px 0px;  
   margin-left: 8%;
 }

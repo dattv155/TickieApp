@@ -3,6 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
 import {atomicStyles} from '../../../styles'
 import {View, Text, Animated, TouchableOpacity, StyleSheet} from 'react-native';
+import { string } from 'prop-types';
 /**
  * File: ./Notibox.tsx
  * @created 2021-04-19 21:48:55
@@ -12,9 +13,9 @@ import {View, Text, Animated, TouchableOpacity, StyleSheet} from 'react-native';
 const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
   props: PropsWithChildren<NotiboxProps>,
 ): ReactElement => {
-  const [height, setHeight]= React.useState(new Animated.Value(85));
-  const [title, setTitle]= React.useState("");
-  const {data}= props;
+    const [height, setHeight]= React.useState(new Animated.Value(85));
+    const [title, setTitle]= React.useState("");
+    const {data}= props;
     const {type, span, content} = data;
   const press = ()=>{
       Animated.timing(
@@ -89,6 +90,7 @@ const sstyle= StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 12,
     paddingHorizontal: 13,
+    paddingVertical: 2,
     marginTop: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -97,7 +99,8 @@ const sstyle= StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 3,
-    paddingBottom: 9
+    paddingBottom: 9,
+    elevation: 4
   },  
 })
 export interface NotiboxProps {
@@ -114,6 +117,7 @@ Notibox.defaultProps = {
 
 Notibox.propTypes = {
   //
+  type: string,
 };
 
 Notibox.displayName = nameof(Notibox);

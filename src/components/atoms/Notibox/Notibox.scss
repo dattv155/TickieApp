@@ -3,6 +3,7 @@
  * @created 2021-04-19 21:48:55
  * @author Huy-No1 <huygg12345@gmail.com>
  */
+ @import '../../../styles/atomic-styles';
 .touchable {
     width: 100%;
     align-items: center;
@@ -15,18 +16,18 @@
 .type {
     font-weight: bold;
     font-size: 18px;
-    color: #0E52E1;
+    color: map-get($colors, "blue" );
     margin-bottom: 4px;
     line-height: 18.9px;
     margin-top: 12px;
 
 };
 .content {
-    font-weight: 300px;
+    font-weight: 300;
     font-size: 15px;
 };
 .wrapper {
     margin-top: 5px;
     // height: 40;
-    margin-bottom: 19px;
+    margin-bottom: 15px;
 }

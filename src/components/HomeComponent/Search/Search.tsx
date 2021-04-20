@@ -79,13 +79,9 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
         </Animated.View>
 
         <Animated.View
-          style={{
+          style={[styles.viewanimated,{
             width: searchWidth,
-            padding: 0,
-            position: 'absolute',
-            right: 0,
-            overflow: 'hidden',
-          }}>
+          }]}>
           <TextInput
             style={styles.textInput}
             placeholder="Search"
@@ -100,13 +96,9 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
       </View>
 
       <Animated.View
-        style={{
-          width: '100%',
+        style={[styles.viewanimated2,{
           height: viewHeight,
-          overflow: 'hidden',
-          paddingTop: 10,
-          paddingLeft: 10,
-        }}>
+        }]}>
         <FlatList
           data={list.filter((item) => {
             if (input === '') {
@@ -119,11 +111,9 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
           })}
           renderItem={({item}) => (
             <View
-              style={{
-                alignItems: 'center',
+              style={[styles.viewitem, {
                 marginRight: SLIDER_WIDTH * 0.051,
-                marginBottom: 10,
-              }}>
+              }]}>
               <Image
                 style={{
                   width: SLIDER_WIDTH * 0.4,

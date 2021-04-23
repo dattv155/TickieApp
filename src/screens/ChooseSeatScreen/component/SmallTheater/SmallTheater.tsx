@@ -67,6 +67,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
       <View style={styles.containerViewRow}>
         <View style={styles.labelView}>
           <FlatList
+            key={'_'}
             data={SmallTheaterLayout.map((item) => {
               return item.title;
             })}
@@ -94,6 +95,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
 
         <View style={styles.labelView}>
           <FlatList
+            key={'+'}
             data={SmallTheaterLayout.map((item) => {
               return item.title;
             })}
@@ -106,6 +108,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
       </View>
       <View>
         <FlatList
+          key={'='}
           data={rowLabel}
           renderItem={renderLabelRow}
           horizontal={true}

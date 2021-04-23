@@ -14,6 +14,7 @@ import {
   logInByGoogle,
   loginUser,
   signInUser,
+  loginByFacebook,
 } from 'src/services/firebase-service';
 import {emailValidator, passwordValidator} from 'src/core/utils';
 import Toast from 'react-native-simple-toast';
@@ -295,7 +296,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
         <ButtonLink
           label={translate('loginScreen.loginFB')}
           icon={require('assets/icons/FBIcon.svg')}
-          onPress={handleGoToHomeScreen}
+          onPress={loginByFacebook}
         />
         <ButtonLink
           label={translate('loginScreen.loginGoogle')}

@@ -37,6 +37,7 @@
     "@types/react": "^17.0.3",
     "@types/react-native-snap-carousel": "^3.8.2",
     "@types/yup": "^0.29.11",
+    "add": "^2.0.6",
     "axios": "^0.21.1",
     "firebase": "^8.3.1",
     "i18next": "^19.9.1",
@@ -54,6 +55,7 @@
     "react-native-date-picker": "^3.2.10",
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^8.0.7",
+    "react-native-fbsdk": "^3.0.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-crop-picker": "^0.36.0",
     "react-native-linear-gradient": "^2.5.6",
@@ -74,6 +76,7 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.6",
+    "yarn": "^1.22.10",
     "yup": "^0.32.9"
   },
   "devDependencies": {

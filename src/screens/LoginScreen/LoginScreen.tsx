@@ -10,7 +10,11 @@ import LoginInput from 'src/components/atoms/LoginInput/LoginInput';
 import LoginHeader from 'src/components/atoms/LoginHeader/LoginHeader';
 import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswordScreen';
 import {useTranslation} from 'react-i18next';
-import {loginUser, signInUser} from 'src/services/firebase-service';
+import {
+  logInByGoogle,
+  loginUser,
+  signInUser,
+} from 'src/services/firebase-service';
 import {emailValidator, passwordValidator} from 'src/core/utils';
 import Toast from 'react-native-simple-toast';
 
@@ -296,7 +300,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
         <ButtonLink
           label={translate('loginScreen.loginGoogle')}
           icon={require('assets/icons/GoogleIcon.svg')}
-          onPress={handleGoToHomeScreen}
+          onPress={logInByGoogle}
         />
       </SafeAreaView>
     );

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "882927407357",
+    "firebase_url": "https://tickie-app-default-rtdb.firebaseio.com",
     "project_id": "tickie-app",
     "storage_bucket": "tickie-app.appspot.com"
   },

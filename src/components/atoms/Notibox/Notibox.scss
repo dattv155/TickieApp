@@ -17,9 +17,6 @@
     font-weight: bold;
     font-size: 18px;
     color: map-get($colors, "blue" );
-    margin-bottom: 4px;
-    line-height: 18.9px;
-    margin-top: 12px;
 
 };
 .content {
@@ -30,4 +27,10 @@
     margin-top: 5px;
     // height: 40;
     margin-bottom: 15px;
+}
+.title {
+    flex-direction: row;
+    line-height: 18.9px;
+    margin-top: 8px;
+    justify-content: space-between;
 }

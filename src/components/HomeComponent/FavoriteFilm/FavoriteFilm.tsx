@@ -42,7 +42,7 @@ const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
               }}
             />
             <Text style={[atomicStyles.bold, styles.text1]}>{item.name}</Text>
-            <Text style={[atomicStyles.bold, styles.text2]}>
+            <Text style={[atomicStyles.regular, styles.text2]}>
               {item.release}
             </Text>
           </View>

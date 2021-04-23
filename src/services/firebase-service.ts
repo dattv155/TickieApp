@@ -56,7 +56,10 @@ export const signInUser = async ({email, password}: AuthDetails) => {
 
 export const logInByGoogle = async () => {
   try {
-    GoogleSignin.configure({});
+    GoogleSignin.configure({
+      webClientId:
+        '882927407357-42g1r9e2e49p1pke081lfn3crpkdvgha.apps.googleusercontent.com',
+    });
     // Get the users ID token
     const {idToken} = await GoogleSignin.signIn();
 
@@ -85,7 +88,7 @@ export const logInByGoogle = async () => {
           })
           //   //ensure we catch any errors at this stage to advise us if something does go wrong
           .catch((error) => {
-            console.log(
+            Toast.show(
               'Something went wrong with added user to firestore: ',
               error,
             );
@@ -93,7 +96,7 @@ export const logInByGoogle = async () => {
       })
       //we need to catch the whole sign up process if it fails too.
       .catch((error) => {
-        console.log('Something went wrong with sign up: ', error);
+        Toast.show('Something went wrong with sign up: ', error);
       });
   } catch (e) {
     Toast.show(e.toString());

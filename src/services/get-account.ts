@@ -1,4 +1,4 @@
-import React from 'reactn';
+import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {AppUser} from 'src/models/AppUser';

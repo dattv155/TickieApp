@@ -313,8 +313,8 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                 onPress={logoutUser}
               />
             </View>
-            <MainTabBar navigation={navigation} route={route} />
           </SafeAreaView>
+          <MainTabBar navigation={navigation} route={route} />
         </Pressable>
       </Animated.View>
     </>

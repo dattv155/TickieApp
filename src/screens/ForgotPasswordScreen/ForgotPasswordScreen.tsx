@@ -6,8 +6,8 @@ import {SafeAreaView} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import LoginInput from 'src/components/atoms/LoginInput/LoginInput';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
-import VerifyCodeScreen from 'src/screens/VerifyCodeScreen/VerifyCodeScreen';
 import {useTranslation} from 'react-i18next';
+import {sendEmailWithPassword} from 'src/services/firebase-service';
 
 /**
  * File: ForgotPasswordScreen.tsx
@@ -22,9 +22,13 @@ const ForgotPasswordScreen: FC<PropsWithChildren<ForgotPasswordScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const handleGoToVerifyScreen = React.useCallback(() => {
-    navigation.navigate(VerifyCodeScreen.displayName);
-  }, [navigation]);
+  const [emailInput, setEmailInput] = React.useState<string>('ab');
+
+  const handleSendEmail = React.useCallback(async () => {
+    setEmailInput(emailInput);
+    const response = await sendEmailWithPassword(emailInput);
+  }, [emailInput]);
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <LoginHeader
@@ -38,14 +42,16 @@ const ForgotPasswordScreen: FC<PropsWithChildren<ForgotPasswordScreenProps>> = (
           marginTop: 60,
         }}
         title={translate('loginScreen.inputEmail')}
-        onChange={() => {}}
+        onChangeText={(email: string) => {
+          setEmailInput(email);
+        }}
         placeholder={translate('loginScreen.inputEmail')}
         keyboardType="email-address"
       />
 
       <ButtonMain
         label={translate('loginScreen.receiveVerifyCode')}
-        onPress={handleGoToVerifyScreen}
+        onPress={handleSendEmail}
       />
     </SafeAreaView>
   );

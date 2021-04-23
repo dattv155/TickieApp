@@ -185,6 +185,15 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-fbsdk')
+
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    implementation 'com.facebook.android:facebook-login:[8.1)'
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0' // <-- add this; newer versions should work too
+    implementation(project(":react-native-google-signin"))
+
     implementation project(path: ":@react-native-firebase_auth")
     implementation project(':react-native-safe-area-context')
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -227,3 +236,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+apply plugin: 'com.google.gms.google-services' // <--- this should be the last line

@@ -8,6 +8,8 @@ import {atomicStyles} from 'src/styles';
 import Notibox from '../../components/atoms/Notibox/Notibox';
 import firestore from '@react-native-firebase/firestore';
 import styles from './NotificationScreen.scss';
+import auth from '@react-native-firebase/auth';
+import { string } from 'prop-types';
 /**
  * File: NotificationScreen.tsx
  * @created 2021-03-09 17:09:49
@@ -20,11 +22,11 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
   const {navigation, route} = props;
   const db= firestore();
   const [list, setList]= React.useState([]);
-  const userId= "9AKYA27yIDfm9UrJ65InchSZ62H2";
-
+  const userId= auth().currentUser.uid;
   useEffect(() =>{
     async function fetchData(){
-      var exp=[];
+
+      var exp:Array<Obj> =[];
       var dataGeneral= await db.collection("notification").doc("general").collection("1").orderBy("day", "desc").get();
       dataGeneral.forEach(item => exp.push(item.data()));
       var dataSpecific= await db.collection("notification").doc("specific").collection("1").where("userId", "==", userId).get();
@@ -35,13 +37,14 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
     fetchData();
   },[]); 
   const renderData = ()=>{
+    let saiso= 43200000;
     let item=[];
     var day=0;
     var isoday;
     for(let i=0; i<list.length; i++){
-      if(list[i].day.seconds * 1000 > Date.now()) continue;
-      if(list[i].day.seconds * 1000 != day){
-        day=list[i].day.seconds * 1000;
+      if(list[i].day.seconds * 1000 + saiso> Date.now()) continue;
+      if(list[i].day.seconds * 1000 + saiso!= day){
+        day=list[i].day.seconds * 1000 + saiso;
         isoday= new Date(day);
         let realday;
         if(isoday.toLocaleDateString() === new Date().toLocaleDateString())
@@ -76,6 +79,12 @@ export interface NotificationScreenProps extends StackScreenProps<any> {
   //
 }
 
+export interface Obj {
+  day?: any;
+  content?: string;
+  span?: string;
+  type?: string;
+}
 NotificationScreen.defaultProps = {
   //
 };

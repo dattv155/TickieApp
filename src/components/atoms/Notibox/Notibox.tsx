@@ -2,8 +2,10 @@ import React, { FC, PropsWithChildren, ReactElement, useEffect } from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
 import {atomicStyles} from '../../../styles'
-import {View, Text, Animated, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, Animated, TouchableOpacity, StyleSheet, Touchable, TouchableOpacityBase} from 'react-native';
 import { string } from 'prop-types';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { Timestamp } from 'react-native-firebase/firestore';
 /**
  * File: ./Notibox.tsx
  * @created 2021-04-19 21:48:55
@@ -16,7 +18,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
     const [height, setHeight]= React.useState(new Animated.Value(85));
     const [title, setTitle]= React.useState("");
     const {data}= props;
-    const {type, span, content} = data;
+    const {type, span, content, day} = data;
   const press = ()=>{
       Animated.timing(
           height,
@@ -56,8 +58,15 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
           }
       }
   },[]);
+  const getHour = (day) => {
+      let hour="";
+      let isoDay= new Date(day * 1000 + 43200000);
+      let minutes= isoDay.getUTCMinutes();
+      if(minutes < 10)
+        return `${isoDay.getHours() -5}:0${isoDay.getUTCMinutes()}`;
+      return `${isoDay.getHours() -5}:${isoDay.getUTCMinutes()}`;
+  }
   return (
-      <TouchableOpacity style={styles.touchable} onPress={press}>
       <Animated.View style={[
           {
               height: height
@@ -65,10 +74,16 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
           sstyle.box
       ]}
           >
+        <TouchableOpacity activeOpacity={0.1} style={styles.touchable} onPress={press}>
           <View style={styles.bigwrapper}>
-              <Text style={[styles.type, atomicStyles.bold]}>
-                  {title}
-              </Text>
+              <View style={styles.title}>
+                <Text style={[styles.type, atomicStyles.bold]}>
+                    {title}
+                </Text>
+                <Text style={[styles.hour, atomicStyles.regular]}>
+                      {getHour(day.seconds)}
+                </Text>
+              </View>
               <View style={styles.wrapper}>
                   <Text style={[styles.content, atomicStyles.regular]}>
                       {content}
@@ -77,15 +92,18 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
               <Text style={[styles.content, atomicStyles.regular]}>
                       {span}
               </Text>
-          </View>
+
+          </View> 
+          </TouchableOpacity>
       </Animated.View>
-      </TouchableOpacity>
+     
   )
 
 };
 
 const sstyle= StyleSheet.create({
-  box: {     
+  box: {  
+    alignSelf: 'center'  , 
     width: '90%',
     backgroundColor: 'white',
     borderRadius: 12,
@@ -95,29 +113,31 @@ const sstyle= StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
         width: 0.5,
-        height: 2.5,
+        height: 3.5,
     },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.5,
     shadowRadius: 3,
     paddingBottom: 9,
-    elevation: 4
+    elevation: 8
   },  
 })
 export interface NotiboxProps {
   //
-  type?: string;
-  content?: string;
-  span?: string;
-  data?: object;
+  data?: Data;
 }
 
+export interface Data {
+    span?: string;
+    content?: string;
+    type?: string;
+    day?: Timestamp;
+}
 Notibox.defaultProps = {
   //
 };
 
 Notibox.propTypes = {
   //
-  type: string,
 };
 
 Notibox.displayName = nameof(Notibox);

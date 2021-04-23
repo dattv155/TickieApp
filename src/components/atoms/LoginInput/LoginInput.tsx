@@ -25,10 +25,10 @@ const LoginInput: FC<PropsWithChildren<LoginInputProps>> = (
         {title}
       </Text>
       <TextInput
-        {...restProps}
         style={[atomicStyles.h5, styles.textStyle]}
         placeholder={placeholder}
         keyboardType={keyboardType}
+        {...restProps}
       />
       <View style={styles.bottomInputStyle} />
     </View>

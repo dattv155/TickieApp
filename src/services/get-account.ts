@@ -21,7 +21,7 @@ export const getAccount = {
   ] {
     const [userData, setUserData] = React.useState<AppUser>({});
 
-    const [province, setProvince] = React.useState<string>('');
+    const [province, setProvince] = React.useState<string>('Hà Nội');
     const [email, setEmail] = React.useState<string>('');
     const [gender, setGender] = React.useState<string>('');
     const [phoneNumber, setPhoneNumber] = React.useState<string>('');

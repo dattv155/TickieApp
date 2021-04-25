@@ -71,6 +71,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
               navigation={navigation}
               route={route}
               list={list}
+              display={display}
             />
             <AvailableFilm display={display} list={list} />
             <UpcomingFilm display={display} list={list} />

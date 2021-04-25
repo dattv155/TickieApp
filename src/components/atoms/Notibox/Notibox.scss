@@ -1,0 +1,36 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-04-19 21:48:55
+ * @author Huy-No1 <huygg12345@gmail.com>
+ */
+ @import '../../../styles/atomic-styles';
+.touchable {
+    width: 100%;
+    align-items: center;
+}
+.bigwrapper {
+    overflow: hidden;
+    width: 100%;
+    height: 100%
+}
+.type {
+    font-weight: bold;
+    font-size: 18px;
+    color: map-get($colors, "blue" );
+
+};
+.content {
+    font-weight: 300;
+    font-size: 15px;
+};
+.wrapper {
+    margin-top: 5px;
+    // height: 40;
+    margin-bottom: 15px;
+}
+.title {
+    flex-direction: row;
+    line-height: 18.9px;
+    margin-top: 8px;
+    justify-content: space-between;
+}

@@ -3,6 +3,7 @@ import {AuthDetails} from '../types';
 import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-simple-toast';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+// @ts-ignore
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 
 export const logoutUser = () => {
@@ -216,5 +217,36 @@ export const sendEmailWithPassword = async (email: string) => {
           error: 'Check your internet connection.',
         };
     }
+  }
+};
+
+const reauthenticate = (currentPassword: string) => {
+  var user = auth().currentUser;
+  var cred = auth.EmailAuthProvider.credential(user.email, currentPassword);
+  return user.reauthenticateWithCredential(cred);
+};
+
+export const changePassword = async (
+  currentPassword: string,
+  newPassword: string,
+) => {
+  try {
+    reauthenticate(currentPassword)
+      .then(() => {
+        var user = auth().currentUser;
+        user
+          .updatePassword(newPassword)
+          .then(() => {
+            Toast.show('Cập nhật mật khẩu mới thành công');
+          })
+          .catch((e) => {
+            Toast.show(e.toString());
+          });
+      })
+      .catch((e) => {
+        Toast.show(e.toString());
+      });
+  } catch (e) {
+    Toast.show(e.toString());
   }
 };

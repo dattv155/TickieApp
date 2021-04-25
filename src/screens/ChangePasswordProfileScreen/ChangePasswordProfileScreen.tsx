@@ -2,12 +2,13 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ChangePasswordProfileScreen.scss';
 import {StackScreenProps} from '@react-navigation/stack';
-import {View, Text, SafeAreaView} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import InputProfile from 'src/components/morecules/InputProfile/InputProfile';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
+import {changePassword} from 'src/services/firebase-service';
 
 /**
  * File: ChangePasswordProfileScreen.tsx
@@ -21,6 +22,15 @@ const ChangePasswordProfileScreen: FC<
   props: PropsWithChildren<ChangePasswordProfileScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const [currentPassword, setCurrentPassword] = React.useState<string>('');
+
+  const [newPassword, setNewPassword] = React.useState<string>('');
+
+  const handleChangePassword = async () => {
+    await changePassword(currentPassword, newPassword);
+  };
+
   return (
     <DefaultLayout
       navigation={navigation}
@@ -44,13 +54,21 @@ const ChangePasswordProfileScreen: FC<
         <View style={styles.viewContainer}>
           <InputProfile
             label="Mật khẩu cũ"
+            defaultValue={currentPassword}
             keyboardType="default"
             secureTextEntry={true}
+            onChangeText={(password: string) => {
+              setCurrentPassword(password);
+            }}
           />
           <InputProfile
             label="Mật khẩu mới"
+            defaultValue={newPassword}
             keyboardType="default"
             secureTextEntry={true}
+            onChangeText={(password: string) => {
+              setNewPassword(password);
+            }}
           />
           <InputProfile
             label="Nhập lại mật khẩu mới"
@@ -58,7 +76,7 @@ const ChangePasswordProfileScreen: FC<
             secureTextEntry={true}
           />
         </View>
-        <ButtonMain onPress={() => {}} label="Thay đổi mật khẩu" />
+        <ButtonMain onPress={handleChangePassword} label="Thay đổi mật khẩu" />
       </SafeAreaView>
     </DefaultLayout>
   );

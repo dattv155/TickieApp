@@ -9,4 +9,5 @@ export class AppUser extends Model {
   public gender?: string;
   public province?: string;
   public createAt?: Date;
+  public userImg?: string;
 }

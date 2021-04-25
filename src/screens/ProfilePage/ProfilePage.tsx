@@ -27,6 +27,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
 import {logoutUser} from 'src/services/firebase-service';
 import Toast from 'react-native-simple-toast';
+import {getAccount} from 'src/services/get-account';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 /**
  * File: ProfilePage.tsx
@@ -70,7 +73,22 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
   const fall = new Animated.Value<number>(1);
 
   const [image, setImage] = React.useState(null);
-  const [avatar, setAvatar] = React.useState(null);
+
+  const [
+    ,
+    fullname,
+    ,
+    ,
+    ,
+    profileImg,
+    ,
+    ,
+    ,
+    ,
+    ,
+    handleChangeProfileImg,
+  ] = getAccount.getAccountInfo();
+
   const [uploading, setUploading] = React.useState(false);
   const [transferred, setTransferred] = React.useState(0);
 
@@ -191,7 +209,19 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
       setUploading(false);
       setImage(url);
-      setAvatar(url);
+      handleChangeProfileImg(url);
+      firestore()
+        .collection('users')
+        .doc(auth().currentUser.uid)
+        .update({
+          userImg: url,
+        })
+        .then(() => {
+          Toast.show('Cập nhật ảnh thành công');
+        })
+        .catch((e) => {
+          Toast.show(e.toString());
+        });
       return url;
     } catch (e) {
       Toast.show(e.toString());
@@ -233,7 +263,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                 style={styles.avatarFrame}>
                 <Image
                   source={{
-                    uri: avatar,
+                    uri: profileImg,
                   }}
                   style={styles.avatarImage}
                 />
@@ -249,7 +279,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                       fontWeight: '100',
                     },
                   ]}>
-                  Vu Trong Dat
+                  {fullname}
                 </Text>
                 <Text
                   style={[
@@ -307,11 +337,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                 />
               </View>
 
-              <ButtonMain
-                style={styles.logoutButton}
-                label={'Đăng xuất'}
-                onPress={logoutUser}
-              />
+              <ButtonMain label={'Đăng xuất'} onPress={logoutUser} />
             </View>
           </SafeAreaView>
           <MainTabBar navigation={navigation} route={route} />

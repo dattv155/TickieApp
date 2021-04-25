@@ -59,7 +59,7 @@ const TabBarIcon: FC<PropsWithChildren<TabBarIconProps>> = (
               },
             ]}>
             <Text style={[atomicStyles.textDark, atomicStyles.bold]}>
-            {iconName}
+              {iconName}
             </Text>
           </Animated.View>
         </View>

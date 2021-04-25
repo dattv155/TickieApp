@@ -22,6 +22,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
 import {getAccount} from 'src/services/get-account';
+import moment from 'moment';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -42,11 +43,13 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
     phoneNumber,
     province,
     gender,
+    ,
     handleChangeFullname,
     handleChangeEmail,
     handleChangePhoneNumber,
     handleChangeProvince,
     handleChangeGender,
+    ,
   ] = getAccount.getAccountInfo();
 
   const updateProfile = React.useCallback(() => {
@@ -248,7 +251,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                           atomicStyles.mb16px,
                           atomicStyles.mt8px,
                         ]}>
-                        {newDate.toLocaleDateString()}
+                        {moment(newDate).format('DD/MM/YYYY')}
                       </Text>
                     </Pressable>
                   </View>

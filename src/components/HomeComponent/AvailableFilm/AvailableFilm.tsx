@@ -49,6 +49,7 @@ const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
         )}
         keyExtractor={(item) => item.id.toString()}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
       <View style={styles.line} />
     </View>

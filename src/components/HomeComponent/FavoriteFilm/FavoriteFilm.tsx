@@ -49,6 +49,7 @@ const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
         )}
         keyExtractor={(item) => item.id.toString()}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
       <View style={styles.line} />
     </View>

@@ -40,9 +40,7 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
                 uri: item.img,
               }}
             />
-            <Text style={[atomicStyles.bold, styles.text1]}>
-              {item.name}
-            </Text>
+            <Text style={[atomicStyles.bold, styles.text1]}>{item.name}</Text>
             <Text style={[atomicStyles.regular, styles.text2]}>
               {item.release}
             </Text>
@@ -50,6 +48,7 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
         )}
         keyExtractor={(item) => item.id.toString()}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
       <View style={styles.line} />
     </View>

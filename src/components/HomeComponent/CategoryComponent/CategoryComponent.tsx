@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Dimensions,
-  StyleSheet,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -30,7 +29,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
 ): ReactElement => {
   const {navigation} = props;
 
-  const {list} = props;
+  const {list, display} = props;
 
   const [translate] = useTranslation();
 
@@ -47,7 +46,12 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
       <View>
         <TouchableOpacity onPress={handleGotoMovieScreen}>
           <Image
-            style={itemStyles.imageContainer}
+            style={[styles.imageContainer,
+                      {
+                        width: ITEM_WIDTH,
+                        height: ITEM_HEIGHT,
+                      }
+                  ]}
             source={{
               uri: item.img,
             }}
@@ -58,17 +62,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   };
 
   return (
-    <View>
-      <Text
-        style={[
-          atomicStyles.h1,
-          atomicStyles.bold,
-          styles.header,
-          styles.textStyle,
-        ]}>
-        {translate('homeScreen.latest')}
-      </Text>
-
+    <View style={[{display: display}]}>
       <Carousel
         ref={(c) => setCarousel(c)}
         data={list}
@@ -102,24 +96,10 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   );
 };
 
-const itemStyles = StyleSheet.create({
-  imageContainer: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
-    borderRadius: 39,
-    borderWidth: 3,
-  },
-  release: {
-    paddingTop: 3,
-    color: '#828282',
-    fontWeight: '500',
-    fontStyle: 'normal',
-  },
-});
-
 export interface CategoryComponentProps extends StackScreenProps<any> {
   //
   list?: any[];
+  display?: string;
 }
 
 CategoryComponent.defaultProps = {

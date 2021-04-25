@@ -10,6 +10,8 @@ import {atomicStyles} from 'src/styles';
 import TabBarIcon from 'src/components/organisms/MainTabBar/TabBarIcon/TabBarIcon';
 import ProfilePage from 'src/screens/ProfilePage/ProfilePage';
 import NotificationScreen from 'src/screens/NotificationScreen/NotificationScreen';
+import { Text } from 'react-native-svg';
+import { result } from 'lodash';
 
 /**
  * File: MainTabBar.tsx
@@ -21,9 +23,9 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
   props: PropsWithChildren<MainTabBarProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-
   const [translate] = useTranslation();
 
+ 
   const tabs: {
     routeName: string;
     icon?: {
@@ -58,7 +60,7 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
         routeName: ProfilePage.displayName,
         icon: require('assets/TabBarIcon/Profile.svg'),
         activeIcon: require('assets/TabBarIcon/ProfileW.svg'),
-        onPress: () => {
+        onPress: ()=> {
           navigation.navigate(ProfilePage.displayName);
         },
         iconName: translate('tab.profile'),
@@ -78,17 +80,19 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
             borderTopWidth: 0,
             elevation: 10,
           },
-        ]}>
+        ]}>      
         {tabs.map((tab, index: number) => (
           <TabBarIcon
             key={index}
-            onPress={tab.onPress}
+            onPress={() => tab.onPress(index)}
             icon={tab.icon}
             iconName={tab.iconName}
             activeIcon={tab.activeIcon}
             isActive={route?.name === tab.routeName}
+            hand
           />
         ))}
+
       </View>
       {props.children}
     </SafeAreaView>

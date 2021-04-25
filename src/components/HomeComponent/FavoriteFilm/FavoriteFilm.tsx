@@ -19,7 +19,6 @@ const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
 ): ReactElement => {
   const {list, display} = props;
   const [translate] = useTranslation();
-
   return (
     <View style={{...styles.mainComponent, display: display}}>
       <View>
@@ -43,7 +42,7 @@ const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
               }}
             />
             <Text style={[atomicStyles.bold, styles.text1]}>{item.name}</Text>
-            <Text style={[atomicStyles.bold, styles.text2]}>
+            <Text style={[atomicStyles.regular, styles.text2]}>
               {item.release}
             </Text>
           </View>
@@ -58,9 +57,8 @@ const FavoriteFilm: FC<PropsWithChildren<FavoriteFilmProps>> = (
 
 export interface FavoriteFilmProps {
   //
-  list?: any[];
-
   display?: string;
+  list?: any[];
 }
 
 FavoriteFilm.defaultProps = {

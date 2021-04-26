@@ -8,6 +8,7 @@ import LoginInput from 'src/components/atoms/LoginInput/LoginInput';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import {useTranslation} from 'react-i18next';
 import {sendEmailWithPassword} from 'src/services/firebase-service';
+import SentEmailScreen from 'src/screens/SentEmailScreen/SentEmailScreen';
 
 /**
  * File: ForgotPasswordScreen.tsx
@@ -24,10 +25,15 @@ const ForgotPasswordScreen: FC<PropsWithChildren<ForgotPasswordScreenProps>> = (
 
   const [emailInput, setEmailInput] = React.useState<string>('ab');
 
+  const handleGoToSentLinkScreen = React.useCallback(() => {
+    navigation.navigate(SentEmailScreen.displayName);
+  }, [navigation]);
+
   const handleSendEmail = React.useCallback(async () => {
     setEmailInput(emailInput);
     const response = await sendEmailWithPassword(emailInput);
-  }, [emailInput]);
+    handleGoToSentLinkScreen();
+  }, [emailInput, handleGoToSentLinkScreen]);
 
   return (
     <SafeAreaView style={styles.screenContainer}>

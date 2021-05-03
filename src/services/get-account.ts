@@ -18,6 +18,8 @@ export const getAccount = {
     (value: string) => Promise<void>,
     (value: string) => Promise<void>,
     (value: string) => Promise<void>,
+    Date,
+    (value: Date) => Promise<void>,
   ] {
     const [userData, setUserData] = React.useState<AppUser>({});
 
@@ -27,6 +29,7 @@ export const getAccount = {
     const [phoneNumber, setPhoneNumber] = React.useState<string>('');
     const [fullname, setFullname] = React.useState<string>('');
     const [profileImg, setProfileImg] = React.useState<string>('');
+    const [dateOfBirth, setDateOfBirth] = React.useState<Date>(new Date());
 
     React.useEffect(() => {
       const subscriber = firestore()
@@ -41,6 +44,9 @@ export const getAccount = {
             setGender(userData.gender);
             setProvince(userData.province);
             setProfileImg(userData.userImg);
+            try {
+              setDateOfBirth(userData.dateOfBirth.toDate());
+            } catch (e) {}
           },
           (e) => {
             Toast.show(e.toString());
@@ -48,6 +54,8 @@ export const getAccount = {
         );
       return () => subscriber();
     }, [
+      navigation,
+      ,
       userData.email,
       userData.fullname,
       userData.gender,
@@ -83,6 +91,10 @@ export const getAccount = {
       await setProfileImg(img);
     }, []);
 
+    const handleChangeDateOfBirth = React.useCallback(async (date: Date) => {
+      await setDateOfBirth(date);
+    }, []);
+
     return [
       email,
       fullname,
@@ -96,6 +108,8 @@ export const getAccount = {
       handleChangeProvince,
       handleChangeGender,
       handleChangeProfileImg,
+      dateOfBirth,
+      handleChangeDateOfBirth,
     ];
   },
 };

@@ -17,9 +17,9 @@ import {StackScreenProps} from '@react-navigation/stack';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import {atomicStyles} from 'src/styles';
-import ButtonSelectFilmProperties from 'src/components/atoms/ButtonSelectFilmProperties/ButtonSelectFilmProperties';
-import {ListMovie} from 'src/sample/listMovies';
 import ChooseSeatScreen from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
+import ButtonSelectFilmType from 'src/screens/BookingScreen/component/ButtonSelectFilmType/ButtonSelectFilmType';
+import ButtonSelectFilmTime from 'src/screens/BookingScreen/component/ButtonSelectFilmTime/ButtonSelectFilmTime';
 
 /**
  * File: BookingScreen.tsx
@@ -27,19 +27,21 @@ import ChooseSeatScreen from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
  * @author TrongDat <trongdat1505@gmail.com>
  * @type {FC<PropsWithChildren<BookingScreenProps>>}
  */
-
-export interface MovieSchedule {
+export interface CinemaSchedule {
   cinemaName: string;
-  schedule: string[];
+  showTime: string[];
+}
+
+export interface Schedule {
+  id: number;
+  byType: string;
+  cinema: CinemaSchedule[];
 }
 
 export interface Movie {
-  id: number;
-  day: string;
-  movie: {
-    type: string[];
-    cinema: MovieSchedule[];
-  };
+  // id: number;
+  Day: string;
+  Schedule: Schedule[];
 }
 
 const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
@@ -47,9 +49,17 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
+  const {movieInfo} = route?.params;
+
   const fadeAnimation = React.useRef(new Animated.Value(1)).current;
 
-  const [data, setData] = React.useState<Movie>(ListMovie[0]);
+  const [data, setData] = React.useState<Movie>(movieInfo.Schedules[0]);
+
+  const [schedule, setSchedule] = React.useState<Schedule>(
+    movieInfo.Schedules[0].Schedule[0],
+  );
+
+  const [selectedTypeID, setSelectedTypeID] = React.useState<number>(0);
 
   const fadeIn = React.useCallback(() => {
     Animated.timing(fadeAnimation, {
@@ -59,23 +69,84 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     }).start();
   }, [fadeAnimation]);
 
-  const getInfo = React.useCallback(
+  const convertTimestamp = React.useCallback((timestamp: number) => {
+    const date = new Date(timestamp * 1000);
+    const day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+    const month =
+      date.getMonth() >= 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
+
+    return date.getFullYear() + '-' + month + '-' + day;
+  }, []);
+
+  const getInfoByDay = React.useCallback(
     (day) => {
-      const dataTemp = ListMovie.find(
-        (item) => item.day === day.toISOString(false).split('T')[0],
+      const dataTemp = movieInfo.Schedules.find(
+        (item: any) =>
+          convertTimestamp(item.Day.seconds) ===
+          day.toISOString(false).split('T')[0],
       );
-      setData(dataTemp);
-      fadeIn();
+
+      dataTemp
+        ? (setData(dataTemp), setSchedule(dataTemp.Schedule[0]))
+        : setData(null);
     },
-    [fadeIn],
+    [convertTimestamp, movieInfo.Schedules],
+  );
+
+  const getInfoByType = React.useCallback(
+    (typeID) => {
+      if (data) {
+        const dataByType = data?.Schedule.find((item) => item.id === typeID);
+        dataByType ? (setSchedule(dataByType), fadeIn()) : setSchedule(null);
+      }
+    },
+    [data, fadeIn],
+  );
+
+  const handleSelection = React.useCallback(
+    (id) => {
+      selectedTypeID !== id && setSelectedTypeID(id);
+    },
+    [selectedTypeID],
+  );
+
+  const renderType: ListRenderItem<any> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<any>) => {
+      let select = false;
+
+      if (selectedTypeID === index) {
+        select = true;
+      }
+      return (
+        <TouchableOpacity
+          key={index}
+          onPress={() => {
+            handleSelection(index);
+            getInfoByType(index);
+          }}
+          style={styles.press}>
+          <ButtonSelectFilmType item={item} selected={select} />
+        </TouchableOpacity>
+      );
+    },
+    [getInfoByType, handleSelection, selectedTypeID],
   );
 
   const renderItem: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
-      return <ButtonSelectFilmProperties item={item} key={index} />;
+      let select = false;
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.press}
+          onPress={() => (select = !select)}>
+          <ButtonSelectFilmType item={item} selected={select} />
+        </TouchableOpacity>
+      );
     },
     [],
   );
+
   const handleGotoChooseSeatScreen = React.useCallback(() => {
     navigation.navigate(ChooseSeatScreen.displayName);
   }, [navigation]);
@@ -90,8 +161,8 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
       customHeader={false}
       bgWhite={true}>
       <StatusBar barStyle="dark-content" />
-      <ScrollView>
-        <View style={styles.containerView}>
+      <View style={styles.containerView}>
+        <View style={styles.calendar}>
           <CalendarStrip
             startingDate={moment()}
             minDate={moment()}
@@ -118,12 +189,14 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
             showMonth={false}
             iconContainer={{flex: 0.1}}
             onDateSelected={(date) => {
-              getInfo(date);
+              getInfoByDay(date);
             }}
           />
-          <Animated.View style={[styles.contentView, {opacity: fadeAnimation}]}>
-            {data !== undefined ? (
-              <View>
+        </View>
+        <Animated.View style={[styles.content, {opacity: fadeAnimation}]}>
+          {data ? (
+            <View style={styles.scheduleArea}>
+              <ScrollView>
                 <View>
                   <Text
                     style={[
@@ -135,8 +208,8 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
                   </Text>
                   <View>
                     <FlatList
-                      data={data.movie.type}
-                      renderItem={renderItem}
+                      data={data.Schedule?.map((item) => item.byType)}
+                      renderItem={renderType}
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => item + index.toString()}
                       contentContainerStyle={styles.listType}
@@ -144,35 +217,13 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
                     />
                   </View>
                 </View>
-
                 <View>
-                  {data.movie.cinema.map((item) => {
-                    return (
-                      <View>
-                        <Text
-                          style={[
-                            atomicStyles.bold,
-                            atomicStyles.h1,
-                            styles.textStyle,
-                          ]}>
-                          {item.cinemaName}
-                        </Text>
-                        <View>
-                          <FlatList
-                            key={'#'}
-                            data={item.schedule}
-                            renderItem={renderItem}
-                            showsVerticalScrollIndicator={false}
-                            keyExtractor={(item) => '#' + item}
-                            contentContainerStyle={styles.listTime}
-                            numColumns={3}
-                          />
-                        </View>
-                      </View>
-                    );
+                  {schedule?.cinema.map((item) => {
+                    return <ButtonSelectFilmTime data={item} />;
                   })}
                 </View>
-
+              </ScrollView>
+              <View style={styles.bottom}>
                 <TouchableOpacity
                   style={styles.buttonNext}
                   onPress={handleGotoChooseSeatScreen}>
@@ -181,25 +232,25 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
                   </Text>
                 </TouchableOpacity>
               </View>
-            ) : (
-              <View
+            </View>
+          ) : (
+            <View
+              style={[
+                atomicStyles.alignItemsCenter,
+                atomicStyles.justifyContentCenter,
+              ]}>
+              <Text
                 style={[
-                  atomicStyles.alignItemsCenter,
-                  atomicStyles.justifyContentCenter,
+                  atomicStyles.h2,
+                  atomicStyles.bold,
+                  atomicStyles.textDark,
                 ]}>
-                <Text
-                  style={[
-                    atomicStyles.h2,
-                    atomicStyles.bold,
-                    atomicStyles.textDark,
-                  ]}>
-                  No Data
-                </Text>
-              </View>
-            )}
-          </Animated.View>
-        </View>
-      </ScrollView>
+                No Data
+              </Text>
+            </View>
+          )}
+        </Animated.View>
+      </View>
     </DefaultLayout>
   );
 };

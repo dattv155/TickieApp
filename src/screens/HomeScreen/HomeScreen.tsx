@@ -10,6 +10,11 @@ import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableF
 import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
 import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
 import Search from '../../components/HomeComponent/Search/Search';
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
+
+import {ListMovie} from 'src/sample/listMovies';
 
 /**
  * File: HomeScreen.tsx
@@ -29,7 +34,33 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
     display === 'flex' ? setDisplay('none') : setDisplay('flex');
   };
 
+  const [data, setData] = React.useState<FirebaseFirestoreTypes.DocumentData[]>(
+    [],
+  );
+
+  const handleGetData = React.useCallback(async () => {
+    return await firestore()
+      .collection('movie')
+      .get()
+      .then((documentData) => {
+        return documentData.docs.map((item) => item.data());
+      });
+  }, []);
+
+  React.useEffect(() => {
+    return navigation.addListener('focus', async () => {
+      const result = await handleGetData();
+      setData(result);
+    });
+  }, [handleGetData, navigation]);
+
   const list = [
+    // {
+    //   id: 1,
+    //   img: data?.Poster,
+    //   name: data?.Name,
+    //   release: convertTimestamp(data?.Release.seconds),
+    // },
     {
       id: 1,
       img:
@@ -70,7 +101,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
             <CategoryComponent
               navigation={navigation}
               route={route}
-              list={list}
+              list={data}
             />
             <AvailableFilm display={display} list={list} />
             <UpcomingFilm display={display} list={list} />

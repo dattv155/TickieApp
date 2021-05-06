@@ -56,7 +56,6 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^8.0.7",
     "react-native-fbsdk": "^3.0.0",
-    "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-crop-picker": "^0.36.0",
     "react-native-linear-gradient": "^2.5.6",

@@ -16,7 +16,7 @@ const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
   const {label, ...restProps} = props;
 
   return (
-    <Pressable {...restProps} style={styles.buttonStyle}>
+    <Pressable style={styles.buttonStyle} {...restProps}>
       <Text
         style={[
           atomicStyles.h5,
@@ -33,7 +33,6 @@ const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
 export interface ButtonMainProps extends PressableProps {
   //
   label?: string;
-  onPress?: () => void;
 }
 
 ButtonMain.defaultProps = {

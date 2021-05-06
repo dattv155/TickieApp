@@ -59,7 +59,12 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
       <View>
         <TouchableOpacity onPress={() => handleGotoMovieScreen(item)}>
           <Image
-            style={itemStyles.imageContainer}
+            style={[styles.imageContainer,
+                      {
+                        width: ITEM_WIDTH,
+                        height: ITEM_HEIGHT,
+                      }
+                  ]}
             source={{
               uri: item?.Poster,
             }}
@@ -115,21 +120,6 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
     </View>
   );
 };
-
-const itemStyles = StyleSheet.create({
-  imageContainer: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
-    borderRadius: 39,
-    borderWidth: 3,
-  },
-  release: {
-    paddingTop: 3,
-    color: '#828282',
-    fontWeight: '500',
-    fontStyle: 'normal',
-  },
-});
 
 export interface CategoryComponentProps extends StackScreenProps<any> {
   //

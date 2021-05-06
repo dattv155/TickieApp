@@ -22,6 +22,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
 import {getAccount} from 'src/services/get-account';
+import moment from 'moment';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -34,19 +35,21 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const [newDate, setNewDate] = React.useState(new Date());
-
   const [
     email,
     fullname,
     phoneNumber,
     province,
     gender,
+    ,
     handleChangeFullname,
     handleChangeEmail,
     handleChangePhoneNumber,
     handleChangeProvince,
     handleChangeGender,
+    ,
+    dateOfBirth,
+    handleChangeDateOfBirth,
   ] = getAccount.getAccountInfo();
 
   const updateProfile = React.useCallback(() => {
@@ -59,6 +62,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
         phoneNumber: phoneNumber,
         gender: gender,
         province: province,
+        dateOfBirth: firestore.Timestamp.fromDate(dateOfBirth),
       })
       .then(() => {
         Toast.show('Lưu thông tin thành công');
@@ -66,7 +70,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
       .catch((e) => {
         Toast.show(e.toString());
       });
-  }, [email, fullname, gender, phoneNumber, province]);
+  }, [dateOfBirth, email, fullname, gender, phoneNumber, province]);
 
   const sheetRef = React.useRef(null);
   const provinceRef = React.useRef(null);
@@ -84,10 +88,8 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
               width: 350,
             },
           ]}
-          date={newDate}
-          onDateChange={(date: Date) => {
-            setNewDate(date);
-          }}
+          date={dateOfBirth}
+          onDateChange={handleChangeDateOfBirth}
           mode={'date'}
         />
       </View>
@@ -132,6 +134,8 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
 
   const handleOpenBottomSheet = React.useCallback(() => {
     sheetRef.current.snapTo(0);
+    provinceRef.current.snapTo(1);
+    genderRef.current.snapTo(1);
   }, []);
 
   const handleCloseBottomSheet = React.useCallback(() => {
@@ -248,7 +252,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                           atomicStyles.mb16px,
                           atomicStyles.mt8px,
                         ]}>
-                        {newDate.toLocaleDateString()}
+                        {moment(dateOfBirth).format('DD/MM/YYYY')}
                       </Text>
                     </Pressable>
                   </View>

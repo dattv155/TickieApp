@@ -24,14 +24,16 @@ import {
  */
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
-
+const HEADER_WIDTH = SLIDER_WIDTH * 0.55;
+const SEARCH_WIDTH = SLIDER_WIDTH * 0.9;
+const VIEW_HEIGHT = SLIDER_HEIGHT * 0.77;
 const Search: FC<PropsWithChildren<SearchProps>> = (
   props: PropsWithChildren<SearchProps>,
 ): ReactElement => {
   const {list, display, handleClick} = props;
 
   const headerWidth: Animated.Value = React.useRef<Animated.Value>(
-    new Animated.Value(200),
+    new Animated.Value(HEADER_WIDTH),
   ).current;
   const searchWidth: Animated.Value = React.useRef<Animated.Value>(
     new Animated.Value(0),
@@ -49,19 +51,19 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
       handleClick();
     }
     Animated.timing(headerWidth, {
-      toValue: headerWidth._value === 200 ? 0 : 200,
+      toValue: headerWidth._value === 0 ? HEADER_WIDTH : 0,
       duration: 500,
       useNativeDriver: false,
       // easing: Easing.out(Easing.linear)
     }).start();
     Animated.timing(searchWidth, {
-      toValue: searchWidth._value === 0 ? 370 : 0,
+      toValue: searchWidth._value === 0?  SEARCH_WIDTH: 0,
       duration: 500,
       useNativeDriver: false,
       // easing: Easing.out(Easing.linear)
     }).start();
     Animated.timing(viewHeight, {
-      toValue: viewHeight._value === 0 ? 680 : 0,
+      toValue: viewHeight._value === 0 ? VIEW_HEIGHT : 0,
       duration: 500,
       useNativeDriver: false,
       easing: Easing.linear,
@@ -77,13 +79,9 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
         </Animated.View>
 
         <Animated.View
-          style={{
+          style={[styles.viewanimated,{
             width: searchWidth,
-            padding: 0,
-            position: 'absolute',
-            right: 0,
-            overflow: 'hidden',
-          }}>
+          }]}>
           <TextInput
             style={styles.textInput}
             placeholder="Search"
@@ -98,13 +96,9 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
       </View>
 
       <Animated.View
-        style={{
-          width: '100%',
+        style={[styles.viewanimated2,{
           height: viewHeight,
-          overflow: 'hidden',
-          paddingTop: 10,
-          paddingLeft: 10,
-        }}>
+        }]}>
         <FlatList
           data={list.filter((item) => {
             if (input === '') {
@@ -117,11 +111,9 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
           })}
           renderItem={({item}) => (
             <View
-              style={{
-                alignItems: 'center',
+              style={[styles.viewitem, {
                 marginRight: SLIDER_WIDTH * 0.051,
-                marginBottom: 10,
-              }}>
+              }]}>
               <Image
                 style={{
                   width: SLIDER_WIDTH * 0.4,
@@ -132,7 +124,7 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
                   uri: item.img,
                 }}
               />
-              <Text style={[atomicStyles.regular, styles.text1]}>
+              <Text style={[atomicStyles.bold, styles.text1]}>
                 {item.name}
               </Text>
               <Text style={[atomicStyles.regular, styles.text2]}>

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "882927407357",
+    "firebase_url": "https://tickie-app-default-rtdb.firebaseio.com",
     "project_id": "tickie-app",
     "storage_bucket": "tickie-app.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "882927407357-5sb3mhulh3824upadjqe0bcaonom3hqa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tickieapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
         {
           "client_id": "882927407357-42g1r9e2e49p1pke081lfn3crpkdvgha.apps.googleusercontent.com",
           "client_type": 3

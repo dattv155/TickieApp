@@ -6,8 +6,7 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import LoginScreen from 'src/screens/LoginScreen/LoginScreen';
 import ForgotPasswordScreen from 'src/screens/ForgotPasswordScreen/ForgotPasswordScreen';
-import VerifyCodeScreen from 'src/screens/VerifyCodeScreen/VerifyCodeScreen';
-import ChangePasswordScreen from 'src/screens/ChangePasswordScreen/ChangePasswordScreen';
+import SentEmailScreen from 'src/screens/SentEmailScreen/SentEmailScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -34,14 +33,10 @@ const LoginNavigator: FC<
         component={ForgotPasswordScreen}
         initialParams={{}}
       />
+
       <Screen
-        name={VerifyCodeScreen.displayName}
-        component={VerifyCodeScreen}
-        initialParams={{}}
-      />
-      <Screen
-        name={ChangePasswordScreen.displayName}
-        component={ChangePasswordScreen}
+        name={SentEmailScreen.displayName}
+        component={SentEmailScreen}
         initialParams={{}}
       />
     </Navigator>

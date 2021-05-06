@@ -12,17 +12,19 @@
 }
 
 .screenContainer {
-  padding: 0 20px;
   padding-top: 60px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .infoSection {
   flex-direction: row;
+  align-items: flex-end;
 }
 
 .avatarFrame {
-  width: 65px;
-  height: 65px;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -48,7 +50,7 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   elevation: 4;
   border-radius: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .header {
@@ -93,8 +95,8 @@
 }
 
 .avatarImage {
-  width: 65px;
-  height: 65px;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
 
 }
@@ -107,5 +109,3 @@
   margin-bottom: 15px;
   margin-top: 5px;
 }
-
-

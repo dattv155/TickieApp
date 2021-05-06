@@ -55,12 +55,6 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   }, [handleGetData, navigation]);
 
   const list = [
-    // {
-    //   id: 1,
-    //   img: data?.Poster,
-    //   name: data?.Name,
-    //   release: convertTimestamp(data?.Release.seconds),
-    // },
     {
       id: 1,
       img:

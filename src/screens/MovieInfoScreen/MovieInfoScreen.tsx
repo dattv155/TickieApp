@@ -45,7 +45,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
 
   const handleMarkFilm = React.useCallback(() => {
     setMark(!mark);
-  }, [mark, movieInfo]);
+  }, [mark]);
 
   const handleGotoBookingScreen = React.useCallback(() => {
     navigation.navigate(BookingScreen.displayName, {

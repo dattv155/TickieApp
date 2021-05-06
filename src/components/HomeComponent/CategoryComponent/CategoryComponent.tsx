@@ -1,12 +1,5 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, Dimensions, Image, TouchableOpacity} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {
   scrollInterpolator,
@@ -59,12 +52,13 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
       <View>
         <TouchableOpacity onPress={() => handleGotoMovieScreen(item)}>
           <Image
-            style={[styles.imageContainer,
-                      {
-                        width: ITEM_WIDTH,
-                        height: ITEM_HEIGHT,
-                      }
-                  ]}
+            style={[
+              styles.imageContainer,
+              {
+                width: ITEM_WIDTH,
+                height: ITEM_HEIGHT,
+              },
+            ]}
             source={{
               uri: item?.Poster,
             }}

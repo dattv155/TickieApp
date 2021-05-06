@@ -18,11 +18,10 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
 ): ReactElement => {
   const {list, display} = props;
   const [translate] = useTranslation();
-
   return (
     <View style={{...styles.mainComponent, display: display}}>
       <View>
-        <Text style={[atomicStyles.regular, styles.header]}>
+        <Text style={[atomicStyles.bold, styles.header]}>
           {translate('homeScreen.upcoming')}
         </Text>
       </View>
@@ -41,9 +40,7 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
                 uri: item.img,
               }}
             />
-            <Text style={[atomicStyles.regular, styles.text1]}>
-              {item.name}
-            </Text>
+            <Text style={[atomicStyles.bold, styles.text1]}>{item.name}</Text>
             <Text style={[atomicStyles.regular, styles.text2]}>
               {item.release}
             </Text>
@@ -51,6 +48,7 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
         )}
         keyExtractor={(item) => item.id.toString()}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
       <View style={styles.line} />
     </View>
@@ -60,7 +58,6 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
 export interface UpcomingFilmProps {
   //
   list?: any[];
-
   display?: string;
 }
 

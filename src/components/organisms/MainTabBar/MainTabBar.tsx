@@ -21,7 +21,6 @@ const MainTabBar: FC<PropsWithChildren<MainTabBarProps>> = (
   props: PropsWithChildren<MainTabBarProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-
   const [translate] = useTranslation();
 
   const tabs: {

@@ -19,7 +19,6 @@ const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
 ): ReactElement => {
   const {list, display} = props;
   const [translate] = useTranslation();
-
   return (
     <View style={{...styles.mainComponent, display: display}}>
       <View>
@@ -43,13 +42,14 @@ const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
               }}
             />
             <Text style={[atomicStyles.bold, styles.text1]}>{item.name}</Text>
-            <Text style={[atomicStyles.bold, styles.text2]}>
+            <Text style={[atomicStyles.regular, styles.text2]}>
               {item.release}
             </Text>
           </View>
         )}
         keyExtractor={(item) => item.id.toString()}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
       <View style={styles.line} />
     </View>
@@ -59,7 +59,6 @@ const AvailableFilm: FC<PropsWithChildren<AvailableFilmProps>> = (
 export interface AvailableFilmProps {
   //
   list?: any[];
-
   display?: string;
 }
 

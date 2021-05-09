@@ -34,7 +34,7 @@ export const MomoPayment = {
     const [billDescription, setBillDescription] = React.useState<string>(
       'Fast and Furious 8',
     );
-    const [amount, setAmount] = React.useState<number>(0);
+    const [amount, setAmount] = React.useState<number>(1000);
 
     const enviroment = '0'; //"1": production
 

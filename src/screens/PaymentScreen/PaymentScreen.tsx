@@ -5,8 +5,9 @@ import {Image, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
-import PaymentMethodItem from 'src/screens/PaymentScreen/component/PaymentMethodItem/PaymentMethodItem';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
+import RadioButton from 'src/components/RadioButton/RadioButton';
+import {PaymentMethod} from 'src/sample/paymentMethod';
 
 /**
  * File: PaymentScreen.tsx
@@ -22,6 +23,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
     navigation.navigate(SuccessBookingScreen.displayName);
   }, [navigation]);
+
   return (
     <>
       <DefaultLayout
@@ -107,9 +109,10 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               Chọn cách thức thanh toán
             </Text>
             <View style={styles.paymentGroup}>
-              <PaymentMethodItem type={'credit'} />
-              <PaymentMethodItem type={'banking'} />
-              <PaymentMethodItem />
+              {/*<PaymentMethodItem type={'credit'} />*/}
+              {/*<PaymentMethodItem type={'banking'} />*/}
+              {/*<PaymentMethodItem />*/}
+              <RadioButton values={PaymentMethod} />
             </View>
           </View>
           <View style={styles.summaryArea}>

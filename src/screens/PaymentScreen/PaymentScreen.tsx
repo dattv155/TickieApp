@@ -8,6 +8,9 @@ import {atomicStyles} from 'src/styles';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
 import RadioButton from 'src/components/RadioButton/RadioButton';
 import {PaymentMethod} from 'src/sample/paymentMethod';
+import {MomoPayment} from 'src/services/momo-payment';
+import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
+import Toast from 'react-native-simple-toast';
 
 /**
  * File: PaymentScreen.tsx
@@ -20,9 +23,52 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
+  const [
+    merchantName,
+    merchantCode,
+    merchantNameLabel,
+    billDescription,
+    amount,
+    payment,
+    handleChangeMerchantName,
+    handleChangeMerchantCode,
+    handleChangeMerchantNameLabel,
+    handleChangeBillDescription,
+    handleChangeAmount,
+    handleSendRequest,
+    handleChangePayment,
+  ] = MomoPayment.getPayment();
+
+  const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
+
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
     navigation.navigate(SuccessBookingScreen.displayName);
   }, [navigation]);
+
+  const handlePay = React.useCallback(() => {
+    if (paymentMethodKey === 'momo') {
+      let newValue = 1000;
+      let amount = fomatNumberToMoney(newValue, null, '');
+      handleChangeAmount(newValue);
+      handleChangePayment({
+        amount: newValue,
+        textAmount: amount,
+        description: '',
+      });
+      handleSendRequest();
+    } else if (paymentMethodKey === 'credit') {
+      Toast.show('Đang phát triển');
+    } else if (paymentMethodKey === 'banking') {
+      Toast.show('Đang phát triển');
+    } else {
+      Toast.show('Hãy chọn phương thức thanh toán!');
+    }
+  }, [
+    handleChangeAmount,
+    handleChangePayment,
+    handleSendRequest,
+    paymentMethodKey,
+  ]);
 
   return (
     <>
@@ -112,7 +158,10 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               {/*<PaymentMethodItem type={'credit'} />*/}
               {/*<PaymentMethodItem type={'banking'} />*/}
               {/*<PaymentMethodItem />*/}
-              <RadioButton values={PaymentMethod} />
+              <RadioButton
+                values={PaymentMethod}
+                onSetMethodKey={setPaymentMethodKey}
+              />
             </View>
           </View>
           <View style={styles.summaryArea}>
@@ -134,9 +183,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                 400.000 VND
               </Text>
             </View>
-            <TouchableOpacity
-              style={styles.paymentButton}
-              onPress={handleGotoSuccessBookingScreen}>
+            <TouchableOpacity style={styles.paymentButton} onPress={handlePay}>
               <Text
                 style={[
                   atomicStyles.h5,

@@ -10,3 +10,46 @@
 .textStyle {
   font-weight: 100;
 }
+
+.container {
+  flex: 1;
+  background-color: #f2f2f2;
+}
+.textInput {
+  font-size: 16px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 5px;
+  height: 40px;
+  padding-bottom: 2px;
+  border-bottom-color: #dadada;
+  border-bottom-width: 1px;
+}
+.formInput {
+  background-color: #FFF;
+  border-bottom-color: #dadada;
+  border-top-color: #dadada;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
+}
+.button {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  background-color: #b0006d;
+  border-radius: 4px;
+  margin: 10px 40px;
+}
+.text {
+  color: #FFFFFF;
+  font-size: 18px;
+  text-align: center;
+  padding: 0 10px;
+}
+.textGrey {
+  color: grey;
+  font-size: 18px;
+  text-align: center;
+}

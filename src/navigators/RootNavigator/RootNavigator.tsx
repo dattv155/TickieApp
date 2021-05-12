@@ -23,6 +23,7 @@ import ChooseSeatScreen from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
 import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
 import PaymentScreen from 'src/screens/PaymentScreen/PaymentScreen';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
+import CommentScreen from 'src/screens/CommentScreen/CommentScreen';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -136,6 +137,11 @@ const RootNavigator: FC<
       <Screen
         name={SuccessBookingScreen.displayName}
         component={SuccessBookingScreen}
+        initialParams={{}}
+      />
+      <Screen
+        name={CommentScreen.displayName}
+        component={CommentScreen}
         initialParams={{}}
       />
     </Navigator>

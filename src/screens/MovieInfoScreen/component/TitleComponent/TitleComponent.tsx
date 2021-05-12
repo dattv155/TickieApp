@@ -45,15 +45,16 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
               <SvgIcon component={require('assets/icons/star.svg')} />
               <Text style={[styles.numberOfRate]}>
                 <Text style={[atomicStyles.h3, styles.rateNumber]}>
-                  {rate.toFixed(1)}
+                  {rate}
                 </Text>
-                /10
+                /5
               </Text>
             </View>
           </View>
-          <TouchableOpacity onPress={handleGotoDetailTitle}>
+          <TouchableOpacity onPress={props.handleDisplay}>
             <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
           </TouchableOpacity>
+
         </>
       )}
     </View>

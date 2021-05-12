@@ -10,6 +10,8 @@
   flex-direction: row;
   margin-bottom: 15px;
   width: 100%;
+  border-bottom-width: 0.5px;
+  border-color: map-get($colors, "gray" );
 }
 .avatarItem {
   height: 60px;
@@ -17,17 +19,19 @@
   border-radius: 120px;
 }
 .containerViewRight {
-  margin-left: 15px;
+  margin-left: 4%;
+  width: 78%;
+  flex-direction: column;
 
 }
 .ReviewArea {
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
+
 }
 .reviewTitle {
-
 }
 .timeItem {
   color: map-get($colors, 'gray');
@@ -36,12 +40,12 @@
 .rate {
   flex-direction: row;
   align-items: center;
-  margin-right: 8px;
 }
 .detailReview {
   //margin-right: 36px;
   margin-top: 9px;
-  padding-right: 100px;
+  padding-right: 15%;
   color: map-get($colors, 'gray');
+  // height: 200px;
 }
 

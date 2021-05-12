@@ -13,11 +13,15 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 const Seat: FC<PropsWithChildren<SeatProps>> = (
   props: PropsWithChildren<SeatProps>,
 ): ReactElement => {
-  const {state} = props;
+  const {state, positionRow, positionColumn} = props;
+
   const [isChoose, setChoose] = React.useState(false);
+
   const handleChooseSeat = React.useCallback(() => {
-    !isChoose ? setChoose(true) : setChoose(false);
+    // console.log(positionRow + ',' + positionColumn);
+    setChoose(!isChoose);
   }, [isChoose]);
+
   return (
     <>
       <View style={styles.container}>
@@ -52,6 +56,10 @@ const Seat: FC<PropsWithChildren<SeatProps>> = (
 export interface SeatProps {
   //
   state?: number;
+
+  positionRow?: number;
+
+  positionColumn?: number;
 }
 
 Seat.defaultProps = {

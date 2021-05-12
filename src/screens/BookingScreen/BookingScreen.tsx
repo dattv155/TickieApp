@@ -39,7 +39,6 @@ export interface Schedule {
 }
 
 export interface Movie {
-  // id: number;
   Day: string;
   Schedule: Schedule[];
 }
@@ -148,8 +147,13 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
   );
 
   const handleGotoChooseSeatScreen = React.useCallback(() => {
-    navigation.navigate(ChooseSeatScreen.displayName);
-  }, [navigation]);
+    navigation.navigate(ChooseSeatScreen.displayName, {
+      movieName: movieInfo?.Name,
+      cinemaName: schedule?.cinema[0].cinemaName,
+      movieDate: data?.Day,
+      showTime: schedule?.cinema[0].showTime[0],
+    });
+  }, [data, movieInfo, navigation, schedule]);
 
   return (
     <DefaultLayout

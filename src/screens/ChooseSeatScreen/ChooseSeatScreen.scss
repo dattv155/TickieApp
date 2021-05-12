@@ -19,8 +19,8 @@
   margin-top: 15px;
 }
 .seatsArea {
-  z-index: -1;
-  margin-top: -50px;
+  z-index: 1;
+  margin-top: -53px;
   align-items: center;
   width: 100%;
   height: 244px;
@@ -44,17 +44,17 @@
   margin-left: 5px;
 }
 .summaryArea {
-  border-radius: 46px;
+  border-top-left-radius: 46px;
+  border-top-right-radius: 46px;
   border-width: 1px;
-  height: 100%;
-  padding: 0 25px;
-  //position: absolute;
+  padding: 0 20px;
   width: 100%;
-  margin-top: 30px;
-  margin-bottom: 50px;
+  background-color: map-get($colors, 'white');
+  position: absolute;
+  bottom: 0;
 }
 .summaryTitle {
-  margin-top: 16px;
+  margin-top: 10px;
 }
 .seatSummary {
   flex-direction: row;
@@ -83,6 +83,7 @@
 }
 .costSummary {
   align-items: center;
+  width: 150px;
 }
 .costTitle {
   font-weight: 500;

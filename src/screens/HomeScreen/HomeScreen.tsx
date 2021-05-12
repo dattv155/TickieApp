@@ -14,8 +14,6 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 
-import {ListMovie} from 'src/sample/listMovies';
-
 /**
  * File: HomeScreen.tsx
  * @created 2021-03-09 16:40:00

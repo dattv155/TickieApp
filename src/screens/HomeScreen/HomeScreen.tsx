@@ -10,7 +10,7 @@ import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableF
 import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
 import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
 import Search from '../../components/HomeComponent/Search/Search';
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 
 import firestore, {
   FirebaseFirestoreTypes,
@@ -86,7 +86,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   ];
   React.useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-}, []);
+  }, []);
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />

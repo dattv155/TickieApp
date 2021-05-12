@@ -1,11 +1,8 @@
-import React, { FC, PropsWithChildren, ReactElement, useEffect } from 'react';
+import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './RateStar.scss';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
-import {
-  Text,
-  View,
-} from 'react-native';
+import {View} from 'react-native';
 /**
  * File: RateStar.tsx
  * @created 2021-05-11 22:02:56
@@ -16,27 +13,32 @@ import {
 const RateStar: FC<PropsWithChildren<RateStarProps>> = (
   props: PropsWithChildren<RateStarProps>,
 ): ReactElement => {
-  const {rate}= props;
-  const [star, setStar]= React.useState([]);
+  const {rate} = props;
+  const [star, setStar] = React.useState([]);
   useEffect(() => {
-    var exp=[];
-    for(let i=0; i<rate; i++)
-      exp.push(<SvgIcon key={i} component={require('assets/icons/star.svg')} />);
-    for(let i=rate; i< 5; i++)
-      exp.push(<SvgIcon key={i} component={require('assets/icons/stargray.svg')} />);
+    let exp = [];
+    for (let i = 0; i < rate; i++) {
+      exp.push(
+        <SvgIcon key={i} component={require('assets/icons/star.svg')} />,
+      );
+    }
+    for (let i = rate; i < 5; i++) {
+      exp.push(
+        <SvgIcon key={i} component={require('assets/icons/stargray.svg')} />,
+      );
+    }
     setStar(exp);
-  },[rate]);
+  }, [rate]);
   return (
     <>
-    <View style={styles.star}>
-    {star}
-    </View>
+      <View style={styles.star}>{star}</View>
     </>
   );
 };
 
 export interface RateStarProps {
   //
+  rate?: number;
 }
 
 RateStar.defaultProps = {

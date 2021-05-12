@@ -11,7 +11,6 @@ import {
   ListRenderItemInfo,
   FlatList,
   TouchableOpacity,
-  TextInput
 } from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
@@ -27,12 +26,9 @@ import UnMark from 'src/screens/MovieInfoScreen/component/MarkComponent/UnMark/U
 import Mark from 'src/screens/MovieInfoScreen/component/MarkComponent/Mark/Mark';
 import BookingScreen from 'src/screens/BookingScreen/BookingScreen';
 import VideoComponent from 'src/components/atoms/VideoComponent/VideoComponent';
-import FilmRate from './component/FilmRate/FilmRate'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import FilmRate from './component/FilmRate/FilmRate';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
-import RateStar from './component/RateStar/RateStar'
-import { number } from 'prop-types';
+import RateStar from './component/RateStar/RateStar';
 import CommentScreen from '../CommentScreen/CommentScreen';
 
 /**
@@ -67,39 +63,57 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
 
   const renderItem: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
-      return <ReviewList item={item.data()} key={index} />;
+      return <ReviewList item={item} key={index} />;
     },
     [],
   );
-  const [intitItem, setInitItem]=React.useState(0);
-  const [rate, setRate]=React.useState(0);
-  const [display, setDisplay]=React.useState('none');
+  const [intitItem, setInitItem] = React.useState<number>(0);
+  const [rate, setRate] = React.useState<number>(0);
+  const [display, setDisplay] = React.useState('none');
   const handleDisplay = () => {
-      if(display === 'flex')
-        setDisplay('none');
-      else
-        setDisplay('flex');
-  }
-  const handleMoreComment = () => {
-    var len=ListReview.length;
-    if (intitItem + 3 < len)
-      setInitItem(intitItem + 3);
-    else setInitItem(len);
-  }
-  const db= firestore();
-  const [list, setList]= React.useState([]);
-  useEffect(() => {
-  async function fetchData(){
-      var exp:Array<Obj>= [];
-      var data= await db.collection("comment").where("movieId", "==", "Movie-1").get();
-      data.forEach(item => exp.push(item));
-      setRate((exp.reduce((sum, item)=>sum + item.data().rate, 0)/exp.length).toFixed(1));
-      setInitItem(exp.length>3?3:exp.length);
-      setList(exp);
+    if (display === 'flex') {
+      setDisplay('none');
+    } else {
+      setDisplay('flex');
     }
-    fetchData();
-  },[])
-  );
+  };
+  const handleMoreComment = () => {
+    let len = ListReview.length;
+    if (intitItem + 3 < len) {
+      setInitItem(intitItem + 3);
+    } else {
+      setInitItem(len);
+    }
+  };
+  const [list, setList] = React.useState<Obj[]>([]);
+
+  const fetchData = React.useCallback(async () => {
+    return await firestore()
+      .collection('comment')
+      .where('movieId', '==', 'Movie-1')
+      .get()
+      .then((data) => {
+        return data.docs.map((item) => item.data());
+      });
+  }, []);
+
+  // Error
+
+  // React.useEffect(() => {
+  //   return navigation.addListener('focus', async () => {
+  //     const data = (await fetchData()) as Obj[];
+  //     setList(data);
+  //
+  //     data.length > 3 ? setInitItem(3) : setInitItem(data.length);
+  //
+  //     const rateTemp = Number(
+  //       (data.reduce((sum, item) => sum + item.rate, 0) / data.length).toFixed(
+  //         1,
+  //       ),
+  //     );
+  //     setRate(rateTemp);
+  //   });
+  // }, [fetchData, navigation]);
 
   const renderListActor: ListRenderItem<any> = React.useCallback(
     ({item}: ListRenderItemInfo<any>) => {
@@ -166,22 +180,23 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
             <View style={styles.actorView}>
               <TitleComponent title={'Diễn viên'} />
               <FlatList
+                key={'-'}
                 data={movieInfo?.Actor}
                 renderItem={renderListActor}
                 horizontal={true}
-                showsHorizontalScrollIndicator={false}>
-                <ActorComponent />
-                <ActorComponent />
-              </FlatList>
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => '-' + item.toString()}
+              />
             </View>
             <View style={styles.actorView}>
               <TitleComponent title={'Hình ảnh'} />
               <FlatList
+                key={'+'}
                 data={movieInfo?.Image}
                 renderItem={renderListImage}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => item.toString()}
+                keyExtractor={(item) => '+' + item.toString()}
               />
             </View>
             <View style={styles.actorView}>
@@ -195,43 +210,52 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
               </ScrollView>
             </View>
 
-
             <View style={styles.actorView}>
               <TitleComponent
                 title={'Đánh giá'}
                 isReviewArea={true}
                 rate={rate}
-                numOfReview={list.length}
+                numOfReview={list?.length}
                 handleDisplay={handleDisplay}
               />
               <View style={[styles.danhgia, {display: display}]}>
-                <Text style={[styles.bignum,atomicStyles.regular]}>
+                <Text style={[styles.bignum, atomicStyles.regular]}>
                   {rate}
                 </Text>
-                <RateStar rate={Math.floor(rate)}/>
-                <Text style={styles.numberofdanhgia}>Dựa trên {list.length} đánh giá</Text>
-                <FilmRate data={list}/>
-                <TouchableOpacity style={styles.buttondanhgia} onPress={handleGotoCommentScreen}>
-                  <View >
-                    <Text style={[styles.textbuttondanhgia,atomicStyles.bold]}>Đánh giá của bạn</Text>
+                <RateStar rate={Math.floor(rate)} />
+                <Text style={styles.numberofdanhgia}>
+                  Dựa trên {list?.length} đánh giá
+                </Text>
+                <FilmRate data={list} />
+                <TouchableOpacity
+                  style={styles.buttondanhgia}
+                  onPress={handleGotoCommentScreen}>
+                  <View>
+                    <Text style={[styles.textbuttondanhgia, atomicStyles.bold]}>
+                      Đánh giá của bạn
+                    </Text>
                   </View>
                 </TouchableOpacity>
               </View>
               <View style={[styles.reviewArea]}>
-                <View style={{height: 12}}/>
+                <View style={{height: 12}} />
                 <FlatList
-                  data={list.slice(0, intitItem)}
+                  key={'='}
+                  data={list?.slice(0, intitItem)}
                   renderItem={renderItem}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item) => item.id.toString()}
                 />
-                <TouchableOpacity style={[styles.buttondanhgia]} onPress={handleMoreComment}>
-                  <View >
-                    <Text style={[styles.textbuttondanhgia,atomicStyles.bold]}>Xem thêm</Text>
+                <TouchableOpacity
+                  style={[styles.buttondanhgia]}
+                  onPress={handleMoreComment}>
+                  <View>
+                    <Text style={[styles.textbuttondanhgia, atomicStyles.bold]}>
+                      Xem thêm
+                    </Text>
                   </View>
                 </TouchableOpacity>
               </View>
-
             </View>
           </View>
           <View style={styles.playButton}>
@@ -261,10 +285,11 @@ export interface MovieInfoScreenProps extends StackScreenProps<any> {
 }
 
 export interface Obj {
+  id?: number;
   avatar?: string;
   movieId?: string;
   name?: string;
-  rate?: string;
+  rate?: number;
   text?: string;
   time?: any;
   userId?: string;

@@ -30,7 +30,6 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
   props: PropsWithChildren<SelectComboScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-  const keyExtractor = ({key}: any) => key;
 
   const [inputVoucher, setInputVoucher] = React.useState('');
 
@@ -60,7 +59,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
             <FlatList
               data={ListCombo}
               renderItem={renderItem}
-              keyExtractor={keyExtractor}
+              keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
             />
           </View>

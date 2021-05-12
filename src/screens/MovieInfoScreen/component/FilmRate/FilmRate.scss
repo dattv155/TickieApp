@@ -1,0 +1,68 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-05-10 23:51:19
+ * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
+ */
+ @import "src/styles/mixins";
+@import "src/styles/atomic-styles";
+
+ .fiveline {
+    width: 100%;
+    border-bottom-width: 0.5px;
+    border-color: map-get($colors, "gray" );
+    padding-top: 24px;
+    padding-bottom: 30px;
+  }
+  .tv {
+    flex-direction: row;
+    align-items:flex-start;
+    font-weight: 100;
+    justify-content: space-between;
+  }
+  .tvtext{
+    font-size: 12px;
+  }
+  .outline {
+    margin-top: 7px;
+    width: 75%;
+    height: 7px;
+    background-color: map-get($colors, "four-gray" );
+    border-radius: 5px;
+    overflow: hidden;
+    
+  }
+  .inline5 {
+    width: 60%;
+    height: 100%;
+    background-color: #4DA64D;
+    border-radius: 5px;
+  
+  }
+  .inline4 {
+    width: 60%;
+    height: 100%;
+    background-color: #A6D633;
+    border-radius: 5px;
+  
+  }
+  .inline3 {
+    width: 60%;
+    height: 100%;
+    background-color: #F7E632;
+    border-radius: 5px;
+  
+  }
+  .inline2 {
+    width: 60%;
+    height: 100%;
+    background-color: #F7A624;
+    border-radius: 5px;
+  
+  }
+  .inline1 {
+    width: 60%;
+    height: 100%;
+    background-color: #EF370C;
+    border-radius: 5px;
+  
+  }

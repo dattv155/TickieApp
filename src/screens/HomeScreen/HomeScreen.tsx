@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren, ReactElement, useState} from 'react';
+import React, {FC, PropsWithChildren, ReactElement, useState, useEffect} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './HomeScreen.scss';
 import {SafeAreaView, StatusBar, ScrollView, View} from 'react-native';
@@ -10,6 +10,8 @@ import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableF
 import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
 import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
 import Search from '../../components/HomeComponent/Search/Search';
+import { LogBox } from 'react-native';
+
 
 /**
  * File: HomeScreen.tsx
@@ -59,7 +61,9 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
       release: '12-02-2020',
     },
   ];
-
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+}, [])
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />

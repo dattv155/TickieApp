@@ -23,7 +23,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
 ): ReactElement => {
   const {navigation} = props;
 
-  const {list} = props;
+  const {list, display} = props;
 
   const [translate] = useTranslation();
 
@@ -69,16 +69,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   };
 
   return (
-    <View>
-      <Text
-        style={[
-          atomicStyles.h1,
-          atomicStyles.bold,
-          styles.header,
-          styles.textStyle,
-        ]}>
-        {translate('homeScreen.latest')}
-      </Text>
+    <View style={[{display: display}]}>
 
       <Carousel
         ref={(c) => setCarousel(c)}
@@ -118,6 +109,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
 export interface CategoryComponentProps extends StackScreenProps<any> {
   //
   list?: FirebaseFirestoreTypes.DocumentData[];
+  display?: String;
 }
 
 CategoryComponent.defaultProps = {

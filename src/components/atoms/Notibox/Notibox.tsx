@@ -16,14 +16,13 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
 ): ReactElement => {
   const [height, setHeight] = React.useState(new Animated.Value(85));
   const [title, setTitle] = React.useState('');
+  const [display, setDisplay] = React.useState('none');
   const {data} = props;
   const {type, span, content, day} = data;
   const press = () => {
-    Animated.timing(height, {
-      toValue: height._value == 85 ? 145 : 85,
-      duration: 450,
-      useNativeDriver: false,
-    }).start();
+    if(display === "none")
+      setDisplay("flex");
+    else setDisplay("none");
   };
   useEffect(() => {
     if (props.data === undefined) {
@@ -65,11 +64,8 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
     return `${isoDay.getHours() - 5}:${isoDay.getUTCMinutes()}`;
   };
   return (
-    <Animated.View
+    <View
       style={[
-        {
-          height: height,
-        },
         sstyle.box,
       ]}>
       <TouchableOpacity
@@ -88,10 +84,10 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
               {content}
             </Text>
           </View>
-          <Text style={[styles.content, atomicStyles.regular]}>{span}</Text>
+          <Text style={[styles.content, atomicStyles.regular, {display: display}]}>{span}</Text>
         </View>
       </TouchableOpacity>
-    </Animated.View>
+    </View>
   );
 };
 

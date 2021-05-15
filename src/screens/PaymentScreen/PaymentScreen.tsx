@@ -5,8 +5,12 @@ import {Image, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
-import PaymentMethodItem from 'src/screens/PaymentScreen/component/PaymentMethodItem/PaymentMethodItem';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
+import RadioButton from 'src/components/RadioButton/RadioButton';
+import {PaymentMethod} from 'src/sample/paymentMethod';
+import {MomoPayment} from 'src/services/momo-payment';
+import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
+import Toast from 'react-native-simple-toast';
 import {SelectedCombo} from 'src/services/booking-service/use-combo';
 import {formatToCurrency} from 'src/helpers/string-helper';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
@@ -36,6 +40,24 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 
   const [, handleGetDay] = UseTimestamp();
 
+  const [
+    merchantName,
+    merchantCode,
+    merchantNameLabel,
+    billDescription,
+    amount,
+    payment,
+    handleChangeMerchantName,
+    handleChangeMerchantCode,
+    handleChangeMerchantNameLabel,
+    handleChangeBillDescription,
+    handleChangeAmount,
+    handleSendRequest,
+    handleChangePayment,
+  ] = MomoPayment.getPayment();
+
+  const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
+
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
     navigation.navigate(SuccessBookingScreen.displayName);
   }, [navigation]);
@@ -47,6 +69,32 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     });
     return text.substring(0, text.length - 2);
   }, []);
+
+  const handlePay = React.useCallback(() => {
+    if (paymentMethodKey === 'momo') {
+      let newValue = 1000;
+      let amount = fomatNumberToMoney(newValue, null, '');
+      handleChangeAmount(newValue);
+      handleChangePayment({
+        amount: newValue,
+        textAmount: amount,
+        description: '',
+      });
+      handleSendRequest();
+    } else if (paymentMethodKey === 'credit') {
+      Toast.show('Đang phát triển');
+    } else if (paymentMethodKey === 'banking') {
+      Toast.show('Đang phát triển');
+    } else {
+      Toast.show('Hãy chọn phương thức thanh toán!');
+    }
+  }, [
+    handleChangeAmount,
+    handleChangePayment,
+    handleSendRequest,
+    paymentMethodKey,
+  ]);
+
   return (
     <>
       <DefaultLayout
@@ -132,9 +180,13 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               Chọn cách thức thanh toán
             </Text>
             <View style={styles.paymentGroup}>
-              <PaymentMethodItem type={'credit'} />
-              <PaymentMethodItem type={'banking'} />
-              <PaymentMethodItem />
+              {/*<PaymentMethodItem type={'credit'} />*/}
+              {/*<PaymentMethodItem type={'banking'} />*/}
+              {/*<PaymentMethodItem />*/}
+              <RadioButton
+                values={PaymentMethod}
+                onSetMethodKey={setPaymentMethodKey}
+              />
             </View>
           </View>
           <View style={styles.summaryArea}>
@@ -156,9 +208,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                 {formatToCurrency(seatCost + comboCost)} VND
               </Text>
             </View>
-            <TouchableOpacity
-              style={styles.paymentButton}
-              onPress={handleGotoSuccessBookingScreen}>
+            <TouchableOpacity style={styles.paymentButton} onPress={handlePay}>
               <Text
                 style={[
                   atomicStyles.h5,

@@ -15,21 +15,15 @@ const FilmRate: FC<PropsWithChildren<FilmRateProps>> = (
 ): ReactElement => {
   const {data} = props;
   const [rate, setRate] = React.useState<number[]>([0, 0, 0, 0, 0]);
-  useEffect(() => {
-    const leng = data.length;
-    if (leng === 0) {
-      return;
-    } else {
-      let exp = [...rate];
-      exp = exp.map(
-        (item, index) =>
-          (data.filter((items: Obj) => items.rate === 5 - index).length /
-            leng) *
-          100,
-      );
+  React.useEffect(()=> {
+    var leng= data.length;
+    if(leng === 0) return;
+    else {
+      let exp=[...rate];
+      exp= exp.map((item, index) => data.filter(items => items.data().rate === (5 - index)).length/leng * 100);
       setRate(exp);
     }
-  }, [data, rate]);
+  },[data])
   return (
     <View style={styles.fiveline}>
       <View style={styles.tv}>
@@ -68,9 +62,13 @@ const FilmRate: FC<PropsWithChildren<FilmRateProps>> = (
 
 export interface FilmRateProps {
   //
-  data?: any;
+  data?: Array<Obj>
 }
 
+export interface Obj {
+  id?: String;
+  data?: Function;
+}
 FilmRate.defaultProps = {
   //
 };

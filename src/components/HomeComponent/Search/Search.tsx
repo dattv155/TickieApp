@@ -24,9 +24,9 @@ import {
  */
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
-const HEADER_WIDTH = SLIDER_WIDTH * 0.55;
+const HEADER_WIDTH = SLIDER_WIDTH * 0.75;
 const SEARCH_WIDTH = SLIDER_WIDTH * 0.9;
-const VIEW_HEIGHT = SLIDER_HEIGHT * 0.77;
+const VIEW_HEIGHT = SLIDER_HEIGHT * 0.85;
 const Search: FC<PropsWithChildren<SearchProps>> = (
   props: PropsWithChildren<SearchProps>,
 ): ReactElement => {
@@ -72,7 +72,7 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headContainer}>
-        <Animated.View style={{width: headerWidth, overflow: 'hidden'}}>
+        <Animated.View style={[styles.release, {width: headerWidth, overflow: 'hidden' }]}>
           <Text style={[atomicStyles.regular, styles.header]}>
             Mới phát hành
           </Text>
@@ -124,10 +124,10 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
                   uri: item.img,
                 }}
               />
-              <Text style={[atomicStyles.bold, styles.text1]}>
+              <Text style={[styles.text1]}>
                 {item.name}
               </Text>
-              <Text style={[atomicStyles.regular, styles.text2]}>
+              <Text style={[styles.text2]}>
                 {item.release}
               </Text>
             </View>

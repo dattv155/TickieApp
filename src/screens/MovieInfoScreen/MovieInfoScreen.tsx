@@ -58,12 +58,14 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   }, [movieInfo, navigation]);
 
   const handleGotoCommentScreen = React.useCallback(() => {
-    navigation.navigate(CommentScreen.displayName);
-  }, [navigation]);
+    navigation.navigate(CommentScreen.displayName, {
+      movieInfo,
+    });
+  }, [movieInfo, navigation]);
 
   const renderItem: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
-      return <ReviewList item={item} key={index} />;
+      return <ReviewList item={item.data()} key={index} />;
     },
     [],
   );
@@ -87,25 +89,39 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   };
   const [list, setList] = React.useState<Obj[]>([]);
 
-  const fetchData = React.useCallback(async () => {
-    return await firestore()
-      .collection('comment')
-      .where('movieId', '==', 'Movie-1')
-      .get()
-      .then((data) => {
-        return data.docs.map((item) => item.data());
-      });
-  }, []);
+  // const fetchData = React.useCallback(async () => {
+  //   return await firestore()
+  //     .collection('comment')
+  //     .where('movieId', '==', 'Movie-1')
+  //     .get()
+  //     .then((data) => {
+  //       return data.docs.map((item) => item.data());
+  //     });
+  // }, []);
 
+  React.useEffect(() => {
+    async function fetchData(){
+        let exp:Array<Obj>= [];
+        let data= await firestore().collection("comment").where("movieId", "==", "Movie-" + movieInfo.movieID).get();
+        data.forEach(item => exp.push(item));
+        if(exp.length === 0) setRate(0);
+        else {
+          setRate(Number((exp.reduce((sum, item)=>sum + item.data().rate, 0)/exp.length).toFixed(1)));
+        }
+        setInitItem(exp.length > 3 ?3: exp.length);
+        setList(exp);
+      }
+      fetchData();
+    },[])
   // Error
 
   // React.useEffect(() => {
   //   return navigation.addListener('focus', async () => {
   //     const data = (await fetchData()) as Obj[];
   //     setList(data);
-  //
+  
   //     data.length > 3 ? setInitItem(3) : setInitItem(data.length);
-  //
+  
   //     const rateTemp = Number(
   //       (data.reduce((sum, item) => sum + item.rate, 0) / data.length).toFixed(
   //         1,
@@ -152,9 +168,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
           {/*  resizeMode="cover"*/}
           {/*  style={styles.posterView}*/}
           {/*/>*/}
-          <View style={styles.movieArea}>
-            <VideoComponent VideoID={movieInfo?.TrailerID} />
-          </View>
+
 
           <View style={[styles.infoArea]}>
             <View style={styles.title}>
@@ -247,7 +261,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                   keyExtractor={(item) => item.id.toString()}
                 />
                 <TouchableOpacity
-                  style={[styles.buttondanhgia]}
+                  style={[styles.buttondanhgia, {display: rate === 0 ?"none": "flex"}]}
                   onPress={handleMoreComment}>
                   <View>
                     <Text style={[styles.textbuttondanhgia, atomicStyles.bold]}>
@@ -285,14 +299,8 @@ export interface MovieInfoScreenProps extends StackScreenProps<any> {
 }
 
 export interface Obj {
-  id?: number;
-  avatar?: string;
-  movieId?: string;
-  name?: string;
-  rate?: number;
-  text?: string;
-  time?: any;
-  userId?: string;
+  id?: String;
+  data?: Function;
 }
 MovieInfoScreen.defaultProps = {
   //

@@ -1,7 +1,8 @@
-import React, {FC, PropsWithChildren, ReactElement} from 'react';
+import type {FC, PropsWithChildren, ReactElement} from 'react';
+import React from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ButtonSelectFilmType.scss';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text} from 'react-native';
 import {atomicStyles} from 'src/styles';
 
 /**
@@ -15,11 +16,6 @@ const ButtonSelectFilmType: FC<PropsWithChildren<ButtonSelectFilmTypeProps>> = (
 ): ReactElement => {
   const {item, selected} = props;
 
-  const [picked, setPicked] = React.useState(false);
-
-  const handlePicker = React.useCallback(() => {
-    selected ? setPicked(true) : setPicked(false);
-  }, [selected]);
   return (
     <>
       <View style={[styles.buttonContainer, selected && styles.pickedButton]}>

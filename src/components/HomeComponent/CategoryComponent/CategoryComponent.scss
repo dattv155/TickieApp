@@ -24,7 +24,7 @@
 .release {
   padding-top: 3px;
   color: map-get($colors, "gray");
-  font-size: 15;
+  font-size: 15px;
   font-weight: 500;
   font-style: normal;
 }
@@ -43,11 +43,11 @@
   padding: 5px 0;
   font-size: 30px;
   line-height: 27px;
-  letter-spacing: 0.02;
+  letter-spacing: 0.02px;
 }
 .head {
-  margin: 50px 6% 0px 6%;
-  padding: 5px 0px;
+  margin: 50px 6% 0 6%;
+  padding: 5px 0;
   flex-direction: row;
 }
 .imageContainer {

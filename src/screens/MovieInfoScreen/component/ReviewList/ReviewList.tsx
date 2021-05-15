@@ -19,26 +19,31 @@ const ReviewList: FC<PropsWithChildren<ReviewListProps>> = (
   return (
     <>
       <View style={styles.containerReview}>
-        <Image
-          source={require('assets/images/MCK.jpeg')}
-          // source={{uri: item.avatar}}
-          resizeMode={'cover'}
-          style={styles.avatarItem}
-        />
+        <View style={styles.avatarItem}>
+          <Image
+            source={require('assets/images/MCK.jpeg')}
+            // source={{uri: item.avatar}}
+            resizeMode={'cover'}
+            style={styles.avatarItem}
+          />
+        </View>
         <View style={styles.containerViewRight}>
           <View style={styles.ReviewArea}>
             <View style={styles.reviewTitle}>
               <Text style={[atomicStyles.bold]}>{item.name}</Text>
-              <Text style={[styles.h7, styles.timeItem]}>{item.time}</Text>
+              <Text style={[styles.h7, styles.timeItem]}>{new Date(item.time.seconds* 1000 + 43200000).toLocaleDateString()}</Text>
             </View>
-            <View style={styles.rate}>
+            <View >
               <SvgIcon component={require('assets/icons/star.svg')} />
               <Text style={[styles.rateNumber]}>{item.rate.toFixed(1)}</Text>
             </View>
           </View>
-          <Text style={[atomicStyles.h7, styles.detailReview]}>
-            {item.text}
-          </Text>
+          <View>
+            <Text style={[atomicStyles.h7, styles.detailReview]}>
+              {item.text}
+            </Text>
+          </View>
+          
         </View>
       </View>
     </>

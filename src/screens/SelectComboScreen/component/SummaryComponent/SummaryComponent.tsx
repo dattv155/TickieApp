@@ -14,12 +14,14 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 const SummaryComponent: FC<PropsWithChildren<SummaryComponentProps>> = (
   props: PropsWithChildren<SummaryComponentProps>,
 ): ReactElement => {
-  const {content} = props;
+  const {count, nameCombo} = props;
   const handleClearButton = React.useCallback(() => {}, []);
   return (
     <>
       <View style={styles.container}>
-        <Text style={[atomicStyles.h5, styles.text]}>{content}</Text>
+        <Text style={[atomicStyles.h5, styles.text]}>
+          {count} {nameCombo}
+        </Text>
         <TouchableOpacity
           style={styles.clearButton}
           onPress={handleClearButton}>
@@ -32,7 +34,8 @@ const SummaryComponent: FC<PropsWithChildren<SummaryComponentProps>> = (
 
 export interface SummaryComponentProps {
   //
-  content?: string;
+  count?: number;
+  nameCombo?: string;
 }
 
 SummaryComponent.defaultProps = {

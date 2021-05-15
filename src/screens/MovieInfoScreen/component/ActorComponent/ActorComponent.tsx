@@ -15,18 +15,20 @@ import {atomicStyles} from 'src/styles';
 const ActorComponent: FC<PropsWithChildren<ActorComponentProps>> = (
   props: PropsWithChildren<ActorComponentProps>,
 ): ReactElement => {
-  // const {src} = props;
+  const {actor} = props;
   return (
     <>
       <View style={styles.actorArea}>
         <Image
-          source={require('assets/images/mulan-poster.png')}
+          source={{uri: actor.ActorImage}}
           resizeMode="cover"
           style={styles.imageView}
         />
         <View style={styles.textArea}>
-          <Text style={[atomicStyles.h7, styles.actorName]}>Lưu Diệp Phi</Text>
-          <Text style={[atomicStyles.h7, styles.actorRole]}>Mộc Lan</Text>
+          <Text style={[atomicStyles.h7, styles.actorName]}>{actor.Name}</Text>
+          <Text style={[atomicStyles.h7, styles.actorRole]}>
+            {actor.CharactorName}
+          </Text>
         </View>
       </View>
     </>
@@ -35,7 +37,7 @@ const ActorComponent: FC<PropsWithChildren<ActorComponentProps>> = (
 
 export interface ActorComponentProps extends SvgProps {
   //
-  // src?: string;
+  actor?: any;
 }
 
 ActorComponent.defaultProps = {

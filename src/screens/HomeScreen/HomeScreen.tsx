@@ -10,6 +10,11 @@ import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableF
 import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
 import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
 import Search from '../../components/HomeComponent/Search/Search';
+import {LogBox} from 'react-native';
+
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
 
 /**
  * File: HomeScreen.tsx
@@ -28,6 +33,26 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   const onClick = () => {
     display === 'flex' ? setDisplay('none') : setDisplay('flex');
   };
+
+  const [data, setData] = React.useState<FirebaseFirestoreTypes.DocumentData[]>(
+    [],
+  );
+
+  const handleGetData = React.useCallback(async () => {
+    return await firestore()
+      .collection('movie')
+      .get()
+      .then((documentData) => {
+        return documentData.docs.map((item) => item.data());
+      });
+  }, []);
+
+  React.useEffect(() => {
+    return navigation.addListener('focus', async () => {
+      const result = await handleGetData();
+      setData(result);
+    });
+  }, [handleGetData, navigation]);
 
   const list = [
     {
@@ -59,7 +84,9 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
       release: '12-02-2020',
     },
   ];
-
+  React.useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, []);
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
@@ -70,7 +97,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
             <CategoryComponent
               navigation={navigation}
               route={route}
-              list={list}
+              list={data}
               display={display}
             />
             <AvailableFilm display={display} list={list} />

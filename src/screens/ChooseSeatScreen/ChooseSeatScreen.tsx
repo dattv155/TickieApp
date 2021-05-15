@@ -1,4 +1,5 @@
-import React, {FC, PropsWithChildren, ReactElement} from 'react';
+import type {FC, PropsWithChildren, ReactElement} from 'react';
+import React from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ChooseSeatScreen.scss';
 import {
@@ -9,11 +10,14 @@ import {
   View,
 } from 'react-native';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
-import {StackScreenProps} from '@react-navigation/stack';
+import type {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import SmallTheater from 'src/screens/ChooseSeatScreen/component/SmallTheater/SmallTheater';
 import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
+import {UseTimestamp} from 'src/hooks/use-timestamp';
+import {bookingService} from 'src/services/booking-service';
+import {formatToCurrency} from 'src/helpers/string-helper';
 
 /**
  * File: ChooseSeatScreen.tsx
@@ -21,13 +25,73 @@ import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
  * @author TrongDat <trongdat1505@gmail.com>
  * @type {FC<PropsWithChildren<ChooseSeatScreenProps>>}
  */
+export interface Position {
+  row: number;
+  column: number;
+}
+export interface BookingData {
+  cinemaID: number;
+  date: string;
+  filmID: number;
+  filmType: string;
+  position: Position[];
+}
+
 const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
   props: PropsWithChildren<ChooseSeatScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-  const hanleGotoSelectComboScreen = React.useCallback(() => {
-    navigation.navigate(SelectComboScreen.displayName);
-  }, [navigation]);
+
+  const {movieInfo, movieName, cinemaName, movieDate, showTime} = route?.params;
+
+  const [
+    seatCost,
+    selectedList,
+    setSelectedList,
+    listLabel,
+    handleGetData,
+    handlePickedSeats,
+    handleClearPickedSeats,
+    pickingSeats,
+  ] = bookingService.useBooking();
+
+  React.useEffect(() => {
+    return navigation.addListener('focus', async () => {
+      const result = (await handleGetData()) as BookingData[];
+
+      const selected: number[][] = [];
+      result.map((item) => {
+        item.position.map((pos) => {
+          selected.push([pos.row, pos.column]);
+        });
+      });
+      setSelectedList(selected);
+    });
+  }, [handleGetData, navigation, setSelectedList]);
+
+  const handleGotoSelectComboScreen = React.useCallback(() => {
+    navigation.navigate(SelectComboScreen.displayName, {
+      movieName,
+      cinemaName,
+      movieDate,
+      showTime,
+      pickingSeats,
+      listLabel,
+      seatCost,
+    });
+  }, [
+    cinemaName,
+    listLabel,
+    movieDate,
+    movieName,
+    navigation,
+    pickingSeats,
+    seatCost,
+    showTime,
+  ]);
+
+  const [handleTimestamp] = UseTimestamp();
+
   return (
     <DefaultLayout
       navigation={navigation}
@@ -40,20 +104,23 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
       <StatusBar barStyle="dark-content" />
       <ScrollView style={styles.containerView}>
         <View style={styles.title}>
-          <Text style={[atomicStyles.h1, atomicStyles.bold]}>Mulan</Text>
-          <Text style={[atomicStyles.h4, atomicStyles.bold]}>
-            Ticket Cinema - Giai Phong
-          </Text>
+          <Text style={[atomicStyles.h1, atomicStyles.bold]}>{movieName}</Text>
+          <Text style={[atomicStyles.h4, atomicStyles.bold]}>{cinemaName}</Text>
           <Text style={[atomicStyles.h5, styles.textTime]}>
-            Thứ 6, ngày 10/5/2021, 7:30 PM
+            {handleTimestamp(movieDate.seconds)}, {showTime}
           </Text>
         </View>
         <View style={styles.screen}>
           <SvgIcon component={require('assets/icons/SmallScreen.svg')} />
         </View>
+
         <View style={styles.seatsArea}>
-          <SmallTheater />
+          <SmallTheater
+            selectedList={selectedList}
+            handleShowPickedSeats={handlePickedSeats}
+          />
         </View>
+
         <View style={styles.noteArea}>
           <View style={styles.note}>
             <SvgIcon
@@ -76,37 +143,53 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
             <Text style={[atomicStyles.h7, styles.textNote]}>Ghế đã chọn</Text>
           </View>
         </View>
-        <View style={styles.summaryArea}>
-          <Text
-            style={[atomicStyles.h1, atomicStyles.bold, styles.summaryTitle]}>
-            Chọn ghế ngồi
-          </Text>
+      </ScrollView>
+      <View style={styles.summaryArea}>
+        <Text style={[atomicStyles.h1, atomicStyles.bold, styles.summaryTitle]}>
+          Chọn ghế ngồi
+        </Text>
+        {!!listLabel && (
           <View style={styles.seatSummary}>
             <Text style={[atomicStyles.h4, styles.seatSummaryTitle]}>
               Ghế đang chọn
             </Text>
+
             <View style={styles.totalSeatArea}>
-              <Text style={[atomicStyles.h5, styles.seatChosen]}>D01, D02</Text>
-              <TouchableOpacity>
+              <View style={styles.seatPickingView}>
+                <Text
+                  style={[
+                    atomicStyles.h5,
+                    atomicStyles.bold,
+                    styles.seatPickingText,
+                  ]}>
+                  {listLabel}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.clearSeatsButton}
+                onPress={handleClearPickedSeats}>
                 <SvgIcon component={require('assets/icons/Clear.svg')} />
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.summaryTotal}>
-            <View style={styles.costSummary}>
-              <Text style={[atomicStyles.h5, styles.costTitle]}>Tạm tính</Text>
-              <Text style={[atomicStyles.h1, atomicStyles.bold, styles.cost]}>
-                220.000 VND
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={styles.bookingButton}
-              onPress={hanleGotoSelectComboScreen}>
-              <Text style={[atomicStyles.h5, styles.buttonText]}>Đặt chỗ</Text>
-            </TouchableOpacity>
+        )}
+        <View style={styles.summaryTotal}>
+          <View style={styles.costSummary}>
+            <Text style={[atomicStyles.h5, styles.costTitle]}>Tạm tính</Text>
+            <Text style={[atomicStyles.h1, atomicStyles.bold, styles.cost]}>
+              {formatToCurrency(seatCost)}
+            </Text>
           </View>
+          <TouchableOpacity
+            style={styles.bookingButton}
+            onPress={handleGotoSelectComboScreen}>
+            <Text
+              style={[atomicStyles.h5, atomicStyles.bold, styles.buttonText]}>
+              Đặt chỗ
+            </Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </DefaultLayout>
   );
 };

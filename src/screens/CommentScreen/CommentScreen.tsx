@@ -2,13 +2,13 @@ import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './CommentScreen.scss';
 import {Image, Text, View, TouchableOpacity, TextInput} from 'react-native';
-
 import {atomicStyles} from 'src/styles';
 
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {StackScreenProps} from '@react-navigation/stack';
+import MovieInfoScreen from '../MovieInfoScreen/MovieInfoScreen';
 
 /**
  * File: CommentScreen.tsx
@@ -20,6 +20,7 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
   props: PropsWithChildren<CommentScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+  const {movieInfo} = route?.params;
   const userId = auth().currentUser.uid;
   const db = firestore();
   const yellowstar = require('assets/icons/star.svg');
@@ -36,6 +37,11 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
   const handleComment = () => {
     console.log('add comment');
   };
+  const handleGoBack = React.useCallback(() => {
+    navigation.navigate(MovieInfoScreen.displayName, {
+      movieInfo,
+    });
+  }, [movieInfo, navigation]);
   useEffect(() => {
     let exp = [...svg];
     for (let i = 0; i < curStar; i++) {
@@ -45,11 +51,11 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
       exp[i] = graystar;
     }
     setSvg(exp);
-  }, [curStar, graystar, svg, yellowstar]);
+  }, [curStar]);
 
   return (
     <View style={styles.yourcomment}>
-      <TouchableOpacity style={styles.goback}>
+      <TouchableOpacity style={styles.goback} onPress={handleGoBack}>
         <SvgIcon component={require('assets/icons/backIconRound.svg')} />
       </TouchableOpacity>
 
@@ -58,17 +64,19 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
       </Text>
       <View style={styles.header}>
         <Image
-          source={require('assets/images/mulan-poster.png')}
+          source={{uri: movieInfo.Poster}}
           resizeMode="cover"
           style={styles.imageheaderinfo}
         />
         <View style={styles.headerinfo}>
-          <Text style={[styles.headerinfo_name, atomicStyles.bold]}>Mulan</Text>
+          <Text style={[styles.headerinfo_name, atomicStyles.bold]}>
+            {movieInfo.Name}
+          </Text>
           <Text style={[styles.headerinfo_release, atomicStyles.regular]}>
-            2020
+            {new Date(movieInfo.Release.seconds * 1000 + 43200000).getFullYear()}
           </Text>
           <Text style={[styles.headerinfo_kind, atomicStyles.regular]}>
-            PG 13, hành động, cổ trang
+            {movieInfo.Type}
           </Text>
         </View>
       </View>

@@ -5,30 +5,35 @@
  */
  @import '../../../styles/atomic-styles'; 
  .container {
-    width: 90%;
+     margin-top: -3%;
+    width: 100%;
     align-self: center;
     height: auto;
     overflow: hidden;
  }
-
+.release {
+    position: absolute;
+    left: 5%;
+    height: 100%;
+}
  .header {
-    text-transform: uppercase;
     font: {
-        size: 28px;
+        size: 26px;
         weight: bold;
     }
     overflow: hidden;
-    height: 30px
- }
+    height: 100%;
+    margin-top: 3px;
+}
  .box {
     width: 40px;
     height: 40px;
     background-color: map-get($colors, 'third-gray');
     border-radius: 50px;
-    position: absolute;
-    right: 6px;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    position: absolute;
+    right: 5.5%;
 }
 .search {
     width: 100%;
@@ -51,8 +56,10 @@
 .headContainer {
     flex-direction: row;
     align-items: center;
-    padding: 10px 0px;
+    // padding: 10px 0px;
     position: relative;
+    height: 49px;
+    width: 100%;
 }
 .textInput {
     height: 49px;
@@ -63,31 +70,29 @@
 }
 .text1 {
     padding: 7px 0px 0px 0px;
-    font-style: normal;
-    
-    font-size: 15px;
-    line-height: 15px;
-    color: black
+    line-height: 14px;
+    font-weight:normal;
+    color: black;
 }
 .text2 {
     padding: 5px 0px 0px 0px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 12px;
+    line-height: 8px;
+    font-size: 11px;
+    font-weight:normal;
     color: map-get($colors, "nobel");
 }
 .viewanimated {
     padding: 0;
     position: absolute;
-    right: 0;
+    right: 5%;
     overflow: hidden;
 }
 .viewanimated2 {
-    width: 100%;
+    align-self: center;
+    width: 94%;
     overflow: hidden;
     padding-top: 10px;
-    padding-left: 10px;
+    padding-left: 2.5%;
 }
 .viewitem {
     align-items: center;

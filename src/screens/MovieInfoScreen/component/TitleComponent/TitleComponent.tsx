@@ -2,7 +2,6 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './TitleComponent.scss';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 
@@ -15,7 +14,7 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
   props: PropsWithChildren<TitleComponentProps>,
 ): ReactElement => {
-  const {title, isReviewArea, rate, numOfReview} = props;
+  const {title, isReviewArea, rate, numOfReview, handleDisplay} = props;
 
   const handleGotoDetailTitle = React.useCallback(() => {}, []);
 
@@ -44,14 +43,12 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
             <View style={styles.rate}>
               <SvgIcon component={require('assets/icons/star.svg')} />
               <Text style={[styles.numberOfRate]}>
-                <Text style={[atomicStyles.h3, styles.rateNumber]}>
-                  {rate.toFixed(1)}
-                </Text>
-                /10
+                <Text style={[atomicStyles.h3, styles.rateNumber]}>{rate}</Text>
+                /5
               </Text>
             </View>
           </View>
-          <TouchableOpacity onPress={handleGotoDetailTitle}>
+          <TouchableOpacity onPress={handleDisplay}>
             <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
           </TouchableOpacity>
         </>
@@ -66,6 +63,7 @@ export interface TitleComponentProps {
   isReviewArea?: boolean;
   rate?: number;
   numOfReview?: number;
+  handleDisplay?: () => void;
 }
 
 TitleComponent.defaultProps = {

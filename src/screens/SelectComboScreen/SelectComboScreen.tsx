@@ -15,10 +15,12 @@ import {
 import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import ComboComponent from 'src/screens/SelectComboScreen/component/ComboComponent/ComboComponent';
-import {ListCombo} from 'src/sample/listCombo';
 import {atomicStyles} from 'src/styles';
 import SummaryComponent from 'src/screens/SelectComboScreen/component/SummaryComponent/SummaryComponent';
 import PaymentScreen from 'src/screens/PaymentScreen/PaymentScreen';
+import {bookingService} from 'src/services/booking-service';
+import {SelectedCombo} from 'src/services/booking-service/use-combo';
+import {formatToCurrency} from 'src/helpers/string-helper';
 
 /**
  * File: SelectComboScreen.tsx
@@ -30,20 +32,77 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
   props: PropsWithChildren<SelectComboScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
-  const keyExtractor = ({key}: any) => key;
+
+  const {
+    movieName,
+    cinemaName,
+    movieDate,
+    showTime,
+    pickingSeats,
+    listLabel,
+    seatCost,
+  } = route?.params;
 
   const [inputVoucher, setInputVoucher] = React.useState('');
 
-  const renderItem: ListRenderItem<any> = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>) => {
-      return <ComboComponent item={item} key={index} />;
-    },
+  const [listSelectCombo, setListSelectCombo] = React.useState<SelectedCombo[]>(
     [],
   );
 
+  const [comboCost, setComboCost] = React.useState<number>(0);
+
+  const [comboList] = bookingService.useCombo(navigation);
+
+  const handleCombo = React.useCallback(
+    (listCombo: SelectedCombo[]) => {
+      console.log(listSelectCombo);
+      let cost = 0;
+      listSelectCombo.map((select) => {
+        cost = cost + select.count * select.amount;
+      });
+      setComboCost(cost);
+    },
+    [listSelectCombo],
+  );
+
+  const renderItem: ListRenderItem<any> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<any>) => {
+      return (
+        <ComboComponent
+          combo={item}
+          key={index}
+          handleCombo={handleCombo}
+          listCombo={listSelectCombo}
+        />
+      );
+    },
+    [handleCombo, listSelectCombo],
+  );
+
   const handleGotoPaymentScreen = React.useCallback(() => {
-    navigation.navigate(PaymentScreen.displayName);
-  }, [navigation]);
+    navigation.navigate(PaymentScreen.displayName, {
+      movieName,
+      cinemaName,
+      movieDate,
+      showTime,
+      pickingSeats,
+      listLabel,
+      seatCost,
+      listSelectCombo,
+      comboCost,
+    });
+  }, [
+    cinemaName,
+    comboCost,
+    listLabel,
+    listSelectCombo,
+    movieDate,
+    movieName,
+    navigation,
+    pickingSeats,
+    seatCost,
+    showTime,
+  ]);
   return (
     <>
       <DefaultLayout
@@ -58,9 +117,9 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
         <View style={styles.containerView}>
           <View style={styles.listComboArea}>
             <FlatList
-              data={ListCombo}
+              data={comboList}
               renderItem={renderItem}
-              keyExtractor={keyExtractor}
+              keyExtractor={(item) => item.toString()}
               showsVerticalScrollIndicator={false}
             />
           </View>
@@ -87,16 +146,21 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
           <View style={styles.comboArea}>
             <Text style={[atomicStyles.h4, styles.comboText]}>Set Combo</Text>
             <View>
-              <SummaryComponent content={'1 Combo L'} />
-              <SummaryComponent content={'1 Combo M'} />
-              <SummaryComponent content={'1 Combo F2'} />
+              {listSelectCombo.map((selectedCombo) => {
+                return (
+                  <SummaryComponent
+                    count={selectedCombo.count}
+                    nameCombo={selectedCombo.name}
+                  />
+                );
+              })}
             </View>
           </View>
           <View style={styles.summaryTotal}>
             <View style={styles.costSummary}>
               <Text style={[atomicStyles.h5, styles.costTitle]}>Tạm tính</Text>
               <Text style={[atomicStyles.h1, atomicStyles.bold, styles.cost]}>
-                200.000 VND
+                {formatToCurrency(comboCost)} VND
               </Text>
             </View>
             <TouchableOpacity

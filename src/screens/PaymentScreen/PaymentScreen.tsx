@@ -5,8 +5,15 @@ import {Image, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
-import PaymentMethodItem from 'src/screens/PaymentScreen/component/PaymentMethodItem/PaymentMethodItem';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
+import RadioButton from 'src/components/RadioButton/RadioButton';
+import {PaymentMethod} from 'src/sample/paymentMethod';
+import {MomoPayment} from 'src/services/momo-payment';
+import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
+import Toast from 'react-native-simple-toast';
+import {SelectedCombo} from 'src/services/booking-service/use-combo';
+import {formatToCurrency} from 'src/helpers/string-helper';
+import {UseTimestamp} from 'src/hooks/use-timestamp';
 
 /**
  * File: PaymentScreen.tsx
@@ -19,9 +26,75 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
+  const {
+    movieName,
+    cinemaName,
+    movieDate,
+    showTime,
+    pickingSeats,
+    listLabel,
+    seatCost,
+    listSelectCombo,
+    comboCost,
+  } = route?.params;
+
+  const [, handleGetDay] = UseTimestamp();
+
+  const [
+    merchantName,
+    merchantCode,
+    merchantNameLabel,
+    billDescription,
+    amount,
+    payment,
+    handleChangeMerchantName,
+    handleChangeMerchantCode,
+    handleChangeMerchantNameLabel,
+    handleChangeBillDescription,
+    handleChangeAmount,
+    handleSendRequest,
+    handleChangePayment,
+  ] = MomoPayment.getPayment();
+
+  const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
+
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
     navigation.navigate(SuccessBookingScreen.displayName);
   }, [navigation]);
+
+  const handleListCombo = React.useCallback((listCombo: SelectedCombo[]) => {
+    let text = '';
+    listCombo.map((combo) => {
+      text = text + combo.count + ' ' + combo.name + ', ';
+    });
+    return text.substring(0, text.length - 2);
+  }, []);
+
+  const handlePay = React.useCallback(() => {
+    if (paymentMethodKey === 'momo') {
+      let newValue = 1000;
+      let amount = fomatNumberToMoney(newValue, null, '');
+      handleChangeAmount(newValue);
+      handleChangePayment({
+        amount: newValue,
+        textAmount: amount,
+        description: '',
+      });
+      handleSendRequest();
+    } else if (paymentMethodKey === 'credit') {
+      Toast.show('Đang phát triển');
+    } else if (paymentMethodKey === 'banking') {
+      Toast.show('Đang phát triển');
+    } else {
+      Toast.show('Hãy chọn phương thức thanh toán!');
+    }
+  }, [
+    handleChangeAmount,
+    handleChangePayment,
+    handleSendRequest,
+    paymentMethodKey,
+  ]);
+
   return (
     <>
       <DefaultLayout
@@ -50,7 +123,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             <View style={styles.info}>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.filmName]}>
-                Mulan
+                {movieName}
               </Text>
               <Text style={[atomicStyles.h6, styles.infoType]}>
                 PG 13, hành động, cổ trang
@@ -58,7 +131,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               <Text style={[atomicStyles.h6, styles.infoType]}>
                 Rạp:
                 <Text style={[atomicStyles.bold, styles.textBold]}>
-                  Tickie Giải Phóng
+                  {cinemaName}
                 </Text>
               </Text>
               <Text style={[atomicStyles.h6, styles.infoType]}>
@@ -72,7 +145,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               <Text style={[atomicStyles.h6, styles.detailTitle]}>Ngày</Text>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                10/3
+                {handleGetDay(movieDate.seconds)}
               </Text>
             </View>
             <View style={styles.detailBlock}>
@@ -81,7 +154,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               </Text>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                19:30
+                {showTime}
               </Text>
             </View>
             <View style={styles.detailBlock}>
@@ -90,7 +163,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               </Text>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                D01, D02
+                {listLabel}
               </Text>
             </View>
           </View>
@@ -98,7 +171,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             <Text style={[atomicStyles.h6, styles.comboTitle]}>Combo Set</Text>
             <Text
               style={[atomicStyles.h4, atomicStyles.bold, styles.comboDetail]}>
-              1 Combo L, 1 Combo M
+              {handleListCombo(listSelectCombo)}
             </Text>
           </View>
           <View style={styles.paymentArea}>
@@ -107,9 +180,13 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               Chọn cách thức thanh toán
             </Text>
             <View style={styles.paymentGroup}>
-              <PaymentMethodItem type={'credit'} />
-              <PaymentMethodItem type={'banking'} />
-              <PaymentMethodItem />
+              {/*<PaymentMethodItem type={'credit'} />*/}
+              {/*<PaymentMethodItem type={'banking'} />*/}
+              {/*<PaymentMethodItem />*/}
+              <RadioButton
+                values={PaymentMethod}
+                onSetMethodKey={setPaymentMethodKey}
+              />
             </View>
           </View>
           <View style={styles.summaryArea}>
@@ -128,12 +205,10 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                   atomicStyles.bold,
                   atomicStyles.textBlue,
                 ]}>
-                400.000 VND
+                {formatToCurrency(seatCost + comboCost)} VND
               </Text>
             </View>
-            <TouchableOpacity
-              style={styles.paymentButton}
-              onPress={handleGotoSuccessBookingScreen}>
+            <TouchableOpacity style={styles.paymentButton} onPress={handlePay}>
               <Text
                 style={[
                   atomicStyles.h5,

@@ -13,11 +13,8 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 const Seat: FC<PropsWithChildren<SeatProps>> = (
   props: PropsWithChildren<SeatProps>,
 ): ReactElement => {
-  const {state} = props;
-  const [isChoose, setChoose] = React.useState(false);
-  const handleChooseSeat = React.useCallback(() => {
-    !isChoose ? setChoose(true) : setChoose(false);
-  }, [isChoose]);
+  const {state, handleSeat, positionRow, positionColumn, isChoose} = props;
+
   return (
     <>
       <View style={styles.container}>
@@ -28,7 +25,7 @@ const Seat: FC<PropsWithChildren<SeatProps>> = (
                 component={require('assets/icons/seat/OccupiedSeat.svg')}
               />
             ) : (
-              <TouchableOpacity onPress={handleChooseSeat}>
+              <View>
                 {!isChoose ? (
                   <SvgIcon
                     component={require('assets/icons/seat/BlankSeat.svg')}
@@ -38,7 +35,7 @@ const Seat: FC<PropsWithChildren<SeatProps>> = (
                     component={require('assets/icons/seat/SelectedSeat.svg')}
                   />
                 )}
-              </TouchableOpacity>
+              </View>
             )}
           </View>
         ) : (
@@ -52,6 +49,14 @@ const Seat: FC<PropsWithChildren<SeatProps>> = (
 export interface SeatProps {
   //
   state?: number;
+
+  handleSeat?: (rowNumber: number, columnNumber: number) => void;
+
+  positionRow?: number;
+
+  positionColumn?: number;
+
+  isChoose?: boolean;
 }
 
 Seat.defaultProps = {

@@ -1,16 +1,13 @@
-import React, {FC, PropsWithChildren, ReactElement} from 'react';
+import type {FC, PropsWithChildren, ReactElement} from 'react';
+import React from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './SmallTheater.scss';
 import Seat from 'src/screens/ChooseSeatScreen/component/Seat/Seat';
-import {
-  View,
-  Text,
-  ListRenderItem,
-  ListRenderItemInfo,
-  FlatList,
-} from 'react-native';
+import type {ListRenderItem, ListRenderItemInfo} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {atomicStyles} from 'src/styles';
-import {SmallTheaterLayout} from 'src/sample/smallTheaterLayout';
+import {CinemaLayout} from 'src/sample/cinemaLayout';
+import {indexOf2dArray} from 'src/helpers/array-helper';
 
 /**
  * File: SmallTheater.tsx
@@ -19,16 +16,85 @@ import {SmallTheaterLayout} from 'src/sample/smallTheaterLayout';
  * @type {FC<PropsWithChildren<SmallTheaterProps>>}
  */
 
-const rowLabel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+export interface CinemaLayout {
+  cinemaID: number;
+  size: {
+    row: number;
+    column: number;
+  };
+  label: {
+    row: string[];
+    column: string[];
+  };
+}
 
 const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
   props: PropsWithChildren<SmallTheaterProps>,
 ): ReactElement => {
-  const renderItem: ListRenderItem<any> = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>) => {
-      return <Seat state={item} key={index} />;
+  const {selectedList, handleShowPickedSeats} = props;
+  const [layout, setLayout] = React.useState<CinemaLayout>(CinemaLayout[0]);
+
+  const [pickList, setPickList] = React.useState<number[][]>([]);
+
+  const listSeat = React.useRef<number[][]>([]);
+
+  const handleSelect = React.useCallback(
+    (rowIndex: number, columnIndex: number) => {
+      if (indexOf2dArray(listSeat.current, [rowIndex, columnIndex]) === -1) {
+        listSeat.current.push([rowIndex, columnIndex]);
+      } else {
+        let pickedIndex = indexOf2dArray(listSeat.current, [
+          rowIndex,
+          columnIndex,
+        ]);
+        listSeat.current.splice(pickedIndex, 1);
+      }
+
+      setPickList([...listSeat.current]);
     },
     [],
+  );
+
+  React.useEffect(() => {}, []);
+
+  const renderSeat = React.useCallback(
+    ({item, index}: ListRenderItemInfo<any>, indexRow: number) => {
+      let choose = false;
+
+      if (indexOf2dArray(pickList, [indexRow, index]) > -1) {
+        choose = true;
+      }
+
+      return indexOf2dArray(selectedList, [indexRow, index]) === -1 ? (
+        <TouchableOpacity
+          onPress={() => {
+            handleSelect(indexRow, index);
+            handleShowPickedSeats(listSeat.current);
+          }}>
+          <Seat
+            key={index}
+            state={
+              indexRow === 0 &&
+              (index === 0 || index === layout.size.column - 1)
+                ? 0
+                : item
+            }
+            positionRow={indexRow}
+            positionColumn={index}
+            isChoose={choose}
+          />
+        </TouchableOpacity>
+      ) : (
+        <Seat key={index} state={2} />
+      );
+    },
+    [
+      pickList,
+      selectedList,
+      layout.size.column,
+      handleSelect,
+      handleShowPickedSeats,
+    ],
   );
 
   const renderLabelColumn: ListRenderItem<any> = React.useCallback(
@@ -68,9 +134,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
         <View style={styles.labelView}>
           <FlatList
             key={'_'}
-            data={SmallTheaterLayout.map((item) => {
-              return item.title;
-            })}
+            data={layout.label.row}
             renderItem={renderLabelColumn}
             horizontal={true}
             keyExtractor={(item, index) => item.toString() + index.toString()}
@@ -78,27 +142,27 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
           />
         </View>
         <View style={styles.seatArea}>
-          {SmallTheaterLayout.map((row) => {
-            return (
-              <FlatList
-                data={row.data}
-                renderItem={renderItem}
-                horizontal={true}
-                keyExtractor={(item, index) =>
-                  item.toString() + index.toString()
-                }
-                contentContainerStyle={styles.rowStyle}
-              />
-            );
-          })}
+          {Array(layout.size.row)
+            .fill(1)
+            .map((itemRow, indexRow) => {
+              return (
+                <FlatList
+                  data={Array(layout.size.column).fill(1)}
+                  renderItem={(info) => renderSeat(info, indexRow)}
+                  horizontal={true}
+                  keyExtractor={(item, index) =>
+                    item.toString() + index.toString()
+                  }
+                  contentContainerStyle={styles.rowStyle}
+                />
+              );
+            })}
         </View>
 
         <View style={styles.labelView}>
           <FlatList
             key={'+'}
-            data={SmallTheaterLayout.map((item) => {
-              return item.title;
-            })}
+            data={layout.label.row}
             renderItem={renderLabelColumn}
             horizontal={true}
             keyExtractor={(item, index) => item.toString() + index.toString()}
@@ -109,7 +173,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
       <View>
         <FlatList
           key={'='}
-          data={rowLabel}
+          data={layout.label.column}
           renderItem={renderLabelRow}
           horizontal={true}
           keyExtractor={(item, index) => item.toString() + index.toString()}
@@ -122,6 +186,9 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
 
 export interface SmallTheaterProps {
   //
+  selectedList?: any[][];
+
+  handleShowPickedSeats?: (pickedList: number[][]) => void;
 }
 
 SmallTheater.defaultProps = {

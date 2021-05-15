@@ -54,8 +54,7 @@ export const getAccount = {
         );
       return () => subscriber();
     }, [
-      navigation,
-      ,
+      userData.dateOfBirth,
       userData.email,
       userData.fullname,
       userData.gender,

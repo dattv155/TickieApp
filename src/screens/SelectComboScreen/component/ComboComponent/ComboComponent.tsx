@@ -1,8 +1,9 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ComboComponent.scss';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {atomicStyles} from 'src/styles';
+import {Combo, SelectedCombo} from 'src/services/booking-service/use-combo';
 
 /**
  * File: ComboComponent.tsx
@@ -13,28 +14,67 @@ import {atomicStyles} from 'src/styles';
 const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
   props: PropsWithChildren<ComboComponentProps>,
 ): ReactElement => {
-  const {item} = props;
+  const {combo, handleCombo, listCombo} = props;
+
   const [numCombo, setNumCombo] = React.useState<number>(0);
+
+  const countCombo = React.useRef<number>(0);
+
+  const handleDeleteDuplicate = React.useCallback(() => {
+    let index = listCombo.findIndex(function (selectedCombo) {
+      return selectedCombo.name === combo.name;
+    });
+    if (index > -1) {
+      listCombo.splice(index, 1);
+    }
+  }, [combo.name, listCombo]);
+
   const handleIncreaseNumber = React.useCallback(() => {
-    setNumCombo(numCombo + 1);
-  }, [numCombo]);
+    // setNumCombo(numCombo + 1);
+    countCombo.current += 1;
+    setNumCombo(countCombo.current);
+    handleDeleteDuplicate();
+    listCombo.push({
+      name: combo.name,
+      count: countCombo.current,
+      amount: combo.amount,
+    });
+    handleCombo([]);
+  }, [combo.amount, combo.name, handleCombo, handleDeleteDuplicate, listCombo]);
+
   const handleDecreaseNumber = React.useCallback(() => {
-    numCombo > 0 ? setNumCombo(numCombo - 1) : setNumCombo(0);
-  }, [numCombo]);
+    numCombo > 0 &&
+      ((countCombo.current -= 1),
+      handleCombo([]),
+      setNumCombo(countCombo.current),
+      handleDeleteDuplicate());
+  }, [handleCombo, handleDeleteDuplicate, numCombo]);
+
+  const handleDetail = React.useCallback(
+    (details: {type: string; quantity: number}[]): string => {
+      let detailText = '';
+      details.map((detail) => {
+        detailText += detail.type + '(x' + detail.quantity + '); ';
+      });
+      return detailText;
+    },
+    [],
+  );
+
   return (
     <>
       <View style={styles.container}>
         <View style={styles.infoArea}>
           <Text style={[atomicStyles.h4, atomicStyles.bold, styles.nameCombo]}>
-            {item.name}
+            {combo.name}
           </Text>
           <Text style={[atomicStyles.h5, styles.detailText]}>
-            {item.description}
+            {handleDetail(combo.detail)}
           </Text>
         </View>
         <View style={styles.countArea}>
           <Text style={[atomicStyles.h5, atomicStyles.bold, styles.costNumber]}>
-            {item.cost} VND
+            {combo.amount} VND
           </Text>
           <View style={styles.buttonSelectNumber}>
             <TouchableOpacity
@@ -72,7 +112,11 @@ const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
 
 export interface ComboComponentProps {
   //
-  item: any;
+  combo: Combo;
+
+  handleCombo?: (numCombo: SelectedCombo[]) => void;
+
+  listCombo?: SelectedCombo[];
 }
 
 ComboComponent.defaultProps = {

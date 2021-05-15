@@ -1,0 +1,16 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-05-09 17:04:08
+ * @author Ngo Tien Tan <ngotientan811@gmail.com>
+ */
+.container {
+  height: 55px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 12px;
+}
+.title {
+  margin-left: 12px;
+  flex: 2;
+}

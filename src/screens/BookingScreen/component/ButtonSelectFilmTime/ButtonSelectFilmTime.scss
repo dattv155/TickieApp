@@ -1,13 +1,15 @@
 /**
  * Styles for Component.tsx
- * @created 2021-04-06 08:24:51
+ * @created 2021-04-27 23:22:45
  * @author TrongDat <trongdat1505@gmail.com>
  */
 @import "src/styles/mixins";
-@import "src/styles/atomic-styles";
 
+.containerView {
+  width: 100%;
+}
 .buttonContainer {
-  margin: 12px;
+  margin: 8px 12px;
   height: 45px;
   width: 90px;
   background-color: map-get($colors, 'white');
@@ -27,4 +29,13 @@
 .pickedText {
   color: map-get($colors, 'white');
   font-weight: 700;
+}
+.textStyle {
+  font-weight: 900;
+  margin-top: 20px;
+}
+.listTime {
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }

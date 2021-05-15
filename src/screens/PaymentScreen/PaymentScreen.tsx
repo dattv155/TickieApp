@@ -7,6 +7,9 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
 import PaymentMethodItem from 'src/screens/PaymentScreen/component/PaymentMethodItem/PaymentMethodItem';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
+import {SelectedCombo} from 'src/services/booking-service/use-combo';
+import {formatToCurrency} from 'src/helpers/string-helper';
+import {UseTimestamp} from 'src/hooks/use-timestamp';
 
 /**
  * File: PaymentScreen.tsx
@@ -19,9 +22,31 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
+  const {
+    movieName,
+    cinemaName,
+    movieDate,
+    showTime,
+    pickingSeats,
+    listLabel,
+    seatCost,
+    listSelectCombo,
+    comboCost,
+  } = route?.params;
+
+  const [, handleGetDay] = UseTimestamp();
+
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
     navigation.navigate(SuccessBookingScreen.displayName);
   }, [navigation]);
+
+  const handleListCombo = React.useCallback((listCombo: SelectedCombo[]) => {
+    let text = '';
+    listCombo.map((combo) => {
+      text = text + combo.count + ' ' + combo.name + ', ';
+    });
+    return text.substring(0, text.length - 2);
+  }, []);
   return (
     <>
       <DefaultLayout
@@ -50,7 +75,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             <View style={styles.info}>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.filmName]}>
-                Mulan
+                {movieName}
               </Text>
               <Text style={[atomicStyles.h6, styles.infoType]}>
                 PG 13, hành động, cổ trang
@@ -58,7 +83,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               <Text style={[atomicStyles.h6, styles.infoType]}>
                 Rạp:
                 <Text style={[atomicStyles.bold, styles.textBold]}>
-                  Tickie Giải Phóng
+                  {cinemaName}
                 </Text>
               </Text>
               <Text style={[atomicStyles.h6, styles.infoType]}>
@@ -72,7 +97,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               <Text style={[atomicStyles.h6, styles.detailTitle]}>Ngày</Text>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                10/3
+                {handleGetDay(movieDate.seconds)}
               </Text>
             </View>
             <View style={styles.detailBlock}>
@@ -81,7 +106,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               </Text>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                19:30
+                {showTime}
               </Text>
             </View>
             <View style={styles.detailBlock}>
@@ -90,7 +115,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               </Text>
               <Text
                 style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                D01, D02
+                {listLabel}
               </Text>
             </View>
           </View>
@@ -98,7 +123,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             <Text style={[atomicStyles.h6, styles.comboTitle]}>Combo Set</Text>
             <Text
               style={[atomicStyles.h4, atomicStyles.bold, styles.comboDetail]}>
-              1 Combo L, 1 Combo M
+              {handleListCombo(listSelectCombo)}
             </Text>
           </View>
           <View style={styles.paymentArea}>
@@ -128,7 +153,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                   atomicStyles.bold,
                   atomicStyles.textBlue,
                 ]}>
-                400.000 VND
+                {formatToCurrency(seatCost + comboCost)} VND
               </Text>
             </View>
             <TouchableOpacity

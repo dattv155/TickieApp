@@ -1,30 +1,35 @@
 module.exports = {
   root: true,
-  extends: ['@react-native-community'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
+  extends: ['@react-native-community'],
   rules: {
-    semi: [
-      'error',
-      'always',
-    ],
-    'comma-dangle': [
-      'error',
-      'always-multiline',
-    ],
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'error',
-    'no-shadow': 'off',
+    // 'react-hooks/exhaustive-deps': 'warn',
+    'comma-dangle': ['error', 'always-multiline'],
+    'no-array-constructor': 'error',
+    'no-cond-assign': 'error',
     'no-console': 'error',
     'no-debugger': 'error',
-    'no-restricted-syntax': [
-      'error',
-      {
-        "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
-        "message": "Unexpected property on console object was called"
-        // "message": "Unexpected console statement. (no-console)"
-      }
-    ]
+    'no-delete-var': 'error',
+    'no-else-return': 'error',
+    'no-eq-null': 'error',
+    'no-return-await': 'error',
+    'no-shadow': 'off',
+    'no-undef': 'off',
+    'no-unreachable': 'error',
+    'no-unused-vars': 'off',
+    'no-use-before-define': 'off',
+    'no-useless-computed-key': 'error',
+    'no-useless-concat': 'error',
+    'no-useless-constructor': 'error',
+    'no-useless-rename': 'error',
+    'no-useless-return': 'error',
+    semi: ['error', 'always'],
+    // '@typescript-eslint/consistent-type-imports': [
+    //   'error',
+    //   {
+    //     prefer: 'type-imports',
+    //   },
+    // ],
   },
-  settings: {},
 };

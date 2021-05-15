@@ -1,6 +1,9 @@
 import React from 'react';
 
-export function UseTimestamp(): [(time: number) => string] {
+export function UseTimestamp(): [
+  (time: number) => string,
+  (time: number) => string,
+] {
   const getDayOfWeek = React.useCallback((timestamp: number) => {
     const date = new Date(timestamp * 1000);
     const day = date.getDay();
@@ -45,5 +48,15 @@ export function UseTimestamp(): [(time: number) => string] {
     [getDayOfWeek],
   );
 
-  return [handleTimestamp];
+  const handleGetDay = React.useCallback((timestamp: number) => {
+    const date = new Date(timestamp * 1000);
+    const day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+    const month =
+      date.getMonth() >= 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
+
+    // return date.getFullYear() + '-' + month + '-' + day;
+    return day + '/' + month;
+  }, []);
+
+  return [handleTimestamp, handleGetDay];
 }

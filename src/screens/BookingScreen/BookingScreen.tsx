@@ -1,11 +1,11 @@
-import React, {FC, PropsWithChildren, ReactElement} from 'react';
+import type {FC, PropsWithChildren, ReactElement} from 'react';
+import React from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './BookingScreen.scss';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
+import type {ListRenderItem, ListRenderItemInfo} from 'react-native';
 import {
   FlatList,
-  ListRenderItem,
-  ListRenderItemInfo,
   ScrollView,
   StatusBar,
   Text,
@@ -13,7 +13,7 @@ import {
   View,
   Animated,
 } from 'react-native';
-import {StackScreenProps} from '@react-navigation/stack';
+import type {StackScreenProps} from '@react-navigation/stack';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import {atomicStyles} from 'src/styles';
@@ -148,6 +148,7 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
 
   const handleGotoChooseSeatScreen = React.useCallback(() => {
     navigation.navigate(ChooseSeatScreen.displayName, {
+      movieInfo,
       movieName: movieInfo?.Name,
       cinemaName: schedule?.cinema[0].cinemaName,
       movieDate: data?.Day,

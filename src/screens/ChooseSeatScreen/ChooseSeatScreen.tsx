@@ -1,4 +1,5 @@
-import React, {FC, PropsWithChildren, ReactElement} from 'react';
+import type {FC, PropsWithChildren, ReactElement} from 'react';
+import React from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ChooseSeatScreen.scss';
 import {
@@ -9,15 +10,14 @@ import {
   View,
 } from 'react-native';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
-import {StackScreenProps} from '@react-navigation/stack';
+import type {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import SmallTheater from 'src/screens/ChooseSeatScreen/component/SmallTheater/SmallTheater';
 import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore';
+import {bookingService} from 'src/services/booking-service';
+import {formatToCurrency} from 'src/helpers/string-helper';
 
 /**
  * File: ChooseSeatScreen.tsx
@@ -25,16 +25,16 @@ import firestore, {
  * @author TrongDat <trongdat1505@gmail.com>
  * @type {FC<PropsWithChildren<ChooseSeatScreenProps>>}
  */
-
+export interface Position {
+  row: number;
+  column: number;
+}
 export interface BookingData {
   cinemaID: number;
   date: string;
   filmID: number;
   filmType: string;
-  position: {
-    row: number;
-    column: number;
-  }[];
+  position: Position[];
 }
 
 const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
@@ -42,29 +42,22 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const {movieName, cinemaName, movieDate, showTime} = route?.params;
+  const {movieInfo, movieName, cinemaName, movieDate, showTime} = route?.params;
 
-  const [seatCost, setSeatCost] = React.useState<number>(0);
-
-  const [bookingData, setBookingData] = React.useState<
-    FirebaseFirestoreTypes.DocumentData[]
-  >([]);
-
-  const [selectedList, setSelectedList] = React.useState<number[][]>([]);
-
-  const handleGetData = React.useCallback(async () => {
-    return await firestore()
-      .collection('bookings')
-      .get()
-      .then((documentData) => {
-        return documentData.docs.map((item) => item.data());
-      });
-  }, []);
+  const [
+    seatCost,
+    selectedList,
+    setSelectedList,
+    listLabel,
+    handleGetData,
+    handlePickedSeats,
+    handleClearPickedSeats,
+    pickingSeats,
+  ] = bookingService.useBooking();
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
       const result = (await handleGetData()) as BookingData[];
-      setBookingData(result);
 
       const selected: number[][] = [];
       result.map((item) => {
@@ -74,11 +67,28 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
       });
       setSelectedList(selected);
     });
-  }, [handleGetData, navigation, selectedList]);
+  }, [handleGetData, navigation, setSelectedList]);
 
   const handleGotoSelectComboScreen = React.useCallback(() => {
-    navigation.navigate(SelectComboScreen.displayName);
-  }, [navigation]);
+    navigation.navigate(SelectComboScreen.displayName, {
+      movieName,
+      cinemaName,
+      movieDate,
+      showTime,
+      pickingSeats,
+      listLabel,
+      seatCost,
+    });
+  }, [
+    cinemaName,
+    listLabel,
+    movieDate,
+    movieName,
+    navigation,
+    pickingSeats,
+    seatCost,
+    showTime,
+  ]);
 
   const [handleTimestamp] = UseTimestamp();
 
@@ -105,7 +115,10 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
         </View>
 
         <View style={styles.seatsArea}>
-          <SmallTheater selectedList={selectedList} />
+          <SmallTheater
+            selectedList={selectedList}
+            handleShowPickedSeats={handlePickedSeats}
+          />
         </View>
 
         <View style={styles.noteArea}>
@@ -135,22 +148,36 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
         <Text style={[atomicStyles.h1, atomicStyles.bold, styles.summaryTitle]}>
           Chọn ghế ngồi
         </Text>
-        <View style={styles.seatSummary}>
-          <Text style={[atomicStyles.h4, styles.seatSummaryTitle]}>
-            Ghế đang chọn
-          </Text>
-          <View style={styles.totalSeatArea}>
-            <Text style={[atomicStyles.h5, styles.seatChosen]}>D01, D02</Text>
-            <TouchableOpacity>
-              <SvgIcon component={require('assets/icons/Clear.svg')} />
-            </TouchableOpacity>
+        {!!listLabel && (
+          <View style={styles.seatSummary}>
+            <Text style={[atomicStyles.h4, styles.seatSummaryTitle]}>
+              Ghế đang chọn
+            </Text>
+
+            <View style={styles.totalSeatArea}>
+              <View style={styles.seatPickingView}>
+                <Text
+                  style={[
+                    atomicStyles.h5,
+                    atomicStyles.bold,
+                    styles.seatPickingText,
+                  ]}>
+                  {listLabel}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.clearSeatsButton}
+                onPress={handleClearPickedSeats}>
+                <SvgIcon component={require('assets/icons/Clear.svg')} />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        )}
         <View style={styles.summaryTotal}>
           <View style={styles.costSummary}>
             <Text style={[atomicStyles.h5, styles.costTitle]}>Tạm tính</Text>
             <Text style={[atomicStyles.h1, atomicStyles.bold, styles.cost]}>
-              {seatCost} VND
+              {formatToCurrency(seatCost)}
             </Text>
           </View>
           <TouchableOpacity

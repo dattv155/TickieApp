@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './CommentScreen.scss';
-import {Image, Text, View, TouchableOpacity, TextInput} from 'react-native';
+import {Image, Text, View, TouchableOpacity, TextInput, Alert} from 'react-native';
 import {atomicStyles} from 'src/styles';
 
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
@@ -21,8 +21,7 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
   const {movieInfo} = route?.params;
-  const userId = auth().currentUser.uid;
-  const db = firestore();
+  const user = auth().currentUser;
   const yellowstar = require('assets/icons/star.svg');
   const graystar = require('assets/icons/stargray.svg');
   const [svg, setSvg] = React.useState([
@@ -32,11 +31,9 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
     graystar,
     graystar,
   ]);
-  const [text, onChangeText] = React.useState('');
+  const [comment, setComment] = React.useState('');
   const [curStar, setCurStar] = React.useState(1);
-  const handleComment = () => {
-    console.log('add comment');
-  };
+  
   const handleGoBack = React.useCallback(() => {
     navigation.navigate(MovieInfoScreen.displayName, {
       movieInfo,
@@ -52,6 +49,21 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
     }
     setSvg(exp);
   }, [curStar]);
+
+  //send your comment and rating about film
+  const sendComment = async () => {
+    const avatar = await (await firestore().collection('users').where('uid', '==', user.uid).get()).docs[0].data().userImg;
+    const data = {
+      avatar: avatar,
+      movieId: "1",
+      name: movieInfo.Name,
+      rate: curStar,
+      text: comment,
+      time: new Date(Date.now()),
+      userId: user.uid
+    };
+    await firestore().collection('comment').add(data);
+  }
 
   return (
     <View style={styles.yourcomment}>
@@ -107,12 +119,12 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
           placeholder="Để lại đánh giá của bạn tại đây..."
           multiline={true}
           textAlignVertical={'top'}
-          onChangeText={onChangeText}
-          value={text}
+          onChangeText={setComment}
+          value={comment}
         />
         <TouchableOpacity
           style={[styles.buttondanhgia]}
-          onPress={handleComment}>
+          onPress={sendComment}>
           <View>
             <Text style={[styles.textbuttondanhgia, atomicStyles.regular]}>
               Gửi đánh giá

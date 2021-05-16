@@ -33,22 +33,37 @@ const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
     // setNumCombo(numCombo + 1);
     countCombo.current += 1;
     setNumCombo(countCombo.current);
-    handleDeleteDuplicate();
-    listCombo.push({
+    handleCombo({
+      comboID: combo.comboID,
       name: combo.name,
       count: countCombo.current,
       amount: combo.amount,
     });
-    handleCombo([]);
-  }, [combo.amount, combo.name, handleCombo, handleDeleteDuplicate, listCombo]);
+    // handleDeleteDuplicate();
+    // listCombo.push({
+    //   name: combo.name,
+    //   count: countCombo.current,
+    //   amount: combo.amount,
+    // });
+    // handleCombo([]);
+  }, [combo.amount, combo.comboID, combo.name, handleCombo]);
 
   const handleDecreaseNumber = React.useCallback(() => {
+    // numCombo > 0 &&
+    //   ((countCombo.current -= 1),
+    //   handleCombo([]),
+    //   setNumCombo(countCombo.current),
+    //   handleDeleteDuplicate());
     numCombo > 0 &&
       ((countCombo.current -= 1),
-      handleCombo([]),
       setNumCombo(countCombo.current),
-      handleDeleteDuplicate());
-  }, [handleCombo, handleDeleteDuplicate, numCombo]);
+      handleCombo({
+        comboID: combo.comboID,
+        name: combo.name,
+        count: countCombo.current,
+        amount: combo.amount,
+      }));
+  }, [combo.amount, combo.comboID, combo.name, handleCombo, numCombo]);
 
   const handleDetail = React.useCallback(
     (details: {type: string; quantity: number}[]): string => {
@@ -114,7 +129,7 @@ export interface ComboComponentProps {
   //
   combo: Combo;
 
-  handleCombo?: (numCombo: SelectedCombo[]) => void;
+  handleCombo?: (numCombo: SelectedCombo) => void;
 
   listCombo?: SelectedCombo[];
 }

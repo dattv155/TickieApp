@@ -1,0 +1,64 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-05-16 21:51:57
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+
+.containerView {
+  width: 100%;
+  top: -10px;
+  position: absolute;
+}
+.posterView {
+  height: 375px;
+  width: 100%;
+  z-index: -1;
+}
+.infoArea {
+  //position: absolute;
+  //top: 300px;
+  top: -200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 40px;
+  background-color: map-get($colors, 'white');
+  height: 100%;
+  width: 100%;
+  elevation: 4;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.title {
+  font-weight: 900;
+}
+.roles {
+  margin-top: 9px;
+  color: map-get($colors, "black");
+}
+.description {
+  margin-top: 20px;
+}
+.actorView {
+  margin-top: 35px;
+}
+.imageFilmItem {
+  height: 94px;
+  width: 147px;
+  border-radius: 11px;
+  margin-right: 11px;
+}
+.infoHeader {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 30px;
+}
+.infoRight{
+  margin-top: 20px;
+}
+.infoLeft{
+
+}
+.textCountry {
+  margin-top: 15px;
+}

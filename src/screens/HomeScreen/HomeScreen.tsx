@@ -15,6 +15,7 @@ import {LogBox} from 'react-native';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
+import Voucher from './Voucher/Voucher';
 
 /**
  * File: HomeScreen.tsx
@@ -100,9 +101,8 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
               list={data}
               display={display}
             />
-            <AvailableFilm display={display} list={list} />
             <UpcomingFilm display={display} list={list} />
-            <FavoriteFilm display={display} list={list} />
+            <Voucher/>
           </View>
         </ScrollView>
         <MainTabBar navigation={navigation} route={route} />

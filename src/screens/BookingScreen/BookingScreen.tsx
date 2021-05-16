@@ -19,7 +19,8 @@ import moment from 'moment';
 import {atomicStyles} from 'src/styles';
 import ChooseSeatScreen from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
 import ButtonSelectFilmType from 'src/screens/BookingScreen/component/ButtonSelectFilmType/ButtonSelectFilmType';
-import ButtonSelectFilmTime from 'src/screens/BookingScreen/component/ButtonSelectFilmTime/ButtonSelectFilmTime';
+import CinemaShowtimeComponent from 'src/screens/BookingScreen/component/CinemaShowtimeComponent/CinemaShowtimeComponent';
+import {showError} from 'src/helpers/toast';
 
 /**
  * File: BookingScreen.tsx
@@ -52,11 +53,9 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
 
   const fadeAnimation = React.useRef(new Animated.Value(1)).current;
 
-  const [data, setData] = React.useState<Movie>(movieInfo.Schedules[0]);
+  const [data, setData] = React.useState<Movie>(null);
 
-  const [schedule, setSchedule] = React.useState<Schedule>(
-    movieInfo.Schedules[0].Schedule[0],
-  );
+  const [schedule, setSchedule] = React.useState<Schedule>(null);
 
   const [selectedTypeID, setSelectedTypeID] = React.useState<number>(0);
 
@@ -92,6 +91,27 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     [convertTimestamp, movieInfo.Schedules],
   );
 
+  React.useEffect(() => {
+    getInfoByDay(moment());
+  }, [getInfoByDay]);
+
+  const [
+    currentSelectedCinema,
+    setCurrentSelectedCinema,
+  ] = React.useState<string>('');
+  const [
+    currentSelectedShowtime,
+    setCurrentSelectedShowtime,
+  ] = React.useState<string>('');
+
+  const handleChooseCinema = React.useCallback(
+    (cinema: string, showTime: string) => {
+      setCurrentSelectedCinema(cinema);
+      setCurrentSelectedShowtime(showTime);
+    },
+    [],
+  );
+
   const getInfoByType = React.useCallback(
     (typeID) => {
       if (data) {
@@ -109,12 +129,15 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     [selectedTypeID],
   );
 
-  const renderType: ListRenderItem<any> = React.useCallback(
+  const [currentFormat, setCurrentFormat] = React.useState<string>('');
+
+  const renderFormat: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
       let select = false;
 
       if (selectedTypeID === index) {
         select = true;
+        setCurrentFormat(item);
       }
       return (
         <TouchableOpacity
@@ -131,30 +154,30 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     [getInfoByType, handleSelection, selectedTypeID],
   );
 
-  const renderItem: ListRenderItem<any> = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>) => {
-      let select = false;
-      return (
-        <TouchableOpacity
-          key={index}
-          style={styles.press}
-          onPress={() => (select = !select)}>
-          <ButtonSelectFilmType item={item} selected={select} />
-        </TouchableOpacity>
-      );
-    },
-    [],
-  );
-
   const handleGotoChooseSeatScreen = React.useCallback(() => {
-    navigation.navigate(ChooseSeatScreen.displayName, {
-      movieInfo,
-      movieName: movieInfo?.Name,
-      cinemaName: schedule?.cinema[0].cinemaName,
-      movieDate: data?.Day,
-      showTime: schedule?.cinema[0].showTime[0],
-    });
-  }, [data, movieInfo, navigation, schedule]);
+    if (currentSelectedShowtime === '' || currentSelectedCinema === '') {
+      showError('Hãy chọn lịch chiếu');
+      return;
+    }
+    if (data) {
+      navigation.navigate(ChooseSeatScreen.displayName, {
+        movieName: movieInfo?.Name,
+        movieType: movieInfo?.Type,
+        movieFormat: currentFormat,
+        cinemaName: currentSelectedCinema,
+        movieDate: data?.Day,
+        showTime: currentSelectedShowtime,
+      });
+    }
+  }, [
+    currentFormat,
+    currentSelectedCinema,
+    currentSelectedShowtime,
+    data,
+    movieInfo.Name,
+    movieInfo.Type,
+    navigation,
+  ]);
 
   return (
     <DefaultLayout
@@ -167,13 +190,14 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
       bgWhite={true}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.containerView}>
-        <View style={styles.calendar}>
+        <View style={styles.calendarContainer}>
           <CalendarStrip
             startingDate={moment()}
+            selectedDate={moment()}
             minDate={moment()}
             maxDate={moment().add(13, 'days')}
             calendarAnimation={{type: 'parallel', duration: 10}}
-            style={{height: 68, justifyContent: 'center'}}
+            style={styles.calendar}
             calendarHeaderStyle={{color: 'blue'}}
             calendarColor={'white'}
             scrollable={true}
@@ -214,7 +238,7 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
                   <View>
                     <FlatList
                       data={data.Schedule?.map((item) => item.byType)}
-                      renderItem={renderType}
+                      renderItem={renderFormat}
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => item + index.toString()}
                       contentContainerStyle={styles.listType}
@@ -224,7 +248,14 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
                 </View>
                 <View>
                   {schedule?.cinema.map((item) => {
-                    return <ButtonSelectFilmTime data={item} />;
+                    return (
+                      <CinemaShowtimeComponent
+                        data={item}
+                        handleChooseCinema={handleChooseCinema}
+                        currentCinema={currentSelectedCinema}
+                        currentShowTime={currentSelectedShowtime}
+                      />
+                    );
                   })}
                 </View>
               </ScrollView>

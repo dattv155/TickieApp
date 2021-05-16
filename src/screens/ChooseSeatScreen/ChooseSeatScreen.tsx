@@ -42,7 +42,14 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const {movieInfo, movieName, cinemaName, movieDate, showTime} = route?.params;
+  const {
+    movieName,
+    movieType,
+    movieFormat,
+    cinemaName,
+    movieDate,
+    showTime,
+  } = route?.params;
 
   const [
     seatCost,
@@ -72,6 +79,8 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
   const handleGotoSelectComboScreen = React.useCallback(() => {
     navigation.navigate(SelectComboScreen.displayName, {
       movieName,
+      movieType,
+      movieFormat,
       cinemaName,
       movieDate,
       showTime,
@@ -83,7 +92,9 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     cinemaName,
     listLabel,
     movieDate,
+    movieFormat,
     movieName,
+    movieType,
     navigation,
     pickingSeats,
     seatCost,

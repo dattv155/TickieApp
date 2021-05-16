@@ -1,6 +1,6 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-import styles from './ButtonSelectFilmTime.scss';
+import styles from './CinemaShowtimeComponent.scss';
 import {
   FlatList,
   ListRenderItem,
@@ -10,38 +10,41 @@ import {
   View,
 } from 'react-native';
 import {atomicStyles} from 'src/styles';
+import {CinemaSchedule} from 'src/screens/BookingScreen/BookingScreen';
 
 /**
- * File: ButtonSelectFilmTime.tsx
- * @created 2021-04-27 23:22:45
+ * File: CinemaShowtimeComponent.tsx
+ * @created 2021-05-16 17:11:16
  * @author TrongDat <trongdat1505@gmail.com>
- * @type {FC<PropsWithChildren<ButtonSelectFilmTimeProps>>}
+ * @type {FC<PropsWithChildren<CinemaShowtimeComponentProps>>}
  */
-const ButtonSelectFilmTime: FC<PropsWithChildren<ButtonSelectFilmTimeProps>> = (
-  props: PropsWithChildren<ButtonSelectFilmTimeProps>,
-): ReactElement => {
-  const {data} = props;
-
-  const [selectedTypeID, setSelectedTypeID] = React.useState<number>(null);
+const CinemaShowtimeComponent: FC<
+  PropsWithChildren<CinemaShowtimeComponentProps>
+> = (props: PropsWithChildren<CinemaShowtimeComponentProps>): ReactElement => {
+  const {data, handleChooseCinema, currentCinema, currentShowTime} = props;
 
   const handleSelection = React.useCallback(
-    (id) => {
-      selectedTypeID !== id && setSelectedTypeID(id);
+    (time) => {
+      if (currentCinema !== data.cinemaName) {
+        handleChooseCinema(data.cinemaName, time);
+      } else if (currentShowTime !== time) {
+        handleChooseCinema(currentCinema, time);
+      }
     },
-    [selectedTypeID],
+    [currentCinema, currentShowTime, data.cinemaName, handleChooseCinema],
   );
 
   const renderItem: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
       let selected = false;
-      if (selectedTypeID === index) {
+      if (currentCinema === data.cinemaName && currentShowTime === item) {
         selected = true;
       }
       return (
         <TouchableOpacity
           key={index}
           onPress={() => {
-            handleSelection(index);
+            handleSelection(item);
           }}
           style={styles.press}>
           <View
@@ -58,7 +61,7 @@ const ButtonSelectFilmTime: FC<PropsWithChildren<ButtonSelectFilmTimeProps>> = (
         </TouchableOpacity>
       );
     },
-    [handleSelection, selectedTypeID],
+    [currentCinema, currentShowTime, data.cinemaName, handleSelection],
   );
 
   return (
@@ -79,33 +82,29 @@ const ButtonSelectFilmTime: FC<PropsWithChildren<ButtonSelectFilmTimeProps>> = (
           />
         </View>
       </View>
-      {/*<View style={[styles.buttonContainer, selected && styles.pickedButton]}>*/}
-      {/*  <Text*/}
-      {/*    style={[*/}
-      {/*      atomicStyles.bold,*/}
-      {/*      atomicStyles.h4,*/}
-      {/*      selected ? styles.pickedText : styles.unPickedText,*/}
-      {/*    ]}>*/}
-      {/*    {item}*/}
-      {/*  </Text>*/}
-      {/*</View>*/}
     </>
   );
 };
 
-export interface ButtonSelectFilmTimeProps {
+export interface CinemaShowtimeComponentProps {
   //
-  data?: any;
+  data?: CinemaSchedule;
+
+  handleChooseCinema?: (cinema: string, showTime: string) => void;
+
+  currentCinema?: string;
+
+  currentShowTime?: string;
 }
 
-ButtonSelectFilmTime.defaultProps = {
+CinemaShowtimeComponent.defaultProps = {
   //
 };
 
-ButtonSelectFilmTime.propTypes = {
+CinemaShowtimeComponent.propTypes = {
   //
 };
 
-ButtonSelectFilmTime.displayName = nameof(ButtonSelectFilmTime);
+CinemaShowtimeComponent.displayName = nameof(CinemaShowtimeComponent);
 
-export default React.memo(ButtonSelectFilmTime);
+export default React.memo(CinemaShowtimeComponent);

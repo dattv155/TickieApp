@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './CommentScreen.scss';
-import {Image, Text, View, TouchableOpacity, TextInput, Alert} from 'react-native';
+import {Image, Text, View, TouchableOpacity, TextInput} from 'react-native';
 import {atomicStyles} from 'src/styles';
 
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
@@ -33,7 +33,7 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
   ]);
   const [comment, setComment] = React.useState('');
   const [curStar, setCurStar] = React.useState(1);
-  
+
   const handleGoBack = React.useCallback(() => {
     navigation.navigate(MovieInfoScreen.displayName, {
       movieInfo,
@@ -48,22 +48,24 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
       exp[i] = graystar;
     }
     setSvg(exp);
-  }, [curStar]);
+  }, [curStar, graystar, svg, yellowstar]);
 
   //send your comment and rating about film
   const sendComment = async () => {
-    const avatar = await (await firestore().collection('users').where('uid', '==', user.uid).get()).docs[0].data().userImg;
+    const avatar = await (
+      await firestore().collection('users').where('uid', '==', user.uid).get()
+    ).docs[0].data().userImg;
     const data = {
       avatar: avatar,
-      movieId: "1",
+      movieId: '1',
       name: movieInfo.Name,
       rate: curStar,
       text: comment,
       time: new Date(Date.now()),
-      userId: user.uid
+      userId: user.uid,
     };
     await firestore().collection('comment').add(data);
-  }
+  };
 
   return (
     <View style={styles.yourcomment}>
@@ -85,7 +87,9 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
             {movieInfo.Name}
           </Text>
           <Text style={[styles.headerinfo_release, atomicStyles.regular]}>
-            {new Date(movieInfo.Release.seconds * 1000 + 43200000).getFullYear()}
+            {new Date(
+              movieInfo.Release.seconds * 1000 + 43200000,
+            ).getFullYear()}
           </Text>
           <Text style={[styles.headerinfo_kind, atomicStyles.regular]}>
             {movieInfo.Type}
@@ -122,9 +126,7 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
           onChangeText={setComment}
           value={comment}
         />
-        <TouchableOpacity
-          style={[styles.buttondanhgia]}
-          onPress={sendComment}>
+        <TouchableOpacity style={[styles.buttondanhgia]} onPress={sendComment}>
           <View>
             <Text style={[styles.textbuttondanhgia, atomicStyles.regular]}>
               Gửi đánh giá

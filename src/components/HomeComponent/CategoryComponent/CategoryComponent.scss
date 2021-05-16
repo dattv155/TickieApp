@@ -39,18 +39,17 @@
 }
 
 .header {
-  margin: 30px 6% 0 6%;
   padding: 5px 0;
   font-size: 30px;
   line-height: 27px;
   letter-spacing: 0.02px;
 }
 .head {
-  margin: 50px 6% 0 6%;
   padding: 5px 0;
   flex-direction: row;
 }
 .imageContainer {
   border-radius: 39px;
-  border-width: 3px;
+  border-width: 0.3px;
+  border-color: black;
 }

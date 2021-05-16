@@ -1,7 +1,14 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './PaymentScreen.scss';
-import {Image, StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles} from 'src/styles';
@@ -115,114 +122,142 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
           </View>
         }>
         <StatusBar barStyle="dark-content" />
-        <View style={styles.containerView}>
-          <View style={styles.information}>
-            <Image
-              source={require('assets/images/mulan-poster.png')}
-              resizeMode="cover"
-              style={styles.infoImage}
-            />
-            <View style={styles.info}>
-              <Text
-                style={[atomicStyles.h4, atomicStyles.bold, styles.filmName]}>
-                {movieName}
-              </Text>
-              <Text style={[atomicStyles.h6, styles.infoType]}>
-                {movieType}
-              </Text>
-              <Text style={[atomicStyles.h6, styles.infoType]}>
-                Rạp:{' '}
-                <Text style={[atomicStyles.bold, styles.textBold]}>
-                  {cinemaName}
-                </Text>
-              </Text>
-              <Text style={[atomicStyles.h6, styles.infoType]}>
-                Định dạng:{' '}
-                <Text style={[atomicStyles.bold, styles.textBold]}>
-                  {movieFormat}
-                </Text>
-              </Text>
-            </View>
-          </View>
-          <View style={styles.detailArea}>
-            <View style={styles.detailBlock}>
-              <Text style={[atomicStyles.h6, styles.detailTitle]}>Ngày</Text>
-              <Text
-                style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                {handleGetDay(movieDate.seconds)}
-              </Text>
-            </View>
-            <View style={styles.detailBlock}>
-              <Text style={[atomicStyles.h6, styles.detailTitle]}>
-                Thời gian
-              </Text>
-              <Text
-                style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                {showTime}
-              </Text>
-            </View>
-            <View style={styles.detailBlock}>
-              <Text style={[atomicStyles.h6, styles.detailTitle]}>
-                Chỗ ngồi
-              </Text>
-              <Text
-                style={[atomicStyles.h4, atomicStyles.bold, styles.detailInfo]}>
-                {listLabel}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.comboInfo}>
-            <Text style={[atomicStyles.h6, styles.comboTitle]}>Combo Set</Text>
-            <Text
-              style={[atomicStyles.h4, atomicStyles.bold, styles.comboDetail]}>
-              {handleListCombo(listSelectCombo)}
-            </Text>
-          </View>
-          <View style={styles.paymentArea}>
-            <Text
-              style={[atomicStyles.h5, atomicStyles.bold, styles.paymentTitle]}>
-              Chọn cách thức thanh toán
-            </Text>
-            <View style={styles.paymentGroup}>
-              {/*<PaymentMethodItem type={'credit'} />*/}
-              {/*<PaymentMethodItem type={'banking'} />*/}
-              {/*<PaymentMethodItem />*/}
-              <RadioButton
-                values={PaymentMethod}
-                onSetMethodKey={setPaymentMethodKey}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          horizontal={false}
+          style={styles.scrollView}>
+          <View style={styles.containerView}>
+            <View style={styles.information}>
+              <Image
+                source={require('assets/images/mulan-poster.png')}
+                resizeMode="cover"
+                style={styles.infoImage}
               />
+              <View style={styles.info}>
+                <Text
+                  style={[atomicStyles.h4, atomicStyles.bold, styles.filmName]}>
+                  {movieName}
+                </Text>
+                <Text style={[atomicStyles.h6, styles.infoType]}>
+                  {movieType}
+                </Text>
+                <Text style={[atomicStyles.h6, styles.infoType]}>
+                  Rạp:{' '}
+                  <Text style={[atomicStyles.bold, styles.textBold]}>
+                    {cinemaName}
+                  </Text>
+                </Text>
+                <Text style={[atomicStyles.h6, styles.infoType]}>
+                  Định dạng:{' '}
+                  <Text style={[atomicStyles.bold, styles.textBold]}>
+                    {movieFormat}
+                  </Text>
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.summaryArea}>
-            <View style={styles.summary}>
-              <Text
-                style={[
-                  atomicStyles.h3,
-                  atomicStyles.bold,
-                  atomicStyles.textBlue,
-                ]}>
-                Tổng cộng
+            <View style={styles.detailArea}>
+              <View style={styles.detailBlock}>
+                <Text style={[atomicStyles.h6, styles.detailTitle]}>Ngày</Text>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    styles.detailInfo,
+                  ]}>
+                  {handleGetDay(movieDate.seconds)}
+                </Text>
+              </View>
+              <View style={styles.detailBlock}>
+                <Text style={[atomicStyles.h6, styles.detailTitle]}>
+                  Thời gian
+                </Text>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    styles.detailInfo,
+                  ]}>
+                  {showTime}
+                </Text>
+              </View>
+              <View style={styles.detailBlock}>
+                <Text style={[atomicStyles.h6, styles.detailTitle]}>
+                  Chỗ ngồi
+                </Text>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    styles.detailInfo,
+                  ]}>
+                  {listLabel}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.comboInfo}>
+              <Text style={[atomicStyles.h6, styles.comboTitle]}>
+                Combo Set
               </Text>
               <Text
                 style={[
-                  atomicStyles.h1,
+                  atomicStyles.h4,
                   atomicStyles.bold,
-                  atomicStyles.textBlue,
+                  styles.comboDetail,
                 ]}>
-                {formatToCurrency(seatCost + comboCost)} VND
+                {handleListCombo(listSelectCombo)}
               </Text>
             </View>
-            <TouchableOpacity style={styles.paymentButton} onPress={handlePay}>
+            <View style={styles.paymentArea}>
               <Text
                 style={[
                   atomicStyles.h5,
                   atomicStyles.bold,
-                  atomicStyles.textWhite,
+                  styles.paymentTitle,
                 ]}>
-                Thanh toán
+                Chọn cách thức thanh toán
               </Text>
-            </TouchableOpacity>
+              <View style={styles.paymentGroup}>
+                {/*<PaymentMethodItem type={'credit'} />*/}
+                {/*<PaymentMethodItem type={'banking'} />*/}
+                {/*<PaymentMethodItem />*/}
+                <RadioButton
+                  values={PaymentMethod}
+                  onSetMethodKey={setPaymentMethodKey}
+                />
+              </View>
+            </View>
           </View>
+        </ScrollView>
+
+        <View style={styles.summaryArea}>
+          <View style={styles.summary}>
+            <Text
+              style={[
+                atomicStyles.h3,
+                atomicStyles.bold,
+                atomicStyles.textBlue,
+              ]}>
+              Tổng cộng
+            </Text>
+            <Text
+              style={[
+                atomicStyles.h1,
+                atomicStyles.bold,
+                atomicStyles.textBlue,
+              ]}>
+              {formatToCurrency(seatCost + comboCost)} VND
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.paymentButton} onPress={handlePay}>
+            <Text
+              style={[
+                atomicStyles.h5,
+                atomicStyles.bold,
+                atomicStyles.textWhite,
+              ]}>
+              Thanh toán
+            </Text>
+          </TouchableOpacity>
         </View>
       </DefaultLayout>
     </>

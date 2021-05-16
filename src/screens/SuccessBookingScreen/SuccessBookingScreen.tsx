@@ -19,6 +19,8 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import {useTranslation} from 'react-i18next';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import HomeScreen from 'src/screens/HomeScreen/HomeScreen';
+import {SelectedCombo} from 'src/services/booking-service/use-combo';
+import {UseTimestamp} from 'src/hooks/use-timestamp';
 
 /**
  * File: SuccessBookingScreen.tsx
@@ -33,9 +35,33 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
 
   const [translate] = useTranslation();
 
+  const {
+    movieName,
+    cinemaName,
+    movieDate,
+    showTime,
+    pickingSeats,
+    listLabel,
+    seatCost,
+    listSelectCombo,
+    comboCost,
+  } = route?.params;
+
   const handleGoToHomeScreen = React.useCallback(() => {
     navigation.navigate(nameof(HomeScreen));
   }, [navigation]);
+
+  const handleListCombo = React.useCallback((listCombo: SelectedCombo[]) => {
+    let text = '';
+    listCombo.map((combo) => {
+      text = text + combo.count + ' ' + combo.name + ', ';
+    });
+    return text.substring(0, text.length - 2);
+  }, []);
+
+  const [, handleGetDay] = UseTimestamp();
+
+  const dateAndShowTime = `${showTime} ${handleGetDay(movieDate)}`;
 
   return (
     <>
@@ -94,7 +120,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                       atomicStyles.bold,
                       styles.textStyle,
                     ]}>
-                    Mulan
+                    {movieName}
                   </Text>
                   <Text
                     style={[
@@ -108,12 +134,15 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                 </View>
 
                 <TextItemView label="Mã vé" value="18022123214" />
-                <TextItemView label="Thời gian" value="7:00 PM 10/3" />
-                <TextItemView label="Rạp" value="Tickie Giải Phóng" />
+                <TextItemView label="Thời gian" value={dateAndShowTime} />
+                <TextItemView label="Rạp" value={cinemaName} />
                 <TextItemView label="Phòng chiếu" value="2B" />
-                <TextItemView label="Chỗ ngồi" value="D06, D07" />
-                <TextItemView label="Set Combo" value="1 Combo L, 1 Combo M" />
-                <TextItemView label="Giá" value="400.000 VND" />
+                <TextItemView label="Chỗ ngồi" value={listLabel} />
+                <TextItemView
+                  label="Set Combo"
+                  value={handleListCombo(listSelectCombo)}
+                />
+                <TextItemView label="Giá" value={seatCost + comboCost} />
               </View>
 
               <SvgIcon

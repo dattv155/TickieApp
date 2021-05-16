@@ -39,7 +39,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   );
 
   const handleGetData = React.useCallback(async () => {
-    return await firestore()
+    return firestore()
       .collection('movie')
       .get()
       .then((documentData) => {

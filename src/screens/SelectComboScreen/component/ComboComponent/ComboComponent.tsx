@@ -14,23 +14,13 @@ import {Combo, SelectedCombo} from 'src/services/booking-service/use-combo';
 const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
   props: PropsWithChildren<ComboComponentProps>,
 ): ReactElement => {
-  const {combo, handleCombo, listCombo} = props;
+  const {combo, handleCombo} = props;
 
   const [numCombo, setNumCombo] = React.useState<number>(0);
 
   const countCombo = React.useRef<number>(0);
 
-  const handleDeleteDuplicate = React.useCallback(() => {
-    let index = listCombo.findIndex(function (selectedCombo) {
-      return selectedCombo.name === combo.name;
-    });
-    if (index > -1) {
-      listCombo.splice(index, 1);
-    }
-  }, [combo.name, listCombo]);
-
   const handleIncreaseNumber = React.useCallback(() => {
-    // setNumCombo(numCombo + 1);
     countCombo.current += 1;
     setNumCombo(countCombo.current);
     handleCombo({
@@ -39,21 +29,9 @@ const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
       count: countCombo.current,
       amount: combo.amount,
     });
-    // handleDeleteDuplicate();
-    // listCombo.push({
-    //   name: combo.name,
-    //   count: countCombo.current,
-    //   amount: combo.amount,
-    // });
-    // handleCombo([]);
   }, [combo.amount, combo.comboID, combo.name, handleCombo]);
 
   const handleDecreaseNumber = React.useCallback(() => {
-    // numCombo > 0 &&
-    //   ((countCombo.current -= 1),
-    //   handleCombo([]),
-    //   setNumCombo(countCombo.current),
-    //   handleDeleteDuplicate());
     numCombo > 0 &&
       ((countCombo.current -= 1),
       setNumCombo(countCombo.current),
@@ -130,8 +108,6 @@ export interface ComboComponentProps {
   combo: Combo;
 
   handleCombo?: (numCombo: SelectedCombo) => void;
-
-  listCombo?: SelectedCombo[];
 }
 
 ComboComponent.defaultProps = {

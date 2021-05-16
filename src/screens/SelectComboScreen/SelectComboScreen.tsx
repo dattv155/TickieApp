@@ -35,6 +35,8 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
 
   const {
     movieName,
+    movieType,
+    movieFormat,
     cinemaName,
     movieDate,
     showTime,
@@ -82,23 +84,24 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
     setComboCost(cost);
   }, [listSelectCombo]);
 
-  const renderItem: ListRenderItem<any> = React.useCallback(
+  const renderComboItem: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
       return (
         <ComboComponent
           combo={item}
           key={index}
           handleCombo={handleListCombo}
-          listCombo={listSelectCombo}
         />
       );
     },
-    [handleListCombo, listSelectCombo],
+    [handleListCombo],
   );
 
   const handleGotoPaymentScreen = React.useCallback(() => {
     navigation.navigate(PaymentScreen.displayName, {
       movieName,
+      movieType,
+      movieFormat,
       cinemaName,
       movieDate,
       showTime,
@@ -114,7 +117,9 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
     listLabel,
     listSelectCombo,
     movieDate,
+    movieFormat,
     movieName,
+    movieType,
     navigation,
     pickingSeats,
     seatCost,
@@ -135,7 +140,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
           <View style={styles.listComboArea}>
             <FlatList
               data={comboList}
-              renderItem={renderItem}
+              renderItem={renderComboItem}
               keyExtractor={(item) => item.comboID.toString()}
               showsVerticalScrollIndicator={false}
             />

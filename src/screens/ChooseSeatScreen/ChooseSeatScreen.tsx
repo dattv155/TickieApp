@@ -34,7 +34,7 @@ export interface BookingData {
   movieName: string;
   date: FirebaseFirestoreTypes.Timestamp;
   time: string;
-  cinemaID: number;
+  cinemaName: string;
   filmID: number;
   filmType: string;
   position: Position[];
@@ -63,7 +63,13 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     handlePickedSeats,
     handleClearPickedSeats,
     pickingSeats,
-  ] = bookingService.useBooking(movieName, movieDate, movieFormat, showTime);
+  ] = bookingService.useBooking(
+    movieName,
+    movieDate,
+    movieFormat,
+    cinemaName,
+    showTime,
+  );
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {

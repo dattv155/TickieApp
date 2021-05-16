@@ -82,7 +82,7 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
       const dataTemp = movieInfo.Schedules.find(
         (item: any) =>
           convertTimestamp(item.Day.seconds) ===
-          day.toISOString(false).split('T')[0],
+          day.toISOString(true).split('T')[0],
       );
 
       dataTemp

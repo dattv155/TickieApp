@@ -5,7 +5,12 @@ import firestore, {
 import {CinemaLayout} from 'src/sample/cinemaLayout';
 import {SEAT_PRICE} from 'src/config/consts';
 
-export function useBooking(): [
+export function useBooking(
+  movieName: string,
+  movieDate: FirebaseFirestoreTypes.Timestamp,
+  movieFormat: string,
+  showTime: string,
+): [
   number,
   number[][],
   Dispatch<SetStateAction<number[][]>>,
@@ -26,11 +31,15 @@ export function useBooking(): [
   const handleGetData = React.useCallback(async () => {
     return firestore()
       .collection('bookings')
+      .where('movieName', '==', movieName)
+      .where('date', '==', movieDate)
+      .where('filmType', '==', movieFormat)
+      .where('time', '==', showTime)
       .get()
       .then((documentData) => {
         return documentData.docs.map((item) => item.data());
       });
-  }, []);
+  }, [movieDate, movieFormat, movieName, showTime]);
 
   const handlePickedSeats = React.useCallback((seatList: number[][]) => {
     setPickingSeats([...seatList]);

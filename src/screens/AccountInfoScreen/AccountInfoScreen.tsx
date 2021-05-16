@@ -23,6 +23,7 @@ import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
 import {getAccount} from 'src/services/get-account';
 import moment from 'moment';
+import AccountInfoSkeleton from 'src/screens/AccountInfoScreen/AccountInfoSkeleton/AccountInfoSkeleton';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -50,6 +51,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
     ,
     dateOfBirth,
     handleChangeDateOfBirth,
+    loading,
   ] = getAccount.getAccountInfo();
 
   const updateProfile = React.useCallback(() => {
@@ -212,120 +214,144 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
             customHeader={false}>
             <SafeAreaView style={styles.screenContainer}>
               <View style={styles.viewContainer}>
-                <InputProfile
-                  label="Họ và tên"
-                  keyboardType="default"
-                  placeholder={fullname}
-                  onChangeText={handleChangeFullname}
-                />
-                <InputProfile
-                  label="Số điện thoại"
-                  keyboardType="number-pad"
-                  placeholder={phoneNumber}
-                  onChangeText={handleChangePhoneNumber}
-                />
-                <InputProfile
-                  label="Email"
-                  keyboardType="email-address"
-                  placeholder={email}
-                  onChangeText={handleChangeEmail}
-                />
-
-                <View style={styles.dateSexSection}>
-                  <View style={[atomicStyles.w50]}>
-                    <Text
-                      style={[
-                        atomicStyles.h5,
-                        atomicStyles.bold,
-                        styles.textStyle,
-                        atomicStyles.mb8px,
-                      ]}>
-                      Ngày sinh
-                    </Text>
-                    <Pressable onPress={handleOpenBottomSheet}>
-                      <Text
-                        style={[
-                          atomicStyles.h5,
-                          atomicStyles.bold,
-                          styles.textStyle,
-                          atomicStyles.textGray,
-                          atomicStyles.mb16px,
-                          atomicStyles.mt8px,
-                        ]}>
-                        {moment(dateOfBirth).format('DD/MM/YYYY')}
-                      </Text>
-                    </Pressable>
-                  </View>
-                  <SvgIcon
-                    component={require('assets/icons/LineHorizontal.svg')}
+                {loading ? (
+                  <AccountInfoSkeleton />
+                ) : (
+                  <InputProfile
+                    label="Họ và tên"
+                    keyboardType="default"
+                    placeholder={fullname}
+                    onChangeText={handleChangeFullname}
                   />
-                  <View style={[atomicStyles.w100]}>
-                    <Text
-                      style={[
-                        atomicStyles.w50,
-                        atomicStyles.textRight,
-                        atomicStyles.h5,
-                        atomicStyles.bold,
-                        styles.textStyle,
-                        atomicStyles.mb4px,
-                      ]}>
-                      Giới tính
-                    </Text>
+                )}
 
-                    <Pressable onPress={handleOpenGenderChoice}>
+                {loading ? (
+                  <AccountInfoSkeleton />
+                ) : (
+                  <InputProfile
+                    label="Số điện thoại"
+                    keyboardType="number-pad"
+                    placeholder={phoneNumber}
+                    onChangeText={handleChangePhoneNumber}
+                  />
+                )}
+
+                {loading ? (
+                  <AccountInfoSkeleton />
+                ) : (
+                  <InputProfile
+                    label="Email"
+                    keyboardType="email-address"
+                    placeholder={email}
+                    onChangeText={handleChangeEmail}
+                  />
+                )}
+
+                {loading ? (
+                  <AccountInfoSkeleton />
+                ) : (
+                  <View style={styles.dateSexSection}>
+                    <View style={[atomicStyles.w50]}>
                       <Text
                         style={[
                           atomicStyles.h5,
                           atomicStyles.bold,
-                          atomicStyles.textRight,
                           styles.textStyle,
-                          atomicStyles.textGray,
-                          atomicStyles.mb16px,
-                          atomicStyles.mt8px,
-                          atomicStyles.w50,
+                          atomicStyles.mb8px,
                         ]}>
-                        {gender}
+                        Ngày sinh
                       </Text>
-                    </Pressable>
+                      <Pressable onPress={handleOpenBottomSheet}>
+                        <Text
+                          style={[
+                            atomicStyles.h5,
+                            atomicStyles.bold,
+                            styles.textStyle,
+                            atomicStyles.textGray,
+                            atomicStyles.mb16px,
+                            atomicStyles.mt8px,
+                          ]}>
+                          {moment(dateOfBirth).format('DD/MM/YYYY')}
+                        </Text>
+                      </Pressable>
+                    </View>
+                    <SvgIcon
+                      component={require('assets/icons/LineHorizontal.svg')}
+                    />
+                    <View style={[atomicStyles.w100]}>
+                      <Text
+                        style={[
+                          atomicStyles.w50,
+                          atomicStyles.textRight,
+                          atomicStyles.h5,
+                          atomicStyles.bold,
+                          styles.textStyle,
+                          atomicStyles.mb4px,
+                        ]}>
+                        Giới tính
+                      </Text>
+
+                      <Pressable onPress={handleOpenGenderChoice}>
+                        <Text
+                          style={[
+                            atomicStyles.h5,
+                            atomicStyles.bold,
+                            atomicStyles.textRight,
+                            styles.textStyle,
+                            atomicStyles.textGray,
+                            atomicStyles.mb16px,
+                            atomicStyles.mt8px,
+                            atomicStyles.w50,
+                          ]}>
+                          {gender}
+                        </Text>
+                      </Pressable>
+                    </View>
                   </View>
-                </View>
+                )}
 
-                <Dash
-                  dashGap={0}
-                  dashLength={3}
-                  dashThickness={1}
-                  style={[styles.dash, atomicStyles.mb16px]}
-                  dashColor={Colors.Gray}
-                />
+                {loading ? (
+                  <AccountInfoSkeleton />
+                ) : (
+                  <>
+                    <Dash
+                      dashGap={0}
+                      dashLength={3}
+                      dashThickness={1}
+                      style={[styles.dash, atomicStyles.mb16px]}
+                      dashColor={Colors.Gray}
+                    />
 
-                <View
-                  style={[
-                    atomicStyles.flexRow,
-                    atomicStyles.justifyContentBetween,
-                    atomicStyles.mt8px,
-                  ]}>
-                  <Text
-                    style={[
-                      atomicStyles.h5,
-                      atomicStyles.bold,
-                      styles.textStyle,
-                      atomicStyles.mb8px,
-                    ]}>
-                    Khu vực
-                  </Text>
-
-                  <Pressable onPress={handleOpenProvinceChoice}>
-                    <Text
+                    <View
                       style={[
-                        atomicStyles.h5,
-                        atomicStyles.bold,
-                        styles.textStyle,
-                        atomicStyles.textGray,
+                        atomicStyles.flexRow,
+                        atomicStyles.justifyContentBetween,
+                        atomicStyles.mt8px,
                       ]}>
-                      {province}
-                    </Text>
-                  </Pressable>
-                </View>
+                      <Text
+                        style={[
+                          atomicStyles.h5,
+                          atomicStyles.bold,
+                          styles.textStyle,
+                          atomicStyles.mb8px,
+                        ]}>
+                        Khu vực
+                      </Text>
+
+                      <Pressable onPress={handleOpenProvinceChoice}>
+                        <Text
+                          style={[
+                            atomicStyles.h5,
+                            atomicStyles.bold,
+                            styles.textStyle,
+                            atomicStyles.textGray,
+                          ]}>
+                          {province}
+                        </Text>
+                      </Pressable>
+                    </View>
+                  </>
+                )}
               </View>
               <View style={[styles.viewContainer, styles.box]}>
                 <LineBlock

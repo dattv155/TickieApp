@@ -17,4 +17,10 @@ export const PaymentMethod = [
     subtitle: 'Momo',
     iconLink: 'assets/icons/WalletIcon.svg',
   },
+  {
+    key: 'offline',
+    title: 'Thanh toán trực tiếp',
+    subtitle: 'Thanh toán tại quầy bán vé',
+    iconLink: 'assets/icons/WalletIcon.svg',
+  },
 ];

@@ -21,7 +21,6 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
   const {movieInfo} = route?.params;
-  const user = auth().currentUser;
   const yellowstar = require('assets/icons/star.svg');
   const graystar = require('assets/icons/stargray.svg');
   const [svg, setSvg] = React.useState([
@@ -52,17 +51,19 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
 
   //send your comment and rating about film
   const sendComment = async () => {
-    const avatar = await (await firestore().collection('users').where('uid', '==', user.uid).get()).docs[0].data().userImg;
+    let user:Obj = await (await firestore().collection('users').where('uid', '==', auth().currentUser.uid).get()).docs[0];
     const data = {
-      avatar: avatar,
-      movieId: "1",
-      name: movieInfo.Name,
+      avatar: user.data().UserImg,
+      movieId: `Movie-${movieInfo.movieID}`,
+      name: user.data().fullname,
       rate: curStar,
       text: comment,
       time: new Date(Date.now()),
-      userId: user.uid
+      userId: auth().currentUser.uid
     };
+    console.log(data);
     await firestore().collection('comment').add(data);
+    console.log(data);
   }
 
   return (
@@ -140,7 +141,10 @@ export interface CommentScreenProps extends StackScreenProps<any> {
   //
   auth?: any;
 }
-
+export interface Obj {
+  id?: String;
+  data?: Function;
+}
 CommentScreen.defaultProps = {
   //
 };

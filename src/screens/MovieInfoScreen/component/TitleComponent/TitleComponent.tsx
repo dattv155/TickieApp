@@ -14,7 +14,7 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
   props: PropsWithChildren<TitleComponentProps>,
 ): ReactElement => {
-  const {title, isReviewArea, rate, numOfReview, handleDisplay} = props;
+  const {title, isReviewArea} = props;
 
   const handleGotoDetailTitle = React.useCallback(() => {}, []);
 
@@ -36,21 +36,11 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
               <Text style={[atomicStyles.h4, atomicStyles.bold, styles.title]}>
                 {title}
               </Text>
-              <Text style={[atomicStyles.h7, styles.numOfReviewItem]}>
-                {numOfReview} Đánh giá
-              </Text>
+  
             </View>
-            <View style={styles.rate}>
-              <SvgIcon component={require('assets/icons/star.svg')} />
-              <Text style={[styles.numberOfRate]}>
-                <Text style={[atomicStyles.h3, styles.rateNumber]}>{rate}</Text>
-                /5
-              </Text>
-            </View>
+
           </View>
-          <TouchableOpacity onPress={handleDisplay}>
-            <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
-          </TouchableOpacity>
+
         </>
       )}
     </View>

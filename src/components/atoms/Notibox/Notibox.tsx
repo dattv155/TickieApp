@@ -3,7 +3,9 @@ import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
 import {atomicStyles} from '../../../styles';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import firebase from 'firebase';
+import moment from 'moment';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {Notification} from 'src/models/Notification';
 
 /**
  * File: ./Notibox.tsx
@@ -55,15 +57,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
       }
     }
   }, [props.data, type]);
-  const getHour = (day) => {
-    let hour = '';
-    let isoDay = new Date(day * 1000 + 43200000);
-    let minutes = isoDay.getUTCMinutes();
-    if (minutes < 10) {
-      return `${isoDay.getHours() - 5}:0${isoDay.getUTCMinutes()}`;
-    }
-    return `${isoDay.getHours() - 5}:${isoDay.getUTCMinutes()}`;
-  };
+
   return (
     <View style={[sstyle.box]}>
       <TouchableOpacity
@@ -72,18 +66,23 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
         onPress={press}>
         <View style={styles.bigwrapper}>
           <View style={styles.title}>
-            <Text style={[styles.type, atomicStyles.bold]}>{title}</Text>
-            <Text style={[styles.hour, atomicStyles.regular]}>
-              {getHour(day.seconds)}
+            <Text
+              style={[
+                atomicStyles.h5,
+                atomicStyles.bold,
+                styles.textStyle,
+                atomicStyles.textBlue,
+              ]}>
+              {title}
+            </Text>
+            <Text style={[styles.hour, atomicStyles.h7]}>
+              {moment(day.toDate()).format('hh:mm')}
             </Text>
           </View>
           <View style={styles.wrapper}>
-            <Text style={[styles.content, atomicStyles.regular]}>
-              {content}
-            </Text>
+            <Text style={[styles.content, atomicStyles.h6]}>{content}</Text>
           </View>
-          <Text
-            style={[styles.content, atomicStyles.regular, {display: display}]}>
+          <Text style={[styles.content, atomicStyles.h6, {display: display}]}>
             {span}
           </Text>
         </View>
@@ -100,20 +99,20 @@ const sstyle = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 13,
     paddingVertical: 8,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 16,
   },
 });
 export interface NotiboxProps {
   //
-  data?: Data;
+  data?: Notification;
 }
 
 export interface Data {
   span?: string;
   content?: string;
   type?: string;
-  day?: firebase.firestore.Timestamp;
+  day?: FirebaseFirestoreTypes.Timestamp;
 }
 Notibox.defaultProps = {
   //

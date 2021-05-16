@@ -21,6 +21,7 @@ import ChooseSeatScreen from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
 import ButtonSelectFilmType from 'src/screens/BookingScreen/component/ButtonSelectFilmType/ButtonSelectFilmType';
 import CinemaShowtimeComponent from 'src/screens/BookingScreen/component/CinemaShowtimeComponent/CinemaShowtimeComponent';
 import {showError} from 'src/helpers/toast';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 /**
  * File: BookingScreen.tsx
@@ -40,7 +41,7 @@ export interface Schedule {
 }
 
 export interface Movie {
-  Day: string;
+  Day: FirebaseFirestoreTypes.Timestamp;
   Schedule: Schedule[];
 }
 

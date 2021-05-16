@@ -10,7 +10,7 @@ PushNotification.configure({
   requestPermissions: true,
 });
 
-export const LocalNotification = () => {
+export const LocalNotification = (movie: string) => {
   PushNotification.localNotification({
     autoCancel: true,
     largeIcon: 'ic_launcher', // (optional) default: "ic_launcher". Use "" for no large icon.
@@ -23,7 +23,7 @@ export const LocalNotification = () => {
     bigText:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dictum molestie ipsum eu lacinia. Quisque egestas, sem at ornare gravida, velit nibh laoreet leo, eu tincidunt ex metus vel lectus. Sed eget nibh viverra, imperdiet erat nec, molestie arcu. Curabitur in odio a urna ornare efficitur.',
     subText: 'Thanh toán và đặt phim thành công',
-    title: 'Thanh toán thành công',
+    title: 'Thanh toán thành công phim ' + movie,
     message: 'Kéo để xem thêm',
     vibrate: true,
     vibration: 500,

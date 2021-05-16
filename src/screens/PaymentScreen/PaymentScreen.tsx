@@ -16,6 +16,8 @@ import {formatToCurrency} from 'src/helpers/string-helper';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
 import {useTranslation} from 'react-i18next';
+import {pushNotificationFirestoreBookingSuccessful} from 'src/services/push-notification-firestore';
+import {LocalNotification} from 'src/services/local-push-notification';
 
 /**
  * File: PaymentScreen.tsx
@@ -66,8 +68,29 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   const [buttonTitle, setButtonTitle] = React.useState<string>('Thanh toán');
 
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
-    navigation.navigate(SuccessBookingScreen.displayName);
-  }, [navigation]);
+    navigation.navigate(SuccessBookingScreen.displayName, {
+      movieName,
+      cinemaName,
+      movieDate,
+      showTime,
+      pickingSeats,
+      listLabel,
+      seatCost,
+      listSelectCombo,
+      comboCost,
+    });
+  }, [
+    cinemaName,
+    comboCost,
+    listLabel,
+    listSelectCombo,
+    movieDate,
+    movieName,
+    navigation,
+    pickingSeats,
+    seatCost,
+    showTime,
+  ]);
 
   const handleListCombo = React.useCallback((listCombo: SelectedCombo[]) => {
     let text = '';
@@ -89,6 +112,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       });
       handleSendRequest();
       if (paymentResponseStatus === 'Successful') {
+        pushNotificationFirestoreBookingSuccessful(movieName);
+        LocalNotification(movieName);
         handleGotoSuccessBookingScreen();
       }
     } else if (paymentMethodKey === 'credit') {
@@ -96,6 +121,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     } else if (paymentMethodKey === 'banking') {
       Toast.show('Đang phát triển');
     } else if (paymentMethodKey === 'offline') {
+      pushNotificationFirestoreBookingSuccessful(movieName);
+      LocalNotification(movieName);
       handleGotoSuccessBookingScreen();
     } else {
       Toast.show('Hãy chọn phương thức thanh toán!');
@@ -105,6 +132,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     handleChangePayment,
     handleGotoSuccessBookingScreen,
     handleSendRequest,
+    movieName,
     paymentMethodKey,
     paymentResponseStatus,
   ]);

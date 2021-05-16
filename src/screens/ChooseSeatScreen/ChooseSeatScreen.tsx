@@ -18,6 +18,7 @@ import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
 import {bookingService} from 'src/services/booking-service';
 import {formatToCurrency} from 'src/helpers/string-helper';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 /**
  * File: ChooseSeatScreen.tsx
@@ -30,8 +31,10 @@ export interface Position {
   column: number;
 }
 export interface BookingData {
+  movieName: string;
+  date: FirebaseFirestoreTypes.Timestamp;
+  time: string;
   cinemaID: number;
-  date: string;
   filmID: number;
   filmType: string;
   position: Position[];
@@ -60,7 +63,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     handlePickedSeats,
     handleClearPickedSeats,
     pickingSeats,
-  ] = bookingService.useBooking();
+  ] = bookingService.useBooking(movieName, movieDate, movieFormat, showTime);
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {

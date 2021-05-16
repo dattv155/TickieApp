@@ -58,7 +58,13 @@ const TabBarIcon: FC<PropsWithChildren<TabBarIconProps>> = (
                 ],
               },
             ]}>
-            <Text style={[atomicStyles.textDark, atomicStyles.bold]}>
+            <Text
+              style={[
+                atomicStyles.h6,
+                atomicStyles.bold,
+                styles.textStyle,
+                atomicStyles.textDark,
+              ]}>
               {iconName}
             </Text>
           </Animated.View>

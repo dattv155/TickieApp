@@ -9,7 +9,7 @@ export const pushNotificationFirestoreBookingSuccessful = (movie: string) => {
     .collection('1')
     .add({
       content: 'Bạn đã đặt thành công vé xem phim ' + movie,
-      day: new Date(),
+      day: firestore.Timestamp.fromDate(new Date()),
       span: 'Thông tin chi tiết xem tại lịch sử mua vé',
       type: 'bookingsuccess',
       userId: auth().currentUser.uid,

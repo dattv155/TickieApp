@@ -20,6 +20,7 @@ export const getAccount = {
     (value: string) => Promise<void>,
     Date,
     (value: Date) => Promise<void>,
+    boolean,
   ] {
     const [userData, setUserData] = React.useState<AppUser>({});
 
@@ -30,6 +31,8 @@ export const getAccount = {
     const [fullname, setFullname] = React.useState<string>('');
     const [profileImg, setProfileImg] = React.useState<string>('');
     const [dateOfBirth, setDateOfBirth] = React.useState<Date>(new Date());
+
+    const [loading, setLoading] = React.useState<boolean>(true);
 
     React.useEffect(() => {
       const subscriber = firestore()
@@ -52,7 +55,11 @@ export const getAccount = {
             Toast.show(e.toString());
           },
         );
-      return () => subscriber();
+
+      return () => {
+        subscriber();
+        setLoading(false);
+      };
     }, [
       userData.dateOfBirth,
       userData.email,
@@ -109,6 +116,7 @@ export const getAccount = {
       handleChangeProfileImg,
       dateOfBirth,
       handleChangeDateOfBirth,
+      loading,
     ];
   },
 };

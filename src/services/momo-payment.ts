@@ -25,6 +25,7 @@ export const MomoPayment = {
     (value: number) => void,
     () => void,
     (value: Payment) => void,
+    string,
   ] {
     const [merchantName, setMerchantName] = React.useState<string>('Tickie');
     const [merchantCode, setMerchantCode] = React.useState<string>('CGV01');
@@ -37,6 +38,8 @@ export const MomoPayment = {
     const [amount, setAmount] = React.useState<number>(1000);
 
     const enviroment = '0'; //"1": production
+
+    const [paymentResponse, setPaymentResponse] = React.useState<string>('');
 
     const [payment, setPayment] = React.useState<Payment>({
       textAmount: fomatNumberToMoney(amount, null, ''),
@@ -154,6 +157,7 @@ export const MomoPayment = {
           let momoToken = response.data;
           let phonenumber = response.phonenumber;
           let message = response.message;
+          setPaymentResponse(response.message);
           //continue to submit momoToken,phonenumber to server
           console.log('Momo Token: ', momoToken);
           console.log('phonenumber: ', phonenumber);
@@ -183,6 +187,7 @@ export const MomoPayment = {
       handleChangeAmount,
       handleSendRequest,
       handleChangePayment,
+      paymentResponse,
     ];
   },
 };

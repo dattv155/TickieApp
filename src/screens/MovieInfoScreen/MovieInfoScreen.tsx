@@ -90,16 +90,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   };
   const [list, setList] = React.useState<Obj[]>([]);
 
-  // const fetchData = React.useCallback(async () => {
-  //   return await firestore()
-  //     .collection('comment')
-  //     .where('movieId', '==', 'Movie-1')
-  //     .get()
-  //     .then((data) => {
-  //       return data.docs.map((item) => item.data());
-  //     });
-  // }, []);
-
   React.useEffect(() => {
     async function fetchData() {
       let exp: Array<Obj> = [];
@@ -124,23 +114,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
     }
     fetchData();
   }, [movieInfo.movieID]);
-  // Error
-
-  // React.useEffect(() => {
-  //   return navigation.addListener('focus', async () => {
-  //     const data = (await fetchData()) as Obj[];
-  //     setList(data);
-
-  //     data.length > 3 ? setInitItem(3) : setInitItem(data.length);
-
-  //     const rateTemp = Number(
-  //       (data.reduce((sum, item) => sum + item.rate, 0) / data.length).toFixed(
-  //         1,
-  //       ),
-  //     );
-  //     setRate(rateTemp);
-  //   });
-  // }, [fetchData, navigation]);
 
   const handleGotoActorDetailScreen = React.useCallback(
     (actorID: number) => {
@@ -193,6 +166,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
           {/*  resizeMode="cover"*/}
           {/*  style={styles.posterView}*/}
           {/*/>*/}
+          {movieInfo && <VideoComponent videoLink={movieInfo?.Trailer} />}
 
           <View style={[styles.infoArea]}>
             <View style={styles.title}>

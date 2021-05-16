@@ -15,13 +15,13 @@ const ReviewList: FC<PropsWithChildren<ReviewListProps>> = (
   props: PropsWithChildren<ReviewListProps>,
 ): ReactElement => {
   const {item} = props;
-
+  const avatar=item.avatar === null ?require('assets/images/defaultAvatar.png'):{uri: item.avatar}
   return (
     <>
       <View style={styles.containerReview}>
         <View style={styles.avatarItem}>
           <Image
-            source={require('assets/images/MCK.jpeg')}
+            source={avatar}
             // source={{uri: item.avatar}}
             resizeMode={'cover'}
             style={styles.avatarItem}

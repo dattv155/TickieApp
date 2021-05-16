@@ -71,14 +71,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   );
   const [intitItem, setInitItem] = React.useState<number>(0);
   const [rate, setRate] = React.useState<number>(0);
-  const [display, setDisplay] = React.useState('none');
-  const handleDisplay = () => {
-    if (display === 'flex') {
-      setDisplay('none');
-    } else {
-      setDisplay('flex');
-    }
-  };
   const handleMoreComment = () => {
     let len = ListReview.length;
     if (intitItem + 3 < len) {
@@ -228,11 +220,8 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
               <TitleComponent
                 title={'Đánh giá'}
                 isReviewArea={true}
-                rate={rate}
-                numOfReview={list?.length}
-                handleDisplay={handleDisplay}
               />
-              <View style={[styles.danhgia, {display: display}]}>
+              <View style={[styles.danhgia]}>
                 <Text style={[styles.bignum, atomicStyles.regular]}>
                   {rate}
                 </Text>

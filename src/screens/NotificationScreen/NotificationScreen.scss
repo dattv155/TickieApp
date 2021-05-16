@@ -10,12 +10,15 @@
   padding: 16px 16px 16px 16px;
 }
 .day {
-  font-weight: 700;
-  font-size: 16px;
   color: map-get($colors, "third-gray" );
   margin: 5px 0;
 
 }
 .padding {
   height: 100px;
+}
+
+.scrollContainer {
+  height: 100%;
+  padding-bottom: 15%;
 }

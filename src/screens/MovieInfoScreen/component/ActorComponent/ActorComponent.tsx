@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ActorComponent.scss';
-import {Image, View, Text} from 'react-native';
+import {Image, View, Text, TouchableOpacity} from 'react-native';
 import {SvgProps} from 'react-native-svg';
 import {SvgComponent} from 'react-native-svg-types';
 import {atomicStyles} from 'src/styles';

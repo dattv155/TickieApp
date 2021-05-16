@@ -30,6 +30,7 @@ import FilmRate from './component/FilmRate/FilmRate';
 import firestore from '@react-native-firebase/firestore';
 import RateStar from './component/RateStar/RateStar';
 import CommentScreen from '../CommentScreen/CommentScreen';
+import ActorDetailScreen from 'src/screens/ActorDetailScreen/ActorDetailScreen';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -141,11 +142,25 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   //   });
   // }, [fetchData, navigation]);
 
+  const handleGotoActorDetailScreen = React.useCallback(
+    (actorID: number) => {
+      navigation.navigate(ActorDetailScreen.displayName, {
+        actorID: actorID,
+      });
+    },
+    [navigation],
+  );
+
   const renderListActor: ListRenderItem<any> = React.useCallback(
     ({item}: ListRenderItemInfo<any>) => {
-      return <ActorComponent actor={item} />;
+      return (
+        <TouchableOpacity
+          onPress={() => handleGotoActorDetailScreen(item?.actorID)}>
+          <ActorComponent actor={item} />
+        </TouchableOpacity>
+      );
     },
-    [],
+    [handleGotoActorDetailScreen],
   );
 
   const renderListImage: ListRenderItem<any> = React.useCallback(
@@ -186,13 +201,17 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                 {movieInfo?.Name}
               </Text>
               <View style={styles.rate}>
-                <Text>{movieInfo.AverageScore}</Text>
+                <Text style={[atomicStyles.text]}>
+                  {movieInfo.AverageScore}
+                </Text>
                 <SvgIcon component={require('assets/icons/star.svg')} />
               </View>
             </View>
             <View style={styles.info}>
-              <Text style={styles.category}>{movieInfo?.Type}</Text>
-              <Text style={styles.time}>
+              <Text style={[atomicStyles.text, styles.category]}>
+                {movieInfo?.Type}
+              </Text>
+              <Text style={[atomicStyles.text, styles.time]}>
                 Thời lượng: {movieInfo?.Duration} phút
               </Text>
             </View>

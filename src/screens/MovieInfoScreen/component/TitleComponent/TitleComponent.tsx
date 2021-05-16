@@ -14,7 +14,14 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
   props: PropsWithChildren<TitleComponentProps>,
 ): ReactElement => {
-  const {title, isReviewArea, rate, numOfReview, handleDisplay} = props;
+  const {
+    title,
+    isReviewArea,
+    rate,
+    numOfReview,
+    handleDisplay,
+    hideShowMore,
+  } = props;
 
   const handleGotoDetailTitle = React.useCallback(() => {}, []);
 
@@ -22,12 +29,17 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
     <View style={styles.container}>
       {!isReviewArea ? (
         <>
-          <Text style={[atomicStyles.h4, atomicStyles.bold, styles.title]}>
-            {title}
-          </Text>
-          <TouchableOpacity onPress={handleGotoDetailTitle}>
-            <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
-          </TouchableOpacity>
+          {!!title && (
+            <Text style={[atomicStyles.h4, atomicStyles.bold, styles.title]}>
+              {title}
+            </Text>
+          )}
+
+          {!hideShowMore && (
+            <TouchableOpacity onPress={handleDisplay}>
+              <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
+            </TouchableOpacity>
+          )}
         </>
       ) : (
         <>
@@ -48,9 +60,11 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
               </Text>
             </View>
           </View>
-          <TouchableOpacity onPress={handleDisplay}>
-            <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
-          </TouchableOpacity>
+          {!hideShowMore && (
+            <TouchableOpacity onPress={handleDisplay}>
+              <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
+            </TouchableOpacity>
+          )}
         </>
       )}
     </View>
@@ -64,6 +78,7 @@ export interface TitleComponentProps {
   rate?: number;
   numOfReview?: number;
   handleDisplay?: () => void;
+  hideShowMore?: boolean;
 }
 
 TitleComponent.defaultProps = {

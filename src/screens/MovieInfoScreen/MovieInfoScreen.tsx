@@ -100,28 +100,38 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   // }, []);
 
   React.useEffect(() => {
-    async function fetchData(){
-        let exp:Array<Obj>= [];
-        let data= await firestore().collection("comment").where("movieId", "==", "Movie-" + movieInfo.movieID).get();
-        data.forEach(item => exp.push(item));
-        if(exp.length === 0) setRate(0);
-        else {
-          setRate(Number((exp.reduce((sum, item)=>sum + item.data().rate, 0)/exp.length).toFixed(1)));
-        }
-        setInitItem(exp.length > 3 ?3: exp.length);
-        setList(exp);
+    async function fetchData() {
+      let exp: Array<Obj> = [];
+      let data = await firestore()
+        .collection('comment')
+        .where('movieId', '==', 'Movie-' + movieInfo.movieID)
+        .get();
+      data.forEach((item) => exp.push(item));
+      if (exp.length === 0) {
+        setRate(0);
+      } else {
+        setRate(
+          Number(
+            (
+              exp.reduce((sum, item) => sum + item.data().rate, 0) / exp.length
+            ).toFixed(1),
+          ),
+        );
       }
-      fetchData();
-    },[])
+      setInitItem(exp.length > 3 ? 3 : exp.length);
+      setList(exp);
+    }
+    fetchData();
+  }, [movieInfo.movieID]);
   // Error
 
   // React.useEffect(() => {
   //   return navigation.addListener('focus', async () => {
   //     const data = (await fetchData()) as Obj[];
   //     setList(data);
-  
+
   //     data.length > 3 ? setInitItem(3) : setInitItem(data.length);
-  
+
   //     const rateTemp = Number(
   //       (data.reduce((sum, item) => sum + item.rate, 0) / data.length).toFixed(
   //         1,
@@ -168,7 +178,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
           {/*  resizeMode="cover"*/}
           {/*  style={styles.posterView}*/}
           {/*/>*/}
-
 
           <View style={[styles.infoArea]}>
             <View style={styles.title}>
@@ -261,7 +270,10 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                   keyExtractor={(item) => item.id.toString()}
                 />
                 <TouchableOpacity
-                  style={[styles.buttondanhgia, {display: rate === 0 ?"none": "flex"}]}
+                  style={[
+                    styles.buttondanhgia,
+                    {display: rate === 0 ? 'none' : 'flex'},
+                  ]}
                   onPress={handleMoreComment}>
                   <View>
                     <Text style={[styles.textbuttondanhgia, atomicStyles.bold]}>

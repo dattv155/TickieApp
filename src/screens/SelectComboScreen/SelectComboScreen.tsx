@@ -51,19 +51,36 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
 
   const [comboCost, setComboCost] = React.useState<number>(0);
 
-  const [comboList] = bookingService.useCombo(navigation);
-
-  const handleCombo = React.useCallback(
-    (listCombo: SelectedCombo[]) => {
-      console.log(listSelectCombo);
-      let cost = 0;
-      listSelectCombo.map((select) => {
-        cost = cost + select.count * select.amount;
-      });
-      setComboCost(cost);
-    },
-    [listSelectCombo],
+  const [comboList, handleDeleteDuplicate] = bookingService.useCombo(
+    navigation,
   );
+
+  const handleListCombo = React.useCallback(
+    (comboSelected: SelectedCombo) => {
+      const list = handleDeleteDuplicate(listSelectCombo, comboSelected);
+
+      if (list > -1) {
+        setListSelectCombo((prevs) =>
+          prevs.map((prev) => {
+            return prev.comboID === comboSelected.comboID
+              ? {...prev, count: comboSelected.count}
+              : prev;
+          }),
+        );
+      } else {
+        setListSelectCombo((prevs) => [...prevs, comboSelected]);
+      }
+    },
+    [handleDeleteDuplicate, listSelectCombo],
+  );
+
+  React.useEffect(() => {
+    let cost = 0;
+    listSelectCombo.map((select) => {
+      cost = cost + select.count * select.amount;
+    });
+    setComboCost(cost);
+  }, [listSelectCombo]);
 
   const renderItem: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
@@ -71,12 +88,12 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
         <ComboComponent
           combo={item}
           key={index}
-          handleCombo={handleCombo}
+          handleCombo={handleListCombo}
           listCombo={listSelectCombo}
         />
       );
     },
-    [handleCombo, listSelectCombo],
+    [handleListCombo, listSelectCombo],
   );
 
   const handleGotoPaymentScreen = React.useCallback(() => {
@@ -119,7 +136,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
             <FlatList
               data={comboList}
               renderItem={renderItem}
-              keyExtractor={(item) => item.toString()}
+              keyExtractor={(item) => item.comboID.toString()}
               showsVerticalScrollIndicator={false}
             />
           </View>
@@ -146,12 +163,15 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
           <View style={styles.comboArea}>
             <Text style={[atomicStyles.h4, styles.comboText]}>Set Combo</Text>
             <View>
-              {listSelectCombo.map((selectedCombo) => {
-                return (
+              {listSelectCombo.map((selectedCombo, index) => {
+                return selectedCombo.count > 0 ? (
                   <SummaryComponent
+                    key={index + selectedCombo.count}
                     count={selectedCombo.count}
                     nameCombo={selectedCombo.name}
                   />
+                ) : (
+                  <View />
                 );
               })}
             </View>

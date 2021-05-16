@@ -2,7 +2,7 @@ import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
 import {atomicStyles} from '../../../styles';
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import firebase from 'firebase';
 
 /**
@@ -14,15 +14,16 @@ import firebase from 'firebase';
 const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
   props: PropsWithChildren<NotiboxProps>,
 ): ReactElement => {
-  const [height, setHeight] = React.useState(new Animated.Value(85));
   const [title, setTitle] = React.useState('');
   const [display, setDisplay] = React.useState('none');
   const {data} = props;
   const {type, span, content, day} = data;
   const press = () => {
-    if(display === "none")
-      setDisplay("flex");
-    else setDisplay("none");
+    if (display === 'none') {
+      setDisplay('flex');
+    } else {
+      setDisplay('none');
+    }
   };
   useEffect(() => {
     if (props.data === undefined) {
@@ -64,10 +65,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
     return `${isoDay.getHours() - 5}:${isoDay.getUTCMinutes()}`;
   };
   return (
-    <View
-      style={[
-        sstyle.box,
-      ]}>
+    <View style={[sstyle.box]}>
       <TouchableOpacity
         activeOpacity={0.1}
         style={styles.touchable}
@@ -84,7 +82,10 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
               {content}
             </Text>
           </View>
-          <Text style={[styles.content, atomicStyles.regular, {display: display}]}>{span}</Text>
+          <Text
+            style={[styles.content, atomicStyles.regular, {display: display}]}>
+            {span}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -94,21 +95,13 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
 const sstyle = StyleSheet.create({
   box: {
     alignSelf: 'center',
-    width: '90%',
+    width: '100%',
     backgroundColor: 'white',
     borderRadius: 12,
     paddingHorizontal: 13,
-    paddingVertical: 2,
+    paddingVertical: 8,
     marginTop: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0.5,
-      height: 3.5,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    paddingBottom: 9,
-    elevation: 8,
+    marginBottom: 16,
   },
 });
 export interface NotiboxProps {

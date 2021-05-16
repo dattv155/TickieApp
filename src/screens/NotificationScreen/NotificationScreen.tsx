@@ -1,7 +1,6 @@
-import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-// import styles from './NotificationScreen.scss';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {RefreshControl, SafeAreaView, ScrollView, Text} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {atomicStyles} from 'src/styles';
@@ -20,37 +19,56 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
   props: PropsWithChildren<NotificationScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
   const db = firestore();
+
   const [list, setList] = React.useState([]);
+
   const userId = auth().currentUser.uid;
-  useEffect(() => {
-    async function fetchData() {
-      var exp: Array<Obj> = [];
-      var dataGeneral = await db
-        .collection('notification')
-        .doc('general')
-        .collection('1')
-        .orderBy('day', 'desc')
-        .get();
-      dataGeneral.forEach((item) => exp.push(item.data()));
-      var dataSpecific = await db
-        .collection('notification')
-        .doc('specific')
-        .collection('1')
-        .where('userId', '==', userId)
-        .get();
-      dataSpecific.forEach((item) => exp.push(item.data()));
-      exp.sort((a, b) =>
-        a.day.seconds < b.day.seconds
-          ? 1
-          : a.day.seconds > b.day.seconds
-          ? -1
-          : 0,
-      );
-      setList(exp);
-    }
-    fetchData();
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchData().then(() => setRefreshing(false));
+  }, [fetchData]);
+
+  const fetchData = React.useCallback(async () => {
+    var exp: Array<Obj> = [];
+
+    var dataGeneral = await db
+      .collection('notification')
+      .doc('general')
+      .collection('1')
+      .orderBy('day', 'desc')
+      .get();
+
+    dataGeneral.forEach((item) => exp.push(item.data()));
+
+    var dataSpecific = await db
+      .collection('notification')
+      .doc('specific')
+      .collection('1')
+      .where('userId', '==', userId)
+      .get();
+
+    dataSpecific.forEach((item) => exp.push(item.data()));
+
+    exp.sort((a, b) =>
+      a.day.seconds < b.day.seconds
+        ? 1
+        : a.day.seconds > b.day.seconds
+        ? -1
+        : 0,
+    );
+
+    setList(exp);
   }, [db, userId]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, [db, fetchData, userId]);
+
   const renderData = () => {
     let saiso = 43200000;
     let item = [];
@@ -77,7 +95,9 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
           }/${isoday.getFullYear()}`;
         }
         item.push(
-          <Text key={day} style={[styles.day, atomicStyles.regular]}>
+          <Text
+            key={day}
+            style={[styles.day, atomicStyles.regular, atomicStyles.textGray]}>
             {realday}
           </Text>,
         );
@@ -90,11 +110,12 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         {renderData()}
-        <View style={styles.padding} />
       </ScrollView>
-
       <MainTabBar navigation={navigation} route={route} />
     </SafeAreaView>
   );

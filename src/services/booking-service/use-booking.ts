@@ -9,6 +9,7 @@ export function useBooking(
   movieName: string,
   movieDate: FirebaseFirestoreTypes.Timestamp,
   movieFormat: string,
+  cinemaName: string,
   showTime: string,
 ): [
   number,

@@ -25,6 +25,10 @@ import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/He
 import {useTranslation} from 'react-i18next';
 import {pushNotificationFirestoreBookingSuccessful} from 'src/services/push-notification-firestore';
 import {LocalNotification} from 'src/services/local-push-notification';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import moment from 'moment';
+import {Position} from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
 
 /**
  * File: PaymentScreen.tsx
@@ -109,7 +113,44 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     return text.substring(0, text.length - 2);
   }, []);
 
-  const handlePay = React.useCallback(() => {
+  const handleListPosSeat = React.useCallback((listPosition: number[][]) => {
+    let listPos: Position[] = [];
+    listPosition.map((pos) => {
+      listPos.push({row: pos[0], column: pos[1]});
+    }, []);
+    return listPos;
+  }, []);
+
+  const handleSaveDataBooking = React.useCallback(async () => {
+    const data = {
+      userId: auth().currentUser.uid,
+      date: movieDate,
+      filmType: movieFormat,
+      movieName: movieName,
+      cinemaName: cinemaName,
+      time: showTime,
+      combos: listSelectCombo,
+      position: handleListPosSeat(pickingSeats),
+      totalCost: seatCost + comboCost,
+    };
+    await firestore()
+      .collection('bookings')
+      .doc(moment().toISOString(true))
+      .set(data);
+  }, [
+    cinemaName,
+    comboCost,
+    handleListPosSeat,
+    listSelectCombo,
+    movieDate,
+    movieFormat,
+    movieName,
+    pickingSeats,
+    seatCost,
+    showTime,
+  ]);
+
+  const handlePay = React.useCallback(async () => {
     if (paymentMethodKey === 'momo') {
       let newValue = 1000;
       let amount = fomatNumberToMoney(newValue, null, '');
@@ -130,6 +171,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     } else if (paymentMethodKey === 'banking') {
       Toast.show('Đang phát triển');
     } else if (paymentMethodKey === 'offline') {
+      await handleSaveDataBooking();
       pushNotificationFirestoreBookingSuccessful(movieName);
       LocalNotification(movieName);
       handleGotoSuccessBookingScreen();
@@ -140,6 +182,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     handleChangeAmount,
     handleChangePayment,
     handleGotoSuccessBookingScreen,
+    handleSaveDataBooking,
     handleSendRequest,
     movieName,
     paymentMethodKey,

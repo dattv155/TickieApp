@@ -186,7 +186,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
 
 export interface SmallTheaterProps {
   //
-  selectedList?: any[][];
+  selectedList?: number[][];
 
   handleShowPickedSeats?: (pickedList: number[][]) => void;
 }

@@ -63,6 +63,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 
   const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
 
+  const [buttonTitle, setButtonTitle] = React.useState<string>('Thanh toán');
+
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
     navigation.navigate(SuccessBookingScreen.displayName);
   }, [navigation]);
@@ -86,7 +88,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
         description: '',
       });
       handleSendRequest();
-      if (paymentResponseStatus === 0) {
+      if (paymentResponseStatus === 'Successful') {
         handleGotoSuccessBookingScreen();
       }
     } else if (paymentMethodKey === 'credit') {
@@ -106,6 +108,21 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     paymentMethodKey,
     paymentResponseStatus,
   ]);
+
+  React.useEffect(() => {
+    if (paymentMethodKey === 'momo') {
+      setButtonTitle('Truy cập Momo');
+      if (paymentResponseStatus === 'Successful') {
+        setButtonTitle('Đã thanh toán');
+      }
+    } else if (paymentMethodKey === 'credit') {
+      setButtonTitle('Thanh toán');
+    } else if (paymentMethodKey === 'banking') {
+      setButtonTitle('Thanh toán');
+    } else if (paymentMethodKey === 'offline') {
+      setButtonTitle('Đặt vé');
+    }
+  }, [paymentMethodKey, paymentResponseStatus]);
 
   return (
     <>
@@ -221,8 +238,9 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                   atomicStyles.h5,
                   atomicStyles.bold,
                   atomicStyles.textWhite,
+                  styles.textStyle,
                 ]}>
-                Thanh toán
+                {buttonTitle}
               </Text>
             </TouchableOpacity>
           </View>

@@ -1,0 +1,38 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-05-16 01:25:15
+ * @author Ngo Tien Tan <ngotientan811@gmail.com>
+ */
+
+.item {
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.avatarFrame {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  elevation: 5;
+}
+
+.info {
+  margin-left: 16px;
+}
+
+.member {
+  margin-top: 5px;
+  width: 85px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.name {
+  width: 90px;
+  height: 35px;
+  border-radius: 5px;
+}

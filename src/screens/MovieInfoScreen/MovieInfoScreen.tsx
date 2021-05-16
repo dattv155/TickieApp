@@ -158,7 +158,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
           {/*  resizeMode="cover"*/}
           {/*  style={styles.posterView}*/}
           {/*/>*/}
-          {movieInfo && <VideoComponent videoLink={movieInfo?.Trailer} />}
+          {/*{movieInfo && <VideoComponent videoLink={movieInfo?.Trailer} />}*/}
 
           <View style={[styles.infoArea]}>
             <View style={styles.title}>
@@ -219,10 +219,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
             </View>
 
             <View style={styles.actorView}>
-              <TitleComponent
-                title={'Đánh giá'}
-                isReviewArea={true}
-              />
+              <TitleComponent title={'Đánh giá'} isReviewArea={true} />
               <View style={[styles.danhgia]}>
                 <Text style={[styles.bignum, atomicStyles.regular]}>
                   {rate}

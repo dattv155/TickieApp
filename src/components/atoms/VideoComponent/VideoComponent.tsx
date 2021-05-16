@@ -15,7 +15,7 @@ import {SCREEN_WIDTH} from 'src/config/consts';
 const VideoComponent: FC<PropsWithChildren<VideoComponentProps>> = (
   props: PropsWithChildren<VideoComponentProps>,
 ): ReactElement => {
-  const {VideoID} = props;
+  const {videoLink} = props;
   const [playing, setPlaying] = React.useState(false);
 
   const onStateChange = React.useCallback((state) => {
@@ -24,13 +24,21 @@ const VideoComponent: FC<PropsWithChildren<VideoComponentProps>> = (
     }
   }, []);
 
+  const togglePlaying = React.useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
+
+  const getYoutubeID = React.useCallback((link: string): string => {
+    return link.slice(-11);
+  }, []);
+
   return (
     <View style={[atomicStyles.alignItemsCenter, atomicStyles.radius10px]}>
       <YoutubePlayer
         height={345}
         width={SCREEN_WIDTH}
         play={playing}
-        videoId={VideoID}
+        videoId={getYoutubeID(videoLink)}
         onChangeState={onStateChange}
       />
     </View>
@@ -39,7 +47,7 @@ const VideoComponent: FC<PropsWithChildren<VideoComponentProps>> = (
 
 export interface VideoComponentProps {
   //
-  VideoID: string;
+  videoLink?: string;
 }
 
 VideoComponent.defaultProps = {

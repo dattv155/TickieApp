@@ -10,8 +10,12 @@
   height: 100%;
   background-color: map-get($colors, 'white');
 }
-.calendar {
+.calendarContainer {
 
+}
+.calendar {
+  height: 68px;
+  justify-content: center;
 }
 .content {
   //flex: 1;

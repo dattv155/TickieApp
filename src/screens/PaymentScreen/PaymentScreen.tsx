@@ -28,6 +28,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 
   const {
     movieName,
+    movieType,
+    movieFormat,
     cinemaName,
     movieDate,
     showTime,
@@ -126,17 +128,19 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                 {movieName}
               </Text>
               <Text style={[atomicStyles.h6, styles.infoType]}>
-                PG 13, hành động, cổ trang
+                {movieType}
               </Text>
               <Text style={[atomicStyles.h6, styles.infoType]}>
-                Rạp:
+                Rạp:{' '}
                 <Text style={[atomicStyles.bold, styles.textBold]}>
                   {cinemaName}
                 </Text>
               </Text>
               <Text style={[atomicStyles.h6, styles.infoType]}>
-                Định dạng:
-                <Text style={[atomicStyles.bold, styles.textBold]}>IMAX</Text>
+                Định dạng:{' '}
+                <Text style={[atomicStyles.bold, styles.textBold]}>
+                  {movieFormat}
+                </Text>
               </Text>
             </View>
           </View>

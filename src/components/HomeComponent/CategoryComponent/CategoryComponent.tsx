@@ -69,8 +69,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   };
 
   return (
-    <View style={[{display: display}]}>
-
+    <View style={display === 'flex' ? {display: 'flex'} : {display: 'none'}}>
       <Carousel
         ref={(c) => setCarousel(c)}
         data={list}

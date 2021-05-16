@@ -30,6 +30,7 @@ import Toast from 'react-native-simple-toast';
 import {getAccount} from 'src/services/get-account';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import ProfilePageSkeleton from 'src/screens/ProfilePage/ProfilePageSkeleton/ProfilePageSkeleton';
 
 /**
  * File: ProfilePage.tsx
@@ -87,6 +88,9 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
     ,
     ,
     handleChangeProfileImg,
+    ,
+    ,
+    loading,
   ] = getAccount.getAccountInfo();
 
   const [uploading, setUploading] = React.useState(false);
@@ -173,7 +177,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
   );
 
   const uploadImage = async () => {
-    if (image == null) {
+    if (image === null) {
       return null;
     }
     const uploadUri = image;
@@ -257,45 +261,51 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
         }}>
         <Pressable onPress={() => sheetRef.current.snapTo(1)}>
           <SafeAreaView style={[styles.container, styles.screenContainer]}>
-            <View style={styles.infoSection}>
-              <Pressable
-                onPress={() => sheetRef.current.snapTo(0)}
-                style={styles.avatarFrame}>
-                <Image
-                  source={{
-                    uri: profileImg,
-                  }}
-                  style={styles.avatarImage}
-                />
-              </Pressable>
-              <View style={styles.profile}>
-                <Text
-                  style={[
-                    atomicStyles.h4,
-                    atomicStyles.bold,
-                    atomicStyles.textDark,
-                    {
-                      fontSize: 22,
-                      fontWeight: '100',
-                    },
-                  ]}>
-                  {fullname}
-                </Text>
-                <Text
-                  style={[
-                    atomicStyles.h6,
-                    atomicStyles.bold,
-                    atomicStyles.textBlue,
-                    {
-                      fontSize: 16,
-                      fontWeight: '100',
-                      marginTop: 5,
-                    },
-                  ]}>
-                  Member
-                </Text>
+            {loading ? (
+              <ProfilePageSkeleton />
+            ) : (
+              <View style={styles.infoSection}>
+                <Pressable
+                  onPress={() => sheetRef.current.snapTo(0)}
+                  style={styles.avatarFrame}>
+                  <Image
+                    source={{
+                      uri: profileImg,
+                    }}
+                    style={styles.avatarImage}
+                  />
+                </Pressable>
+                <View style={styles.profile}>
+                  <Text
+                    style={[
+                      atomicStyles.h4,
+                      atomicStyles.bold,
+                      atomicStyles.textDark,
+                      {
+                        fontSize: 22,
+                        fontWeight: '100',
+                      },
+                    ]}>
+                    {fullname}
+                  </Text>
+
+                  <Text
+                    style={[
+                      atomicStyles.h6,
+                      atomicStyles.bold,
+                      atomicStyles.textBlue,
+                      {
+                        fontSize: 16,
+                        fontWeight: '100',
+                        marginTop: 5,
+                      },
+                    ]}>
+                    Member
+                  </Text>
+                </View>
               </View>
-            </View>
+            )}
+
             <View style={styles.optionSection}>
               <View style={styles.viewContainer}>
                 <LineBlock

@@ -12,6 +12,8 @@ import nameof from 'ts-nameof.macro';
 import MovieInfoScreen from 'src/screens/MovieInfoScreen/MovieInfoScreen';
 import {StackScreenProps} from '@react-navigation/stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import CategoryComponentSkeleton from 'src/components/HomeComponent/CategoryComponent/CategoryComponentSkeleton/CategoryComponentSkeleton';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -23,7 +25,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
 ): ReactElement => {
   const {navigation} = props;
 
-  const {list, display} = props;
+  const {list, displayMode, loading} = props;
 
   const [translate] = useTranslation();
 
@@ -50,27 +52,30 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   const renderItem = ({item}: any) => {
     return (
       <View>
-        <TouchableOpacity onPress={() => handleGotoMovieScreen(item)}>
-          <Image
-            style={[
-              styles.imageContainer,
-              {
-                width: ITEM_WIDTH,
-                height: ITEM_HEIGHT,
-              },
-            ]}
-            source={{
-              uri: item?.Poster,
-            }}
-          />
-        </TouchableOpacity>
+        {loading ? (
+          <CategoryComponentSkeleton />
+        ) : (
+          <TouchableOpacity onPress={() => handleGotoMovieScreen(item)}>
+            <Image
+              style={[
+                styles.imageContainer,
+                {
+                  width: ITEM_WIDTH,
+                  height: ITEM_HEIGHT,
+                },
+              ]}
+              source={{
+                uri: item?.Poster,
+              }}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
 
   return (
-    <View style={[{display: display}]}>
-
+    <View style={{display: displayMode}}>
       <Carousel
         ref={(c) => setCarousel(c)}
         data={list}
@@ -86,20 +91,35 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
         keyExtractor={(item, index) => item.toString() + index.toString()}
       />
       <View style={styles.info}>
-        <Text
-          style={[
-            atomicStyles.h5,
-            atomicStyles.bold,
-            styles.textStyle,
-            styles.headerText,
-          ]}>
-          {list[index]?.Name}
-        </Text>
-        <Text style={[atomicStyles.h6, styles.release, styles.textStyle]}>
-          {translate('homeScreen.releaseDay') +
-            ': ' +
-            convertTimestamp(list[index]?.Release.seconds)}
-        </Text>
+        {loading ? (
+          <SkeletonPlaceholder>
+            <View
+              style={{height: 30, width: 150, borderRadius: 5, marginBottom: 5}}
+            />
+          </SkeletonPlaceholder>
+        ) : (
+          <Text
+            style={[
+              atomicStyles.h5,
+              atomicStyles.bold,
+              styles.textStyle,
+              styles.headerText,
+            ]}>
+            {list[index]?.Name}
+          </Text>
+        )}
+
+        {loading ? (
+          <SkeletonPlaceholder>
+            <View style={{height: 20, width: 200, borderRadius: 5}} />
+          </SkeletonPlaceholder>
+        ) : (
+          <Text style={[atomicStyles.h6, styles.release, styles.textStyle]}>
+            {translate('homeScreen.releaseDay') +
+              ': ' +
+              convertTimestamp(list[index]?.Release.seconds)}
+          </Text>
+        )}
       </View>
       <View style={styles.line} />
     </View>
@@ -109,7 +129,10 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
 export interface CategoryComponentProps extends StackScreenProps<any> {
   //
   list?: FirebaseFirestoreTypes.DocumentData[];
-  display?: String;
+
+  displayMode?: String;
+
+  loading?: boolean;
 }
 
 CategoryComponent.defaultProps = {

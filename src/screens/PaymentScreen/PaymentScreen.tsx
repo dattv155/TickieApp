@@ -14,6 +14,8 @@ import Toast from 'react-native-simple-toast';
 import {SelectedCombo} from 'src/services/booking-service/use-combo';
 import {formatToCurrency} from 'src/helpers/string-helper';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
+import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
+import {useTranslation} from 'react-i18next';
 
 /**
  * File: PaymentScreen.tsx
@@ -25,6 +27,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   props: PropsWithChildren<PaymentScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const [translate] = useTranslation();
 
   const {
     movieName,
@@ -41,19 +45,20 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   const [, handleGetDay] = UseTimestamp();
 
   const [
-    merchantName,
-    merchantCode,
-    merchantNameLabel,
-    billDescription,
-    amount,
-    payment,
-    handleChangeMerchantName,
-    handleChangeMerchantCode,
-    handleChangeMerchantNameLabel,
-    handleChangeBillDescription,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
     handleChangeAmount,
     handleSendRequest,
     handleChangePayment,
+    paymentResponseStatus,
   ] = MomoPayment.getPayment();
 
   const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
@@ -81,18 +86,25 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
         description: '',
       });
       handleSendRequest();
+      if (paymentResponseStatus === 0) {
+        handleGotoSuccessBookingScreen();
+      }
     } else if (paymentMethodKey === 'credit') {
       Toast.show('Đang phát triển');
     } else if (paymentMethodKey === 'banking') {
       Toast.show('Đang phát triển');
+    } else if (paymentMethodKey === 'offline') {
+      handleGotoSuccessBookingScreen();
     } else {
       Toast.show('Hãy chọn phương thức thanh toán!');
     }
   }, [
     handleChangeAmount,
     handleChangePayment,
+    handleGotoSuccessBookingScreen,
     handleSendRequest,
     paymentMethodKey,
+    paymentResponseStatus,
   ]);
 
   return (
@@ -101,16 +113,14 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
         navigation={navigation}
         route={route}
         left="back-button"
-        // right={<HeaderIconPlaceholder />}
+        right={<HeaderIconPlaceholder />}
         gradient={false}
         customHeader={false}
         bgWhite={true}
         title={
-          <View style={styles.titleHeader}>
-            <Text style={[atomicStyles.h2, atomicStyles.bold]}>
-              Thông tin thanh toán
-            </Text>
-          </View>
+          <Text style={[atomicStyles.h2, atomicStyles.bold, styles.textStyle]}>
+            {translate('Thông tin thanh toán')}
+          </Text>
         }>
         <StatusBar barStyle="dark-content" />
         <View style={styles.containerView}>
@@ -180,9 +190,6 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               Chọn cách thức thanh toán
             </Text>
             <View style={styles.paymentGroup}>
-              {/*<PaymentMethodItem type={'credit'} />*/}
-              {/*<PaymentMethodItem type={'banking'} />*/}
-              {/*<PaymentMethodItem />*/}
               <RadioButton
                 values={PaymentMethod}
                 onSetMethodKey={setPaymentMethodKey}

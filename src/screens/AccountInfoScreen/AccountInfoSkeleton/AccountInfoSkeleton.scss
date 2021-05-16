@@ -1,0 +1,14 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-05-16 01:58:24
+ * @author Ngo Tien Tan <ngotientan811@gmail.com>
+ */
+
+@import "src/styles/atomic-styles";
+
+.container {
+  width: 100%;
+  border-radius: 5px;
+  height: 50px;
+  margin-bottom: 16px;
+}

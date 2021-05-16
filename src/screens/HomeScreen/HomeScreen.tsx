@@ -38,19 +38,34 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
     [],
   );
 
-  const handleGetData = React.useCallback(async () => {
-    return await firestore()
-      .collection('movie')
-      .get()
-      .then((documentData) => {
-        return documentData.docs.map((item) => item.data());
-      });
-  }, []);
+  const [loading, setLoading] = React.useState<boolean>(true);
+
+  // const handleGetData = React.useCallback(async () => {
+  //   return await firestore()
+  //     .collection('movie')
+  //     .get()
+  //     .then((documentData) => {
+  //       return documentData.docs.map((item) => item.data());
+  //     });
+  // }, []);
+
+  const handleGetData = React.useCallback(
+    (data: FirebaseFirestoreTypes.DocumentData[]) => {
+      setData(data);
+    },
+    [],
+  );
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      const result = await handleGetData();
-      setData(result);
+      const result = await firestore()
+        .collection('movie')
+        .get()
+        .then((documentData) => {
+          return documentData.docs.map((item) => item.data());
+        });
+
+      handleGetData(result);
     });
   }, [handleGetData, navigation]);
 
@@ -86,7 +101,10 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   ];
   React.useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-  }, []);
+    if (data) {
+      setLoading(false);
+    }
+  }, [data]);
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
@@ -98,7 +116,8 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
               navigation={navigation}
               route={route}
               list={data}
-              display={display}
+              displayMode={display}
+              loading={loading}
             />
             <AvailableFilm display={display} list={list} />
             <UpcomingFilm display={display} list={list} />

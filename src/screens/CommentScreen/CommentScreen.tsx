@@ -1,7 +1,14 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './CommentScreen.scss';
-import {Image, SafeAreaView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {atomicStyles} from 'src/styles';
 
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';

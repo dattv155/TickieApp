@@ -83,41 +83,43 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   };
   const [list, setList] = React.useState<Obj[]>([]);
 
-  React.useEffect(() => {
-    async function fetchData() {
-      let exp: Array<Obj> = [];
-      let data = await firestore()
-        .collection('comment')
-        .where('movieId', '==', 'Movie-' + movieInfo.movieID)
-        .get();
-      data.forEach((item) => {
-        exp.push(item);
-      });
+  const fetchData = React.useCallback(async () => {
+    let exp: Array<Obj> = [];
+    let data = await firestore()
+      .collection('comment')
+      .where('movieId', '==', 'Movie-' + movieInfo.movieID)
+      .get();
 
-      exp.sort((a, b) =>
-        a.data().time.seconds < b.data().time.seconds
-          ? 1
-          : a.data().time.seconds > b.data().time.seconds
-          ? -1
-          : 0,
+    data.forEach((item) => {
+      exp.push(item);
+    });
+
+    exp.sort((a, b) =>
+      a.data().time.seconds < b.data().time.seconds
+        ? 1
+        : a.data().time.seconds > b.data().time.seconds
+        ? -1
+        : 0,
+    );
+
+    if (exp.length === 0) {
+      setRate(0);
+    } else {
+      setRate(
+        Number(
+          (
+            exp.reduce((sum, item) => sum + item.data().rate, 0) / exp.length
+          ).toFixed(1),
+        ),
       );
-
-      if (exp.length === 0) {
-        setRate(0);
-      } else {
-        setRate(
-          Number(
-            (
-              exp.reduce((sum, item) => sum + item.data().rate, 0) / exp.length
-            ).toFixed(1),
-          ),
-        );
-      }
-      setInitItem(exp.length > 3 ? 3 : exp.length);
-      setList(exp);
     }
-    fetchData();
+    setInitItem(exp.length > 3 ? 3 : exp.length);
+    setList(exp);
   }, [movieInfo.movieID]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleGotoActorDetailScreen = React.useCallback(
     (actorID: number) => {

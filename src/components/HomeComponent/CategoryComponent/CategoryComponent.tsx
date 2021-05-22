@@ -49,9 +49,9 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
     );
   }, []);
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({item, index}: any) => {
     return (
-      <View>
+      <View key={index}>
         {loading ? (
           <CategoryComponentSkeleton />
         ) : (
@@ -79,7 +79,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
       <Carousel
         ref={(c) => setCarousel(c)}
         data={list}
-        renderItem={(item: object) => renderItem(item)}
+        renderItem={renderItem}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         containerCustomStyle={styles.carouselContainer}
@@ -89,39 +89,49 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
         slideInterpolatedStyle={animatedStyles}
         useScrollView={true}
         keyExtractor={(item, index) => item.toString() + index.toString()}
-      />
-      <View style={styles.info}>
-        {loading ? (
-          <SkeletonPlaceholder>
-            <View
-              style={{height: 30, width: 150, borderRadius: 5, marginBottom: 5}}
-            />
-          </SkeletonPlaceholder>
-        ) : (
-          <Text
-            style={[
-              atomicStyles.h5,
-              atomicStyles.bold,
-              styles.textStyle,
-              styles.headerText,
-            ]}>
-            {list[index]?.Name}
-          </Text>
-        )}
+        ListFooterComponent={
+          <>
+            <View style={styles.info}>
+              {loading ? (
+                <SkeletonPlaceholder>
+                  <View
+                    style={{
+                      height: 30,
+                      width: 150,
+                      borderRadius: 5,
+                      marginBottom: 5,
+                    }}
+                  />
+                </SkeletonPlaceholder>
+              ) : (
+                <Text
+                  style={[
+                    atomicStyles.h5,
+                    atomicStyles.bold,
+                    styles.textStyle,
+                    styles.headerText,
+                  ]}>
+                  {list[index]?.Name}
+                </Text>
+              )}
 
-        {loading ? (
-          <SkeletonPlaceholder>
-            <View style={{height: 20, width: 200, borderRadius: 5}} />
-          </SkeletonPlaceholder>
-        ) : (
-          <Text style={[atomicStyles.h6, styles.release, styles.textStyle]}>
-            {translate('homeScreen.releaseDay') +
-              ': ' +
-              convertTimestamp(list[index]?.Release.seconds)}
-          </Text>
-        )}
-      </View>
-      <View style={styles.line} />
+              {loading ? (
+                <SkeletonPlaceholder>
+                  <View style={{height: 20, width: 200, borderRadius: 5}} />
+                </SkeletonPlaceholder>
+              ) : (
+                <Text
+                  style={[atomicStyles.h6, styles.release, styles.textStyle]}>
+                  {translate('homeScreen.releaseDay') +
+                    ': ' +
+                    convertTimestamp(list[index]?.Release.seconds)}
+                </Text>
+              )}
+            </View>
+            <View style={styles.line} />
+          </>
+        }
+      />
     </View>
   );
 };

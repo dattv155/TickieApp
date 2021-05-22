@@ -2,15 +2,15 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './MovieInfoScreen.scss';
 import {
+  FlatList,
   Image,
-  ScrollView,
-  Text,
-  View,
-  StatusBar,
   ListRenderItem,
   ListRenderItemInfo,
-  FlatList,
+  ScrollView,
+  StatusBar,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
@@ -25,7 +25,6 @@ import {ListReview} from 'src/sample/listReview';
 import UnMark from 'src/screens/MovieInfoScreen/component/MarkComponent/UnMark/UnMark';
 import Mark from 'src/screens/MovieInfoScreen/component/MarkComponent/Mark/Mark';
 import BookingScreen from 'src/screens/BookingScreen/BookingScreen';
-import VideoComponent from 'src/components/atoms/VideoComponent/VideoComponent';
 import FilmRate from './component/FilmRate/FilmRate';
 import firestore from '@react-native-firebase/firestore';
 import RateStar from './component/RateStar/RateStar';
@@ -70,12 +69,14 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
     },
     [],
   );
-  const [intitItem, setInitItem] = React.useState<number>(0);
+  const [initItem, setInitItem] = React.useState<number>(0);
+
   const [rate, setRate] = React.useState<number>(0);
+
   const handleMoreComment = () => {
     let len = ListReview.length;
-    if (intitItem + 3 < len) {
-      setInitItem(intitItem + 3);
+    if (initItem + 2 < len) {
+      setInitItem(initItem + 3);
     } else {
       setInitItem(len);
     }
@@ -89,7 +90,18 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
         .collection('comment')
         .where('movieId', '==', 'Movie-' + movieInfo.movieID)
         .get();
-      data.forEach((item) => exp.push(item));
+      data.forEach((item) => {
+        exp.push(item);
+      });
+
+      exp.sort((a, b) =>
+        a.data().time.seconds < b.data().time.seconds
+          ? 1
+          : a.data().time.seconds > b.data().time.seconds
+          ? -1
+          : 0,
+      );
+
       if (exp.length === 0) {
         setRate(0);
       } else {
@@ -117,9 +129,10 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   );
 
   const renderListActor: ListRenderItem<any> = React.useCallback(
-    ({item}: ListRenderItemInfo<any>) => {
+    ({item, index}: ListRenderItemInfo<any>) => {
       return (
         <TouchableOpacity
+          key={index}
           onPress={() => handleGotoActorDetailScreen(item?.actorID)}>
           <ActorComponent actor={item} />
         </TouchableOpacity>
@@ -129,9 +142,10 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   );
 
   const renderListImage: ListRenderItem<any> = React.useCallback(
-    ({item}: ListRenderItemInfo<any>) => {
+    ({item, index}: ListRenderItemInfo<any>) => {
       return (
         <Image
+          key={index}
           source={{uri: item}}
           resizeMode="cover"
           style={styles.imageFilmItem}
@@ -221,11 +235,22 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
             <View style={styles.actorView}>
               <TitleComponent title={'Đánh giá'} isReviewArea={true} />
               <View style={[styles.danhgia]}>
-                <Text style={[styles.bignum, atomicStyles.regular]}>
+                <Text
+                  style={[
+                    atomicStyles.textBlue,
+                    atomicStyles.bold,
+                    styles.bignum,
+                  ]}>
                   {rate}
                 </Text>
                 <RateStar rate={Math.floor(rate)} />
-                <Text style={styles.numberofdanhgia}>
+                <Text
+                  style={[
+                    styles.numberofdanhgia,
+                    atomicStyles.h6,
+                    atomicStyles.textGray,
+                    atomicStyles.mt8px,
+                  ]}>
                   Dựa trên {list?.length} đánh giá
                 </Text>
                 <FilmRate data={list} />
@@ -233,7 +258,15 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                   style={styles.buttondanhgia}
                   onPress={handleGotoCommentScreen}>
                   <View>
-                    <Text style={[styles.textbuttondanhgia, atomicStyles.bold]}>
+                    <Text
+                      style={[
+                        atomicStyles.h4,
+                        atomicStyles.bold,
+                        atomicStyles.textBlue,
+                        {
+                          fontWeight: '100',
+                        },
+                      ]}>
                       Đánh giá của bạn
                     </Text>
                   </View>
@@ -243,7 +276,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                 <View style={{height: 12}} />
                 <FlatList
                   key={'='}
-                  data={list?.slice(0, intitItem)}
+                  data={list?.slice(0, initItem)}
                   renderItem={renderItem}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item) => item.id.toString()}
@@ -255,7 +288,13 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                   ]}
                   onPress={handleMoreComment}>
                   <View>
-                    <Text style={[styles.textbuttondanhgia, atomicStyles.bold]}>
+                    <Text
+                      style={[
+                        atomicStyles.h5,
+                        atomicStyles.textBlue,
+                        atomicStyles.bold,
+                        {fontWeight: '100'},
+                      ]}>
                       Xem thêm
                     </Text>
                   </View>

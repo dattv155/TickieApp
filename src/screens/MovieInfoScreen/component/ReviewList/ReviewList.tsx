@@ -4,6 +4,7 @@ import styles from './ReviewList.scss';
 import {Image, View, Text} from 'react-native';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import {atomicStyles} from 'src/styles';
+import moment from 'moment';
 
 /**
  * File: ReviewList.tsx
@@ -15,14 +16,16 @@ const ReviewList: FC<PropsWithChildren<ReviewListProps>> = (
   props: PropsWithChildren<ReviewListProps>,
 ): ReactElement => {
   const {item} = props;
-  const avatar=item.avatar === null ?require('assets/images/defaultAvatar.png'):{uri: item.avatar}
+  const avatar =
+    item.avatar === null
+      ? require('assets/images/defaultAvatar.png')
+      : {uri: item.avatar};
   return (
     <>
-      <View style={styles.containerReview}>
+      <View style={[styles.containerReview, atomicStyles.pb10px]}>
         <View style={styles.avatarItem}>
           <Image
             source={avatar}
-            // source={{uri: item.avatar}}
             resizeMode={'cover'}
             style={styles.avatarItem}
           />
@@ -30,12 +33,31 @@ const ReviewList: FC<PropsWithChildren<ReviewListProps>> = (
         <View style={styles.containerViewRight}>
           <View style={styles.ReviewArea}>
             <View style={styles.reviewTitle}>
-              <Text style={[atomicStyles.bold]}>{item.name}</Text>
-              <Text style={[styles.h7, styles.timeItem]}>{new Date(item.time.seconds* 1000 + 43200000).toLocaleDateString()}</Text>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.bold,
+                  atomicStyles.textGray,
+                  {
+                    fontWeight: '100',
+                  },
+                ]}>
+                {item.name}
+              </Text>
+              <Text style={[atomicStyles.h7, styles.timeItem]}>
+                {moment(item.time.toDate()).format('DD/MM/YYYY')}
+              </Text>
             </View>
-            <View >
+            <View>
               <SvgIcon component={require('assets/icons/star.svg')} />
-              <Text style={[styles.rateNumber]}>{item.rate.toFixed(1)}</Text>
+              <Text
+                style={[
+                  atomicStyles.h7,
+                  atomicStyles.textGray,
+                  atomicStyles.mt8px,
+                ]}>
+                {item.rate.toFixed(1)}
+              </Text>
             </View>
           </View>
           <View>
@@ -43,7 +65,6 @@ const ReviewList: FC<PropsWithChildren<ReviewListProps>> = (
               {item.text}
             </Text>
           </View>
-          
         </View>
       </View>
     </>

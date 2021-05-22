@@ -11,6 +11,8 @@ target 'TickieApp' do
   #icons
 
 
+  pod 'RNMomosdk', :path => '../node_modules/react-native-momosdk'
+
   target 'TickieAppTests' do
     inherit! :complete
     # Pods for testing

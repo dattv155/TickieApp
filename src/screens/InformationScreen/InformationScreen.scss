@@ -4,52 +4,32 @@
  * @author tannt <ngotientan811@gmail.com>
  */
 
+
 @import "src/styles/mixins";
-@import "src/styles/atomic-styles";
 
 .textStyle {
   font-weight: 100;
 }
 
-.container {
-  flex: 1;
-  background-color: #f2f2f2;
+.containerAll {
+  margin-top: 30px;
 }
-.textInput {
-  font-size: 16px;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-top: 5px;
-  height: 40px;
-  padding-bottom: 2px;
-  border-bottom-color: #dadada;
-  border-bottom-width: 1px;
+
+.contentContainer {
+  margin: 0 12px;
+  background-color: white;
+  width: 90%;
+  border-radius: 10px;
+  padding: 10px;
 }
-.formInput {
-  background-color: #FFF;
-  border-bottom-color: #dadada;
-  border-top-color: #dadada;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-  padding-bottom: 10px;
+
+.imageContainer {
+  width: 100px;
+  height: 100px;
+
 }
-.button {
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0;
-  background-color: #b0006d;
-  border-radius: 4px;
-  margin: 10px 40px;
-}
-.text {
-  color: #FFFFFF;
-  font-size: 18px;
-  text-align: center;
-  padding: 0 10px;
-}
-.textGrey {
-  color: grey;
-  font-size: 18px;
-  text-align: center;
+
+.infoContainer {
+  width: 68%;
+  margin-left: 10px;
 }

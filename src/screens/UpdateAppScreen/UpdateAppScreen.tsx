@@ -57,7 +57,7 @@ const UpdateAppScreen: FC<PropsWithChildren<UpdateAppScreenProps>> = (
             <View>
               <Text
                 style={[
-                  atomicStyles.h5,
+                  atomicStyles.h4,
                   atomicStyles.bold,
                   atomicStyles.textBlue,
                   styles.textStyle,
@@ -73,13 +73,23 @@ const UpdateAppScreen: FC<PropsWithChildren<UpdateAppScreenProps>> = (
                 {translate('update.version')}{' '}
                 <Text style={[atomicStyles.bold, styles.textStyle]}>1.0.0</Text>{' '}
               </Text>
-              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.textGray,
+                  atomicStyles.mt4px,
+                ]}>
                 {translate('update.time')}{' '}
                 <Text style={[atomicStyles.bold, styles.textStyle]}>
                   01/06/2021
                 </Text>
               </Text>
-              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.textGray,
+                  atomicStyles.mt4px,
+                ]}>
                 {translate('update.info')}{' '}
                 <Text style={[atomicStyles.bold, styles.textStyle]}>
                   {translate('update.fixInfo')}

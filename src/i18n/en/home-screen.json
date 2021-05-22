@@ -1,3 +1,6 @@
 {
-  "homeScreen.title": "Home"
+  "homeScreen.available": "",
+  "homeScreen.releaseDay": "",
+  "homeScreen.favorite": "",
+  "homeScreen.upcoming": ""
 }

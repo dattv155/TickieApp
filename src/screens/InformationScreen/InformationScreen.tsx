@@ -52,7 +52,7 @@ const InformationScreen: FC<PropsWithChildren<InformationScreenProps>> = (
             <View>
               <Text
                 style={[
-                  atomicStyles.h5,
+                  atomicStyles.h4,
                   atomicStyles.bold,
                   atomicStyles.textBlue,
                   styles.textStyle,
@@ -70,11 +70,21 @@ const InformationScreen: FC<PropsWithChildren<InformationScreenProps>> = (
                   {translate('information.infoMore')}
                 </Text>
               </Text>
-              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.textGray,
+                  atomicStyles.mt8px,
+                ]}>
                 {translate('information.version')}{' '}
                 <Text style={[atomicStyles.bold, styles.textStyle]}>1.0.0</Text>{' '}
               </Text>
-              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.textGray,
+                  atomicStyles.mt8px,
+                ]}>
                 {translate('information.developers')}{' '}
                 <Text style={[atomicStyles.bold, styles.textStyle]}>
                   Ngô Tiến Tấn, Vũ Trọng Đạt

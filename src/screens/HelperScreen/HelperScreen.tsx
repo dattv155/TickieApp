@@ -84,7 +84,12 @@ const HelperScreen: FC<PropsWithChildren<HelperScreenProps>> = (
                   ]}>
                   {translate('helper.phoneNumber')}
                 </Text>
-                <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                <Text
+                  style={[
+                    atomicStyles.h6,
+                    atomicStyles.textGray,
+                    atomicStyles.mt4px,
+                  ]}>
                   {translate('helper.moreInfo')}{' '}
                 </Text>
               </View>

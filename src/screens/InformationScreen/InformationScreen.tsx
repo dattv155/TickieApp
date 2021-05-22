@@ -3,19 +3,10 @@ import nameof from 'ts-nameof.macro';
 import styles from './InformationScreen.scss';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
-import {
-  ActivityIndicator,
-  Image,
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, SafeAreaView, Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import {StackScreenProps} from '@react-navigation/stack';
-import {MomoPayment} from 'src/services/momo-payment';
-import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: InformationScreen.tsx
@@ -28,35 +19,7 @@ const InformationScreen: FC<PropsWithChildren<InformationScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const [
-    merchantName,
-    merchantCode,
-    merchantNameLabel,
-    billDescription,
-    amount,
-    payment,
-    handleChangeMerchantName,
-    handleChangeMerchantCode,
-    handleChangeMerchantNameLabel,
-    handleChangeBillDescription,
-    handleChangeAmount,
-    handleSendRequest,
-    handleChangePayment,
-  ] = MomoPayment.getPayment();
-
-  const handleChangeText = React.useCallback(
-    (value) => {
-      let newValue = value.replace(/\./g, '').trim();
-      let amount = fomatNumberToMoney(newValue, null, '');
-      handleChangeAmount(newValue);
-      handleChangePayment({
-        amount: newValue,
-        textAmount: amount,
-        description: '',
-      });
-    },
-    [handleChangeAmount, handleChangePayment],
-  );
+  const [translate] = useTranslation();
 
   return (
     <DefaultLayout
@@ -72,116 +35,53 @@ const InformationScreen: FC<PropsWithChildren<InformationScreenProps>> = (
             styles.textStyle,
             atomicStyles.mt16px,
           ]}>
-          Thông tin
+          {translate('information.header')}
         </Text>
       }
       gradient={false}
       customHeader={false}>
       <SafeAreaView
-        style={{flex: 1, marginTop: 50, backgroundColor: 'transparent'}}>
-        <View style={styles.container}>
-          <View
-            style={[
-              {
-                backgroundColor: 'transparent',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 100,
-              },
-            ]}>
-            <Image
-              style={{flex: 1, width: 100, height: 100}}
-              source={require('assets/iconReact.png')}
-            />
-          </View>
-          <Text style={[styles.text, {color: 'red', fontSize: 20}]}>
-            {'MOMO DEVELOPMENT'}
-          </Text>
-          <Text style={[styles.text, {color: 'red', fontSize: 18}]}>
-            {'React native version'}
-          </Text>
-          <Text
-            style={[
-              styles.text,
-              {
-                color: '#000',
-                fontSize: 14,
-                marginVertical: 5,
-                textAlign: 'left',
-                marginTop: 20,
-              },
-            ]}>
-            {'MerchantCode : ' + merchantCode}
-          </Text>
-          <Text
-            style={[
-              styles.text,
-              {
-                color: '#000',
-                fontSize: 14,
-                marginVertical: 5,
-                textAlign: 'left',
-              },
-            ]}>
-            {'MerchantName : ' + merchantName}
-          </Text>
-          <Text
-            style={[
-              styles.text,
-              {
-                color: '#000',
-                fontSize: 14,
-                marginVertical: 5,
-                textAlign: 'left',
-              },
-            ]}>
-            {'Description : ' + billDescription}
-          </Text>
-          <View style={styles.formInput}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text style={{flex: 1, fontSize: 18, paddingHorizontal: 10}}>
-                {'Total amount'}
+        style={[atomicStyles.alignItemsCenter, styles.containerAll]}>
+        <View style={[styles.contentContainer, atomicStyles.flexRow]}>
+          <Image
+            source={require('assets/logoTickie.png')}
+            style={styles.imageContainer}
+            resizeMode={'cover'}
+          />
+          <View style={styles.infoContainer}>
+            <View>
+              <Text
+                style={[
+                  atomicStyles.h5,
+                  atomicStyles.bold,
+                  atomicStyles.textBlue,
+                  styles.textStyle,
+                ]}>
+                {translate('information.appName')}
               </Text>
-              <TextInput
-                autoFocus={true}
-                maxLength={10}
-                placeholderTextColor={'#929292'}
-                placeholder={'Enter amount'}
-                keyboardType={'numeric'}
-                returnKeyType="done"
-                value={amount === 0 ? '' : payment.textAmount}
-                style={[styles.textInput, {flex: 1, paddingRight: 30}]}
-                onChangeText={handleChangeText}
-                underlineColorAndroid="transparent"
-              />
-              <Text style={{position: 'absolute', right: 20, fontSize: 30}}>
-                {'đ'}
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.textGray,
+                  atomicStyles.mt10px,
+                ]}>
+                {translate('information.info')}{' '}
+                <Text style={[atomicStyles.bold, styles.textStyle]}>
+                  {translate('information.infoMore')}
+                </Text>
+              </Text>
+              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                {translate('information.version')}{' '}
+                <Text style={[atomicStyles.bold, styles.textStyle]}>1.0.0</Text>{' '}
+              </Text>
+              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                {translate('information.developers')}{' '}
+                <Text style={[atomicStyles.bold, styles.textStyle]}>
+                  Ngô Tiến Tấn, Vũ Trọng Đạt
+                </Text>
               </Text>
             </View>
           </View>
-
-          <TouchableOpacity onPress={handleSendRequest} style={styles.button}>
-            {payment.processing ? (
-              <Text style={styles.textGrey}>
-                Waiting response from MoMo App
-              </Text>
-            ) : (
-              <Text style={styles.text}>Confirm Payment</Text>
-            )}
-          </TouchableOpacity>
-          {payment.processing ? (
-            <ActivityIndicator size="small" color="#000" />
-          ) : null}
-          {payment.description != '' ? (
-            <Text style={[styles.text, {color: 'red'}]}>
-              {payment.description}
-            </Text>
-          ) : null}
         </View>
       </SafeAreaView>
     </DefaultLayout>

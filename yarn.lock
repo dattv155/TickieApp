@@ -1658,15 +1658,15 @@
     color "^3.1.3"
     react-native-iphone-x-helper "^1.3.0"
 
-"@react3l/advanced-filters@^1.1.0":
-  version "1.1.0"
-  resolved "https://npm.pkg.github.com/download/@react3l/advanced-filters/1.1.0/2d74a51624937ce88ffa11389a1a47c78114c27b5869f8e0e818884cfbd87079#9a02aaafe195a6040952cf083cadcab8706546d3"
-  integrity sha512-Idgdr9KeQyAFK+2xHcbz6MeW/vwEJUCE7oF/ujqgN4pZWtDzj6NCqb5p+tPEJlH0mT1YMrXmj4aMAgbTuxe0/g==
+"@react3l/advanced-filters@^6.0.0":
+  version "6.0.0"
+  resolved "https://npm.pkg.github.com/download/@react3l/advanced-filters/6.0.0/514160bbd4eb591f034e70eb4ddda81644e7fa5063079c5cd8ac11bc25e69a44#2d9f319295d79756410791cc1ed0dcc099abbc3d"
+  integrity sha512-OoJnkzxaA0cgb86E3dMj6GDp7HNse3ozK2mo5/AWcWm5ze14SdGyKKuKCY/mOaXz/8HVY6Ryfmi0ZiW2u2Hg/A==
 
-"@react3l/axios-observable@^1.1.4":
-  version "1.1.4"
-  resolved "https://npm.pkg.github.com/download/@react3l/axios-observable/1.1.4/5c8fdd02c5d6de6debc09ebde209adebdba4fc7bf1db5b6102314530fc6db717#340bcd4d1e97f3e6e5217404cfcc7131d8dc88c8"
-  integrity sha512-jG5ONd2x219KRRFnj7xJV3Er10JRWqQbjtBJWs40PZRAXtyJpTcOMjCgaRKkEn4T5a+KxjAQ6dSfJ3MMXLBMFg==
+"@react3l/axios-observable@^6.0.0":
+  version "6.0.0"
+  resolved "https://npm.pkg.github.com/download/@react3l/axios-observable/6.0.0/e45c0d985ef9265522ccc7f04a7fbbca17af70f7ede553b675b2ccc4ad5d69b2#6160a1dd024fa2000ca96ab9a4deb0d0a672cc75"
+  integrity sha512-JxYX0rh9h7vltiCS1Floqos+t8LErX0EuHccf74NEHHBfDWe6xPCWnoglKTun1+PsoGu1gZAx1CeWW0lJ+S3LA==
 
 "@react3l/cli@^1.0.1":
   version "1.0.1"
@@ -1678,6 +1678,11 @@
     moment "^2.27.0"
     source-map-support "^0.5.19"
 
+"@react3l/common@^6.0.0":
+  version "6.0.0"
+  resolved "https://npm.pkg.github.com/download/@react3l/common/6.0.0/7ddae380ee37e5298c7453e98f6502735e4cb758141815515662104ad3d27624#e42a7dbb916596722623868652d111abb44df3d5"
+  integrity sha512-NtggrEVeYen/3NgEuB4E1o740bxK2vvgYAVDoNUnfMksrKL0Xo1dn2xg/LwiPdG8IVWzi5BzNiCPI7caMs/5Lw==
+
 "@react3l/i18next-extractor@^0.4.0":
   version "0.4.0"
   resolved "https://npm.pkg.github.com/download/@react3l/i18next-extractor/0.4.0/fbc389df24aea02e820f64f95691015fe81a7fc1c14fb50ba7b5c8f8076deed6#5dfed2ee0fb93e3af898d263293ce6bfae033f9e"
@@ -1686,6 +1691,11 @@
     commander "^3.0.2"
     deepmerge "^4.2.1"
     lodash "^4.17.15"
+
+"@react3l/localization@^6.0.0":
+  version "6.0.0"
+  resolved "https://npm.pkg.github.com/download/@react3l/localization/6.0.0/2e24ab7d6015fad7033aaeef6c2ca0d7b653e918d435616e9d45c0f68aed7356#89a7bea6a1d504b8cfb89da76b0b4fcbc8322268"
+  integrity sha512-Br71kDxSvqTKvhxncyJyv2AoPFJbgb39tDvMp6Y5vx7YeJIjtx/PLSYsg2HLic4nuzTtMvE+A7w8uXcpXn29sA==
 
 "@react3l/react3l@^5.0.0-alpha.9":
   version "5.0.0-alpha.9"

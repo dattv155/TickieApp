@@ -24,6 +24,8 @@ import Toast from 'react-native-simple-toast';
 import {getAccount} from 'src/services/get-account';
 import moment from 'moment';
 import AccountInfoSkeleton from 'src/screens/AccountInfoScreen/AccountInfoSkeleton/AccountInfoSkeleton';
+import {useTranslation} from 'react-i18next/';
+import {showInfo} from 'src/helpers/toast';
 
 /**
  * File: AccountInfoScreen.tsx
@@ -35,6 +37,8 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
   props: PropsWithChildren<AccountInfoScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const [translate] = useTranslation();
 
   const [
     email,
@@ -67,12 +71,12 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
         dateOfBirth: firestore.Timestamp.fromDate(dateOfBirth),
       })
       .then(() => {
-        Toast.show('Lưu thông tin thành công');
+        showInfo(translate('accountInfo.saveSuccess'));
       })
       .catch((e) => {
         Toast.show(e.toString());
       });
-  }, [dateOfBirth, email, fullname, gender, phoneNumber, province]);
+  }, [dateOfBirth, email, fullname, gender, phoneNumber, province, translate]);
 
   const sheetRef = React.useRef(null);
   const provinceRef = React.useRef(null);
@@ -207,7 +211,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                   styles.textStyle,
                   atomicStyles.mt16px,
                 ]}>
-                Thông tin tài khoản
+                {translate('accountInfo.header')}
               </Text>
             }
             gradient={false}
@@ -218,7 +222,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                   <AccountInfoSkeleton />
                 ) : (
                   <InputProfile
-                    label="Họ và tên"
+                    label={translate('accountInfo.name')}
                     keyboardType="default"
                     placeholder={fullname}
                     onChangeText={handleChangeFullname}
@@ -229,7 +233,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                   <AccountInfoSkeleton />
                 ) : (
                   <InputProfile
-                    label="Số điện thoại"
+                    label={translate('accountInfo.phoneNumber')}
                     keyboardType="number-pad"
                     placeholder={phoneNumber}
                     onChangeText={handleChangePhoneNumber}
@@ -240,7 +244,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                   <AccountInfoSkeleton />
                 ) : (
                   <InputProfile
-                    label="Email"
+                    label={translate('accountInfo.email')}
                     keyboardType="email-address"
                     placeholder={email}
                     onChangeText={handleChangeEmail}
@@ -259,7 +263,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                           styles.textStyle,
                           atomicStyles.mb8px,
                         ]}>
-                        Ngày sinh
+                        {translate('accountInfo.dateOfBirth')}
                       </Text>
                       <Pressable onPress={handleOpenBottomSheet}>
                         <Text
@@ -288,7 +292,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                           styles.textStyle,
                           atomicStyles.mb4px,
                         ]}>
-                        Giới tính
+                        {translate('accountInfo.gender')}
                       </Text>
 
                       <Pressable onPress={handleOpenGenderChoice}>
@@ -335,7 +339,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
                           styles.textStyle,
                           atomicStyles.mb8px,
                         ]}>
-                        Khu vực
+                        {translate('accountInfo.province')}
                       </Text>
 
                       <Pressable onPress={handleOpenProvinceChoice}>
@@ -355,13 +359,16 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
               </View>
               <View style={[styles.viewContainer, styles.box]}>
                 <LineBlock
-                  label="Thay đổi mật khẩu"
+                  label={translate('accountInfo.changePassword.changePassword')}
                   onPress={handleGoToChangePasswordProfileScreen}
                   icon={require('assets/icons/LockIcon.svg')}
                 />
               </View>
 
-              <ButtonMain onPress={updateProfile} label="Lưu thông tin" />
+              <ButtonMain
+                onPress={updateProfile}
+                label={translate('accountInfo.saveInfo')}
+              />
             </SafeAreaView>
           </DefaultLayout>
         </Pressable>

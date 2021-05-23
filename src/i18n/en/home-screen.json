@@ -1,6 +1,6 @@
 {
-  "homeScreen.available": "",
-  "homeScreen.releaseDay": "",
-  "homeScreen.favorite": "",
-  "homeScreen.upcoming": ""
+  "homeScreen.available": "Available At Theater",
+  "homeScreen.releaseDay": "Release Day",
+  "homeScreen.favorite": "My Favorite",
+  "homeScreen.upcoming": "Upcoming"
 }

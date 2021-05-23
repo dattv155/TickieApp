@@ -16,6 +16,7 @@ import styles from './NotificationScreen.scss';
 import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 import {Notification} from 'src/models/Notification';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: NotificationScreen.tsx
@@ -29,6 +30,8 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
   const {navigation, route} = props;
 
   const today = new Date();
+
+  const [translate] = useTranslation();
 
   const [list, setList] = React.useState<Notification[]>([]);
 
@@ -96,7 +99,11 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
               <View key={index}>
                 <Text
                   style={[styles.day, atomicStyles.h6, atomicStyles.textGray]}>
-                  {realDay}
+                  {realDay === 'Hôm nay'
+                    ? translate('notification.today')
+                    : realDay === 'Hôm qua'
+                    ? translate('notification.yesterday')
+                    : realDay}
                 </Text>
                 <Notibox data={noti} />
               </View>

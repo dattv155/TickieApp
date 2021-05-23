@@ -25,7 +25,11 @@ const TextItemView: FC<PropsWithChildren<TextItemViewProps>> = (
         ]}>
         {label}
       </Text>
-      <Text style={[atomicStyles.textWhite, atomicStyles.h6]}>{value}</Text>
+      <Text
+        style={[atomicStyles.textWhite, atomicStyles.h6, styles.textWidth]}
+        numberOfLines={2}>
+        {value}
+      </Text>
     </View>
   );
 };

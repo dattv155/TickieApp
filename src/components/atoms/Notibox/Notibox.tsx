@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
 import {atomicStyles} from '../../../styles';
@@ -6,20 +6,26 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {Notification} from 'src/models/Notification';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: ./Notibox.tsx
  * @created 2021-04-19 21:48:55
- * @author Huy-No1 <huygg12345@gmail.com>
  * @type {FC<PropsWithChildren<NotiboxProps>>}
  */
 const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
   props: PropsWithChildren<NotiboxProps>,
 ): ReactElement => {
   const [title, setTitle] = React.useState('');
+
+  const [translate] = useTranslation();
+
   const [display, setDisplay] = React.useState('none');
+
   const {data} = props;
+
   const {type, span, content, day} = data;
+
   const press = () => {
     if (display === 'none') {
       setDisplay('flex');
@@ -27,36 +33,37 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
       setDisplay('none');
     }
   };
-  useEffect(() => {
+
+  React.useEffect(() => {
     if (props.data === undefined) {
       return;
     }
     switch (type) {
       case 'bookingsuccess': {
-        setTitle('Đặt vé thành công');
+        setTitle(translate('notification.bookSuccess'));
         break;
       }
       case 'discount': {
-        setTitle('Thông báo khuyến mãi');
+        setTitle(translate('notification.discountInformation'));
         break;
       }
       case 'upcoming': {
-        setTitle('Phim sắp ra mắt');
+        setTitle(translate('notification.comingUpMovie'));
         break;
       }
       case 'member': {
-        setTitle('Thông báo thành viên');
+        setTitle(translate('notification.memberInformation'));
         break;
       }
       case 'newRelease': {
-        setTitle('Chính thức khởi chiếu');
+        setTitle(translate('notification.officialRelease'));
         break;
       }
       default: {
-        setTitle('Chung');
+        setTitle(translate('notification.general'));
       }
     }
-  }, [props.data, type]);
+  }, [props.data, translate, type]);
 
   return (
     <View style={[sstyle.box]}>

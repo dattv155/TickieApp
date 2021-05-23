@@ -1,0 +1,10 @@
+{
+  "notification.bookSuccess": "Booking Successfully",
+  "notification.discountInformation": "Discount",
+  "notification.comingUpMovie": "Coming up Movies",
+  "notification.memberInformation": "Member Notification",
+  "notification.officialRelease": "Official Release",
+  "notification.general": "General",
+  "notification.today": "Today",
+  "notification.yesterday": "Yesterday"
+}

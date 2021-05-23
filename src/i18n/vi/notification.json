@@ -1,0 +1,10 @@
+{
+  "notification.bookSuccess": "Đặt vé thành công",
+  "notification.discountInformation": "Thông tin khuyến mãi",
+  "notification.comingUpMovie": "Phim sắp ra mắt",
+  "notification.memberInformation": "Thông tin thành viên",
+  "notification.officialRelease": "Chính thức ra mắt",
+  "notification.general": "Thông tin chung",
+  "notification.today": "Hôm nay",
+  "notification.yesterday": "Hôm qua"
+}

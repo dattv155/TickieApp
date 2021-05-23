@@ -1,0 +1,19 @@
+{
+  "profile.camera.upload": "Upload Image",
+  "profile.camera.chooseImageProfile": "Choose Your Avatar",
+  "profile.camera.chooseFromLibrary": "Choose from Your Phone",
+  "profile.camera.capture": "Capture",
+  "profile.camera.confirm": "Confirm",
+  "profile.camera.changeAvatar": "Change Avatar",
+  "profile.camera.yes": "Accept",
+  "profile.camera.cancel": "Cancel",
+  "profile.camera.uploadSuccess": "Save Avatar Successfully",
+  "profile.member": "Member",
+  "profile.accountInfo": "Account Information",
+  "profile.myTicket": "My Ticket",
+  "profile.setting": "General Setting",
+  "profile.update": "Update",
+  "profile.helper": "Helper",
+  "profile.information": "App Information",
+  "profile.logout": "Logout"
+}

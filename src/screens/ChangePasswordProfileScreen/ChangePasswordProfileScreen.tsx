@@ -9,6 +9,7 @@ import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout'
 import InputProfile from 'src/components/morecules/InputProfile/InputProfile';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import {changePassword} from 'src/services/firebase-service';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: ChangePasswordProfileScreen.tsx
@@ -22,6 +23,8 @@ const ChangePasswordProfileScreen: FC<
   props: PropsWithChildren<ChangePasswordProfileScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const [translate] = useTranslation();
 
   const [currentPassword, setCurrentPassword] = React.useState<string>('');
 
@@ -45,7 +48,7 @@ const ChangePasswordProfileScreen: FC<
             styles.textStyle,
             atomicStyles.mt16px,
           ]}>
-          Thay đổi mật khẩu
+          {translate('accountInfo.changePassword.header')}
         </Text>
       }
       gradient={false}
@@ -53,7 +56,7 @@ const ChangePasswordProfileScreen: FC<
       <SafeAreaView style={styles.screenContainer}>
         <View style={styles.viewContainer}>
           <InputProfile
-            label="Mật khẩu cũ"
+            label={translate('accountInfo.changePassword.oldPass')}
             defaultValue={currentPassword}
             keyboardType="default"
             secureTextEntry={true}
@@ -62,7 +65,7 @@ const ChangePasswordProfileScreen: FC<
             }}
           />
           <InputProfile
-            label="Mật khẩu mới"
+            label={translate('accountInfo.changePassword.newPass')}
             defaultValue={newPassword}
             keyboardType="default"
             secureTextEntry={true}
@@ -71,12 +74,15 @@ const ChangePasswordProfileScreen: FC<
             }}
           />
           <InputProfile
-            label="Nhập lại mật khẩu mới"
+            label={translate('accountInfo.changePassword.reNewPass')}
             keyboardType="default"
             secureTextEntry={true}
           />
         </View>
-        <ButtonMain onPress={handleChangePassword} label="Thay đổi mật khẩu" />
+        <ButtonMain
+          onPress={handleChangePassword}
+          label={translate('accountInfo.changePassword.changePassword')}
+        />
       </SafeAreaView>
     </DefaultLayout>
   );

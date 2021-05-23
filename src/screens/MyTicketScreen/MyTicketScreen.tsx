@@ -3,11 +3,14 @@ import nameof from 'ts-nameof.macro';
 import styles from './MyTicketScreen.scss';
 import {StackScreenProps} from '@react-navigation/stack';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
-import {SafeAreaView, ScrollView, Text} from 'react-native';
+import {RefreshControl, SafeAreaView, ScrollView, Text} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import TicketItemView from 'src/screens/MyTicketScreen/components/TicketItemView/TicketItemView';
 import DetailTicketScreen from 'src/screens/DetailTicketScreen/DetailTicketScreen';
+import {getMovieBooking} from 'src/services/get-movie-booking';
+import moment from 'moment';
+import {SeatPosition} from 'src/models/SeatPosition';
 
 /**
  * File: MyTicketScreen.tsx
@@ -20,9 +23,42 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const handleGoToDetailTicketScreen = React.useCallback(() => {
-    navigation.navigate(DetailTicketScreen.displayName);
-  }, [navigation]);
+  const [
+    movieBookings,
+    loading,
+    handleRefresh,
+  ] = getMovieBooking.getBookingInfo();
+
+  const changeSeat = React.useCallback((column: number, row: number) => {
+    switch (row) {
+      case 1:
+        return 'A' + column;
+
+      case 2:
+        return 'B' + column;
+
+      case 3:
+        return 'C' + column;
+
+      case 4:
+        return 'D' + column;
+
+      case 5:
+        return 'E' + column;
+
+      case 6:
+        return 'F' + column;
+
+      case 7:
+        return 'G' + column;
+
+      case 8:
+        return 'H' + column;
+
+      case 9:
+        return 'I' + column;
+    }
+  }, []);
 
   return (
     <DefaultLayout
@@ -43,38 +79,39 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
       }
       gradient={false}
       customHeader={false}>
-      <ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
+        }>
         <SafeAreaView style={styles.screenContainer}>
-          <TicketItemView
-            film="Mulan(2020)"
-            theater="Tickie Giải Phóng"
-            time="7:00 13/10"
-            seat="D06, D07"
-            image={require('assets/images/mulan-poster.png')}
-            onPress={handleGoToDetailTicketScreen}
-          />
-          <TicketItemView
-            film="Blade Runner 2049"
-            theater="Tickie Giải Phóng"
-            time="7:00 13/10"
-            seat="D03, D04"
-            image={require('assets/images/bladeRunner-poster.png')}
-          />
-          <TicketItemView
-            film="Mulan(2020)"
-            theater="Tickie Giải Phóng"
-            time="7:00 13/10"
-            seat="D06, D07"
-            image={require('assets/images/mulan-poster.png')}
-            onPress={handleGoToDetailTicketScreen}
-          />
-          <TicketItemView
-            film="Blade Runner 2049"
-            theater="Tickie Giải Phóng"
-            time="7:00 13/10"
-            seat="D03, D04"
-            image={require('assets/images/bladeRunner-poster.png')}
-          />
+          {movieBookings.map((item: any, index: number) => {
+            const timeDate = `${item._data.time} ${moment(
+              item._data.date.toDate(),
+            ).format('DD/MM')}`;
+
+            return (
+              <TicketItemView
+                key={index}
+                film={item._data.movieName}
+                theater={item._data.cinemaName}
+                time={timeDate}
+                seat={item._data.position.map(
+                  (pos: SeatPosition, index: number) => {
+                    return index === item._data.position.length - 1
+                      ? changeSeat(pos.column, pos.row)
+                      : changeSeat(pos.column, pos.row) + ', ';
+                  },
+                )}
+                image={require('assets/images/mulan-poster.png')}
+                onPress={() => {
+                  navigation.navigate(nameof(DetailTicketScreen), {
+                    data: item._data,
+                  });
+                }}
+              />
+            );
+          })}
         </SafeAreaView>
       </ScrollView>
     </DefaultLayout>

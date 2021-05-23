@@ -1,16 +1,13 @@
 import React, {FC, PropsWithChildren, ReactElement, useState} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './HomeScreen.scss';
-import {SafeAreaView, StatusBar, ScrollView, View} from 'react-native';
+import {LogBox, SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
 import CategoryComponent from 'src/components/HomeComponent/CategoryComponent/CategoryComponent';
-import AvailableFilm from 'src/components/HomeComponent/AvailableFilm/AvailableFilm';
-import FavoriteFilm from 'src/components/HomeComponent/FavoriteFilm/FavoriteFilm';
 import UpcomingFilm from 'src/components/HomeComponent/UpcomingFilm/UpcomingFilm';
 import Search from '../../components/HomeComponent/Search/Search';
-import {LogBox} from 'react-native';
 
 import firestore, {
   FirebaseFirestoreTypes,
@@ -121,7 +118,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
               loading={loading}
             />
             <UpcomingFilm display={display} list={list} />
-            <Voucher/>
+            <Voucher />
           </View>
         </ScrollView>
         <MainTabBar navigation={navigation} route={route} />

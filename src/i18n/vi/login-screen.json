@@ -1,9 +1,4 @@
 {
-  "loginScreen.changePassword": "Thay đổi mật khẩu",
-  "loginScreen.changePasswordSubtitle": "Hãy thay đổi mật khẩu mới",
-  "loginScreen.newPassword": "Mật khẩu mới",
-  "loginScreen.reNewPassword": "Nhập lại mật khẩu mới",
-  "loginScreen.confirmNewPassword": "Xác nhận",
   "loginScreen.forgotPassword": "Quên mật khẩu",
   "loginScreen.forgotPasswordSubtitle": "Hãy nhập Email hoặc số điện thoại để nhận mã xác nhận",
   "loginScreen.inputEmail": "Email hoặc số điện thoại",
@@ -18,7 +13,5 @@
   "loginScreen.signupGoogle": "Đăng ký với Google",
   "loginScreen.headerSubtitle": "Đã đến với Tickie. Hãy đăng nhập để tiếp tục",
   "loginScreen.loginFB": "Đăng nhập với Facebook",
-  "loginScreen.loginGoogle": "Đăng nhập với Google",
-  "loginScreen.forgotPasswordSubtitle2": "Hãy nhập mã xác nhận để thay đổi mật khẩu",
-  "loginScreen.verifyCode": "Mã xác nhận"
+  "loginScreen.loginGoogle": "Đăng nhập với Google"
 }

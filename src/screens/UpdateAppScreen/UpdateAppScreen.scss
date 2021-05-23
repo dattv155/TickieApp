@@ -5,8 +5,43 @@
  */
 
 @import "src/styles/mixins";
-@import "src/styles/atomic-styles";
 
 .textStyle {
   font-weight: 100;
+}
+
+.containerAll {
+  margin-top: 30px;
+}
+
+.contentContainer {
+  margin: 0 12px;
+  background-color: white;
+  width: 90%;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.imageContainer {
+  width: 100px;
+  height: 100px;
+
+}
+
+.buttonContainer {
+  margin-top: 15px;
+  align-items: flex-end;
+}
+
+.buttonUpdate {
+  padding: 10px 5px;
+  width: 60%;
+  background-color: map-get($colors, 'blue');
+  border-radius: 10px;
+  align-items: center;
+}
+
+.infoContainer {
+  width: 68%;
+  margin-left: 10px;
 }

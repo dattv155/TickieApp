@@ -1,9 +1,4 @@
 {
-  "loginScreen.changePassword": "",
-  "loginScreen.changePasswordSubtitle": "",
-  "loginScreen.newPassword": "",
-  "loginScreen.reNewPassword": "",
-  "loginScreen.confirmNewPassword": "",
   "loginScreen.forgotPassword": "",
   "loginScreen.forgotPasswordSubtitle": "",
   "loginScreen.inputEmail": "",
@@ -18,7 +13,5 @@
   "loginScreen.signupGoogle": "",
   "loginScreen.headerSubtitle": "",
   "loginScreen.loginFB": "",
-  "loginScreen.loginGoogle": "",
-  "loginScreen.forgotPasswordSubtitle2": "",
-  "loginScreen.verifyCode": ""
+  "loginScreen.loginGoogle": ""
 }

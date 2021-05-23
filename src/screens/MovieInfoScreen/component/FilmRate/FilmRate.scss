@@ -16,8 +16,8 @@
   .tv {
     flex-direction: row;
     align-items:flex-start;
-    font-weight: 100;
     justify-content: space-between;
+    margin: 2px 0;
   }
   .tvtext{
     font-size: 12px;
@@ -29,40 +29,40 @@
     background-color: map-get($colors, "four-gray" );
     border-radius: 5px;
     overflow: hidden;
-    
+
   }
   .inline5 {
     width: 60%;
     height: 100%;
     background-color: #4DA64D;
     border-radius: 5px;
-  
+
   }
   .inline4 {
     width: 60%;
     height: 100%;
     background-color: #A6D633;
     border-radius: 5px;
-  
+
   }
   .inline3 {
     width: 60%;
     height: 100%;
     background-color: #F7E632;
     border-radius: 5px;
-  
+
   }
   .inline2 {
     width: 60%;
     height: 100%;
     background-color: #F7A624;
     border-radius: 5px;
-  
+
   }
   .inline1 {
     width: 60%;
     height: 100%;
     background-color: #EF370C;
     border-radius: 5px;
-  
+
   }

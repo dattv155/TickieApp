@@ -269,9 +269,13 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                   onPress={() => sheetRef.current.snapTo(0)}
                   style={styles.avatarFrame}>
                   <Image
-                    source={{
-                      uri: profileImg,
-                    }}
+                    source={
+                      profileImg
+                        ? {
+                            uri: profileImg,
+                          }
+                        : require('assets/defaultAvatar.jpeg')
+                    }
                     style={styles.avatarImage}
                   />
                 </Pressable>

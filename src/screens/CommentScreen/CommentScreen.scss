@@ -1,17 +1,12 @@
-/**
- * Styles for Component.tsx
- * @created 2021-05-11 23:47:47
- * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
- */
- @import "src/styles/mixins";
-@import "src/styles/atomic-styles";
 
-.goback {
-    margin-top: 3%;
-    width: 93%;
-    // align-items: flex-start;
-    // justify-self: flex-start;
+ @import "src/styles/mixins";
+
+.screenContainer {
+  padding: 0 20px;
+  height: 100%;
+  align-items: center;
 }
+
  .yourcomment{
     width: 100%;
     height: 100%;
@@ -24,24 +19,21 @@
     line-height: 23px;
   }
   .header{
-    margin-top: 6%;
-    flex-direction: row;
-    // justify-content: center;
+    margin-top: 20px;
+    align-items: center;
     width: 90%;
-    height: 21%;
-    padding-bottom: 8%;
+    padding-bottom: 10px;
     border-bottom-width: 0.5px;
     border-color: rgba(130, 130, 130, 0.25);
-  
+
   }
   .imageheaderinfo{
-    margin-left: 12%;
-    width: 25%;
-    height: 110%;
+    width: 100px;
+    height: 150px;
     border-radius: 14px;
   }
   .headerinfo{
-    margin-left: 6%;
+    margin-left: 20px;
     align-self: flex-end;
   }
   .headerinfo_name{
@@ -101,6 +93,4 @@
       align-items: center;
       justify-content: center;
   }
-  .textbuttondanhgia{
-      color:white;
-  }
+

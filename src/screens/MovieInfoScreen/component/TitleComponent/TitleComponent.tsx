@@ -30,7 +30,15 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
 
           {!hideShowMore && (
             <TouchableOpacity onPress={handleGotoDetailTitle}>
-              <Text style={[atomicStyles.bold, styles.more]}>Xem thêm</Text>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.bold,
+                  atomicStyles.textBlue,
+                  {fontWeight: '100'},
+                ]}>
+                Xem thêm
+              </Text>
             </TouchableOpacity>
           )}
         </>
@@ -41,11 +49,8 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
               <Text style={[atomicStyles.h4, atomicStyles.bold, styles.title]}>
                 {title}
               </Text>
-
             </View>
-
           </View>
-
         </>
       )}
     </View>

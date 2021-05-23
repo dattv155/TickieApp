@@ -17,6 +17,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import RootNavigator from 'src/navigators/RootNavigator/RootNavigator';
 import {Colors} from 'src/styles';
 import PushNotification from 'react-native-push-notification';
+import SplashScreen from 'react-native-splash-screen';
 
 const RootComponent: FC = () => {
   const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null);
@@ -82,6 +83,10 @@ const RootComponent: FC = () => {
        */
       requestPermissions: true,
     });
+  }, []);
+
+  React.useEffect(() => {
+    SplashScreen.hide();
   }, []);
 
   if (!user) {

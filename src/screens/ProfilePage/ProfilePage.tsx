@@ -11,7 +11,7 @@ import {
 import styles from './ProfilePage.scss';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
-// import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {atomicStyles} from 'src/styles';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import AccountInfoScreen from 'src/screens/AccountInfoScreen/AccountInfoScreen';
@@ -31,6 +31,7 @@ import {getAccount} from 'src/services/get-account';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import ProfilePageSkeleton from 'src/screens/ProfilePage/ProfilePageSkeleton/ProfilePageSkeleton';
+import {showInfo} from 'src/helpers/toast';
 
 /**
  * File: ProfilePage.tsx
@@ -43,7 +44,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  // const [translate] = useTranslation();
+  const [translate] = useTranslation();
 
   const handleGoToAccountInfoScreen = React.useCallback(() => {
     navigation.navigate(AccountInfoScreen.displayName);
@@ -131,14 +132,20 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       <View style={{alignItems: 'center'}}>
         <View style={styles.swipeDown} />
         <Text style={[atomicStyles.h3, atomicStyles.bold, styles.textStyle]}>
-          Tải ảnh lên
+          {translate('profile.camera.upload')}
         </Text>
         <Text style={[atomicStyles.h5, styles.textStyle]}>
-          Chọn ảnh Profile
+          {translate('profile.camera.chooseImageProfile')}
         </Text>
       </View>
-      <ButtonMain label="Chọn từ Thư viện" onPress={choosePhotoFromLibrary} />
-      <ButtonMain label="Chụp Ảnh" onPress={takePhotoFromCamera} />
+      <ButtonMain
+        label={translate('profile.camera.chooseFromLibrary')}
+        onPress={choosePhotoFromLibrary}
+      />
+      <ButtonMain
+        label={translate('profile.camera.capture')}
+        onPress={takePhotoFromCamera}
+      />
     </SafeAreaView>
   );
 
@@ -147,12 +154,14 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       <View style={{alignItems: 'center'}}>
         <View style={styles.swipeDown} />
         <Text style={[atomicStyles.h3, atomicStyles.bold, styles.textStyle]}>
-          Xác nhận
+          {translate('profile.camera.confirm')}
         </Text>
-        <Text style={[atomicStyles.h5, styles.textStyle]}>Thay đổi Avatar</Text>
+        <Text style={[atomicStyles.h5, styles.textStyle]}>
+          {translate('profile.camera.changeAvatar')}
+        </Text>
       </View>
       <ButtonMain
-        label="Đồng ý"
+        label={translate('profile.camera.yes')}
         onPress={() => {
           uploadImage();
           confirmRef.current.snapTo(1);
@@ -170,7 +179,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
             styles.textStyle,
             atomicStyles.textError,
           ]}>
-          Hủy bỏ
+          {translate('profile.camera.cancel')}
         </Text>
       </Pressable>
     </SafeAreaView>
@@ -221,7 +230,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
           userImg: url,
         })
         .then(() => {
-          Toast.show('Cập nhật ảnh thành công');
+          showInfo(translate('profile.camera.uploadSuccess'));
         })
         .catch((e) => {
           Toast.show(e.toString());
@@ -304,7 +313,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                         marginTop: 5,
                       },
                     ]}>
-                    Member
+                    {translate('profile.member')}
                   </Text>
                 </View>
               </View>
@@ -313,45 +322,48 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
             <View style={styles.optionSection}>
               <View style={styles.viewContainer}>
                 <LineBlock
-                  label="Thông tin tài khoản"
+                  label={translate('profile.accountInfo')}
                   onPress={handleGoToAccountInfoScreen}
                   icon={require('assets/icons/Profile/PersonW.svg')}
                   hasDash={true}
                 />
                 <LineBlock
-                  label="Vé của tôi"
+                  label={translate('profile.myTicket')}
                   onPress={handleGoToMyTicketScreen}
                   icon={require('assets/icons/Profile/TicketW.svg')}
                 />
               </View>
               <View style={styles.viewContainer}>
                 <LineBlock
-                  label="Cài đặt chung"
+                  label={translate('profile.setting')}
                   onPress={handleGoToGeneralSettingScreen}
                   icon={require('assets/icons/Profile/SettingW.svg')}
                   hasDash={true}
                 />
                 <LineBlock
-                  label="Cập nhật"
+                  label={translate('profile.update')}
                   onPress={handleGoToUpdateAppScreen}
                   icon={require('assets/icons/Profile/UpdateW.svg')}
                 />
               </View>
               <View style={styles.viewContainer}>
                 <LineBlock
-                  label="Trợ giúp và phản hồi"
+                  label={translate('profile.helper')}
                   onPress={handleGoToHelperScreen}
                   icon={require('assets/icons/Profile/HelpW.svg')}
                   hasDash={true}
                 />
                 <LineBlock
-                  label="Thông tin"
+                  label={translate('profile.information')}
                   onPress={handleGoToInformationScreen}
                   icon={require('assets/icons/Profile/InfoW.svg')}
                 />
               </View>
 
-              <ButtonMain label={'Đăng xuất'} onPress={logoutUser} />
+              <ButtonMain
+                label={translate('profile.logout')}
+                onPress={logoutUser}
+              />
             </View>
           </SafeAreaView>
           <MainTabBar navigation={navigation} route={route} />

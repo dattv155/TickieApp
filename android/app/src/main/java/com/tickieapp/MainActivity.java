@@ -2,17 +2,7 @@ package com.tickieapp;
 
 import com.facebook.react.ReactActivity;
 
-import android.os.Bundle; // here
-
-import org.devio.rn.splashscreen.SplashScreen; // here
-
 public class MainActivity extends ReactActivity {
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    SplashScreen.show(this);  // here
-    super.onCreate(savedInstanceState);
-  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
@@ -22,6 +12,4 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "TickieApp";
   }
-
-
 }

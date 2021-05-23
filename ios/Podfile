@@ -13,8 +13,6 @@ target 'TickieApp' do
 
   pod 'RNMomosdk', :path => '../node_modules/react-native-momosdk'
 
-  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
-
   target 'TickieAppTests' do
     inherit! :complete
     # Pods for testing

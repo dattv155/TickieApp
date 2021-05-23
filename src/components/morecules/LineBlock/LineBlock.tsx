@@ -16,7 +16,7 @@ import {SvgProps} from 'react-native-svg';
 const LineBlock: FC<PropsWithChildren<LineBlockProps>> = (
   props: PropsWithChildren<LineBlockProps>,
 ): ReactElement => {
-  const {label, icon, hasDash, onPress} = props;
+  const {label, icon, hasDash, onPress, isHideRight} = props;
   return (
     <>
       <Pressable
@@ -30,9 +30,15 @@ const LineBlock: FC<PropsWithChildren<LineBlockProps>> = (
             {label}
           </Text>
         </View>
-        <View style={styles.rightIcon}>
-          <SvgIcon component={require('assets/icons/Profile/BlackRight.svg')} />
-        </View>
+        {isHideRight ? (
+          <View />
+        ) : (
+          <View style={styles.rightIcon}>
+            <SvgIcon
+              component={require('assets/icons/Profile/BlackRight.svg')}
+            />
+          </View>
+        )}
       </Pressable>
       {hasDash && (
         <Dash
@@ -58,6 +64,8 @@ export interface LineBlockProps {
   hasDash?: boolean;
 
   onPress?: () => void;
+
+  isHideRight?: boolean;
 }
 
 LineBlock.defaultProps = {

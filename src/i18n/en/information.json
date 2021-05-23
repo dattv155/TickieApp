@@ -1,8 +1,8 @@
 {
-  "information.header": "",
-  "information.appName": "",
-  "information.info": "",
-  "information.infoMore": "",
-  "information.version": "",
-  "information.developers": ""
+  "information.header": "App Information",
+  "information.appName": "Tickie App",
+  "information.info": "Information",
+  "information.infoMore": "Application for Online Movie Payment and Booking",
+  "information.version": "Version",
+  "information.developers": "Developers"
 }

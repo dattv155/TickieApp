@@ -1,6 +1,6 @@
 {
-  "homeScreen.available": "",
-  "homeScreen.releaseDay": "",
-  "homeScreen.favorite": "",
-  "homeScreen.upcoming": ""
+  "homeScreen.available": "Đang có tại rạp",
+  "homeScreen.releaseDay": "Ngày phát hành",
+  "homeScreen.favorite": "Yêu thích",
+  "homeScreen.upcoming": "Sắp tới"
 }

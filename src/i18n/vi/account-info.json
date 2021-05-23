@@ -1,0 +1,16 @@
+{
+  "accountInfo.saveSuccess": "Lưu thông tin thành công",
+  "accountInfo.header": "Thông tin tài khoản",
+  "accountInfo.name": "Họ và tên",
+  "accountInfo.phoneNumber": "Số điện thoại",
+  "accountInfo.email": "Email",
+  "accountInfo.dateOfBirth": "Ngày sinh",
+  "accountInfo.gender": "Giới tính",
+  "accountInfo.province": "Khu vực",
+  "accountInfo.changePassword.changePassword": "Thay đổi mật khẩu",
+  "accountInfo.saveInfo": "Lưu thông tin",
+  "accountInfo.changePassword.header": "Thay đổi mật khẩu",
+  "accountInfo.changePassword.oldPass": "Mật khẩu cũ",
+  "accountInfo.changePassword.newPass": "Mật khẩu mới",
+  "accountInfo.changePassword.reNewPass": "Nhập lại mật khẩu mới"
+}

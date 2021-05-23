@@ -1,4 +1,7 @@
 {
+  "setting.languages.success": "Thay đổi thành công",
   "setting.header": "Cài đặt chung",
-  "setting.changeLanguage": "Thay đổi ngôn ngữ"
+  "setting.language": "Thay đổi ngôn ngữ",
+  "setting.languages.vi": "Tiếng Việt",
+  "setting.languages.en": "Tiếng Anh"
 }

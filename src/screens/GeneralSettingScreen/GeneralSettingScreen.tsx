@@ -3,10 +3,13 @@ import nameof from 'ts-nameof.macro';
 import styles from './GeneralSettingScreen.scss';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import {StackScreenProps} from '@react-navigation/stack';
 import {useTranslation} from 'react-i18next/';
+import localization from '@react3l/localization';
+import {showInfo} from 'src/helpers/toast';
+import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 
 /**
  * File: GeneralSettingScreen.tsx
@@ -20,6 +23,14 @@ const GeneralSettingScreen: FC<PropsWithChildren<GeneralSettingScreenProps>> = (
   const {navigation, route} = props;
 
   const [translate] = useTranslation();
+
+  const handleChangeLanguage = React.useCallback(
+    (lang: 'en' | 'vi') => async () => {
+      await localization.changeLanguage(lang);
+      showInfo(translate('setting.languages.success'));
+    },
+    [translate],
+  );
 
   return (
     <DefaultLayout
@@ -40,23 +51,31 @@ const GeneralSettingScreen: FC<PropsWithChildren<GeneralSettingScreenProps>> = (
       }
       gradient={false}
       customHeader={false}>
-      <SafeAreaView
-        style={[atomicStyles.alignItemsCenter, styles.containerAll]}>
-        <View style={[styles.contentContainer, atomicStyles.flexRow]}>
-          <View style={styles.infoContainer}>
-            <View>
-              <Text
-                style={[
-                  atomicStyles.h6,
-                  atomicStyles.textBlue,
-                  styles.textStyle,
-                ]}>
-                {translate('setting.changeLanguage')}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </SafeAreaView>
+      <View style={styles.viewContainer}>
+        <Text
+          style={[
+            atomicStyles.h5,
+            atomicStyles.textBlue,
+            atomicStyles.bold,
+            styles.textStyle,
+          ]}>
+          {translate('setting.language')}
+        </Text>
+        <LineBlock
+          icon={require('assets/icons/MicIcon.svg')}
+          label={translate('setting.languages.vi')}
+          hasDash={true}
+          isHideRight={true}
+          onPress={handleChangeLanguage('vi')}
+        />
+        <LineBlock
+          icon={require('assets/icons/MicIcon.svg')}
+          label={translate('setting.languages.en')}
+          hasDash={false}
+          isHideRight={true}
+          onPress={handleChangeLanguage('en')}
+        />
+      </View>
     </DefaultLayout>
   );
 };

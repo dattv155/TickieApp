@@ -1,4 +1,7 @@
 {
-  "setting.header": "",
-  "setting.changeLanguage": ""
+  "setting.languages.success": "Change Language Successfully",
+  "setting.header": "Settings",
+  "setting.language": "Language",
+  "setting.languages.vi": "Vietnamese",
+  "setting.languages.en": "English"
 }

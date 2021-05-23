@@ -1,0 +1,19 @@
+{
+  "profile.camera.upload": "Tải ảnh lên",
+  "profile.camera.chooseImageProfile": "Chọn ảnh đại diện",
+  "profile.camera.chooseFromLibrary": "Chọn từ thư viện",
+  "profile.camera.capture": "Chụp ảnh",
+  "profile.camera.confirm": "Xác nhận",
+  "profile.camera.changeAvatar": "Thay đổi ảnh đại diện",
+  "profile.camera.yes": "Đồng ý",
+  "profile.camera.cancel": "Hủy bỏ",
+  "profile.camera.uploadSuccess": "Tải ảnh lên thành công",
+  "profile.member": "Thành viên",
+  "profile.accountInfo": "Thông tin tài khoản",
+  "profile.myTicket": "Vé của tôi",
+  "profile.setting": "Cài đặt chung",
+  "profile.update": "Cập nhật",
+  "profile.helper": "Trợ giúp và phản hồi",
+  "profile.information": "Thông tin",
+  "profile.logout": "Đăng xuất"
+}

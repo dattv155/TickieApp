@@ -22,7 +22,6 @@ import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout'
 /**
  * File: CommentScreen.tsx
  * @created 2021-05-11 23:47:47
- * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
  * @type {FC<PropsWithChildren<CommentScreenProps>>}
  */
 const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (

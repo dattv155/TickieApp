@@ -6,6 +6,7 @@ import {
   Image,
   ImageProps,
   Pressable,
+  PressableProps,
   Text,
   TouchableOpacity,
   View,
@@ -22,7 +23,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
   props: PropsWithChildren<TicketItemViewProps>,
 ): ReactElement => {
-  const {film, theater, time, seat, image, onPress} = props;
+  const {film, theater, time, seat, image, ...restProps} = props;
 
   const rightSwipe = (progress: any, dragX: any) => {
     const scale = dragX.interpolate({
@@ -96,7 +97,7 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
               {seat}
             </Text>
           </Text>
-          <Pressable style={styles.miniButton} onPress={onPress}>
+          <Pressable style={styles.miniButton} {...restProps}>
             <Text
               style={[
                 styles.textStyle,
@@ -113,14 +114,13 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
   );
 };
 
-export interface TicketItemViewProps {
+export interface TicketItemViewProps extends PressableProps {
   //
   film?: string;
   theater?: string;
   time?: string;
   seat?: string;
   image?: ImageProps['source'];
-  onPress?: () => void;
 }
 
 TicketItemView.defaultProps = {

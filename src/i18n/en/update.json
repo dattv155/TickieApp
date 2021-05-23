@@ -1,10 +1,10 @@
 {
-  "update.developing": "",
-  "update.header": "",
-  "update.appName": "",
-  "update.version": "",
-  "update.time": "",
-  "update.info": "",
-  "update.fixInfo": "",
-  "update.update": ""
+  "update.developing": "Developing",
+  "update.header": "Update",
+  "update.appName": "Tickie App",
+  "update.version": "Version",
+  "update.time": "Latest Update",
+  "update.info": "Content",
+  "update.fixInfo": "Fix bugs",
+  "update.update": "Get Update"
 }

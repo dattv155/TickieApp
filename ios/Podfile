@@ -11,6 +11,8 @@ target 'TickieApp' do
   #icons
 
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'TickieAppTests' do
     inherit! :complete
     # Pods for testing

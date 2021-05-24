@@ -1,4 +1,4 @@
-import {Model} from '@react3l/react3l';
+import {Model} from 'react3l-common';
 import firebase from 'firebase';
 
 export class AppUser extends Model {

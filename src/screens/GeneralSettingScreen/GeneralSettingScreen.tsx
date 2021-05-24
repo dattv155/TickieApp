@@ -7,7 +7,7 @@ import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import {StackScreenProps} from '@react-navigation/stack';
 import {useTranslation} from 'react-i18next/';
-import localization from '@react3l/localization';
+import localization from 'react3l-localization';
 import {showInfo} from 'src/helpers/toast';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 

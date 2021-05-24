@@ -1,4 +1,4 @@
-import {Model} from '@react3l/react3l';
+import {Model} from 'react3l-common';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 export class Notification extends Model {

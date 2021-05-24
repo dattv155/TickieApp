@@ -1,4 +1,4 @@
-import {Model} from '@react3l/react3l';
+import {Model} from 'react3l-common';
 
 export class Payment extends Model {
   public textAmount?: number;

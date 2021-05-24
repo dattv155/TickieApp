@@ -1,4 +1,4 @@
-import {Model} from '@react3l/common';
+import {Model} from 'react3l-common';
 import {ComboSet} from 'src/models/ComboSet';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {SeatPosition} from 'src/models/SeatPosition';

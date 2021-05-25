@@ -1,0 +1,41 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-05-25 03:02:48
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+.scrollView {
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 30%;
+}
+
+.titleText {
+  margin-top: 30px;
+}
+.block {
+  margin-top: 20px;
+  width: 100%;
+  height: 52px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  justify-content: center;
+  background-color: map-get($colors, 'white');
+}
+.button {
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  justify-content: center;
+}
+.textBlock {
+  margin-left: 16px;
+}
+.textSelected {
+  color: map-get($colors, 'white');
+  margin-left: 16px;
+}
+.color {
+  color: map-get($colors, "robins-egg-blue");
+}

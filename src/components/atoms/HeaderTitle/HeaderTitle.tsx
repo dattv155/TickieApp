@@ -1,6 +1,5 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
-// @ts-ignore
 import {atomicStyles} from 'src/styles';
 import {Text, TextProps} from 'react-native';
 

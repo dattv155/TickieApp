@@ -29,6 +29,10 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 import {Position} from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
+import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
+import {useBoolean} from 'react3l-common';
+import VoucherListComponent from 'src/components/organisms/VoucherListComponent/VoucherListComponent';
+import {Voucher} from 'src/models/Voucher';
 
 /**
  * File: PaymentScreen.tsx
@@ -58,6 +62,25 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   } = route?.params;
 
   const [, handleGetDay] = UseTimestamp();
+
+  const [voucherSelected, setVoucherSelected] = React.useState<Voucher>(null);
+
+  const [totalCost, setTotalCost] = React.useState<number>(0);
+
+  const [
+    voucherModalVisible,
+    ,
+    handleOpenModalVoucher,
+    handleCloseModalVoucher,
+  ] = useBoolean(false);
+
+  const handleSelectVoucher = React.useCallback(
+    (voucher: Voucher) => {
+      setVoucherSelected(voucher);
+      handleCloseModalVoucher();
+    },
+    [handleCloseModalVoucher],
+  );
 
   const [
     ,
@@ -150,6 +173,17 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     showTime,
   ]);
 
+  React.useEffect(() => {
+    if (voucherSelected) {
+      setTotalCost(
+        ((seatCost + comboCost) * (100 - voucherSelected.discountPercent)) /
+          100,
+      );
+    } else {
+      setTotalCost(seatCost + comboCost);
+    }
+  }, [comboCost, seatCost, voucherSelected]);
+
   const handlePay = React.useCallback(async () => {
     if (paymentMethodKey === 'momo') {
       let newValue = 1000;
@@ -162,6 +196,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       });
       handleSendRequest();
       if (paymentResponseStatus === 'Successful') {
+        await handleSaveDataBooking();
         pushNotificationFirestoreBookingSuccessful(movieName);
         LocalNotification(movieName);
         handleGotoSuccessBookingScreen();
@@ -324,6 +359,13 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                 />
               </View>
             </View>
+            <TouchableOpacity style={[styles.paymentGroup]}>
+              <LineBlock
+                label={'Chọn voucher'}
+                onPress={handleOpenModalVoucher}
+                right={voucherSelected?.code}
+              />
+            </TouchableOpacity>
           </View>
         </ScrollView>
 
@@ -343,7 +385,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                 atomicStyles.bold,
                 atomicStyles.textBlue,
               ]}>
-              {formatToCurrency(seatCost + comboCost)} VND
+              {formatToCurrency(totalCost)} VND
             </Text>
           </View>
           <TouchableOpacity style={styles.paymentButton} onPress={handlePay}>
@@ -358,6 +400,14 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             </Text>
           </TouchableOpacity>
         </View>
+
+        <VoucherListComponent
+          navigation={navigation}
+          route={route}
+          visible={voucherModalVisible}
+          handleSelectVoucher={handleSelectVoucher}
+          onClose={handleCloseModalVoucher}
+        />
       </DefaultLayout>
     </>
   );

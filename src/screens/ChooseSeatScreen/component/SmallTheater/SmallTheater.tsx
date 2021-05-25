@@ -28,15 +28,19 @@ export interface CinemaLayout {
   };
 }
 
+const ITEM_WIDTH = 26;
+
 const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
   props: PropsWithChildren<SmallTheaterProps>,
 ): ReactElement => {
-  const {selectedList, handleShowPickedSeats} = props;
+  const {selectedList, handleShowPickedSeats, handleClear} = props;
   const [layout, setLayout] = React.useState<CinemaLayout>(CinemaLayout[0]);
 
   const [pickList, setPickList] = React.useState<number[][]>([]);
 
   const listSeat = React.useRef<number[][]>([]);
+
+  const isClear = React.useRef<boolean>(false);
 
   const handleSelect = React.useCallback(
     (rowIndex: number, columnIndex: number) => {
@@ -55,14 +59,19 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
     [],
   );
 
-  React.useEffect(() => {}, []);
+  const getItemLayout = React.useCallback(
+    (data, index) => ({length: ITEM_WIDTH, offset: ITEM_WIDTH * index, index}),
+    [],
+  );
 
   const renderSeat = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>, indexRow: number) => {
       let choose = false;
 
-      if (indexOf2dArray(pickList, [indexRow, index]) > -1) {
-        choose = true;
+      if (!isClear.current) {
+        if (indexOf2dArray(pickList, [indexRow, index]) > -1) {
+          choose = true;
+        }
       }
 
       return indexOf2dArray(selectedList, [indexRow, index]) === -1 ? (
@@ -70,6 +79,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
           onPress={() => {
             handleSelect(indexRow, index);
             handleShowPickedSeats(listSeat.current);
+            handleClear(isClear.current);
           }}>
           <Seat
             key={index}
@@ -89,11 +99,13 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
       );
     },
     [
-      pickList,
+      isClear,
       selectedList,
       layout.size.column,
+      pickList,
       handleSelect,
       handleShowPickedSeats,
+      handleClear,
     ],
   );
 
@@ -154,6 +166,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
                     item.toString() + index.toString()
                   }
                   contentContainerStyle={styles.rowStyle}
+                  getItemLayout={getItemLayout}
                 />
               );
             })}
@@ -189,6 +202,8 @@ export interface SmallTheaterProps {
   selectedList?: number[][];
 
   handleShowPickedSeats?: (pickedList: number[][]) => void;
+
+  handleClear?: (isClear: boolean) => void;
 }
 
 SmallTheater.defaultProps = {

@@ -16,24 +16,26 @@ import {SvgProps} from 'react-native-svg';
 const LineBlock: FC<PropsWithChildren<LineBlockProps>> = (
   props: PropsWithChildren<LineBlockProps>,
 ): ReactElement => {
-  const {label, icon, hasDash, onPress, isHideRight} = props;
+  const {label, icon, hasDash, onPress, isHideRight, right} = props;
   return (
     <>
       <Pressable
         onPress={onPress}
         style={[atomicStyles.flexRow, atomicStyles.w100, atomicStyles.py16px]}>
-        <View style={styles.iconView}>
-          <SvgIcon component={icon} />
-        </View>
+        {!!icon && (
+          <View style={styles.iconView}>
+            <SvgIcon component={icon} />
+          </View>
+        )}
+
         <View style={styles.label}>
           <Text style={[atomicStyles.h6, atomicStyles.bold, styles.textStyle]}>
             {label}
           </Text>
         </View>
-        {isHideRight ? (
-          <View />
-        ) : (
+        {!isHideRight && (
           <View style={styles.rightIcon}>
+            <Text style={[atomicStyles.h6, styles.textStyle]}>{right}</Text>
             <SvgIcon
               component={require('assets/icons/Profile/BlackRight.svg')}
             />
@@ -66,6 +68,8 @@ export interface LineBlockProps {
   onPress?: () => void;
 
   isHideRight?: boolean;
+
+  right?: string;
 }
 
 LineBlock.defaultProps = {

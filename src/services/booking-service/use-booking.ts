@@ -4,6 +4,8 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import {CinemaLayout} from 'src/sample/cinemaLayout';
 import {SEAT_PRICE} from 'src/config/consts';
+import {StackScreenProps} from '@react-navigation/stack';
+import {BookingData} from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
 
 export function useBooking(
   movieName: string,
@@ -11,6 +13,7 @@ export function useBooking(
   movieFormat: string,
   cinemaName: string,
   showTime: string,
+  navigation: StackScreenProps<any>['navigation'],
 ): [
   number,
   number[][],
@@ -20,6 +23,8 @@ export function useBooking(
   (seatList: number[][]) => void,
   () => void,
   number[][],
+  React.MutableRefObject<boolean>,
+  () => void,
 ] {
   const [seatCost, setSeatCost] = React.useState<number>(0);
 
@@ -28,6 +33,10 @@ export function useBooking(
   const [pickingSeats, setPickingSeats] = React.useState<number[][]>([]);
 
   const [listLabel, setListLabel] = React.useState<string>('');
+
+  // const [isClear, setClear] = React.useState<boolean>(false);
+
+  const isClear = React.useRef<boolean>(false);
 
   const handleGetData = React.useCallback(async () => {
     return firestore()
@@ -41,6 +50,20 @@ export function useBooking(
         return documentData.docs.map((item) => item.data());
       });
   }, [movieDate, movieFormat, movieName, showTime]);
+
+  React.useEffect(() => {
+    return navigation.addListener('focus', async () => {
+      const result = (await handleGetData()) as BookingData[];
+
+      const selected: number[][] = [];
+      result.map((item) => {
+        item.position.map((pos) => {
+          selected.push([pos.row, pos.column]);
+        });
+      });
+      setSelectedList(selected);
+    });
+  }, [handleGetData, navigation, setSelectedList]);
 
   const handlePickedSeats = React.useCallback((seatList: number[][]) => {
     setPickingSeats([...seatList]);
@@ -69,6 +92,7 @@ export function useBooking(
     handlePickedSeats([]);
     setPickingSeats([]);
     setSeatCost(0);
+    isClear.current = true;
   }, [handlePickedSeats]);
 
   React.useEffect(() => {
@@ -76,6 +100,10 @@ export function useBooking(
     setListLabel(list);
     setSeatCost(pickingSeats.length * SEAT_PRICE);
   }, [convertListLabel, pickingSeats]);
+
+  const handleClear = React.useCallback(() => {
+    isClear.current = false;
+  }, []);
 
   return [
     seatCost,
@@ -86,5 +114,7 @@ export function useBooking(
     handlePickedSeats,
     handleClearPickedSeats,
     pickingSeats,
+    isClear,
+    handleClear,
   ];
 }

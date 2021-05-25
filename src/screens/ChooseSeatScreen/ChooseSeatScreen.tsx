@@ -63,27 +63,16 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     handlePickedSeats,
     handleClearPickedSeats,
     pickingSeats,
+    isClear,
+    handleClear,
   ] = bookingService.useBooking(
     movieName,
     movieDate,
     movieFormat,
     cinemaName,
     showTime,
+    navigation,
   );
-
-  React.useEffect(() => {
-    return navigation.addListener('focus', async () => {
-      const result = (await handleGetData()) as BookingData[];
-
-      const selected: number[][] = [];
-      result.map((item) => {
-        item.position.map((pos) => {
-          selected.push([pos.row, pos.column]);
-        });
-      });
-      setSelectedList(selected);
-    });
-  }, [handleGetData, navigation, setSelectedList]);
 
   const handleGotoSelectComboScreen = React.useCallback(() => {
     navigation.navigate(SelectComboScreen.displayName, {
@@ -138,6 +127,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
           <SmallTheater
             selectedList={selectedList}
             handleShowPickedSeats={handlePickedSeats}
+            handleClear={handleClear}
           />
         </View>
 

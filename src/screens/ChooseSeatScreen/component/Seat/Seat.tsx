@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './Seat.scss';
-import {TouchableOpacity, View} from 'react-native';
+import {View} from 'react-native';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 
 /**

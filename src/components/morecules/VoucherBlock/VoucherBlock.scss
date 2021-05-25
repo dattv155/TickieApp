@@ -1,0 +1,36 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-05-25 03:15:10
+ * @author TrongDat <trongdat1505@gmail.com>
+ */
+@import "src/styles/mixins";
+
+.containerView {
+  border-radius: 8px;
+  border: 0.75px map-get($colors, 'blue');
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  margin: 6px 0;
+}
+.leftArea {
+  width: 70%;
+}
+.textDetail {
+  font-weight: 400;
+  margin-top: 6px;
+}
+.block {
+  width: 78px;
+  height: 50px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  elevation: 6;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  background-color: map-get($colors, 'blue');
+}
+.selectedBlock {
+  background-color: map-get($colors, 'gray');
+ }

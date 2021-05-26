@@ -1,9 +1,8 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ActorComponent.scss';
-import {Image, View, Text, TouchableOpacity} from 'react-native';
+import {Image, View, Text} from 'react-native';
 import {SvgProps} from 'react-native-svg';
-import {SvgComponent} from 'react-native-svg-types';
 import {atomicStyles} from 'src/styles';
 
 /**
@@ -27,7 +26,7 @@ const ActorComponent: FC<PropsWithChildren<ActorComponentProps>> = (
         <View style={styles.textArea}>
           <Text style={[atomicStyles.h7, styles.actorName]}>{actor.Name}</Text>
           <Text style={[atomicStyles.h7, styles.actorRole]}>
-            {actor.CharactorName}
+            {actor.CharacterName}
           </Text>
         </View>
       </View>

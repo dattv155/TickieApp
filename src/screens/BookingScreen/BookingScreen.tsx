@@ -22,6 +22,8 @@ import ButtonSelectFilmType from 'src/screens/BookingScreen/component/ButtonSele
 import CinemaShowtimeComponent from 'src/screens/BookingScreen/component/CinemaShowtimeComponent/CinemaShowtimeComponent';
 import {showError} from 'src/helpers/toast';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {MovieBooking} from 'src/models/MovieBooking';
+import {globalState} from 'src/app/global-state';
 
 /**
  * File: BookingScreen.tsx
@@ -155,12 +157,21 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     [getInfoByType, handleSelection, selectedTypeID],
   );
 
-  const handleGotoChooseSeatScreen = React.useCallback(() => {
+  const bookingData: MovieBooking = globalState.useBookingData();
+
+  const handleGotoChooseSeatScreen = React.useCallback(async () => {
     if (currentSelectedShowtime === '' || currentSelectedCinema === '') {
       showError('Hãy chọn lịch chiếu');
       return;
     }
     if (data) {
+      await globalState.setBookingData({
+        ...bookingData,
+        date: data?.Day,
+        filmType: currentFormat,
+        cinemaName: currentSelectedCinema,
+        time: currentSelectedShowtime,
+      });
       navigation.navigate(ChooseSeatScreen.displayName, {
         movieName: movieInfo?.Name,
         movieType: movieInfo?.Type,
@@ -171,6 +182,7 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
       });
     }
   }, [
+    bookingData,
     currentFormat,
     currentSelectedCinema,
     currentSelectedShowtime,

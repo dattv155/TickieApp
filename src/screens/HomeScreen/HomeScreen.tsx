@@ -13,6 +13,7 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 import Voucher from './Voucher/Voucher';
+import {MovieInfo} from 'src/models/MovieInfo';
 
 /**
  * File: HomeScreen.tsx
@@ -32,9 +33,7 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
     display === 'flex' ? setDisplay('none') : setDisplay('flex');
   };
 
-  const [data, setData] = React.useState<FirebaseFirestoreTypes.DocumentData[]>(
-    [],
-  );
+  const [data, setData] = React.useState<MovieInfo[]>([]);
 
   const [loading, setLoading] = React.useState<boolean>(true);
 
@@ -47,21 +46,18 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   //     });
   // }, []);
 
-  const handleGetData = React.useCallback(
-    (data: FirebaseFirestoreTypes.DocumentData[]) => {
-      setData(data);
-    },
-    [],
-  );
+  const handleGetData = React.useCallback((data: MovieInfo[]) => {
+    setData(data);
+  }, []);
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      const result = await firestore()
+      const result = (await firestore()
         .collection('movie')
         .get()
         .then((documentData) => {
           return documentData.docs.map((item) => item.data());
-        });
+        })) as MovieInfo[];
 
       handleGetData(result);
     });

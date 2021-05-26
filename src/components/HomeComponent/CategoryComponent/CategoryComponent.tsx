@@ -14,6 +14,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import CategoryComponentSkeleton from 'src/components/HomeComponent/CategoryComponent/CategoryComponentSkeleton/CategoryComponentSkeleton';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {MovieInfo} from 'src/models/MovieInfo';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -34,7 +35,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   const [index, setIndex] = React.useState<number>(0);
 
   const handleGotoMovieScreen = React.useCallback(
-    (movieInfo) => {
+    (movieInfo: MovieInfo) => {
       navigation.navigate(MovieInfoScreen.displayName, {
         movieInfo,
       });

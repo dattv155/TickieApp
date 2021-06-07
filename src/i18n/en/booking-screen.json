@@ -1,0 +1,12 @@
+{
+  "bookingScreen.timeNCine.movieFormat": "",
+  "bookingScreen.timeNCine.noData": "",
+  "bookingScreen.timeNCine.continue": "",
+  "bookingScreen.seatChoose.seatNotPicked": "",
+  "bookingScreen.seatChoose.seatPicking": "",
+  "bookingScreen.seatChoose.seatPicked": "",
+  "bookingScreen.seatChoose.chooseSeat": "",
+  "bookingScreen.seatChoose.seatsPicked": "",
+  "bookingScreen.seatChoose.summary": "",
+  "bookingScreen.seatChoose.seatBookingConfirm": ""
+}

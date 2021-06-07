@@ -21,8 +21,9 @@ const ButtonSelectFilmType: FC<PropsWithChildren<ButtonSelectFilmTypeProps>> = (
       <View style={[styles.buttonContainer, selected && styles.pickedButton]}>
         <Text
           style={[
-            atomicStyles.bold,
             atomicStyles.h4,
+            atomicStyles.bold,
+            styles.textStyle,
             selected ? styles.pickedText : styles.unPickedText,
           ]}>
           {item}

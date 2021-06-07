@@ -21,7 +21,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
 
   const [translate] = useTranslation();
 
-  const [display, setDisplay] = React.useState('none');
+  const [displayComp, setDisplay] = React.useState('none');
 
   const {data, navigation} = props;
 
@@ -34,7 +34,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
   }, [navigation]);
 
   const press = () => {
-    if (display === 'none') {
+    if (displayComp === 'none') {
       setDisplay('flex');
     } else {
       setDisplay('none');
@@ -97,7 +97,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
           <View style={styles.wrapper}>
             <Text style={[styles.content, atomicStyles.h6]}>{content}</Text>
           </View>
-          <View style={[{display: display}]}>
+          <View style={{display: displayComp}}>
             <Text style={[atomicStyles.h6]}>{span}</Text>
             {isBookingNoti && (
               <Pressable

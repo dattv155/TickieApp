@@ -46,7 +46,7 @@
 .summaryArea {
   border-top-left-radius: 46px;
   border-top-right-radius: 46px;
-  border-width: 1px;
+  elevation: 20;
   padding: 0 20px;
   width: 100%;
   background-color: map-get($colors, 'white');
@@ -61,7 +61,6 @@
   align-items: center;
 }
 .seatSummaryTitle {
-  font-weight: 500;
   width: 50%;
 }
 .totalSeatArea {
@@ -95,9 +94,6 @@
   align-items: center;
   width: 150px;
 }
-.costTitle {
-  font-weight: 500;
-}
 .cost {
   color: map-get($colors, 'blue');
 }
@@ -112,4 +108,8 @@
 .buttonText {
   color: map-get($colors, 'white');
   font-weight: 500;
+}
+
+.textStyle {
+  font-weight: 100;
 }

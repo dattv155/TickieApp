@@ -51,8 +51,8 @@ const CinemaShowtimeComponent: FC<
             style={[styles.buttonContainer, selected && styles.pickedButton]}>
             <Text
               style={[
-                atomicStyles.bold,
                 atomicStyles.h4,
+                atomicStyles.bold,
                 selected ? styles.pickedText : styles.unPickedText,
               ]}>
               {item}
@@ -67,7 +67,7 @@ const CinemaShowtimeComponent: FC<
   return (
     <>
       <View style={styles.containerView}>
-        <Text style={[atomicStyles.bold, atomicStyles.h1, styles.textStyle]}>
+        <Text style={[atomicStyles.h2, atomicStyles.bold, styles.textStyle]}>
           {data.cinemaName}
         </Text>
         <View>

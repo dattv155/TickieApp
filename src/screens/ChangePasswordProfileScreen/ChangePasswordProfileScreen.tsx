@@ -6,7 +6,6 @@ import {SafeAreaView, Text, View} from 'react-native';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
-import InputProfile from 'src/components/morecules/InputProfile/InputProfile';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import {changePassword} from 'src/services/firebase-service';
 import {useTranslation} from 'react-i18next/';
@@ -34,15 +33,21 @@ const ChangePasswordProfileScreen: FC<
 
   const [reNewPassword, setReNewPassword] = React.useState<string>('');
 
-  const handleChangePassword = async () => {
+  const handleChangePassword = React.useCallback(async () => {
+    if (currentPassword === '' && newPassword === '') {
+      showWarning(translate('accountInfo.changePassword.emptyInput'));
+      return;
+    }
+
     if (newPassword === reNewPassword) {
       await changePassword(currentPassword, newPassword);
+      await navigation.goBack();
     } else {
       showWarning(
         translate('accountInfo.changePassword.reNewPasswordNotMatch'),
       );
     }
-  };
+  }, [currentPassword, navigation, newPassword, reNewPassword, translate]);
 
   return (
     <DefaultLayout

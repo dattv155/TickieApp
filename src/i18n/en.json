@@ -50,6 +50,7 @@
   "loginScreen.headerSubtitle": "",
   "loginScreen.loginFB": "",
   "loginScreen.loginGoogle": "",
+  "login.notMatchPassword": "Re-entered Password not matched",
   "notification.bookSuccess": "Booking Successfully",
   "notification.discountInformation": "Discount",
   "notification.comingUpMovie": "Coming up Movies",

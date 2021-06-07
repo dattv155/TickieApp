@@ -10,6 +10,8 @@ import InputProfile from 'src/components/morecules/InputProfile/InputProfile';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import {changePassword} from 'src/services/firebase-service';
 import {useTranslation} from 'react-i18next/';
+import LoginInputPassword from 'src/components/atoms/LoginInputPassword/LoginInputPassword';
+import {showWarning} from 'src/helpers/toast';
 
 /**
  * File: ChangePasswordProfileScreen.tsx
@@ -30,8 +32,16 @@ const ChangePasswordProfileScreen: FC<
 
   const [newPassword, setNewPassword] = React.useState<string>('');
 
+  const [reNewPassword, setReNewPassword] = React.useState<string>('');
+
   const handleChangePassword = async () => {
-    await changePassword(currentPassword, newPassword);
+    if (newPassword === reNewPassword) {
+      await changePassword(currentPassword, newPassword);
+    } else {
+      showWarning(
+        translate('accountInfo.changePassword.reNewPasswordNotMatch'),
+      );
+    }
   };
 
   return (
@@ -55,29 +65,40 @@ const ChangePasswordProfileScreen: FC<
       customHeader={false}>
       <SafeAreaView style={styles.screenContainer}>
         <View style={styles.viewContainer}>
-          <InputProfile
-            label={translate('accountInfo.changePassword.oldPass')}
-            defaultValue={currentPassword}
-            keyboardType="default"
-            secureTextEntry={true}
-            onChangeText={(password: string) => {
-              setCurrentPassword(password);
-            }}
-          />
-          <InputProfile
-            label={translate('accountInfo.changePassword.newPass')}
-            defaultValue={newPassword}
-            keyboardType="default"
-            secureTextEntry={true}
-            onChangeText={(password: string) => {
-              setNewPassword(password);
-            }}
-          />
-          <InputProfile
-            label={translate('accountInfo.changePassword.reNewPass')}
-            keyboardType="default"
-            secureTextEntry={true}
-          />
+          <View>
+            <LoginInputPassword
+              title={translate('accountInfo.changePassword.oldPass')}
+              placeholder={translate('accountInfo.changePassword.enterOldPass')}
+              keyboardType="default"
+              onChangeText={(password: string) => {
+                setCurrentPassword(password);
+              }}
+            />
+          </View>
+
+          <View style={[atomicStyles.mt16px]}>
+            <LoginInputPassword
+              title={translate('accountInfo.changePassword.newPass')}
+              placeholder={translate('accountInfo.changePassword.enterNewPass')}
+              keyboardType="default"
+              onChangeText={(password: string) => {
+                setNewPassword(password);
+              }}
+            />
+          </View>
+
+          <View style={[atomicStyles.mt16px]}>
+            <LoginInputPassword
+              title={translate('accountInfo.changePassword.reNewPass')}
+              keyboardType="default"
+              placeholder={translate(
+                'accountInfo.changePassword.reEnterNewPass',
+              )}
+              onChangeText={(password: string) => {
+                setReNewPassword(password);
+              }}
+            />
+          </View>
         </View>
         <ButtonMain
           onPress={handleChangePassword}

@@ -9,8 +9,11 @@
   "accountInfo.province": "Province",
   "accountInfo.changePassword.changePassword": "Change Password",
   "accountInfo.saveInfo": "Save",
+  "accountInfo.changePassword.reNewPasswordNotMatch": "New Re-entered Password Not Match",
   "accountInfo.changePassword.header": "Change Password",
   "accountInfo.changePassword.oldPass": "Enter Old Password",
+  "accountInfo.changePassword.enterOldPass": "Enter Old Password",
   "accountInfo.changePassword.newPass": "Enter New Password",
+  "accountInfo.changePassword.enterNewPass": "Enter New Password",
   "accountInfo.changePassword.reNewPass": "Re-enter New Password"
 }

@@ -74,7 +74,6 @@ export interface LoginInputPasswordProps extends TextInputProps {
   title?: string;
   style?: ViewStyle;
   placeholder?: string;
-  secureTextEntry?: boolean;
 }
 
 LoginInputPassword.defaultProps = {

@@ -50,6 +50,7 @@
   "loginScreen.headerSubtitle": "Đã đến với Tickie. Hãy đăng nhập để tiếp tục",
   "loginScreen.loginFB": "Đăng nhập với Facebook",
   "loginScreen.loginGoogle": "Đăng nhập với Google",
+  "login.notMatchPassword": "Nhập lại mật khẩu không khớp",
   "notification.bookSuccess": "Đặt vé thành công",
   "notification.discountInformation": "Thông tin khuyến mãi",
   "notification.comingUpMovie": "Phim sắp ra mắt",

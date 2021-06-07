@@ -2,11 +2,12 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
 import {atomicStyles} from '../../../styles';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Pressable, Text, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {Notification} from 'src/models/Notification';
 import {useTranslation} from 'react-i18next/';
+import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
 
 /**
  * File: ./Notibox.tsx
@@ -22,9 +23,15 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
 
   const [display, setDisplay] = React.useState('none');
 
-  const {data} = props;
+  const {data, navigation} = props;
 
   const {type, span, content, day} = data;
+
+  const [isBookingNoti, setBookingNoti] = React.useState<boolean>(false);
+
+  const handleGoToMyTicketScreen = React.useCallback(() => {
+    navigation.navigate(nameof(MyTicketScreen));
+  }, [navigation]);
 
   const press = () => {
     if (display === 'none') {
@@ -41,6 +48,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
     switch (type) {
       case 'bookingsuccess': {
         setTitle(translate('notification.bookSuccess'));
+        setBookingNoti(true);
         break;
       }
       case 'discount': {
@@ -66,7 +74,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
   }, [props.data, translate, type]);
 
   return (
-    <View style={[sstyle.box]}>
+    <View style={[styles.box]}>
       <TouchableOpacity
         activeOpacity={0.1}
         style={styles.touchable}
@@ -83,36 +91,35 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
               {title}
             </Text>
             <Text style={[styles.hour, atomicStyles.h7]}>
-              {moment(day.toDate()).format('hh:mm')}
+              {moment(day.toDate()).format('hh:mm A')}
             </Text>
           </View>
           <View style={styles.wrapper}>
             <Text style={[styles.content, atomicStyles.h6]}>{content}</Text>
           </View>
-          <Text style={[styles.content, atomicStyles.h6, {display: display}]}>
-            {span}
-          </Text>
+          <View style={[{display: display}]}>
+            <Text style={[atomicStyles.h6]}>{span}</Text>
+            {isBookingNoti && (
+              <Pressable
+                style={styles.button}
+                onPress={handleGoToMyTicketScreen}>
+                <Text style={[atomicStyles.h6, atomicStyles.textWhite]}>
+                  Vé của bạn
+                </Text>
+              </Pressable>
+            )}
+          </View>
         </View>
       </TouchableOpacity>
     </View>
   );
 };
 
-const sstyle = StyleSheet.create({
-  box: {
-    alignSelf: 'center',
-    width: '100%',
-    backgroundColor: 'white',
-    borderRadius: 12,
-    paddingHorizontal: 13,
-    paddingVertical: 8,
-    marginTop: 5,
-    marginBottom: 16,
-  },
-});
 export interface NotiboxProps {
   //
   data?: Notification;
+
+  navigation?: any;
 }
 
 export interface Data {

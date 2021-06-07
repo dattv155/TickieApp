@@ -16,6 +16,7 @@
   "accountInfo.changePassword.newPass": "Enter New Password",
   "accountInfo.changePassword.enterNewPass": "Enter New Password",
   "accountInfo.changePassword.reNewPass": "Re-enter New Password",
+  "accountInfo.changePassword.reEnterNewPass": "Re-enter New Password",
   "commentScreen.yourReview": "Your Review",
   "commentScreen.filmRate": "Movie Rate",
   "commentScreen.leaveYourReview": "Leave your review about this movie here...",

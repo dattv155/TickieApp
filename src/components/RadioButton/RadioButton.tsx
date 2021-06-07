@@ -27,7 +27,14 @@ const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = (
             <SvgIcon component={require('assets/icons/WalletIcon.svg')} />
             <View style={styles.title}>
               <>
-                <Text style={[atomicStyles.bold]}>{item.title}</Text>
+                <Text
+                  style={[
+                    atomicStyles.bold,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
+                  ]}>
+                  {item.title}
+                </Text>
                 <Text style={[atomicStyles.h7]}>{item.subtitle}</Text>
               </>
             </View>

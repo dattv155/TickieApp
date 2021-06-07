@@ -101,17 +101,19 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
                   <NotificationScreenSkeleton />
                 </View>
               ))
-            : list.map((noti, index) => {
+            : list.map((notifiation, index) => {
                 let realDay;
-                if (noti.day.toDate().getDate() === today.getDate()) {
+                if (notifiation.day.toDate().getDate() === today.getDate()) {
                   realDay = 'Hôm nay';
                 } else if (
-                  noti.day.toDate().getDate() ===
+                  notifiation.day.toDate().getDate() ===
                   today.getDate() - 1
                 ) {
                   realDay = 'Hôm qua';
                 } else {
-                  realDay = moment(noti.day.toDate()).format('DD/MM/YYYY');
+                  realDay = moment(notifiation.day.toDate()).format(
+                    'DD/MM/YYYY',
+                  );
                 }
                 return (
                   <View key={index}>
@@ -127,7 +129,7 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
                         ? translate('notification.yesterday')
                         : realDay}
                     </Text>
-                    <Notibox data={noti} />
+                    <Notibox data={notifiation} navigation={navigation} />
                   </View>
                 );
               })}
@@ -144,8 +146,11 @@ export interface NotificationScreenProps extends StackScreenProps<any> {
 
 export interface Obj {
   day?: any;
+
   content?: string;
+
   span?: string;
+
   type?: string;
 }
 NotificationScreen.defaultProps = {

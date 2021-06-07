@@ -8,5 +8,12 @@
   "bookingScreen.seatChoose.chooseSeat": "",
   "bookingScreen.seatChoose.seatsPicked": "",
   "bookingScreen.seatChoose.summary": "",
-  "bookingScreen.seatChoose.seatBookingConfirm": ""
+  "bookingScreen.seatChoose.seatBookingConfirm": "",
+  "bookingScreen.comboSelect.enterCode": "",
+  "bookingScreen.comboSelect.noVoucher": "",
+  "bookingScreen.comboSelect.getNow": "",
+  "bookingScreen.comboSelect.selectSetCombo": "",
+  "bookingScreen.comboSelect.setCombo": "",
+  "bookingScreen.comboSelect.summary": "",
+  "bookingScreen.comboSelect.confirmCombo": ""
 }

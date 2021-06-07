@@ -9,12 +9,12 @@
   "accountInfo.province": "Khu vực",
   "accountInfo.changePassword.changePassword": "Thay đổi mật khẩu",
   "accountInfo.saveInfo": "Lưu thông tin",
+  "accountInfo.changePassword.emptyInput": "Hãy nhập mật khẩu cũ và mới để thay đổi",
   "accountInfo.changePassword.reNewPasswordNotMatch": "Nhập lại mật khẩu mới không khớp",
   "accountInfo.changePassword.header": "Thay đổi mật khẩu",
   "accountInfo.changePassword.oldPass": "Mật khẩu cũ",
   "accountInfo.changePassword.enterOldPass": "Mật khẩu cũ",
   "accountInfo.changePassword.newPass": "Mật khẩu mới",
   "accountInfo.changePassword.enterNewPass": "Mật khẩu mới",
-  "accountInfo.changePassword.reNewPass": "Nhập lại mật khẩu mới",
-  "accountInfo.changePassword.reEnterNewPass": "Nhập lại mật khẩu mới"
+  "accountInfo.changePassword.reNewPass": "Nhập lại mật khẩu mới"
 }

@@ -25,7 +25,7 @@ import {
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
 const HEADER_WIDTH = SLIDER_WIDTH * 0.75;
-const SEARCH_WIDTH = SLIDER_WIDTH * 0.9;
+const SEARCH_WIDTH = SLIDER_WIDTH * 0.8;
 const VIEW_HEIGHT = SLIDER_HEIGHT * 0.85;
 const Search: FC<PropsWithChildren<SearchProps>> = (
   props: PropsWithChildren<SearchProps>,
@@ -57,7 +57,7 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
       // easing: Easing.out(Easing.linear)
     }).start();
     Animated.timing(searchWidth, {
-      toValue: searchWidth._value === 0?  SEARCH_WIDTH: 0,
+      toValue: searchWidth._value === 0 ? SEARCH_WIDTH : 0,
       duration: 500,
       useNativeDriver: false,
       // easing: Easing.out(Easing.linear)
@@ -69,21 +69,27 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
       easing: Easing.linear,
     }).start(() => {});
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headContainer}>
-        <Animated.View style={[styles.release, {width: headerWidth, overflow: 'hidden' }]}>
-          <Text style={[atomicStyles.regular, styles.header]}>
+        <Animated.View
+          style={[styles.release, {width: headerWidth, overflow: 'hidden'}]}>
+          <Text
+            style={[atomicStyles.h1, atomicStyles.textBlue, styles.textStyle]}>
             Mới phát hành
           </Text>
         </Animated.View>
 
         <Animated.View
-          style={[styles.viewanimated,{
-            width: searchWidth,
-          }]}>
+          style={[
+            styles.viewanimated,
+            {
+              width: searchWidth,
+            },
+          ]}>
           <TextInput
-            style={styles.textInput}
+            style={[styles.textInput, atomicStyles.h5]}
             placeholder="Search"
             placeholderTextColor="black"
             onChangeText={(e: string) => setInput(e)}
@@ -96,24 +102,30 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
       </View>
 
       <Animated.View
-        style={[styles.viewanimated2,{
-          height: viewHeight,
-        }]}>
+        style={[
+          styles.viewanimated2,
+          {
+            height: viewHeight,
+          },
+        ]}>
         <FlatList
           data={list.filter((item) => {
             if (input === '') {
               return item;
-            } else {
-              if (item.name.toLowerCase().includes(input.toLowerCase())) {
-                return item;
-              }
+            }
+            if (item.name.toLowerCase().includes(input.toLowerCase())) {
+              return item;
             }
           })}
-          renderItem={({item}) => (
+          renderItem={({item, index}) => (
             <View
-              style={[styles.viewitem, {
-                marginRight: SLIDER_WIDTH * 0.051,
-              }]}>
+              style={[
+                styles.viewitem,
+                {
+                  marginRight: SLIDER_WIDTH * 0.051,
+                },
+              ]}
+              key={index}>
               <Image
                 style={{
                   width: SLIDER_WIDTH * 0.4,
@@ -124,10 +136,20 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
                   uri: item.img,
                 }}
               />
-              <Text style={[styles.text1]}>
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.textDark,
+                  atomicStyles.mt8px,
+                ]}>
                 {item.name}
               </Text>
-              <Text style={[styles.text2]}>
+              <Text
+                style={[
+                  atomicStyles.h7,
+                  atomicStyles.textDark,
+                  atomicStyles.textGray,
+                ]}>
                 {item.release}
               </Text>
             </View>

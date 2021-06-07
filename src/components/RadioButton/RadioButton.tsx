@@ -45,9 +45,13 @@ const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = (
                 onSetMethodKey(item.key);
               }}>
               {value === item.key ? (
-                <SvgIcon component={require('assets/icons/TickIcon.svg')} />
+                <View style={styles.choice}>
+                  <SvgIcon component={require('assets/icons/TickIcon.svg')} />
+                </View>
               ) : (
-                <SvgIcon component={require('assets/icons/UntickIcon.svg')} />
+                <View style={styles.choice}>
+                  <SvgIcon component={require('assets/icons/UntickIcon.svg')} />
+                </View>
               )}
             </TouchableOpacity>
           </View>

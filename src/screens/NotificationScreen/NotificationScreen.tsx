@@ -40,7 +40,7 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
 
   const [refreshing, setRefreshing] = React.useState<boolean>(false);
 
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const fetchData = React.useCallback(async () => {
     var exp: Array<Obj> = [];
@@ -70,14 +70,17 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
         ? -1
         : 0,
     );
-
     setList(exp);
-    setLoading(false);
   }, []);
 
   React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, [fetchData, navigation]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

@@ -46,12 +46,13 @@
 .summaryArea {
   border-top-left-radius: 46px;
   border-top-right-radius: 46px;
-  elevation: 20;
+  elevation:20;
   padding: 0 20px;
   width: 100%;
   background-color: map-get($colors, 'white');
   position: absolute;
   bottom: 0;
+  height: 190px;
 }
 .summaryTitle {
   margin-top: 10px;

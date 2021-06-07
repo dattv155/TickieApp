@@ -67,7 +67,13 @@ const CinemaShowtimeComponent: FC<
   return (
     <>
       <View style={styles.containerView}>
-        <Text style={[atomicStyles.h2, atomicStyles.bold, styles.textStyle]}>
+        <Text
+          style={[
+            atomicStyles.h2,
+            atomicStyles.bold,
+            atomicStyles.textBlue,
+            styles.textStyle,
+          ]}>
           {data.cinemaName}
         </Text>
         <View>

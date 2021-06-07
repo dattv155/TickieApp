@@ -56,7 +56,7 @@ export const getAccount = {
           },
         );
 
-      return () => {
+      return function cleanup() {
         subscriber();
         setLoading(false);
       };

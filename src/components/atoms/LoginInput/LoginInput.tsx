@@ -3,6 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './LoginInput.scss';
 import {Text, TextInput, TextInputProps, View, ViewStyle} from 'react-native';
 import {atomicStyles} from 'src/styles';
+
 /**
  * File: LoginInput.tsx
  * @created 2021-03-13 22:49:02
@@ -24,12 +25,14 @@ const LoginInput: FC<PropsWithChildren<LoginInputProps>> = (
         ]}>
         {title}
       </Text>
+
       <TextInput
         style={[atomicStyles.h5, styles.textStyle]}
         placeholder={placeholder}
         keyboardType={keyboardType}
         {...restProps}
       />
+
       <View style={styles.bottomInputStyle} />
     </View>
   );

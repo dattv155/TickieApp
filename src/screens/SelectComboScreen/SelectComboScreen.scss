@@ -24,8 +24,9 @@
 }
 .line {
   border: 0.5px solid map-get($colors, 'gray');
-  padding: 0 20px;
-
+  background-color: map-get($colors, 'gray');
+  margin-bottom: 8px;
+  margin-top: -5px;
 }
 .text {
   font-weight: 500;
@@ -33,9 +34,8 @@
   color: map-get($colors, 'gray');
 }
 .summaryContainer {
-  box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 46px;
-  border-width: 1px;
+  elevation: 5;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -78,4 +78,7 @@
 .buttonText {
   color: map-get($colors, 'white');
   font-weight: 500;
+}
+.textStyle {
+  font-weight: 100;
 }

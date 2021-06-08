@@ -17,6 +17,7 @@
   "accountInfo.changePassword.newPass": "Mật khẩu mới",
   "accountInfo.changePassword.enterNewPass": "Mật khẩu mới",
   "accountInfo.changePassword.reNewPass": "Nhập lại mật khẩu mới",
+  "accountInfo.changePassword.reEnterNewPass": "Nhập lại mật khẩu mới",
   "bookingScreen.timeNCine.movieFormat": "Định dạng",
   "bookingScreen.timeNCine.noData": "Chưa có dữ liệu",
   "bookingScreen.timeNCine.continue": "Tiếp tục",

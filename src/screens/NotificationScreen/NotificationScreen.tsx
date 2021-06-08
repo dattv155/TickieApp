@@ -17,6 +17,7 @@ import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 import {Notification} from 'src/models/Notification';
 import {useTranslation} from 'react-i18next/';
+import NotificationScreenSkeleton from 'src/screens/NotificationScreen/NotificationScreenSkeleton/NotificationScreenSkeleton';
 
 /**
  * File: NotificationScreen.tsx
@@ -33,9 +34,13 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
 
   const [translate] = useTranslation();
 
+  const loadingList = [{}, {}, {}, {}, {}, {}];
+
   const [list, setList] = React.useState<Notification[]>([]);
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState<boolean>(false);
+
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const fetchData = React.useCallback(async () => {
     var exp: Array<Obj> = [];
@@ -65,13 +70,17 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
         ? -1
         : 0,
     );
-
     setList(exp);
   }, []);
 
   React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, [fetchData, navigation]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -86,29 +95,44 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
-          {list.map((noti, index) => {
-            let realDay;
-            if (noti.day.toDate().getDate() === today.getDate()) {
-              realDay = 'Hôm nay';
-            } else if (noti.day.toDate().getDate() === today.getDate() - 1) {
-              realDay = 'Hôm qua';
-            } else {
-              realDay = moment(noti.day.toDate()).format('DD/MM/YYYY');
-            }
-            return (
-              <View key={index}>
-                <Text
-                  style={[styles.day, atomicStyles.h6, atomicStyles.textGray]}>
-                  {realDay === 'Hôm nay'
-                    ? translate('notification.today')
-                    : realDay === 'Hôm qua'
-                    ? translate('notification.yesterday')
-                    : realDay}
-                </Text>
-                <Notibox data={noti} />
-              </View>
-            );
-          })}
+          {loading
+            ? loadingList.map((value, index: number) => (
+                <View key={index}>
+                  <NotificationScreenSkeleton />
+                </View>
+              ))
+            : list.map((notifiation, index) => {
+                let realDay;
+                if (notifiation.day.toDate().getDate() === today.getDate()) {
+                  realDay = 'Hôm nay';
+                } else if (
+                  notifiation.day.toDate().getDate() ===
+                  today.getDate() - 1
+                ) {
+                  realDay = 'Hôm qua';
+                } else {
+                  realDay = moment(notifiation.day.toDate()).format(
+                    'DD/MM/YYYY',
+                  );
+                }
+                return (
+                  <View key={index}>
+                    <Text
+                      style={[
+                        styles.day,
+                        atomicStyles.h6,
+                        atomicStyles.textGray,
+                      ]}>
+                      {realDay === 'Hôm nay'
+                        ? translate('notification.today')
+                        : realDay === 'Hôm qua'
+                        ? translate('notification.yesterday')
+                        : realDay}
+                    </Text>
+                    <Notibox data={notifiation} navigation={navigation} />
+                  </View>
+                );
+              })}
         </ScrollView>
       </View>
 
@@ -122,8 +146,11 @@ export interface NotificationScreenProps extends StackScreenProps<any> {
 
 export interface Obj {
   day?: any;
+
   content?: string;
+
   span?: string;
+
   type?: string;
 }
 NotificationScreen.defaultProps = {

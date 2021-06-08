@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement, useState} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './HomeScreen.scss';
-import {LogBox, SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import {atomicStyles, Colors} from 'src/styles';
@@ -39,23 +39,22 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
   const [loading, setLoading] = React.useState<boolean>(true);
 
   // const handleGetData = React.useCallback(async () => {
-  //   return await firestore()
-  //     .collection('movie')
-  //     .get()
-  //     .then((documentData) => {
-  //       return documentData.docs.map((item) => item.data());
-  //     });
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //
+  //   });
+  //
+  //   return function cleanup() {
+  //     unsubscribe();
+  //   }
   // }, []);
 
-  const handleGetData = React.useCallback(
-    (data: FirebaseFirestoreTypes.DocumentData[]) => {
-      setData(data);
-    },
-    [],
-  );
+  // const handleGetData = React.useCallback(
+  //   (data: FirebaseFirestoreTypes.DocumentData[]) => {},
+  //   [],
+  // );
 
   React.useEffect(() => {
-    return navigation.addListener('focus', async () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       const result = await firestore()
         .collection('movie')
         .get()
@@ -63,9 +62,14 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
           return documentData.docs.map((item) => item.data());
         });
 
-      handleGetData(result);
+      setData(result);
+      setLoading(false);
     });
-  }, [handleGetData, navigation]);
+
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, [data, navigation]);
 
   const list = [
     {
@@ -97,17 +101,13 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
       release: '12-02-2020',
     },
   ];
-  React.useEffect(() => {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    if (data) {
-      setLoading(false);
-    }
-  }, [data]);
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
       <SafeAreaView style={[atomicStyles.container]}>
-        <ScrollView>
+        <ScrollView
+          nestedScrollEnabled={true}
+          showsVerticalScrollIndicator={false}>
           <View style={[styles.containerView]}>
             <Search handleClick={onClick} display={display} list={list} />
             <CategoryComponent

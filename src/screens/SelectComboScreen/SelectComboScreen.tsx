@@ -21,6 +21,7 @@ import PaymentScreen from 'src/screens/PaymentScreen/PaymentScreen';
 import {bookingService} from 'src/services/booking-service';
 import {SelectedCombo} from 'src/services/booking-service/use-combo';
 import {formatToCurrency} from 'src/helpers/string-helper';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: SelectComboScreen.tsx
@@ -32,6 +33,8 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
   props: PropsWithChildren<SelectComboScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const [translate] = useTranslation();
 
   const {
     movieName,
@@ -147,26 +150,37 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
           </View>
           <View style={styles.voucherContainer}>
             <TextInput
-              style={[atomicStyles.light, styles.voucherTitle]}
+              style={[atomicStyles.h6]}
               onChangeText={(text) => {
                 setInputVoucher(text);
               }}
-              placeholder={'Nhập mã khuyến mãi'}
+              placeholder={translate('bookingScreen.comboSelect.enterCode')}
             />
             <View style={styles.line} />
-            <Text style={[atomicStyles.h7, styles.text]}>
-              Không có mã khuyễn mãi?
-              <Text style={[atomicStyles.bold]}> Hãy lấy ngay</Text>
+            <Text style={[atomicStyles.h7, atomicStyles.textGray]}>
+              {translate('bookingScreen.comboSelect.noVoucher')}
+              <Text style={[atomicStyles.bold, styles.textStyle]}>
+                {' '}
+                {translate('bookingScreen.comboSelect.getNow')}
+              </Text>
             </Text>
           </View>
         </View>
         <View style={styles.summaryContainer}>
           <Text
-            style={[atomicStyles.h1, atomicStyles.bold, styles.sumaryTitle]}>
-            Chọn Set Combo
+            style={[
+              atomicStyles.h2,
+              atomicStyles.textBlue,
+              atomicStyles.bold,
+              styles.textStyle,
+            ]}>
+            {translate('bookingScreen.comboSelect.selectSetCombo')}
           </Text>
           <View style={styles.comboArea}>
-            <Text style={[atomicStyles.h4, styles.comboText]}>Set Combo</Text>
+            <Text style={[atomicStyles.h4]}>
+              {' '}
+              {translate('bookingScreen.comboSelect.setCombo')}
+            </Text>
             <View>
               {listSelectCombo.map((selectedCombo, index) => {
                 return selectedCombo.count > 0 ? (
@@ -183,8 +197,12 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
           </View>
           <View style={styles.summaryTotal}>
             <View style={styles.costSummary}>
-              <Text style={[atomicStyles.h5, styles.costTitle]}>Tạm tính</Text>
-              <Text style={[atomicStyles.h1, atomicStyles.bold, styles.cost]}>
+              <Text style={[atomicStyles.h5]}>
+                {' '}
+                {translate('bookingScreen.comboSelect.summary')}
+              </Text>
+              <Text
+                style={[atomicStyles.h1, atomicStyles.bold, styles.textStyle]}>
                 {formatToCurrency(comboCost)} VND
               </Text>
             </View>
@@ -192,7 +210,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
               style={styles.bookingButton}
               onPress={handleGotoPaymentScreen}>
               <Text style={[atomicStyles.h5, styles.buttonText]}>
-                Đặt Combo
+                {translate('bookingScreen.comboSelect.confirmCombo')}
               </Text>
             </TouchableOpacity>
           </View>

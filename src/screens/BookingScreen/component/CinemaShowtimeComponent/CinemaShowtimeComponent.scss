@@ -21,14 +21,15 @@
 }
 .pickedButton {
   background-color: map-get($colors, 'blue');
+  border: none;
 }
 .unPickedText {
   color: map-get($colors, 'gray');
-  font-weight: 700;
+  font-weight: 100;
 }
 .pickedText {
   color: map-get($colors, 'white');
-  font-weight: 700;
+  font-weight: 100;
 }
 .textStyle {
   font-weight: 900;

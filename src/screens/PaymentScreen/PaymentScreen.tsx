@@ -29,6 +29,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 import {Position} from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
+import {showWarning} from 'src/helpers/toast';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import {useBoolean} from 'react3l-common';
 import VoucherListComponent from 'src/components/organisms/VoucherListComponent/VoucherListComponent';
@@ -101,7 +102,9 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 
   const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
 
-  const [buttonTitle, setButtonTitle] = React.useState<string>('Thanh toán');
+  const [buttonTitle, setButtonTitle] = React.useState<string>(
+    translate('bookingScreen.paymentScreen.confirmPayment'),
+  );
 
   const handleGotoSuccessBookingScreen = React.useCallback(() => {
     navigation.navigate(SuccessBookingScreen.displayName, {
@@ -211,7 +214,9 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       LocalNotification(movieName);
       handleGotoSuccessBookingScreen();
     } else {
-      Toast.show('Hãy chọn phương thức thanh toán!');
+      showWarning(
+        translate('bookingScreen.paymentScreen.pleaseChoosePaymentMethod'),
+      );
     }
   }, [
     handleChangeAmount,
@@ -222,22 +227,23 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     movieName,
     paymentMethodKey,
     paymentResponseStatus,
+    translate,
   ]);
 
   React.useEffect(() => {
     if (paymentMethodKey === 'momo') {
-      setButtonTitle('Truy cập Momo');
+      setButtonTitle(translate('bookingScreen.paymentScreen.goToMomo'));
       if (paymentResponseStatus === 'Successful') {
-        setButtonTitle('Đã thanh toán');
+        setButtonTitle(translate('bookingScreen.paymentScreen.successPayment'));
       }
     } else if (paymentMethodKey === 'credit') {
-      setButtonTitle('Thanh toán');
+      setButtonTitle(translate('bookingScreen.paymentScreen.confirmPayment'));
     } else if (paymentMethodKey === 'banking') {
-      setButtonTitle('Thanh toán');
+      setButtonTitle(translate('bookingScreen.paymentScreen.confirmPayment'));
     } else if (paymentMethodKey === 'offline') {
-      setButtonTitle('Đặt vé');
+      setButtonTitle(translate('bookingScreen.paymentScreen.bookTicket'));
     }
-  }, [paymentMethodKey, paymentResponseStatus]);
+  }, [paymentMethodKey, paymentResponseStatus, translate]);
 
   return (
     <>
@@ -251,7 +257,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
         bgWhite={true}
         title={
           <Text style={[atomicStyles.h2, atomicStyles.bold, styles.textStyle]}>
-            {translate('Thông tin thanh toán')}
+            {translate('bookingScreen.paymentScreen.header')}
           </Text>
         }>
         <StatusBar barStyle="dark-content" />
@@ -268,21 +274,36 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               />
               <View style={styles.info}>
                 <Text
-                  style={[atomicStyles.h4, atomicStyles.bold, styles.filmName]}>
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
+                  ]}>
                   {movieName}
                 </Text>
                 <Text style={[atomicStyles.h6, styles.infoType]}>
                   {movieType}
                 </Text>
                 <Text style={[atomicStyles.h6, styles.infoType]}>
-                  Rạp:{' '}
-                  <Text style={[atomicStyles.bold, styles.textBold]}>
+                  {translate('bookingScreen.paymentScreen.cinema')}:{' '}
+                  <Text
+                    style={[
+                      atomicStyles.bold,
+                      atomicStyles.textBlue,
+                      styles.textStyle,
+                    ]}>
                     {cinemaName}
                   </Text>
                 </Text>
                 <Text style={[atomicStyles.h6, styles.infoType]}>
-                  Định dạng:{' '}
-                  <Text style={[atomicStyles.bold, styles.textBold]}>
+                  {translate('bookingScreen.paymentScreen.movieFormat')}:{' '}
+                  <Text
+                    style={[
+                      atomicStyles.bold,
+                      atomicStyles.textBlue,
+                      styles.textStyle,
+                    ]}>
                     {movieFormat}
                   </Text>
                 </Text>
@@ -290,46 +311,51 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             </View>
             <View style={styles.detailArea}>
               <View style={styles.detailBlock}>
-                <Text style={[atomicStyles.h6, styles.detailTitle]}>Ngày</Text>
+                <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                  {translate('bookingScreen.paymentScreen.day')}
+                </Text>
                 <Text
                   style={[
                     atomicStyles.h4,
                     atomicStyles.bold,
-                    styles.detailInfo,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
                   ]}>
                   {handleGetDay(movieDate.seconds)}
                 </Text>
               </View>
               <View style={styles.detailBlock}>
-                <Text style={[atomicStyles.h6, styles.detailTitle]}>
-                  Thời gian
+                <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                  {translate('bookingScreen.paymentScreen.time')}
                 </Text>
                 <Text
                   style={[
                     atomicStyles.h4,
                     atomicStyles.bold,
-                    styles.detailInfo,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
                   ]}>
                   {showTime}
                 </Text>
               </View>
               <View style={styles.detailBlock}>
-                <Text style={[atomicStyles.h6, styles.detailTitle]}>
-                  Chỗ ngồi
+                <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                  {translate('bookingScreen.paymentScreen.seats')}
                 </Text>
                 <Text
                   style={[
                     atomicStyles.h4,
                     atomicStyles.bold,
-                    styles.detailInfo,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
                   ]}>
                   {listLabel}
                 </Text>
               </View>
             </View>
             <View style={styles.comboInfo}>
-              <Text style={[atomicStyles.h6, styles.comboTitle]}>
-                Combo Set
+              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                {translate('bookingScreen.paymentScreen.comboSet')}
               </Text>
               <Text
                 style={[
@@ -342,17 +368,10 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             </View>
             <View style={styles.paymentArea}>
               <Text
-                style={[
-                  atomicStyles.h5,
-                  atomicStyles.bold,
-                  styles.paymentTitle,
-                ]}>
-                Chọn cách thức thanh toán
+                style={[atomicStyles.h5, atomicStyles.bold, styles.textStyle]}>
+                {translate('bookingScreen.paymentScreen.selectPaymentMethod')}
               </Text>
               <View style={styles.paymentGroup}>
-                {/*<PaymentMethodItem type={'credit'} />*/}
-                {/*<PaymentMethodItem type={'banking'} />*/}
-                {/*<PaymentMethodItem />*/}
                 <RadioButton
                   values={PaymentMethod}
                   onSetMethodKey={setPaymentMethodKey}
@@ -376,14 +395,16 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                 atomicStyles.h3,
                 atomicStyles.bold,
                 atomicStyles.textBlue,
+                styles.textStyle,
               ]}>
-              Tổng cộng
+              {translate('bookingScreen.paymentScreen.summary')}
             </Text>
             <Text
               style={[
                 atomicStyles.h1,
                 atomicStyles.bold,
                 atomicStyles.textBlue,
+                styles.textStyle,
               ]}>
               {formatToCurrency(totalCost)} VND
             </Text>

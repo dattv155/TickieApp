@@ -1,15 +1,12 @@
 /**
  * Styles for Component.tsx
  * @created 2021-03-16 20:30:56
- * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
  */
 @import "src/styles/mixins";
 @import "src/styles/atomic-styles";
 
 .mainComponent {
-    height: auto;
-    width: auto;
-    margin: 0px 5.8%;
+    margin-top: 20px;
 }
 .textStyle {
     font-weight: 100;

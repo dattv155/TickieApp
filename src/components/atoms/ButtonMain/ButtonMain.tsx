@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ButtonMain.scss';
-import {Pressable, PressableProps, Text} from 'react-native';
+import {ActivityIndicator, Pressable, PressableProps, Text} from 'react-native';
 import {atomicStyles} from 'src/styles';
 
 /**
@@ -13,10 +13,13 @@ import {atomicStyles} from 'src/styles';
 const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
   props: PropsWithChildren<ButtonMainProps>,
 ): ReactElement => {
-  const {label, ...restProps} = props;
+  const {label, loading, ...restProps} = props;
 
   return (
     <Pressable style={styles.buttonStyle} {...restProps}>
+      {loading && (
+        <ActivityIndicator color={'#ffffff'} style={[styles.spinner]} />
+      )}
       <Text
         style={[
           atomicStyles.h5,
@@ -33,6 +36,8 @@ const ButtonMain: FC<PropsWithChildren<ButtonMainProps>> = (
 export interface ButtonMainProps extends PressableProps {
   //
   label?: string;
+
+  loading?: boolean;
 }
 
 ButtonMain.defaultProps = {

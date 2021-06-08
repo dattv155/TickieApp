@@ -193,11 +193,11 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
         enabledGestureInteraction={true}
         enabledContentTapInteraction={false}
       />
-      <Animated.View
-        style={{
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-        }}>
-        <Pressable onPress={handleCloseBottomSheet}>
+      <Pressable onPress={handleCloseBottomSheet}>
+        <Animated.View
+          style={{
+            opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+          }}>
           <DefaultLayout
             navigation={navigation}
             route={route}
@@ -371,8 +371,8 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
               />
             </SafeAreaView>
           </DefaultLayout>
-        </Pressable>
-      </Animated.View>
+        </Animated.View>
+      </Pressable>
     </>
   );
 };

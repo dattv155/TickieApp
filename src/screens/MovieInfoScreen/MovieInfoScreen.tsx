@@ -220,7 +220,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                 renderItem={renderListActor}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={(item: Actor) => item.actorID.toString()}
+                keyExtractor={(item: Actor) => item.ActorImage}
               />
             </View>
 

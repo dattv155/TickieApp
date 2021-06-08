@@ -2,10 +2,11 @@ import React, {Dispatch, SetStateAction} from 'react';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
-import {CinemaLayout} from 'src/sample/cinemaLayout';
+import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 import {SEAT_PRICE} from 'src/config/consts';
 import {StackScreenProps} from '@react-navigation/stack';
-import {BookingData} from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
+import {SeatPosition} from 'src/models/SeatPosition';
+import {MovieBooking} from 'src/models/MovieBooking';
 
 export function useBooking(
   movieName: string,
@@ -16,21 +17,21 @@ export function useBooking(
   navigation: StackScreenProps<any>['navigation'],
 ): [
   number,
-  number[][],
-  Dispatch<SetStateAction<number[][]>>,
+  SeatPosition[],
+  Dispatch<SetStateAction<SeatPosition[]>>,
   string,
   () => Promise<FirebaseFirestoreTypes.DocumentData[]>,
-  (seatList: number[][]) => void,
+  (seatList: SeatPosition[]) => void,
   () => void,
-  number[][],
+  SeatPosition[],
   React.MutableRefObject<boolean>,
   () => void,
 ] {
   const [seatCost, setSeatCost] = React.useState<number>(0);
 
-  const [selectedList, setSelectedList] = React.useState<number[][]>([]);
+  const [selectedList, setSelectedList] = React.useState<SeatPosition[]>([]);
 
-  const [pickingSeats, setPickingSeats] = React.useState<number[][]>([]);
+  const [pickingSeats, setPickingSeats] = React.useState<SeatPosition[]>([]);
 
   const [listLabel, setListLabel] = React.useState<string>('');
 
@@ -53,31 +54,32 @@ export function useBooking(
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      const result = (await handleGetData()) as BookingData[];
+      const result = (await handleGetData()) as MovieBooking[];
 
-      const selected: number[][] = [];
+      const selected: SeatPosition[] = [];
       result.map((item) => {
         item.position.map((pos) => {
-          selected.push([pos.row, pos.column]);
+          selected.push(pos);
         });
       });
       setSelectedList(selected);
     });
   }, [handleGetData, navigation, setSelectedList]);
 
-  const handlePickedSeats = React.useCallback((seatList: number[][]) => {
+  const handlePickedSeats = React.useCallback((seatList: SeatPosition[]) => {
     setPickingSeats([...seatList]);
   }, []);
 
-  const convertPosToLabel = React.useCallback((pos: number[]) => {
-    let labelRow = CinemaLayout[0].label.row[pos[0]];
-    let labelColumn = CinemaLayout[0].label.column[pos[1]];
+  const convertPosToLabel = React.useCallback((pos: SeatPosition) => {
+    let labelRow = CinemaLayoutSmall[0].label.row[pos.row];
+    let labelColumn = CinemaLayoutSmall[0].label.column[pos.column];
+    // console.log(pos.row);
     labelColumn = Number(labelColumn) > 9 ? labelColumn : '0' + labelColumn;
     return labelRow + labelColumn;
   }, []);
 
   const convertListLabel = React.useCallback(
-    (listPos: number[][]): string => {
+    (listPos: SeatPosition[]): string => {
       let list = '';
       listPos.map((pos) => {
         list = list + convertPosToLabel(pos) + ', ';

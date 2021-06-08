@@ -1,4 +1,4 @@
-export const CinemaLayout = [
+export const CinemaLayoutSmall = [
   {
     cinemaID: 1,
     size: {

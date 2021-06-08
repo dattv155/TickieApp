@@ -16,5 +16,6 @@
   "accountInfo.changePassword.enterOldPass": "Enter Old Password",
   "accountInfo.changePassword.newPass": "Enter New Password",
   "accountInfo.changePassword.enterNewPass": "Enter New Password",
-  "accountInfo.changePassword.reNewPass": "Re-enter New Password"
+  "accountInfo.changePassword.reNewPass": "Re-enter New Password",
+  "accountInfo.changePassword.reEnterNewPass": "Re-enter New Password"
 }

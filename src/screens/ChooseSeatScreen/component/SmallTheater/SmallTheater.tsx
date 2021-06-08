@@ -10,6 +10,11 @@ import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 import {SeatPosition} from 'src/models/SeatPosition';
 import {CinemaLayout} from 'src/models/CinemaLayout';
 import {SeatState} from 'src/config/seat-state';
+import {
+  convertIndexToPosition,
+  getIndexOfPosition,
+} from 'src/helpers/position-helper';
+import {indexOfPositions} from 'src/helpers/position-helper';
 
 /**
  * File: SmallTheater.tsx
@@ -23,21 +28,12 @@ const ITEM_WIDTH = 26;
 const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
   props: PropsWithChildren<SmallTheaterProps>,
 ): ReactElement => {
-  const {selectedList, handleShowPickedSeats, handleClear} = props;
-  const [layout, setLayout] = React.useState<CinemaLayout>(
-    CinemaLayoutSmall[0],
-  );
+  const {selectedList, handleSelectPickedSeats, handleClear} = props;
+  const layout = React.useState<CinemaLayout>(CinemaLayoutSmall[0])[0];
 
   const [pickList, setPickList] = React.useState<SeatPosition[]>([]);
 
   const [cinemaLayout, setCinemaLayout] = React.useState<number[]>([]);
-
-  const getIndexOfPosition = React.useCallback(
-    (pos: SeatPosition) => {
-      return layout.size.column * pos.row + pos.column;
-    },
-    [layout.size.column],
-  );
 
   const handleLayout = React.useCallback((): number[] => {
     let cinema = Array(layout.size.row * layout.size.column).fill(
@@ -46,20 +42,23 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
 
     cinema[0] = SeatState.NO_SEAT;
     cinema[layout.size.column - 1] = SeatState.NO_SEAT;
-    // for (let iLayout = 1; iLayout < cinema.length; iLayout++) {
-    //   for (let iSelected = 0; iSelected < selectedList.length; iSelected++) {
-    //     if (iLayout === getIndexOfPosition(selectedList[iSelected])) {
-    //       cinema[iLayout] = SeatState.OCCUPIED_SEAT;
-    //     }
-    //   }
-    //   for (let iPicking = 0; iPicking < pickList.length; iPicking) {
-    //     if (iLayout === getIndexOfPosition(pickList[iPicking])) {
-    //       cinema[iLayout] = SeatState.SELECTING_SEAT;
-    //     }
-    //   }
-    // }
+    for (let iLayout = 1; iLayout < cinema.length; iLayout++) {
+      for (let iSelected = 0; iSelected < selectedList.length; iSelected++) {
+        if (
+          iLayout ===
+          getIndexOfPosition(selectedList[iSelected], layout.size.column)
+        ) {
+          cinema[iLayout] = SeatState.OCCUPIED_SEAT;
+        }
+      }
+      // for (let iPicking = 0; iPicking < pickList.length; iPicking) {
+      //   if (iLayout === getIndexOfPosition(pickList[iPicking])) {
+      //     cinema[iLayout] = SeatState.SELECTING_SEAT;
+      //   }
+      // }
+    }
     return cinema;
-  }, [layout.size.column, layout.size.row]);
+  }, [layout.size.column, layout.size.row, selectedList]);
 
   React.useEffect(() => {
     const layout = handleLayout();
@@ -70,30 +69,24 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
 
   const isClear = React.useRef<boolean>(false);
 
-  const indexOfPositionArray = React.useCallback(
-    (listPosition: SeatPosition[], positionIndex: number) => {
-      listPosition.forEach((pos, index) => {
-        if (positionIndex === getIndexOfPosition(pos)) {
-          return index;
-        }
-      });
-      return -1;
-    },
-    [getIndexOfPosition],
-  );
-
   const handleSelectSeat = React.useCallback(
     (seatIndex: number) => {
-      if (indexOfPositionArray(listSeat.current, seatIndex) === -1) {
-        listSeat.current.push(seatIndex);
+      const index = indexOfPositions(
+        listSeat.current,
+        seatIndex,
+        layout.size.column,
+      );
+      if (index === -1) {
+        listSeat.current.push(
+          convertIndexToPosition(seatIndex, layout.size.column),
+        );
       } else {
-        let pickedIndex = indexOfPositionArray(listSeat.current, seatIndex);
-        listSeat.current.splice(pickedIndex, 1);
+        listSeat.current = listSeat.current.splice(index, 1);
       }
 
       setPickList([...listSeat.current]);
     },
-    [indexOfPositionArray],
+    [layout.size.column],
   );
 
   const renderListSeats: ListRenderItem<any> = React.useCallback(
@@ -102,14 +95,14 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
         <TouchableOpacity
           onPress={() => {
             handleSelectSeat(index);
-            handleShowPickedSeats([...listSeat.current]);
+            handleSelectPickedSeats([...listSeat.current]);
             handleClear(isClear.current);
           }}>
           <Seat key={index} state={item} />
         </TouchableOpacity>
       );
     },
-    [handleClear, handleSelectSeat, handleShowPickedSeats],
+    [handleClear, handleSelectSeat, handleSelectPickedSeats],
   );
 
   const getItemLayout = React.useCallback(
@@ -262,6 +255,8 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
             numColumns={11}
             columnWrapperStyle={styles.wrapperRow}
             getItemLayout={getItemLayout}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
 
@@ -294,7 +289,7 @@ export interface SmallTheaterProps {
   //
   selectedList?: SeatPosition[];
 
-  handleShowPickedSeats?: (pickedList: SeatPosition[]) => void;
+  handleSelectPickedSeats?: (pickedList: SeatPosition[]) => void;
 
   handleClear?: (isClear: boolean) => void;
 }

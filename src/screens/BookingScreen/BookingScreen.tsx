@@ -105,12 +105,16 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getInfoByDay(moment());
+      if (selectedDate) {
+        getInfoByDay(selectedDate);
+      } else {
+        getInfoByDay(moment());
+      }
     });
     return function cleanup() {
       unsubscribe();
     };
-  }, [getInfoByDay, navigation]);
+  }, [getInfoByDay, navigation, selectedDate]);
 
   const [
     currentSelectedCinema,
@@ -170,6 +174,21 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
       );
     },
     [getInfoByType, handleSelection, selectedTypeID],
+  );
+
+  const renderSchedules: ListRenderItem<CinemaSchedule> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<CinemaSchedule>) => {
+      return (
+        <CinemaShowtimeComponent
+          key={index}
+          data={item}
+          handleChooseCinema={handleChooseCinema}
+          currentCinema={currentSelectedCinema}
+          currentShowTime={currentSelectedShowtime}
+        />
+      );
+    },
+    [currentSelectedCinema, currentSelectedShowtime, handleChooseCinema],
   );
 
   const bookingData: MovieBooking = globalState.useBookingData();
@@ -287,16 +306,11 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
                     </View>
                   </View>
                   <View>
-                    {schedule?.cinema.map((item) => {
-                      return (
-                        <CinemaShowtimeComponent
-                          data={item}
-                          handleChooseCinema={handleChooseCinema}
-                          currentCinema={currentSelectedCinema}
-                          currentShowTime={currentSelectedShowtime}
-                        />
-                      );
-                    })}
+                    <FlatList
+                      data={schedule?.cinema}
+                      renderItem={renderSchedules}
+                      keyExtractor={(item) => item.cinemaName}
+                    />
                   </View>
                 </>
               ) : (

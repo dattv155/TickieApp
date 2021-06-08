@@ -1,0 +1,10 @@
+{
+  "movieDetail.header": "Thông tin vé",
+  "movieDetail.code": "Mã vé",
+  "movieDetail.time": "Thời gian",
+  "movieDetail.cinema": "Rạp",
+  "movieDetail.room": "Phòng chiếu",
+  "movieDetail.seats": "Chỗ ngồi",
+  "movieDetail.setCombo": "Set Combo",
+  "movieDetail.price": "Giá"
+}

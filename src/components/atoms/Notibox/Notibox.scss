@@ -1,30 +1,45 @@
 /**
  * Styles for Component.tsx
  * @created 2021-04-19 21:48:55
- * @author Huy-No1 <huygg12345@gmail.com>
  */
 .touchable {
     width: 100%;
     align-items: center;
 }
+
 .bigwrapper {
     width: 100%;
 }
+
 .textStyle {
     font-weight: 100;
 }
-.content {
-    font-weight: 300;
-    font-size: 15px;
-};
+
+.button {
+    background-color: #0E52E1;
+    padding: 5px;
+    margin: 16px 0;
+    border-radius: 5px;
+    align-items: center;
+}
+
 .wrapper {
     margin-top: 5px;
-    // height: 40;
     margin-bottom: 10px;
 }
+
 .title {
     flex-direction: row;
     line-height: 18.9px;
     margin-top: 5px;
     justify-content: space-between;
+}
+
+.box {
+    align-self: center;
+    width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    padding: 8px 13px;
+    margin: 5px 0 16px 0;
 }

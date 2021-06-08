@@ -3,6 +3,7 @@ import React from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ChooseSeatScreen.scss';
 import {
+  RefreshControl,
   ScrollView,
   StatusBar,
   Text,
@@ -19,6 +20,7 @@ import {UseTimestamp} from 'src/hooks/use-timestamp';
 import {bookingService} from 'src/services/booking-service';
 import {formatToCurrency} from 'src/helpers/string-helper';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: ChooseSeatScreen.tsx
@@ -44,6 +46,8 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
   props: PropsWithChildren<ChooseSeatScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const [translate] = useTranslation();
 
   const {
     movieName,
@@ -73,6 +77,36 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     showTime,
     navigation,
   );
+
+  const [refreshing, setRefreshing] = React.useState<boolean>(false);
+
+  const fetchData = React.useCallback(async () => {
+    const result = (await handleGetData()) as BookingData[];
+
+    const selected: number[][] = [];
+    result.map((item) => {
+      item.position.map((pos) => {
+        selected.push([pos.row, pos.column]);
+      });
+    });
+    setSelectedList(selected);
+  }, [handleGetData, setSelectedList]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, [fetchData, navigation]);
+
+  const onRefresh = React.useCallback(async () => {
+    await setRefreshing(true);
+    await fetchData();
+    await setRefreshing(false);
+  }, [fetchData]);
 
   const handleGotoSelectComboScreen = React.useCallback(() => {
     navigation.navigate(SelectComboScreen.displayName, {
@@ -111,11 +145,25 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
       customHeader={false}
       bgWhite={true}>
       <StatusBar barStyle="dark-content" />
-      <ScrollView style={styles.containerView}>
+      <ScrollView
+        style={styles.containerView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={styles.title}>
-          <Text style={[atomicStyles.h1, atomicStyles.bold]}>{movieName}</Text>
-          <Text style={[atomicStyles.h4, atomicStyles.bold]}>{cinemaName}</Text>
-          <Text style={[atomicStyles.h5, styles.textTime]}>
+          <Text
+            style={[
+              atomicStyles.h1,
+              atomicStyles.bold,
+              atomicStyles.textBlue,
+              styles.textStyle,
+            ]}>
+            {movieName}
+          </Text>
+          <Text style={[atomicStyles.h4, atomicStyles.bold, styles.textStyle]}>
+            {cinemaName}
+          </Text>
+          <Text style={[atomicStyles.h5, styles.textStyle]}>
             {handleTimestamp(movieDate.seconds)}, {showTime}
           </Text>
         </View>
@@ -136,32 +184,43 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
             <SvgIcon
               component={require('assets/icons/SeatNote/BlankDot.svg')}
             />
-            <Text style={[atomicStyles.h7, styles.textNote]}>Ghế trống</Text>
+            <Text style={[atomicStyles.h7, styles.textNote]}>
+              {translate('bookingScreen.seatChoose.seatNotPicked')}
+            </Text>
           </View>
           <View style={[styles.note, styles.marginlr25px]}>
             <SvgIcon
               component={require('assets/icons/SeatNote/SelectedDot.svg')}
             />
             <Text style={[atomicStyles.h7, styles.textNote]}>
-              Ghế đang chọn
+              {translate('bookingScreen.seatChoose.seatPicking')}
             </Text>
           </View>
           <View style={styles.note}>
             <SvgIcon
               component={require('assets/icons/SeatNote/OccupiedDot.svg')}
             />
-            <Text style={[atomicStyles.h7, styles.textNote]}>Ghế đã chọn</Text>
+            <Text style={[atomicStyles.h7, styles.textNote]}>
+              {translate('bookingScreen.seatChoose.seatPicked')}
+            </Text>
           </View>
         </View>
       </ScrollView>
       <View style={styles.summaryArea}>
-        <Text style={[atomicStyles.h1, atomicStyles.bold, styles.summaryTitle]}>
-          Chọn ghế ngồi
+        <Text
+          style={[
+            atomicStyles.h2,
+            atomicStyles.bold,
+            atomicStyles.textBlue,
+            styles.textStyle,
+            styles.summaryTitle,
+          ]}>
+          {translate('bookingScreen.seatChoose.chooseSeat')}
         </Text>
         {!!listLabel && (
           <View style={styles.seatSummary}>
             <Text style={[atomicStyles.h4, styles.seatSummaryTitle]}>
-              Ghế đang chọn
+              {translate('bookingScreen.seatChoose.seatsPicked')}
             </Text>
 
             <View style={styles.totalSeatArea}>
@@ -185,7 +244,9 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
         )}
         <View style={styles.summaryTotal}>
           <View style={styles.costSummary}>
-            <Text style={[atomicStyles.h5, styles.costTitle]}>Tạm tính</Text>
+            <Text style={[atomicStyles.h5]}>
+              {translate('bookingScreen.seatChoose.summary')}
+            </Text>
             <Text style={[atomicStyles.h1, atomicStyles.bold, styles.cost]}>
               {formatToCurrency(seatCost)}
             </Text>
@@ -195,7 +256,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
             onPress={handleGotoSelectComboScreen}>
             <Text
               style={[atomicStyles.h5, atomicStyles.bold, styles.buttonText]}>
-              Đặt chỗ
+              {translate('bookingScreen.seatChoose.seatBookingConfirm')}
             </Text>
           </TouchableOpacity>
         </View>

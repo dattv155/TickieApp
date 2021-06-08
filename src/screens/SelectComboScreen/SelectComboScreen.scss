@@ -24,8 +24,9 @@
 }
 .line {
   border: 0.5px solid map-get($colors, 'gray');
-  padding: 0 20px;
-
+  background-color: map-get($colors, 'gray');
+  margin-bottom: 8px;
+  margin-top: -5px;
 }
 .text {
   font-weight: 500;
@@ -33,40 +34,44 @@
   color: map-get($colors, 'gray');
 }
 .summaryContainer {
-  box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 46px;
-  border-width: 1px;
+  elevation: 3;
   height: 100%;
   width: 100%;
   position: absolute;
   bottom: -400px;
-  padding: 15px 25px;
+  padding: 30px 25px 15px 25px;
 }
-.sumaryTitle {
 
-}
+
 .comboArea {
   flex-direction: row;
   justify-content: space-between;
 }
+
 .comboText {
   font-weight: 500;
 }
+
 .summaryTotal {
   margin-top: 6px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
+
 .costSummary {
   align-items: center;
 }
+
 .costTitle {
   font-weight: 500;
 }
+
 .cost {
   color: map-get($colors, 'blue');
 }
+
 .bookingButton {
   background-color: map-get($colors, 'blue');
   height: 48px;
@@ -75,7 +80,12 @@
   justify-content: center;
   align-items: center;
 }
+
 .buttonText {
   color: map-get($colors, 'white');
   font-weight: 500;
+}
+
+.textStyle {
+  font-weight: 100;
 }

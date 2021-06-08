@@ -1,8 +1,8 @@
 {
   "loginScreen.forgotPassword": "Quên mật khẩu",
-  "loginScreen.forgotPasswordSubtitle": "Hãy nhập Email hoặc số điện thoại để nhận mã xác nhận",
-  "loginScreen.inputEmail": "Email hoặc số điện thoại",
-  "loginScreen.receiveVerifyCode": "Nhận mã xác nhận",
+  "loginScreen.forgotPasswordSubtitle": "Hãy nhập Email để thay đổi mật khẩu",
+  "loginScreen.inputEmail": "Email của bạn",
+  "loginScreen.receiveVerifyCode": "Gửi đường dẫn",
   "loginScreen.headerTitle": "Chào mừng bạn!",
   "loginScreen.signupHeaderSubtitle": "Đã đến với Tickie. Hãy đăng ký để tiếp tục",
   "loginScreen.login": "Đăng nhập",

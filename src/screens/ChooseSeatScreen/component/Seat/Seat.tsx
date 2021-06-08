@@ -16,18 +16,47 @@ const Seat: FC<PropsWithChildren<SeatProps>> = (
 ): ReactElement => {
   const {state, handleSeat, positionRow, positionColumn, isChoose} = props;
 
+  // return (
+  //   <>
+  //     <View style={styles.container}>
+  //       {state === SeatState.NO_SEAT && <View style={styles.noSeat} />}
+  //       {state === SeatState.OCCUPIED_SEAT && (
+  //         <SvgIcon component={require('assets/icons/seat/OccupiedSeat.svg')} />
+  //       )}
+  //       {state === SeatState.AVAILABLE_SEAT && (
+  //         <SvgIcon component={require('assets/icons/seat/BlankSeat.svg')} />
+  //       )}
+  //       {state === SeatState.SELECTING_SEAT && (
+  //         <SvgIcon component={require('assets/icons/seat/SelectedSeat.svg')} />
+  //       )}
+  //     </View>
+  //   </>
+  // );
   return (
     <>
       <View style={styles.container}>
-        {state === SeatState.NO_SEAT && <View style={styles.noSeat} />}
-        {state === SeatState.OCCUPIED_SEAT && (
-          <SvgIcon component={require('assets/icons/seat/OccupiedSeat.svg')} />
-        )}
-        {state === SeatState.AVAILABLE_SEAT && (
-          <SvgIcon component={require('assets/icons/seat/BlankSeat.svg')} />
-        )}
-        {state === SeatState.SELECTING_SEAT && (
-          <SvgIcon component={require('assets/icons/seat/SelectedSeat.svg')} />
+        {state !== 0 ? (
+          <View>
+            {state === 2 ? (
+              <SvgIcon
+                component={require('assets/icons/seat/OccupiedSeat.svg')}
+              />
+            ) : (
+              <View>
+                {!isChoose ? (
+                  <SvgIcon
+                    component={require('assets/icons/seat/BlankSeat.svg')}
+                  />
+                ) : (
+                  <SvgIcon
+                    component={require('assets/icons/seat/SelectedSeat.svg')}
+                  />
+                )}
+              </View>
+            )}
+          </View>
+        ) : (
+          <View style={styles.noSeat} />
         )}
       </View>
     </>

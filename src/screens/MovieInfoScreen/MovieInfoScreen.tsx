@@ -4,8 +4,10 @@ import styles from './MovieInfoScreen.scss';
 import {
   FlatList,
   Image,
+  Linking,
   ListRenderItem,
   ListRenderItemInfo,
+  Pressable,
   ScrollView,
   StatusBar,
   Text,
@@ -13,9 +15,7 @@ import {
   View,
 } from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
-import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import {atomicStyles} from 'src/styles';
-import PlayButton from 'src/components/atoms/PlayButton/PlayButton';
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import TitleComponent from 'src/screens/MovieInfoScreen/component/TitleComponent/TitleComponent';
 import ActorComponent from 'src/screens/MovieInfoScreen/component/ActorComponent/ActorComponent';
@@ -34,6 +34,8 @@ import {globalState} from 'src/app/global-state';
 import {MovieBooking} from 'src/models/MovieBooking';
 import {Comment} from 'src/models/Comment';
 import {Actor} from 'src/models/Actor';
+import LinearGradient from 'react-native-linear-gradient';
+import {showInfo} from 'src/helpers/toast';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -169,26 +171,48 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
     [],
   );
 
+  const handleGoBack = React.useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
+  const handlePress = React.useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(movieInfo.Trailer);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(movieInfo.Trailer);
+    } else {
+      showInfo(`Don't know how to open this URL: ${movieInfo.Trailer}`);
+    }
+  }, [movieInfo.Trailer]);
+
   return (
-    <DefaultLayout
-      navigation={navigation}
-      route={route}
-      left="back-button"
-      // right={<HeaderIconPlaceholder />}
-      gradient={false}
-      customHeader={false}
-      bgWhite={true}>
+    <View>
       <StatusBar barStyle="light-content" />
       <ScrollView style={styles.containerView}>
+        <Pressable onPress={handleGoBack} style={styles.backButton}>
+          <SvgIcon component={require('assets/icons/backIconMovieInfo.svg')} />
+        </Pressable>
+
         <View>
-          {/*<Image*/}
-          {/*  source={require('assets/images/mulan-poster.png')}*/}
-          {/*  resizeMode="cover"*/}
-          {/*  style={styles.posterView}*/}
-          {/*/>*/}
-          {/*{movieInfo && <VideoComponent videoLink={movieInfo?.Trailer} />}*/}
+          <LinearGradient
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            colors={['#2c2c2c', '#000000']}
+            style={styles.darkerLayer}
+          />
+          <Image
+            source={{uri: movieInfo?.Poster}}
+            resizeMode="cover"
+            style={styles.posterView}
+          />
 
           <View style={[styles.infoArea]}>
+            <Pressable style={styles.playButton} onPress={handlePress}>
+              <SvgIcon component={require('assets/icons/playButton.svg')} />
+            </Pressable>
             <View style={styles.title}>
               <Text
                 style={[atomicStyles.bold, atomicStyles.h1, styles.textStyle]}>
@@ -316,9 +340,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
               </View>
             </View>
           </View>
-          <View style={styles.playButton}>
-            <PlayButton />
-          </View>
         </View>
       </ScrollView>
       <View style={styles.bookingView}>
@@ -334,7 +355,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
           </Text>
         </TouchableOpacity>
       </View>
-    </DefaultLayout>
+    </View>
   );
 };
 

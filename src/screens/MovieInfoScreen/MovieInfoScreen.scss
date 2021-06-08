@@ -25,7 +25,7 @@
 .infoArea {
   //position: absolute;
   //top: 300px;
-  top: -40px;
+  top: -100px;
   padding-left: 15px;
   padding-right: 15px;
   border-radius: 40px;
@@ -43,12 +43,17 @@
 .textStyle {
   font-weight: 900;
 }
+
 .playButton {
   position: absolute;
-  top: 260px;
-  align-items: center;
-  width: 100%;
+  top: -40px;
+  left: 45%;
+  background-color: white;
+  padding: 5px;
+  elevation: 4;
+  border-radius: 50px;
 }
+
 .rate {
   flex-direction: row;
   justify-content: flex-end;
@@ -85,7 +90,7 @@
 }
 .bookingView {
   position: absolute;
-  bottom: 40px;
+  bottom: 0;
   background-color: map-get($colors, "white");
   width: 100%;
   height: 82px;
@@ -131,4 +136,20 @@
   border-width: 1px;
   border-color:  map-get($colors, "blue" );
   margin-bottom: 30px;
+}
+
+.darkerLayer {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+
+}
+
+.backButton {
+  position: absolute;
+  z-index: 20;
+  top: 20px;
+  left: 10px;
+  padding: 5px;
 }

@@ -14,7 +14,7 @@ export const ListVoucher = [
   {
     code: 'WEEKEND',
     detail: 'Giảm 50% giá trị đơn hàng',
-    discountPercent: 20,
+    discountPercent: 50,
     condition: 'Đặt vé vào cuối tuần',
   },
 ];

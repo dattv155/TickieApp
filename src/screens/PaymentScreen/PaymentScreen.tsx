@@ -17,7 +17,6 @@ import {atomicStyles} from 'src/styles';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
 import RadioButton from 'src/components/RadioButton/RadioButton';
 import {PaymentMethod} from 'src/sample/paymentMethod';
-import {MomoPayment} from 'src/services/momo-payment';
 import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
 import Toast from 'react-native-simple-toast';
 import {SelectedCombo} from 'src/services/booking-service/use-combo';
@@ -36,6 +35,7 @@ import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import {useBoolean} from 'react3l-common';
 import VoucherListComponent from 'src/components/organisms/VoucherListComponent/VoucherListComponent';
 import {Voucher} from 'src/models/Voucher';
+import {momoService} from 'src/services/momo-service';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -103,7 +103,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     handleSendRequest,
     handleChangePayment,
     paymentResponseStatus,
-  ] = MomoPayment.getPayment();
+  ] = momoService.usePayment();
 
   const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
 

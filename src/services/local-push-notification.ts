@@ -35,7 +35,7 @@ export const LocalNotification = (movie: string) => {
     bigLargeIconUrl:
       'https://drive.google.com/uc?export=view&id=1if-L7JO9I1guUmeKRZd-BQ4O1XybiV4c', // (optional) default: undefined
     bigText:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dictum molestie ipsum eu lacinia. Quisque egestas, sem at ornare gravida, velit nibh laoreet leo, eu tincidunt ex metus vel lectus. Sed eget nibh viverra, imperdiet erat nec, molestie arcu. Curabitur in odio a urna ornare efficitur.',
+      'Hãy để ý kỹ ngày và giờ của vé để không bỏ lỡ những trải nghiệm tốt nhất khi xem phim.',
     subText: 'Thanh toán và đặt phim thành công',
     title: 'Thanh toán thành công phim ' + movie,
     message: 'Kéo để xem thêm',

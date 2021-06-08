@@ -281,7 +281,8 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
             <ScrollView
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }>
+              }
+              showsVerticalScrollIndicator={false}>
               {data ? (
                 <>
                   <View>

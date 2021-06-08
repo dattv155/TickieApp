@@ -92,7 +92,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
     ,
     ,
     loading,
-  ] = getAccount.getAccountInfo();
+  ] = getAccount.getAccountInfo(navigation);
 
   const [uploading, setUploading] = React.useState(false);
   const [transferred, setTransferred] = React.useState(0);
@@ -264,11 +264,11 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
         enabledContentTapInteraction={false}
       />
 
-      <Animated.View
-        style={{
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-        }}>
-        <Pressable onPress={() => sheetRef.current.snapTo(1)}>
+      <Pressable onPress={() => sheetRef.current.snapTo(1)}>
+        <Animated.View
+          style={{
+            opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+          }}>
           <SafeAreaView style={[styles.container, styles.screenContainer]}>
             {loading ? (
               <ProfilePageSkeleton />
@@ -367,8 +367,8 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
             </View>
           </SafeAreaView>
           <MainTabBar navigation={navigation} route={route} />
-        </Pressable>
-      </Animated.View>
+        </Animated.View>
+      </Pressable>
     </>
   );
 };

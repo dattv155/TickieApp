@@ -32,6 +32,8 @@ import CommentScreen from '../CommentScreen/CommentScreen';
 import ActorDetailScreen from 'src/screens/ActorDetailScreen/ActorDetailScreen';
 import {globalState} from 'src/app/global-state';
 import {MovieBooking} from 'src/models/MovieBooking';
+import {Comment} from 'src/models/Comment';
+import {Actor} from 'src/models/Actor';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -65,9 +67,9 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
     });
   }, [movieInfo, navigation]);
 
-  const renderItem: ListRenderItem<any> = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>) => {
-      return <ReviewList item={item.data()} key={index} />;
+  const renderItem: ListRenderItem<Comment> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<Comment>) => {
+      return <ReviewList item={item} key={index} />;
     },
     [],
   );
@@ -75,31 +77,31 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
 
   const [rate, setRate] = React.useState<number>(0);
 
-  const handleMoreComment = () => {
+  const handleMoreComment = React.useCallback(() => {
     let len = ListReview.length;
     if (initItem + 2 < len) {
       setInitItem(initItem + 3);
     } else {
       setInitItem(len);
     }
-  };
-  const [list, setList] = React.useState<Obj[]>([]);
+  }, [initItem]);
+  const [list, setList] = React.useState<Comment[]>([]);
 
   const fetchData = React.useCallback(async () => {
-    let exp: Array<Obj> = [];
+    let exp: Array<Comment> = [];
     let data = await firestore()
       .collection('comment')
       .where('movieId', '==', 'Movie-' + movieInfo.movieID)
       .get();
 
     data.forEach((item) => {
-      exp.push(item);
+      exp.push(item.data());
     });
 
     exp.sort((a, b) =>
-      a.data().time.seconds < b.data().time.seconds
+      a.time.seconds < b.time.seconds
         ? 1
-        : a.data().time.seconds > b.data().time.seconds
+        : a.time.seconds > b.time.seconds
         ? -1
         : 0,
     );
@@ -109,14 +111,14 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
     } else {
       setRate(
         Number(
-          (
-            exp.reduce((sum, item) => sum + item.data().rate, 0) / exp.length
-          ).toFixed(1),
+          (exp.reduce((sum, item) => sum + item.rate, 0) / exp.length).toFixed(
+            1,
+          ),
         ),
       );
     }
     setInitItem(exp.length > 3 ? 3 : exp.length);
-    setList(exp);
+    setList([...exp]);
   }, [movieInfo.movieID]);
 
   React.useEffect(() => {
@@ -140,8 +142,8 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
     [navigation],
   );
 
-  const renderListActor: ListRenderItem<any> = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>) => {
+  const renderListActor: ListRenderItem<Actor> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<Actor>) => {
       return (
         <TouchableOpacity
           key={index}
@@ -214,18 +216,17 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
             <View style={styles.actorView}>
               <TitleComponent title={'Diễn viên'} />
               <FlatList
-                key={'-'}
                 data={movieInfo?.Actor}
                 renderItem={renderListActor}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => '-' + item.toString()}
+                keyExtractor={(item: Actor) => item.actorID.toString()}
               />
             </View>
+
             <View style={styles.actorView}>
               <TitleComponent title={'Hình ảnh'} />
               <FlatList
-                key={'+'}
                 data={movieInfo?.Image}
                 renderItem={renderListImage}
                 horizontal={true}
@@ -233,6 +234,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                 keyExtractor={(item) => '+' + item.toString()}
               />
             </View>
+
             <View style={styles.actorView}>
               <TitleComponent title={'Gợi ý'} />
               <ScrollView
@@ -291,7 +293,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                   data={list?.slice(0, initItem)}
                   renderItem={renderItem}
                   showsVerticalScrollIndicator={false}
-                  keyExtractor={(item) => item.id.toString()}
+                  keyExtractor={(item) => item.time?.seconds.toString()}
                 />
                 <TouchableOpacity
                   style={[

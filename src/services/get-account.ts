@@ -3,9 +3,13 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {AppUser} from 'src/models/AppUser';
 import Toast from 'react-native-simple-toast';
+import {StackScreenProps} from '@react-navigation/stack';
+import {func} from 'prop-types';
 
 export const getAccount = {
-  getAccountInfo(): [
+  getAccountInfo(
+    navigation: StackScreenProps<any>['navigation'],
+  ): [
     string,
     string,
     string,
@@ -24,7 +28,7 @@ export const getAccount = {
   ] {
     const [userData, setUserData] = React.useState<AppUser>({});
 
-    const [province, setProvince] = React.useState<string>('Hà Nội');
+    const [province, setProvince] = React.useState<string>('');
     const [email, setEmail] = React.useState<string>('');
     const [gender, setGender] = React.useState<string>('');
     const [phoneNumber, setPhoneNumber] = React.useState<string>('');
@@ -34,33 +38,39 @@ export const getAccount = {
 
     const [loading, setLoading] = React.useState<boolean>(true);
 
+    const handleGetData = React.useCallback(() => {}, []);
+
     React.useEffect(() => {
-      const subscriber = firestore()
-        .collection('users')
-        .doc(auth().currentUser.uid)
-        .onSnapshot(
-          (documentSnapshot) => {
-            setUserData(documentSnapshot.data());
-            setFullname(userData.fullname);
-            setPhoneNumber(userData.phoneNumber);
-            setEmail(userData.email);
-            setGender(userData.gender);
-            setProvince(userData.province);
-            setProfileImg(userData.userImg);
-            try {
-              setDateOfBirth(userData.dateOfBirth.toDate());
-            } catch (e) {}
-          },
-          (e) => {
-            Toast.show(e.toString());
-          },
-        );
+      const unsubscribe = navigation.addListener('focus', async () => {
+        await firestore()
+          .collection('users')
+          .doc(auth().currentUser.uid)
+          .onSnapshot(
+            (documentSnapshot) => {
+              setUserData(documentSnapshot.data());
+              setFullname(documentSnapshot.data().fullname);
+              setPhoneNumber(documentSnapshot.data().phoneNumber);
+              setEmail(documentSnapshot.data().email);
+              setGender(documentSnapshot.data().gender);
+              setProvince(documentSnapshot.data().province);
+              setProfileImg(documentSnapshot.data().userImg);
+              try {
+                setDateOfBirth(documentSnapshot.data().dateOfBirth.toDate());
+              } catch (e) {}
+            },
+            (e) => {
+              Toast.show(e.toString());
+            },
+          );
+        setLoading(false);
+      });
 
       return function cleanup() {
-        subscriber();
-        setLoading(false);
+        unsubscribe();
       };
     }, [
+      handleGetData,
+      navigation,
       userData.dateOfBirth,
       userData.email,
       userData.fullname,

@@ -92,7 +92,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
     ,
     ,
     loading,
-  ] = getAccount.getAccountInfo();
+  ] = getAccount.getAccountInfo(navigation);
 
   const [uploading, setUploading] = React.useState(false);
   const [transferred, setTransferred] = React.useState(0);

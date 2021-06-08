@@ -56,7 +56,7 @@ const AccountInfoScreen: FC<PropsWithChildren<AccountInfoScreenProps>> = (
     dateOfBirth,
     handleChangeDateOfBirth,
     loading,
-  ] = getAccount.getAccountInfo();
+  ] = getAccount.getAccountInfo(navigation);
 
   const updateProfile = React.useCallback(() => {
     firestore()

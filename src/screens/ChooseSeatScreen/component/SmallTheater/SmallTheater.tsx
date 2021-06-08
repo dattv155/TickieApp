@@ -6,8 +6,10 @@ import Seat from 'src/screens/ChooseSeatScreen/component/Seat/Seat';
 import type {ListRenderItem, ListRenderItemInfo} from 'react-native';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {atomicStyles} from 'src/styles';
-import {CinemaLayout} from 'src/sample/cinemaLayout';
-import {indexOf2dArray} from 'src/helpers/array-helper';
+import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
+import {SeatPosition} from 'src/models/SeatPosition';
+import {CinemaLayout} from 'src/models/CinemaLayout';
+import {SeatState} from 'src/config/seat-state';
 
 /**
  * File: SmallTheater.tsx
@@ -16,47 +18,98 @@ import {indexOf2dArray} from 'src/helpers/array-helper';
  * @type {FC<PropsWithChildren<SmallTheaterProps>>}
  */
 
-export interface CinemaLayout {
-  cinemaID: number;
-  size: {
-    row: number;
-    column: number;
-  };
-  label: {
-    row: string[];
-    column: string[];
-  };
-}
-
 const ITEM_WIDTH = 26;
 
 const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
   props: PropsWithChildren<SmallTheaterProps>,
 ): ReactElement => {
   const {selectedList, handleShowPickedSeats, handleClear} = props;
-  const [layout, setLayout] = React.useState<CinemaLayout>(CinemaLayout[0]);
+  const [layout, setLayout] = React.useState<CinemaLayout>(
+    CinemaLayoutSmall[0],
+  );
 
-  const [pickList, setPickList] = React.useState<number[][]>([]);
+  const [pickList, setPickList] = React.useState<SeatPosition[]>([]);
 
-  const listSeat = React.useRef<number[][]>([]);
+  const [cinemaLayout, setCinemaLayout] = React.useState<number[]>([]);
+
+  const getIndexOfPosition = React.useCallback(
+    (pos: SeatPosition) => {
+      return layout.size.column * pos.row + pos.column;
+    },
+    [layout.size.column],
+  );
+
+  const handleLayout = React.useCallback((): number[] => {
+    let cinema = Array(layout.size.row * layout.size.column).fill(
+      SeatState.AVAILABLE_SEAT,
+    );
+
+    cinema[0] = SeatState.NO_SEAT;
+    cinema[layout.size.column - 1] = SeatState.NO_SEAT;
+    // for (let iLayout = 1; iLayout < cinema.length; iLayout++) {
+    //   for (let iSelected = 0; iSelected < selectedList.length; iSelected++) {
+    //     if (iLayout === getIndexOfPosition(selectedList[iSelected])) {
+    //       cinema[iLayout] = SeatState.OCCUPIED_SEAT;
+    //     }
+    //   }
+    //   for (let iPicking = 0; iPicking < pickList.length; iPicking) {
+    //     if (iLayout === getIndexOfPosition(pickList[iPicking])) {
+    //       cinema[iLayout] = SeatState.SELECTING_SEAT;
+    //     }
+    //   }
+    // }
+    return cinema;
+  }, [layout.size.column, layout.size.row]);
+
+  React.useEffect(() => {
+    const layout = handleLayout();
+    setCinemaLayout(layout);
+  }, [handleLayout]);
+
+  const listSeat = React.useRef<SeatPosition[]>([]);
 
   const isClear = React.useRef<boolean>(false);
 
-  const handleSelect = React.useCallback(
-    (rowIndex: number, columnIndex: number) => {
-      if (indexOf2dArray(listSeat.current, [rowIndex, columnIndex]) === -1) {
-        listSeat.current.push([rowIndex, columnIndex]);
+  const indexOfPositionArray = React.useCallback(
+    (listPosition: SeatPosition[], positionIndex: number) => {
+      listPosition.forEach((pos, index) => {
+        if (positionIndex === getIndexOfPosition(pos)) {
+          return index;
+        }
+      });
+      return -1;
+    },
+    [getIndexOfPosition],
+  );
+
+  const handleSelectSeat = React.useCallback(
+    (seatIndex: number) => {
+      if (indexOfPositionArray(listSeat.current, seatIndex) === -1) {
+        listSeat.current.push(seatIndex);
       } else {
-        let pickedIndex = indexOf2dArray(listSeat.current, [
-          rowIndex,
-          columnIndex,
-        ]);
+        let pickedIndex = indexOfPositionArray(listSeat.current, seatIndex);
         listSeat.current.splice(pickedIndex, 1);
       }
 
       setPickList([...listSeat.current]);
     },
-    [],
+    [indexOfPositionArray],
+  );
+
+  const renderListSeats: ListRenderItem<any> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<any>) => {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            handleSelectSeat(index);
+            handleShowPickedSeats([...listSeat.current]);
+            handleClear(isClear.current);
+          }}>
+          <Seat key={index} state={item} />
+        </TouchableOpacity>
+      );
+    },
+    [handleClear, handleSelectSeat, handleShowPickedSeats],
   );
 
   const getItemLayout = React.useCallback(
@@ -64,50 +117,82 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
     [],
   );
 
-  const renderSeat = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>, indexRow: number) => {
-      let choose = false;
+  // const handleSelect = React.useCallback(
+  //   (rowIndex: number, columnIndex: number) => {
+  //     if (
+  //       indexOfPositionArray(listSeat.current, {
+  //         row: rowIndex,
+  //         column: columnIndex,
+  //       }) === -1
+  //     ) {
+  //       listSeat.current.push({
+  //         row: rowIndex,
+  //         column: columnIndex,
+  //       });
+  //     } else {
+  //       let pickedIndex = indexOfPositionArray(listSeat.current, {
+  //         row: rowIndex,
+  //         column: columnIndex,
+  //       });
+  //       listSeat.current.splice(pickedIndex, 1);
+  //     }
+  //
+  //     setPickList([...listSeat.current]);
+  //   },
+  //   [indexOfPositionArray],
+  // );
 
-      if (!isClear.current) {
-        if (indexOf2dArray(pickList, [indexRow, index]) > -1) {
-          choose = true;
-        }
-      }
-
-      return indexOf2dArray(selectedList, [indexRow, index]) === -1 ? (
-        <TouchableOpacity
-          onPress={() => {
-            handleSelect(indexRow, index);
-            handleShowPickedSeats(listSeat.current);
-            handleClear(isClear.current);
-          }}>
-          <Seat
-            key={index}
-            state={
-              indexRow === 0 &&
-              (index === 0 || index === layout.size.column - 1)
-                ? 0
-                : item
-            }
-            positionRow={indexRow}
-            positionColumn={index}
-            isChoose={choose}
-          />
-        </TouchableOpacity>
-      ) : (
-        <Seat key={index} state={2} />
-      );
-    },
-    [
-      isClear,
-      selectedList,
-      layout.size.column,
-      pickList,
-      handleSelect,
-      handleShowPickedSeats,
-      handleClear,
-    ],
-  );
+  // const renderSeat = React.useCallback(
+  //   ({item, index}: ListRenderItemInfo<any>, indexRow: number) => {
+  //     let choose = false;
+  //
+  //     if (!isClear.current) {
+  //       if (
+  //         indexOfPositionArray(pickList, {
+  //           row: indexRow,
+  //           column: index,
+  //         }) > -1
+  //       ) {
+  //         choose = true;
+  //       }
+  //     }
+  //
+  //     return indexOfPositionArray(selectedList, {
+  //       row: indexRow,
+  //       column: index,
+  //     }) === -1 ? (
+  //       <TouchableOpacity
+  //         onPress={() => {
+  //           handleSelect(indexRow, index);
+  //           handleShowPickedSeats([...listSeat.current]);
+  //           handleClear(isClear.current);
+  //         }}>
+  //         <Seat
+  //           key={index}
+  //           state={
+  //             indexRow === 0 &&
+  //             (index === 0 || index === layout.size.column - 1)
+  //               ? 0
+  //               : item
+  //           }
+  //           positionRow={indexRow}
+  //           positionColumn={index}
+  //           isChoose={choose}
+  //         />
+  //       </TouchableOpacity>
+  //     ) : (
+  //       <Seat key={index} state={2} />
+  //     );
+  //   },
+  //   [
+  //     indexOfPositionArray,
+  //     selectedList,
+  //     layout.size.column,
+  //     pickList,
+  //     handleShowPickedSeats,
+  //     handleClear,
+  //   ],
+  // );
 
   const renderLabelColumn: ListRenderItem<any> = React.useCallback(
     ({item, index}: ListRenderItemInfo<any>) => {
@@ -154,22 +239,30 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
           />
         </View>
         <View style={styles.seatArea}>
-          {Array(layout.size.row)
-            .fill(1)
-            .map((itemRow, indexRow) => {
-              return (
-                <FlatList
-                  data={Array(layout.size.column).fill(1)}
-                  renderItem={(info) => renderSeat(info, indexRow)}
-                  horizontal={true}
-                  keyExtractor={(item, index) =>
-                    item.toString() + index.toString()
-                  }
-                  contentContainerStyle={styles.rowStyle}
-                  getItemLayout={getItemLayout}
-                />
-              );
-            })}
+          {/*{Array(layout.size.row)*/}
+          {/*  .fill(1)*/}
+          {/*  .map((itemRow, indexRow) => {*/}
+          {/*    return (*/}
+          {/*      <FlatList*/}
+          {/*        data={Array(layout.size.column).fill(1)}*/}
+          {/*        renderItem={(info) => renderSeat(info, indexRow)}*/}
+          {/*        horizontal={true}*/}
+          {/*        keyExtractor={(item, index) =>*/}
+          {/*          item.toString() + index.toString()*/}
+          {/*        }*/}
+          {/*        contentContainerStyle={styles.rowStyle}*/}
+          {/*        getItemLayout={getItemLayout}*/}
+          {/*      />*/}
+          {/*    );*/}
+          {/*  })}*/}
+          <FlatList
+            data={cinemaLayout}
+            renderItem={renderListSeats}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={11}
+            columnWrapperStyle={styles.wrapperRow}
+            getItemLayout={getItemLayout}
+          />
         </View>
 
         <View style={styles.labelView}>
@@ -199,9 +292,9 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
 
 export interface SmallTheaterProps {
   //
-  selectedList?: number[][];
+  selectedList?: SeatPosition[];
 
-  handleShowPickedSeats?: (pickedList: number[][]) => void;
+  handleShowPickedSeats?: (pickedList: SeatPosition[]) => void;
 
   handleClear?: (isClear: boolean) => void;
 }

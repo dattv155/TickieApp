@@ -13,6 +13,8 @@ import moment from 'moment';
 import {formatToCurrency} from 'src/helpers/string-helper';
 import {SeatPosition} from 'src/models/SeatPosition';
 import {ComboSet} from 'src/models/ComboSet';
+import firestore from '@react-native-firebase/firestore';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: DetailTicketScreen.tsx
@@ -28,6 +30,8 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
   const {data} = route?.params;
 
   const timeDate = `${data.time} ${moment(data.date.toDate()).format('DD/MM')}`;
+
+  const [translate] = useTranslation();
 
   const changeSeat = React.useCallback((column: number, row: number) => {
     switch (row) {
@@ -60,6 +64,18 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
     }
   }, []);
 
+  const [imageLink, setImageLink] = React.useState<string>(
+    'https://www.google.com/url?sa=i&url=http%3A%2F%2Fguicaniemtin.vn%2FDefault.aspx%3FPage%3Dket-noi-chuyen-mon-list%26cid%3D36&psig=AOvVaw27Ea1H7cMf6RlTRSXS6sdT&ust=1623263472710000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJCfqujViPECFQAAAAAdAAAAABAD',
+  );
+
+  firestore()
+    .collection('movie')
+    .where('Name', '==', data.movieName)
+    .get()
+    .then((documentData) => {
+      setImageLink(documentData.docs[0].data().Poster);
+    });
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.Light_Gray} />
@@ -73,10 +89,10 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
             style={[
               atomicStyles.h3,
               atomicStyles.bold,
-              // styles.textStyle,
+              styles.textStyle,
               atomicStyles.mt16px,
             ]}>
-            Thông tin vé
+            {translate('movieDetail.header')}
           </Text>
         }
         gradient={false}
@@ -91,7 +107,7 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
               style={styles.darkerLayer}
             />
             <Image
-              source={require('assets/images/mulan-poster.png')}
+              source={{uri: imageLink}}
               resizeMode="cover"
               style={styles.imageView}
             />
@@ -117,12 +133,21 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
                 </Text>
               </View>
 
-              <TextItemView label="Mã vé" value="18022123214" />
-              <TextItemView label="Thời gian" value={timeDate} />
-              <TextItemView label="Rạp" value={data.cinemaName} />
-              <TextItemView label="Phòng chiếu" value="2B" />
               <TextItemView
-                label="Chỗ ngồi"
+                label={translate('movieDetail.code')}
+                value="18022123214"
+              />
+              <TextItemView
+                label={translate('movieDetail.time')}
+                value={timeDate}
+              />
+              <TextItemView
+                label={translate('movieDetail.cinema')}
+                value={data.cinemaName}
+              />
+              <TextItemView label={translate('movieDetail.room')} value="2B" />
+              <TextItemView
+                label={translate('movieDetail.seats')}
                 value={data.position.map((pos: SeatPosition, index: number) => {
                   return index === data.position.length - 1
                     ? changeSeat(pos.column, pos.row)
@@ -130,7 +155,7 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
                 })}
               />
               <TextItemView
-                label="Set Combo"
+                label={translate('movieDetail.setCombo')}
                 value={
                   data.combos.length > 1
                     ? data.combos.map((combo: ComboSet) => {
@@ -142,7 +167,7 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
                 }
               />
               <TextItemView
-                label="Giá"
+                label={translate('movieDetail.price')}
                 value={formatToCurrency(data.totalCost) + ' VND'}
               />
             </View>

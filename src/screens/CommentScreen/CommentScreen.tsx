@@ -18,6 +18,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import MovieInfoScreen from '../MovieInfoScreen/MovieInfoScreen';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
+import {useTranslation} from 'react-i18next';
 
 /**
  * File: CommentScreen.tsx
@@ -27,6 +28,7 @@ import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout'
 const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
   props: PropsWithChildren<CommentScreenProps>,
 ): ReactElement => {
+  const [translate] = useTranslation();
   const {navigation, route} = props;
   const {movieInfo} = route?.params;
   const yellowstar = require('assets/icons/star.svg');
@@ -98,7 +100,7 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
                 fontWeight: '100',
               },
             ]}>
-            Đánh giá của bạn
+            {translate('commentScreen.yourReview')}
           </Text>
         }
         gradient={false}
@@ -133,7 +135,15 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
             </View>
           </View>
           <View style={styles.ratemovie}>
-            <Text style={[atomicStyles.h4]}>Xếp hạng phim</Text>
+            <Text
+              style={[
+                atomicStyles.h4,
+                atomicStyles.textBlue,
+                atomicStyles.bold,
+                styles.textStyle,
+              ]}>
+              {translate('commentScreen.filmRate')}
+            </Text>
             <View style={styles.pressstar}>
               <TouchableOpacity
                 style={styles.star}
@@ -164,7 +174,7 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
 
             <TextInput
               style={[styles.input, atomicStyles.h6]}
-              placeholder="Để lại đánh giá của bạn tại đây..."
+              placeholder={translate('commentScreen.leaveYourReview')}
               multiline={true}
               textAlignVertical={'top'}
               onChangeText={setComment}
@@ -177,8 +187,14 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
                 handleGoBack();
               }}>
               <View>
-                <Text style={[atomicStyles.h5, atomicStyles.textWhite]}>
-                  Gửi đánh giá
+                <Text
+                  style={[
+                    atomicStyles.h5,
+                    atomicStyles.textWhite,
+                    atomicStyles.bold,
+                    styles.textStyle,
+                  ]}>
+                  {translate('commentScreen.sendReview')}
                 </Text>
               </View>
             </TouchableOpacity>

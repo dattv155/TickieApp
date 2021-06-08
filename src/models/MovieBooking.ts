@@ -13,4 +13,5 @@ export class MovieBooking extends Model {
   public time?: string;
   public totalCost?: number;
   public userId?: string;
+  public movieInfoType?: string;
 }

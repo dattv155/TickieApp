@@ -15,6 +15,7 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import CategoryComponentSkeleton from 'src/components/HomeComponent/CategoryComponent/CategoryComponentSkeleton/CategoryComponentSkeleton';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {MovieInfo} from 'src/models/MovieInfo';
+import {convertTimestamp} from 'src/helpers/timestamp-helper';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -42,13 +43,6 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
     },
     [navigation],
   );
-
-  const convertTimestamp = React.useCallback((timestamp: number) => {
-    let date = new Date(timestamp * 1000);
-    return (
-      date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()
-    );
-  }, []);
 
   const renderItem = ({item, index}: any) => {
     return (
@@ -124,38 +118,28 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   );
 
   return (
-    <View style={{display: displayMode}}>
-      {loading ? (
-        <Carousel
-          ref={(c) => setCarousel(c)}
-          data={loadingList}
-          renderItem={renderLoadingItem}
-          sliderWidth={SLIDER_WIDTH}
-          itemWidth={ITEM_WIDTH}
-          containerCustomStyle={styles.carouselContainer}
-          onSnapToItem={(index) => setIndex(index)}
-          scrollInterpolator={scrollInterpolator}
-          slideInterpolatedStyle={animatedStyles}
-          useScrollView={true}
-          keyExtractor={(item, index) => item.toString() + index.toString()}
-          ListFooterComponent={listFooterComponent}
-        />
-      ) : (
-        <Carousel
-          ref={(c) => setCarousel(c)}
-          data={list}
-          renderItem={renderItem}
-          sliderWidth={SLIDER_WIDTH}
-          itemWidth={ITEM_WIDTH}
-          containerCustomStyle={styles.carouselContainer}
-          onSnapToItem={(index) => setIndex(index)}
-          scrollInterpolator={scrollInterpolator}
-          slideInterpolatedStyle={animatedStyles}
-          useScrollView={true}
-          keyExtractor={(item, index) => item.toString() + index.toString()}
-          ListFooterComponent={listFooterComponent}
-        />
-      )}
+    <View
+      style={displayMode === 'flex' ? {display: 'flex'} : {display: 'none'}}>
+      <Carousel
+        ref={(c) => setCarousel(c)}
+        data={loading ? loadingList : list}
+        renderItem={loading ? renderLoadingItem : renderItem}
+        sliderWidth={SLIDER_WIDTH}
+        itemWidth={ITEM_WIDTH}
+        containerCustomStyle={styles.carouselContainer}
+        onSnapToItem={(index) => setIndex(index)}
+        scrollInterpolator={scrollInterpolator}
+        slideInterpolatedStyle={animatedStyles}
+        useScrollView={true}
+        keyExtractor={(item, index) => item.toString() + index.toString()}
+        ListFooterComponent={listFooterComponent}
+        enableMomentum={true}
+        lockScrollWhileSnapping={true}
+        autoplay={true}
+        autoplayDelay={10000}
+        autoplayInterval={5000}
+        // loop={true}
+      />
       <View style={styles.line} />
     </View>
   );

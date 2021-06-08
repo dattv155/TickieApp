@@ -69,6 +69,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     pickingSeats,
     isClear,
     handleClear,
+    fetchData,
   ] = bookingService.useBooking(
     movieName,
     movieDate,
@@ -79,28 +80,6 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
   );
 
   const [refreshing, setRefreshing] = React.useState<boolean>(false);
-
-  const fetchData = React.useCallback(async () => {
-    const result = (await handleGetData()) as BookingData[];
-
-    const selected: number[][] = [];
-    result.map((item) => {
-      item.position.map((pos) => {
-        selected.push([pos.row, pos.column]);
-      });
-    });
-    setSelectedList(selected);
-  }, [handleGetData, setSelectedList]);
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      fetchData();
-    });
-
-    return function cleanup() {
-      unsubscribe();
-    };
-  }, [fetchData, navigation]);
 
   const onRefresh = React.useCallback(async () => {
     await setRefreshing(true);
@@ -174,7 +153,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
         <View style={styles.seatsArea}>
           <SmallTheater
             selectedList={selectedList}
-            handleShowPickedSeats={handlePickedSeats}
+            handleSelectPickedSeats={handlePickedSeats}
             handleClear={handleClear}
           />
         </View>

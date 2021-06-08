@@ -1,9 +1,10 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ComboComponent.scss';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import {Combo, SelectedCombo} from 'src/services/booking-service/use-combo';
+import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
 
 /**
  * File: ComboComponent.tsx
@@ -58,16 +59,22 @@ const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
     <>
       <View style={styles.container}>
         <View style={styles.infoArea}>
-          <Text style={[atomicStyles.h4, atomicStyles.bold, styles.nameCombo]}>
+          <Text
+            style={[
+              atomicStyles.h4,
+              atomicStyles.textBlue,
+              atomicStyles.bold,
+              styles.textStyle,
+            ]}>
             {combo.name}
           </Text>
-          <Text style={[atomicStyles.h5, styles.detailText]}>
+          <Text style={[atomicStyles.h6, styles.detailText]}>
             {handleDetail(combo.detail)}
           </Text>
         </View>
         <View style={styles.countArea}>
-          <Text style={[atomicStyles.h5, atomicStyles.bold, styles.costNumber]}>
-            {combo.amount} VND
+          <Text style={[atomicStyles.h5, atomicStyles.bold, styles.textStyle]}>
+            {fomatNumberToMoney(combo.amount, 0, 0)} VND
           </Text>
           <View style={styles.buttonSelectNumber}>
             <TouchableOpacity

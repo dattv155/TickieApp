@@ -29,13 +29,11 @@
   font-style: normal;
 }
 .line {
-  margin-top: 27px;
-  width: 80%;
-  height: 2px;
-  background-color: rgba(130, 130, 130, 0.25);
-  padding: 0;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 30px;
+  width: 100%;
+  height: 1px;
+  background-color: map-get($colors, "line-gray");
+  padding: 0px;
 }
 
 .header {
@@ -50,6 +48,10 @@
 }
 .imageContainer {
   border-radius: 39px;
-  border-width: 0.3px;
-  border-color: black;
+}
+
+.itemContainer {
+  border-radius: 39px;
+  elevation: 4;
+  margin: 5px;
 }

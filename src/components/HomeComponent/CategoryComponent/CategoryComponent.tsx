@@ -1,9 +1,9 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
-import {View, Text, Dimensions, Image, TouchableOpacity} from 'react-native';
+import {Dimensions, Image, Pressable, Text, View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {
-  scrollInterpolator,
   animatedStyles,
+  scrollInterpolator,
 } from '../CategoryComponent/utils/animations';
 import styles from './CategoryComponent.scss';
 import {atomicStyles} from '../../../styles';
@@ -24,11 +24,11 @@ const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
 const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   props: PropsWithChildren<CategoryComponentProps>,
 ): ReactElement => {
-  const {navigation} = props;
-
-  const {list, displayMode, loading} = props;
+  const {navigation, list, displayMode, loading} = props;
 
   const [translate] = useTranslation();
+
+  const loadingList = [{}, {}, {}, {}];
 
   const [carousel, setCarousel] = React.useState<Carousel<any>>(null);
 
@@ -53,86 +53,110 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   const renderItem = ({item, index}: any) => {
     return (
       <View key={index}>
-        {loading ? (
-          <CategoryComponentSkeleton />
-        ) : (
-          <TouchableOpacity onPress={() => handleGotoMovieScreen(item)}>
-            <Image
-              style={[
-                styles.imageContainer,
-                {
-                  width: ITEM_WIDTH,
-                  height: ITEM_HEIGHT,
-                },
-              ]}
-              source={{
-                uri: item?.Poster,
-              }}
-            />
-          </TouchableOpacity>
-        )}
+        <Pressable
+          onPress={() => handleGotoMovieScreen(item)}
+          style={[styles.itemContainer]}>
+          <Image
+            style={[
+              {
+                width: ITEM_WIDTH,
+                height: ITEM_HEIGHT,
+              },
+              styles.imageContainer,
+            ]}
+            source={{
+              uri: item?.Poster,
+            }}
+          />
+        </Pressable>
       </View>
     );
   };
 
+  const renderLoadingItem = ({item, index}: any) => {
+    return (
+      <View key={index}>
+        <CategoryComponentSkeleton />
+      </View>
+    );
+  };
+
+  const listFooterComponent = (
+    <>
+      <View style={styles.info}>
+        {loading ? (
+          <SkeletonPlaceholder>
+            <View
+              style={{
+                height: 30,
+                width: 150,
+                borderRadius: 5,
+                marginBottom: 5,
+              }}
+            />
+          </SkeletonPlaceholder>
+        ) : (
+          <Text
+            style={[
+              atomicStyles.h5,
+              atomicStyles.bold,
+              styles.textStyle,
+              styles.headerText,
+            ]}>
+            {list[index]?.Name}
+          </Text>
+        )}
+
+        {loading ? (
+          <SkeletonPlaceholder>
+            <View style={{height: 20, width: 200, borderRadius: 5}} />
+          </SkeletonPlaceholder>
+        ) : (
+          <Text style={[atomicStyles.h6, styles.release, styles.textStyle]}>
+            {translate('homeScreen.releaseDay') +
+              ': ' +
+              convertTimestamp(list[index]?.Release.seconds)}
+          </Text>
+        )}
+      </View>
+      <View style={styles.line} />
+    </>
+  );
+
   return (
     <View style={{display: displayMode}}>
-      <Carousel
-        ref={(c) => setCarousel(c)}
-        data={list}
-        renderItem={renderItem}
-        sliderWidth={SLIDER_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        containerCustomStyle={styles.carouselContainer}
-        // inactiveSlideShift={1}
-        onSnapToItem={(index) => setIndex(index)}
-        scrollInterpolator={scrollInterpolator}
-        slideInterpolatedStyle={animatedStyles}
-        useScrollView={true}
-        keyExtractor={(item, index) => item.toString() + index.toString()}
-        ListFooterComponent={
-          <>
-            <View style={styles.info}>
-              {loading ? (
-                <SkeletonPlaceholder>
-                  <View
-                    style={{
-                      height: 30,
-                      width: 150,
-                      borderRadius: 5,
-                      marginBottom: 5,
-                    }}
-                  />
-                </SkeletonPlaceholder>
-              ) : (
-                <Text
-                  style={[
-                    atomicStyles.h5,
-                    atomicStyles.bold,
-                    styles.textStyle,
-                    styles.headerText,
-                  ]}>
-                  {list[index]?.Name}
-                </Text>
-              )}
-
-              {loading ? (
-                <SkeletonPlaceholder>
-                  <View style={{height: 20, width: 200, borderRadius: 5}} />
-                </SkeletonPlaceholder>
-              ) : (
-                <Text
-                  style={[atomicStyles.h6, styles.release, styles.textStyle]}>
-                  {translate('homeScreen.releaseDay') +
-                    ': ' +
-                    convertTimestamp(list[index]?.Release.seconds)}
-                </Text>
-              )}
-            </View>
-            <View style={styles.line} />
-          </>
-        }
-      />
+      {loading ? (
+        <Carousel
+          ref={(c) => setCarousel(c)}
+          data={loadingList}
+          renderItem={renderLoadingItem}
+          sliderWidth={SLIDER_WIDTH}
+          itemWidth={ITEM_WIDTH}
+          containerCustomStyle={styles.carouselContainer}
+          onSnapToItem={(index) => setIndex(index)}
+          scrollInterpolator={scrollInterpolator}
+          slideInterpolatedStyle={animatedStyles}
+          useScrollView={true}
+          keyExtractor={(item, index) => item.toString() + index.toString()}
+          ListFooterComponent={listFooterComponent}
+        />
+      ) : (
+        <Carousel
+          ref={(c) => setCarousel(c)}
+          data={list}
+          renderItem={renderItem}
+          sliderWidth={SLIDER_WIDTH}
+          itemWidth={ITEM_WIDTH}
+          containerCustomStyle={styles.carouselContainer}
+          onSnapToItem={(index) => setIndex(index)}
+          scrollInterpolator={scrollInterpolator}
+          slideInterpolatedStyle={animatedStyles}
+          useScrollView={true}
+          keyExtractor={(item, index) => item.toString() + index.toString()}
+          ListFooterComponent={listFooterComponent}
+        />
+      )}
+      <View style={styles.line} />
     </View>
   );
 };

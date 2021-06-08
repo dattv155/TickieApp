@@ -12,16 +12,19 @@ import {
   TouchableOpacity,
   View,
   Animated,
+  RefreshControl,
 } from 'react-native';
 import type {StackScreenProps} from '@react-navigation/stack';
 import CalendarStrip from 'react-native-calendar-strip';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 import {atomicStyles} from 'src/styles';
 import ChooseSeatScreen from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
 import ButtonSelectFilmType from 'src/screens/BookingScreen/component/ButtonSelectFilmType/ButtonSelectFilmType';
 import CinemaShowtimeComponent from 'src/screens/BookingScreen/component/CinemaShowtimeComponent/CinemaShowtimeComponent';
 import {showError} from 'src/helpers/toast';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
+import {useTranslation} from 'react-i18next/';
 import {MovieBooking} from 'src/models/MovieBooking';
 import {globalState} from 'src/app/global-state';
 
@@ -52,6 +55,8 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
+  const [translate] = useTranslation();
+
   const {movieInfo} = route?.params;
 
   const fadeAnimation = React.useRef(new Animated.Value(1)).current;
@@ -61,6 +66,10 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
   const [schedule, setSchedule] = React.useState<Schedule>(null);
 
   const [selectedTypeID, setSelectedTypeID] = React.useState<number>(0);
+
+  const [refreshing, setRefreshing] = React.useState<boolean>(false);
+
+  const [selectedDate, setSelectedDate] = React.useState<Moment>(null);
 
   const fadeIn = React.useCallback(() => {
     Animated.timing(fadeAnimation, {
@@ -95,13 +104,19 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
   );
 
   React.useEffect(() => {
-    getInfoByDay(moment());
-  }, [getInfoByDay]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getInfoByDay(moment());
+    });
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, [getInfoByDay, navigation]);
 
   const [
     currentSelectedCinema,
     setCurrentSelectedCinema,
   ] = React.useState<string>('');
+
   const [
     currentSelectedShowtime,
     setCurrentSelectedShowtime,
@@ -192,12 +207,18 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     navigation,
   ]);
 
+  const onRefresh = React.useCallback(async () => {
+    await setRefreshing(true);
+    await getInfoByDay(selectedDate);
+    await setRefreshing(false);
+  }, [getInfoByDay, selectedDate]);
+
   return (
     <DefaultLayout
       navigation={navigation}
       route={route}
       left="back-button"
-      // right={<HeaderIconPlaceholder />}
+      right={<HeaderIconPlaceholder />}
       gradient={false}
       customHeader={false}
       bgWhite={true}>
@@ -232,72 +253,80 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
             iconContainer={{flex: 0.1}}
             onDateSelected={(date) => {
               getInfoByDay(date);
+              setSelectedDate(date);
             }}
           />
         </View>
         <Animated.View style={[styles.content, {opacity: fadeAnimation}]}>
-          {data ? (
-            <View style={styles.scheduleArea}>
-              <ScrollView>
-                <View>
+          <View style={styles.scheduleArea}>
+            <ScrollView
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
+              {data ? (
+                <>
+                  <View>
+                    <Text
+                      style={[
+                        atomicStyles.h2,
+                        atomicStyles.bold,
+                        atomicStyles.textBlue,
+                        styles.textStyle,
+                      ]}>
+                      {translate('bookingScreen.timeNCine.movieFormat')}
+                    </Text>
+                    <View>
+                      <FlatList
+                        data={data.Schedule?.map((item) => item.byType)}
+                        renderItem={renderFormat}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item, index) => item + index.toString()}
+                        contentContainerStyle={styles.listType}
+                        numColumns={3}
+                      />
+                    </View>
+                  </View>
+                  <View>
+                    {schedule?.cinema.map((item) => {
+                      return (
+                        <CinemaShowtimeComponent
+                          data={item}
+                          handleChooseCinema={handleChooseCinema}
+                          currentCinema={currentSelectedCinema}
+                          currentShowTime={currentSelectedShowtime}
+                        />
+                      );
+                    })}
+                  </View>
+                </>
+              ) : (
+                <View
+                  style={[
+                    atomicStyles.alignItemsCenter,
+                    atomicStyles.justifyContentCenter,
+                  ]}>
                   <Text
                     style={[
-                      atomicStyles.bold,
-                      atomicStyles.h1,
+                      atomicStyles.h3,
+                      atomicStyles.textBlue,
                       styles.textStyle,
                     ]}>
-                    Định dạng
+                    {translate('bookingScreen.timeNCine.noData')}
                   </Text>
-                  <View>
-                    <FlatList
-                      data={data.Schedule?.map((item) => item.byType)}
-                      renderItem={renderFormat}
-                      showsVerticalScrollIndicator={false}
-                      keyExtractor={(item, index) => item + index.toString()}
-                      contentContainerStyle={styles.listType}
-                      numColumns={3}
-                    />
-                  </View>
                 </View>
-                <View>
-                  {schedule?.cinema.map((item) => {
-                    return (
-                      <CinemaShowtimeComponent
-                        data={item}
-                        handleChooseCinema={handleChooseCinema}
-                        currentCinema={currentSelectedCinema}
-                        currentShowTime={currentSelectedShowtime}
-                      />
-                    );
-                  })}
-                </View>
-              </ScrollView>
-              <View style={styles.bottom}>
-                <TouchableOpacity
-                  style={styles.buttonNext}
-                  onPress={handleGotoChooseSeatScreen}>
-                  <Text style={[atomicStyles.h4, styles.textNext]}>
-                    Tiếp theo
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              )}
+            </ScrollView>
+            <View style={styles.bottom}>
+              <TouchableOpacity
+                style={styles.buttonNext}
+                onPress={handleGotoChooseSeatScreen}>
+                <Text
+                  style={[atomicStyles.h4, atomicStyles.bold, styles.textNext]}>
+                  {translate('bookingScreen.timeNCine.continue')}
+                </Text>
+              </TouchableOpacity>
             </View>
-          ) : (
-            <View
-              style={[
-                atomicStyles.alignItemsCenter,
-                atomicStyles.justifyContentCenter,
-              ]}>
-              <Text
-                style={[
-                  atomicStyles.h2,
-                  atomicStyles.bold,
-                  atomicStyles.textDark,
-                ]}>
-                No Data
-              </Text>
-            </View>
-          )}
+          </View>
         </Animated.View>
       </View>
     </DefaultLayout>

@@ -1,10 +1,13 @@
 /**
  * Styles for Component.tsx
  * @created 2021-05-16 11:05:28
- * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
  */
+
+.textStyle {
+  font-weight: 100;
+}
+
  .container{
-     width: 90%;
      height: 330px;
      align-self: center;
      align-items: center;
@@ -12,22 +15,16 @@
  .box{
     overflow: hidden;
      width: 100%;
-     height: 25.24%;
-     border: 2px solid #0E52E1;
+     height: 90px;
+     border: 1px solid #0E52E1;
      border-radius: 11px;
-     margin-bottom: 3%;
+     margin-bottom: 10px;
      flex-direction: row;
 
  }
- .namevoucher {
+ .nameVoucher {
     position: absolute;
-    // top:0;
     text-transform: uppercase;
-    font-size: 17px;
-    line-height: 17px;
-    letter-spacing: -1px;
-    font-weight: 700;
-    // background-color: #0E52E1;
  }
  .noidung {
      font-size: 12px;
@@ -38,12 +35,10 @@
  }
 
  .nameofvou {
-    // opacity: 0.6;
-        //  background-color: #93adeb;
     width: 33%;
     height: 100%;
     border-left: {
-        width: 2px;
+        width: 1px;
         color: #0E52E1
     }
     justify-content: center;
@@ -51,20 +46,15 @@
 
  }
  .boxx{
-            //  background-color: #93adeb;
      width: 67%;
      padding: 10px;
  }
  .header {
      width: 100%;
-    //  height: 50px;
     font-size: 20px;
-    // line-height: 20px;
-    // margin: 20px 0px;
  }
 .viewheader{
     width: 95%;
-    // height: 50px;
     align-self: flex-start;
     margin: 10px 0px;
 }

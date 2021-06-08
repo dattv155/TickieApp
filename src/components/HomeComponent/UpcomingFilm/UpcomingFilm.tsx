@@ -21,7 +21,14 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
   return (
     <View style={{...styles.mainComponent, display: display}}>
       <View>
-        <Text style={[atomicStyles.bold, styles.header]}>
+        <Text
+          style={[
+            atomicStyles.h2,
+            atomicStyles.bold,
+            atomicStyles.textBlue,
+            atomicStyles.mb16px,
+            styles.textStyle,
+          ]}>
           {translate('homeScreen.upcoming')}
         </Text>
       </View>
@@ -40,8 +47,16 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
                 uri: item.img,
               }}
             />
-            <Text style={[atomicStyles.bold, styles.text1]}>{item.name}</Text>
-            <Text style={[atomicStyles.regular, styles.text2]}>
+            <Text
+              style={[
+                atomicStyles.h6,
+                atomicStyles.bold,
+                styles.textStyle,
+                atomicStyles.mt8px,
+              ]}>
+              {item.name}
+            </Text>
+            <Text style={[atomicStyles.h7, atomicStyles.textGray]}>
               {item.release}
             </Text>
           </View>
@@ -49,6 +64,7 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
         keyExtractor={(item) => item.id.toString()}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        style={[atomicStyles.mb16px]}
       />
       <View style={styles.line} />
     </View>

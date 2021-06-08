@@ -138,7 +138,7 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
         autoplay={true}
         autoplayDelay={10000}
         autoplayInterval={5000}
-        // loop={true}
+        loop={true}
       />
       <View style={styles.line} />
     </View>

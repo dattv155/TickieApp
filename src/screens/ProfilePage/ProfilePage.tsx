@@ -5,6 +5,7 @@ import {
   Platform,
   Pressable,
   SafeAreaView,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -12,7 +13,7 @@ import styles from './ProfilePage.scss';
 import MainTabBar from 'src/components/organisms/MainTabBar/MainTabBar';
 import {StackScreenProps} from '@react-navigation/stack';
 import {useTranslation} from 'react-i18next';
-import {atomicStyles} from 'src/styles';
+import {atomicStyles, Colors} from 'src/styles';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import AccountInfoScreen from 'src/screens/AccountInfoScreen/AccountInfoScreen';
 import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
@@ -72,7 +73,6 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
   const sheetRef = React.useRef(null);
   const confirmRef = React.useRef(null);
-  const fall = new Animated.Value<number>(1);
 
   const [image, setImage] = React.useState(null);
 
@@ -104,7 +104,6 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       cropping: true,
       compressImageQuality: 1,
     }).then((image) => {
-      console.log(image);
       const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
       sheetRef.current.snapTo(1);
@@ -119,7 +118,6 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
       cropping: true,
       compressImageQuality: 1,
     }).then((image) => {
-      console.log(image);
       const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
       sheetRef.current.snapTo(1);
@@ -205,10 +203,6 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
     // Set transferred state
     task.on('state_changed', (taskSnapshot) => {
-      console.log(
-        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}.`,
-      );
-
       setTransferred(
         Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
           100,
@@ -242,11 +236,119 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
     }
   };
 
+  const snapPoint: (string | number)[] = [250, 0];
+
+  const fall = React.useRef(new Animated.Value<number>(1)).current;
+
+  const animatedShadowOpacity = Animated.interpolate(fall, {
+    inputRange: [0, 1],
+    outputRange: [0.5, 0],
+  });
+
   return (
     <>
+      <SafeAreaView style={[styles.container, styles.screenContainer]}>
+        {loading ? (
+          <ProfilePageSkeleton />
+        ) : (
+          <View style={styles.infoSection}>
+            <Pressable
+              onPress={() => sheetRef.current.snapTo(0)}
+              style={styles.avatarFrame}>
+              <Image
+                source={
+                  profileImg
+                    ? {
+                        uri: profileImg,
+                      }
+                    : require('assets/defaultAvatar.jpeg')
+                }
+                style={styles.avatarImage}
+              />
+            </Pressable>
+            <View style={styles.profile}>
+              <Text
+                style={[
+                  atomicStyles.h4,
+                  atomicStyles.bold,
+                  atomicStyles.textDark,
+                  {
+                    fontSize: 22,
+                    fontWeight: '100',
+                  },
+                ]}>
+                {fullname}
+              </Text>
+
+              <Text
+                style={[
+                  atomicStyles.h6,
+                  atomicStyles.bold,
+                  atomicStyles.textBlue,
+                  {
+                    fontSize: 16,
+                    fontWeight: '100',
+                    marginTop: 5,
+                  },
+                ]}>
+                {translate('profile.member')}
+              </Text>
+            </View>
+          </View>
+        )}
+
+        <View style={styles.optionSection}>
+          <View style={styles.viewContainer}>
+            <LineBlock
+              label={translate('profile.accountInfo')}
+              onPress={handleGoToAccountInfoScreen}
+              icon={require('assets/icons/Profile/PersonW.svg')}
+              hasDash={true}
+            />
+            <LineBlock
+              label={translate('profile.myTicket')}
+              onPress={handleGoToMyTicketScreen}
+              icon={require('assets/icons/Profile/TicketW.svg')}
+            />
+          </View>
+          <View style={styles.viewContainer}>
+            <LineBlock
+              label={translate('profile.setting')}
+              onPress={handleGoToGeneralSettingScreen}
+              icon={require('assets/icons/Profile/SettingW.svg')}
+              hasDash={true}
+            />
+            <LineBlock
+              label={translate('profile.update')}
+              onPress={handleGoToUpdateAppScreen}
+              icon={require('assets/icons/Profile/UpdateW.svg')}
+            />
+          </View>
+          <View style={styles.viewContainer}>
+            <LineBlock
+              label={translate('profile.helper')}
+              onPress={handleGoToHelperScreen}
+              icon={require('assets/icons/Profile/HelpW.svg')}
+              hasDash={true}
+            />
+            <LineBlock
+              label={translate('profile.information')}
+              onPress={handleGoToInformationScreen}
+              icon={require('assets/icons/Profile/InfoW.svg')}
+            />
+          </View>
+
+          <ButtonMain
+            label={translate('profile.logout')}
+            onPress={logoutUser}
+          />
+        </View>
+      </SafeAreaView>
+      <MainTabBar navigation={navigation} route={route} />
+
       <BottomSheet
         ref={confirmRef}
-        snapPoints={[250, 0, 0]}
+        snapPoints={snapPoint}
         initialSnap={1}
         renderHeader={renderConfirm}
         callbackNode={fall}
@@ -256,7 +358,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
 
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[250, 0, 0]}
+        snapPoints={snapPoint}
         initialSnap={1}
         renderHeader={renderContent}
         callbackNode={fall}
@@ -264,111 +366,16 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
         enabledContentTapInteraction={false}
       />
 
-      <Pressable onPress={() => sheetRef.current.snapTo(1)}>
-        <Animated.View
-          style={{
-            opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-          }}>
-          <SafeAreaView style={[styles.container, styles.screenContainer]}>
-            {loading ? (
-              <ProfilePageSkeleton />
-            ) : (
-              <View style={styles.infoSection}>
-                <Pressable
-                  onPress={() => sheetRef.current.snapTo(0)}
-                  style={styles.avatarFrame}>
-                  <Image
-                    source={
-                      profileImg
-                        ? {
-                            uri: profileImg,
-                          }
-                        : require('assets/defaultAvatar.jpeg')
-                    }
-                    style={styles.avatarImage}
-                  />
-                </Pressable>
-                <View style={styles.profile}>
-                  <Text
-                    style={[
-                      atomicStyles.h4,
-                      atomicStyles.bold,
-                      atomicStyles.textDark,
-                      {
-                        fontSize: 22,
-                        fontWeight: '100',
-                      },
-                    ]}>
-                    {fullname}
-                  </Text>
-
-                  <Text
-                    style={[
-                      atomicStyles.h6,
-                      atomicStyles.bold,
-                      atomicStyles.textBlue,
-                      {
-                        fontSize: 16,
-                        fontWeight: '100',
-                        marginTop: 5,
-                      },
-                    ]}>
-                    {translate('profile.member')}
-                  </Text>
-                </View>
-              </View>
-            )}
-
-            <View style={styles.optionSection}>
-              <View style={styles.viewContainer}>
-                <LineBlock
-                  label={translate('profile.accountInfo')}
-                  onPress={handleGoToAccountInfoScreen}
-                  icon={require('assets/icons/Profile/PersonW.svg')}
-                  hasDash={true}
-                />
-                <LineBlock
-                  label={translate('profile.myTicket')}
-                  onPress={handleGoToMyTicketScreen}
-                  icon={require('assets/icons/Profile/TicketW.svg')}
-                />
-              </View>
-              <View style={styles.viewContainer}>
-                <LineBlock
-                  label={translate('profile.setting')}
-                  onPress={handleGoToGeneralSettingScreen}
-                  icon={require('assets/icons/Profile/SettingW.svg')}
-                  hasDash={true}
-                />
-                <LineBlock
-                  label={translate('profile.update')}
-                  onPress={handleGoToUpdateAppScreen}
-                  icon={require('assets/icons/Profile/UpdateW.svg')}
-                />
-              </View>
-              <View style={styles.viewContainer}>
-                <LineBlock
-                  label={translate('profile.helper')}
-                  onPress={handleGoToHelperScreen}
-                  icon={require('assets/icons/Profile/HelpW.svg')}
-                  hasDash={true}
-                />
-                <LineBlock
-                  label={translate('profile.information')}
-                  onPress={handleGoToInformationScreen}
-                  icon={require('assets/icons/Profile/InfoW.svg')}
-                />
-              </View>
-
-              <ButtonMain
-                label={translate('profile.logout')}
-                onPress={logoutUser}
-              />
-            </View>
-          </SafeAreaView>
-          <MainTabBar navigation={navigation} route={route} />
-        </Animated.View>
-      </Pressable>
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: Colors.Black,
+            opacity: animatedShadowOpacity,
+          },
+        ]}
+      />
     </>
   );
 };

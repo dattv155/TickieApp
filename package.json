@@ -112,6 +112,7 @@
     "jetifier": "^2.0.0",
     "metro-config": "^0.65.2",
     "metro-react-native-babel-preset": "^0.59.0",
+    "react-devtools": "^4.13.5",
     "react-native-postcss-transformer": "^1.2.4",
     "react-native-sass-transformer": "^1.4.0",
     "react-test-renderer": "16.13.1",

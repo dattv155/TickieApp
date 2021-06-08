@@ -14,7 +14,11 @@ import {
   Dimensions,
   Animated,
   Easing,
+  ListRenderItem,
+  ListRenderItemInfo,
 } from 'react-native';
+import {MovieInfo} from 'src/models/MovieInfo';
+import {convertTimestamp} from 'src/helpers/timestamp-helper';
 
 /**
  * File: Search.tsx
@@ -38,9 +42,9 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
   const searchWidth: Animated.Value = React.useRef<Animated.Value>(
     new Animated.Value(0),
   ).current;
-  const viewHeight: Animated.Value = React.useRef<Animated.Value>(
+  const {current: viewHeight} = React.useRef<Animated.Value>(
     new Animated.Value(0),
-  ).current;
+  );
 
   const [input, setInput] = React.useState<string>('');
 
@@ -51,24 +55,76 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
       handleClick();
     }
     Animated.timing(headerWidth, {
-      toValue: headerWidth._value === 0 ? HEADER_WIDTH : 0,
+      toValue:
+        Number.parseInt(JSON.stringify(headerWidth), 10) === 0
+          ? HEADER_WIDTH
+          : 0,
       duration: 500,
       useNativeDriver: false,
       // easing: Easing.out(Easing.linear)
     }).start();
     Animated.timing(searchWidth, {
-      toValue: searchWidth._value === 0 ? SEARCH_WIDTH : 0,
+      toValue:
+        Number.parseInt(JSON.stringify(searchWidth), 10) === 0
+          ? SEARCH_WIDTH
+          : 0,
       duration: 500,
       useNativeDriver: false,
       // easing: Easing.out(Easing.linear)
     }).start();
     Animated.timing(viewHeight, {
-      toValue: viewHeight._value === 0 ? VIEW_HEIGHT : 0,
+      toValue:
+        Number.parseInt(JSON.stringify(searchWidth), 10) === 0
+          ? VIEW_HEIGHT
+          : 0,
       duration: 500,
       useNativeDriver: false,
       easing: Easing.linear,
     }).start(() => {});
   }
+
+  const renderMovie: ListRenderItem<MovieInfo> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<MovieInfo>) => {
+      return (
+        <View
+          style={[
+            styles.viewitem,
+            {
+              marginRight: SLIDER_WIDTH * 0.051,
+            },
+          ]}
+          key={index}>
+          <Image
+            style={{
+              width: SLIDER_WIDTH * 0.4,
+              height: SLIDER_HEIGHT * 0.32,
+              borderRadius: 22,
+            }}
+            source={{
+              uri: item.Poster,
+            }}
+          />
+          <Text
+            style={[
+              atomicStyles.h6,
+              atomicStyles.textDark,
+              atomicStyles.mt8px,
+            ]}>
+            {item.Name}
+          </Text>
+          <Text
+            style={[
+              atomicStyles.h7,
+              atomicStyles.textDark,
+              atomicStyles.textGray,
+            ]}>
+            {convertTimestamp(item.Release.seconds)}
+          </Text>
+        </View>
+      );
+    },
+    [],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -109,52 +165,16 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
           },
         ]}>
         <FlatList
-          data={list.filter((item) => {
+          data={list.filter((item: MovieInfo) => {
             if (input === '') {
               return item;
             }
-            if (item.name.toLowerCase().includes(input.toLowerCase())) {
+            if (item.Name.toLowerCase().includes(input.toLowerCase())) {
               return item;
             }
           })}
-          renderItem={({item, index}) => (
-            <View
-              style={[
-                styles.viewitem,
-                {
-                  marginRight: SLIDER_WIDTH * 0.051,
-                },
-              ]}
-              key={index}>
-              <Image
-                style={{
-                  width: SLIDER_WIDTH * 0.4,
-                  height: SLIDER_HEIGHT * 0.32,
-                  borderRadius: 22,
-                }}
-                source={{
-                  uri: item.img,
-                }}
-              />
-              <Text
-                style={[
-                  atomicStyles.h6,
-                  atomicStyles.textDark,
-                  atomicStyles.mt8px,
-                ]}>
-                {item.name}
-              </Text>
-              <Text
-                style={[
-                  atomicStyles.h7,
-                  atomicStyles.textDark,
-                  atomicStyles.textGray,
-                ]}>
-                {item.release}
-              </Text>
-            </View>
-          )}
-          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderMovie}
+          keyExtractor={(item) => item.Name.toString()}
           horizontal={false}
           numColumns={2}
           showsVerticalScrollIndicator={false}

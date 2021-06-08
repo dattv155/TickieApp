@@ -1,9 +1,10 @@
-import React, {FC, PropsWithChildren, ReactElement, useEffect} from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './FilmRate.scss';
 import {Text, View} from 'react-native';
-import {Obj} from 'src/screens/MovieInfoScreen/MovieInfoScreen';
 import {atomicStyles} from 'src/styles';
+import {Comment} from 'src/models/Comment';
+import {useNavigation} from '@react-navigation/native';
 
 /**
  * File: FilmRate.tsx
@@ -15,24 +16,36 @@ const FilmRate: FC<PropsWithChildren<FilmRateProps>> = (
   props: PropsWithChildren<FilmRateProps>,
 ): ReactElement => {
   const {data} = props;
+
   const [rate, setRate] = React.useState<number[]>([0, 0, 0, 0, 0]);
 
-  let exp = [...rate];
+  const [showData, setShowData] = React.useState<boolean>(false);
 
-  useEffect(() => {
-    var leng = data.length;
-    if (leng === 0) {
-      return;
+  const exp = [...rate];
+
+  React.useEffect(() => {
+    if (data) {
+      setShowData(true);
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    if (data) {
+      const listExp = exp.map(
+        (item, index) =>
+          (data.filter((items) => items.rate === 5 - index).length /
+            data.length) *
+          100,
+      );
+      if (showData) {
+        setRate([...listExp]);
+      }
     }
 
-    exp = exp.map(
-      (item, index) =>
-        (data.filter((items) => items.data().rate === 5 - index).length /
-          leng) *
-        100,
-    );
-    setRate(exp);
-  }, [data]);
+    return function cleanup() {
+      setShowData(false);
+    };
+  }, [data, exp, showData]);
   return (
     <View style={styles.fiveline}>
       <View style={styles.tv}>
@@ -71,7 +84,7 @@ const FilmRate: FC<PropsWithChildren<FilmRateProps>> = (
 
 export interface FilmRateProps {
   //
-  data?: Array<Obj>;
+  data?: Array<Comment>;
 }
 
 export interface Obj {

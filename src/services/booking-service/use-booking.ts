@@ -26,6 +26,7 @@ export function useBooking(
   SeatPosition[],
   React.MutableRefObject<boolean>,
   () => void,
+  () => Promise<void>,
 ] {
   const [seatCost, setSeatCost] = React.useState<number>(0);
 
@@ -52,19 +53,28 @@ export function useBooking(
       });
   }, [movieDate, movieFormat, movieName, showTime]);
 
-  React.useEffect(() => {
-    return navigation.addListener('focus', async () => {
-      const result = (await handleGetData()) as MovieBooking[];
+  const fetchData = React.useCallback(async () => {
+    const result = (await handleGetData()) as MovieBooking[];
 
-      const selected: SeatPosition[] = [];
-      result.map((item) => {
-        item.position.map((pos) => {
-          selected.push(pos);
-        });
+    const selected: SeatPosition[] = [];
+    result.map((item) => {
+      item.position.map((pos) => {
+        selected.push(pos);
       });
-      setSelectedList(selected);
     });
-  }, [handleGetData, navigation, setSelectedList]);
+
+    setSelectedList(selected);
+  }, [handleGetData, setSelectedList]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      await fetchData();
+    });
+
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, [fetchData, navigation]);
 
   const handlePickedSeats = React.useCallback((seatList: SeatPosition[]) => {
     setPickingSeats([...seatList]);
@@ -118,5 +128,6 @@ export function useBooking(
     pickingSeats,
     isClear,
     handleClear,
+    fetchData,
   ];
 }

@@ -9,12 +9,6 @@ import {atomicStyles} from 'src/styles';
 import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 import {SeatPosition} from 'src/models/SeatPosition';
 import {CinemaLayout} from 'src/models/CinemaLayout';
-import {SeatState} from 'src/config/seat-state';
-import {
-  convertIndexToPosition,
-  getIndexOfPosition,
-} from 'src/helpers/position-helper';
-import {indexOfPositions} from 'src/helpers/position-helper';
 import {indexOfPositionArray} from 'src/helpers/array-helper';
 
 /**

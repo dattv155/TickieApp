@@ -11,6 +11,8 @@ import DetailTicketScreen from 'src/screens/DetailTicketScreen/DetailTicketScree
 import {getMovieBooking} from 'src/services/get-movie-booking';
 import moment from 'moment';
 import {SeatPosition} from 'src/models/SeatPosition';
+import firestore from '@react-native-firebase/firestore';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: MyTicketScreen.tsx
@@ -22,6 +24,8 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
   props: PropsWithChildren<MyTicketScreenProps>,
 ): ReactElement => {
   const {navigation, route} = props;
+
+  const [translate] = useTranslation();
 
   const [
     movieBookings,
@@ -60,6 +64,10 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
     }
   }, []);
 
+  const [imageLink, setImageLink] = React.useState<string>(
+    'https://www.google.com/url?sa=i&url=http%3A%2F%2Fguicaniemtin.vn%2FDefault.aspx%3FPage%3Dket-noi-chuyen-mon-list%26cid%3D36&psig=AOvVaw27Ea1H7cMf6RlTRSXS6sdT&ust=1623263472710000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJCfqujViPECFQAAAAAdAAAAABAD',
+  );
+
   return (
     <DefaultLayout
       navigation={navigation}
@@ -74,7 +82,7 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
             styles.textStyle,
             atomicStyles.mt16px,
           ]}>
-          Vé của tôi
+          {translate('myTicket.header')}
         </Text>
       }
       gradient={false}
@@ -90,6 +98,14 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
               item._data.date.toDate(),
             ).format('DD/MM')}`;
 
+            firestore()
+              .collection('movie')
+              .where('Name', '==', item._data.movieName)
+              .get()
+              .then((documentData) => {
+                setImageLink(documentData.docs[0].data().Poster);
+              });
+
             return (
               <TicketItemView
                 key={index}
@@ -103,7 +119,7 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
                       : changeSeat(pos.column, pos.row) + ', ';
                   },
                 )}
-                image={require('assets/images/mulan-poster.png')}
+                image={{uri: imageLink}}
                 onPress={() => {
                   navigation.navigate(nameof(DetailTicketScreen), {
                     data: item._data,

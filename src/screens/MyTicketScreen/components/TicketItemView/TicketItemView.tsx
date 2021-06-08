@@ -4,7 +4,6 @@ import styles from './TicketItemView.scss';
 import {
   Animated,
   Image,
-  ImageProps,
   Pressable,
   PressableProps,
   Text,
@@ -13,6 +12,7 @@ import {
 } from 'react-native';
 import {atomicStyles} from 'src/styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: TicketItemView.tsx
@@ -24,6 +24,8 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
   props: PropsWithChildren<TicketItemViewProps>,
 ): ReactElement => {
   const {film, theater, time, seat, image, ...restProps} = props;
+
+  const [translate] = useTranslation();
 
   const rightSwipe = (progress: any, dragX: any) => {
     const scale = dragX.interpolate({
@@ -42,7 +44,7 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
               atomicStyles.h4,
               atomicStyles.textWhite,
             ]}>
-            Xóa
+            {translate('myTicket.delete')}
           </Animated.Text>
         </View>
       </TouchableOpacity>
@@ -65,7 +67,7 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
             {film}
           </Text>
           <Text style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>
-            Rạp:{' '}
+            {translate('myTicket.cinema')}:{' '}
             <Text
               style={[
                 atomicStyles.textBlue,
@@ -76,7 +78,7 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
             </Text>
           </Text>
           <Text style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>
-            Thời gian:{' '}
+            {translate('myTicket.time')}:{' '}
             <Text
               style={[
                 atomicStyles.textBlue,
@@ -87,7 +89,7 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
             </Text>
           </Text>
           <Text style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>
-            Chỗ ngồi:{' '}
+            {translate('myTicket.seats')}:{' '}
             <Text
               style={[
                 atomicStyles.textBlue,
@@ -101,11 +103,11 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
             <Text
               style={[
                 styles.textStyle,
-                atomicStyles.h76,
+                atomicStyles.h6,
                 atomicStyles.bold,
                 atomicStyles.textWhite,
               ]}>
-              Xem vé
+              {translate('myTicket.detail')}
             </Text>
           </Pressable>
         </View>
@@ -120,7 +122,7 @@ export interface TicketItemViewProps extends PressableProps {
   theater?: string;
   time?: string;
   seat?: string;
-  image?: ImageProps['source'];
+  image?: any;
 }
 
 TicketItemView.defaultProps = {

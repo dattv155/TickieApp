@@ -18,6 +18,7 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
 ): ReactElement => {
   const {list, display} = props;
   const [translate] = useTranslation();
+
   return (
     <View style={{...styles.mainComponent, display: display}}>
       <View>
@@ -39,8 +40,8 @@ const UpcomingFilm: FC<PropsWithChildren<UpcomingFilmProps>> = (
             style={{alignItems: 'center', marginRight: SLIDER_WIDTH * 0.051}}>
             <Image
               style={{
-                width: SLIDER_WIDTH * 0.4,
-                height: SLIDER_HEIGHT * 0.32,
+                width: 133,
+                height: 188,
                 borderRadius: 22,
               }}
               source={{

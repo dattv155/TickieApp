@@ -16,9 +16,13 @@ import {
   Easing,
   ListRenderItem,
   ListRenderItemInfo,
+  Pressable,
 } from 'react-native';
 import {MovieInfo} from 'src/models/MovieInfo';
 import {convertTimestamp} from 'src/helpers/timestamp-helper';
+import MovieInfoScreen from 'src/screens/MovieInfoScreen/MovieInfoScreen';
+import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 /**
  * File: Search.tsx
@@ -35,6 +39,10 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
   props: PropsWithChildren<SearchProps>,
 ): ReactElement => {
   const {list, display, handleClick} = props;
+
+  const navigation = useNavigation();
+
+  const [translate] = useTranslation();
 
   const headerWidth: Animated.Value = React.useRef<Animated.Value>(
     new Animated.Value(HEADER_WIDTH),
@@ -83,47 +91,51 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
     }).start(() => {});
   }
 
+  const handleGotoMovieScreen = React.useCallback(
+    (movieInfo: MovieInfo) => {
+      navigation.navigate(MovieInfoScreen.displayName, {
+        movieInfo,
+      });
+    },
+    [navigation],
+  );
+
   const renderMovie: ListRenderItem<MovieInfo> = React.useCallback(
     ({item, index}: ListRenderItemInfo<MovieInfo>) => {
       return (
-        <View
-          style={[
-            styles.viewitem,
-            {
-              marginRight: SLIDER_WIDTH * 0.051,
-            },
-          ]}
-          key={index}>
-          <Image
-            style={{
-              width: SLIDER_WIDTH * 0.4,
-              height: SLIDER_HEIGHT * 0.32,
-              borderRadius: 22,
-            }}
-            source={{
-              uri: item.Poster,
-            }}
-          />
-          <Text
-            style={[
-              atomicStyles.h6,
-              atomicStyles.textDark,
-              atomicStyles.mt8px,
-            ]}>
-            {item.Name}
-          </Text>
-          <Text
-            style={[
-              atomicStyles.h7,
-              atomicStyles.textDark,
-              atomicStyles.textGray,
-            ]}>
-            {convertTimestamp(item.Release.seconds)}
-          </Text>
+        <View style={[styles.viewItem]} key={index}>
+          <Pressable onPress={() => handleGotoMovieScreen(item)}>
+            <Image
+              style={{
+                width: 157,
+                height: 233,
+                borderRadius: 22,
+              }}
+              source={{
+                uri: item.Poster,
+              }}
+            />
+            <Text
+              style={[
+                atomicStyles.h6,
+                atomicStyles.textDark,
+                atomicStyles.mt8px,
+              ]}>
+              {item.Name}
+            </Text>
+            <Text
+              style={[
+                atomicStyles.h7,
+                atomicStyles.textDark,
+                atomicStyles.textGray,
+              ]}>
+              {convertTimestamp(item.Release.seconds)}
+            </Text>
+          </Pressable>
         </View>
       );
     },
-    [],
+    [handleGotoMovieScreen],
   );
 
   return (
@@ -133,13 +145,13 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
           style={[styles.release, {width: headerWidth, overflow: 'hidden'}]}>
           <Text
             style={[atomicStyles.h1, atomicStyles.textBlue, styles.textStyle]}>
-            Mới phát hành
+            {translate('home.firstTitle')}
           </Text>
         </Animated.View>
 
         <Animated.View
           style={[
-            styles.viewanimated,
+            styles.viewAnimated,
             {
               width: searchWidth,
             },
@@ -159,7 +171,7 @@ const Search: FC<PropsWithChildren<SearchProps>> = (
 
       <Animated.View
         style={[
-          styles.viewanimated2,
+          styles.viewAnimated2,
           {
             height: viewHeight,
           },

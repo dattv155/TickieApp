@@ -13,6 +13,7 @@ import moment from 'moment';
 import {SeatPosition} from 'src/models/SeatPosition';
 import firestore from '@react-native-firebase/firestore';
 import {useTranslation} from 'react-i18next/';
+import auth from '@react-native-firebase/auth';
 
 /**
  * File: MyTicketScreen.tsx
@@ -68,6 +69,8 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
     'https://www.google.com/url?sa=i&url=http%3A%2F%2Fguicaniemtin.vn%2FDefault.aspx%3FPage%3Dket-noi-chuyen-mon-list%26cid%3D36&psig=AOvVaw27Ea1H7cMf6RlTRSXS6sdT&ust=1623263472710000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJCfqujViPECFQAAAAAdAAAAABAD',
   );
 
+  const userId = auth().currentUser.uid;
+
   return (
     <DefaultLayout
       navigation={navigation}
@@ -101,6 +104,7 @@ const MyTicketScreen: FC<PropsWithChildren<MyTicketScreenProps>> = (
             firestore()
               .collection('movie')
               .where('Name', '==', item._data.movieName)
+              // .where('userId', '==', userId)
               .get()
               .then((documentData) => {
                 setImageLink(documentData.docs[0].data().Poster);

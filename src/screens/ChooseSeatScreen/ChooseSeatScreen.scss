@@ -7,6 +7,7 @@
 
 .containerView {
   background-color: map-get($colors, 'white');
+  margin-top: -40px;
 }
 .title {
   align-items: center;
@@ -52,7 +53,7 @@
   background-color: map-get($colors, 'white');
   position: absolute;
   bottom: 0;
-  height: 190px;
+  height: 220px;
 }
 .summaryTitle {
   margin-top: 10px;
@@ -116,4 +117,11 @@
 
 .textStyle {
   font-weight: 100;
+}
+.backButton {
+  position: absolute;
+  z-index: 20;
+  top: 20px;
+  left: 10px;
+  padding: 5px;
 }

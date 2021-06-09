@@ -4,6 +4,7 @@ import styles from './ActorComponent.scss';
 import {Image, View, Text} from 'react-native';
 import {SvgProps} from 'react-native-svg';
 import {atomicStyles} from 'src/styles';
+import {Actor} from 'src/models/Actor';
 
 /**
  * File: ActorComponent.tsx
@@ -15,6 +16,7 @@ const ActorComponent: FC<PropsWithChildren<ActorComponentProps>> = (
   props: PropsWithChildren<ActorComponentProps>,
 ): ReactElement => {
   const {actor} = props;
+
   return (
     <>
       <View style={styles.actorArea}>
@@ -26,7 +28,7 @@ const ActorComponent: FC<PropsWithChildren<ActorComponentProps>> = (
         <View style={styles.textArea}>
           <Text style={[atomicStyles.h7, styles.actorName]}>{actor.Name}</Text>
           <Text style={[atomicStyles.h7, styles.actorRole]}>
-            {actor.CharacterName}
+            {actor.CharactorName}
           </Text>
         </View>
       </View>
@@ -36,7 +38,7 @@ const ActorComponent: FC<PropsWithChildren<ActorComponentProps>> = (
 
 export interface ActorComponentProps extends SvgProps {
   //
-  actor?: any;
+  actor?: Actor;
 }
 
 ActorComponent.defaultProps = {

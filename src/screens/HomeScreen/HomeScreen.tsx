@@ -71,7 +71,9 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
           nestedScrollEnabled={true}
           showsVerticalScrollIndicator={false}>
           <View style={[styles.containerView]}>
-            <Search handleClick={onClick} display={display} list={data} />
+            <View style={styles.rowContainer}>
+              <Search handleClick={onClick} display={display} list={data} />
+            </View>
             <CategoryComponent
               navigation={navigation}
               route={route}
@@ -79,8 +81,10 @@ const HomeScreen: FC<PropsWithChildren<HomeScreenProps>> = (
               displayMode={display}
               loading={loading}
             />
-            <UpcomingFilm display={display} list={ListSampleMovie} />
-            <Voucher />
+            <View style={styles.rowContainer}>
+              <UpcomingFilm display={display} list={ListSampleMovie} />
+              <Voucher />
+            </View>
           </View>
         </ScrollView>
         <MainTabBar navigation={navigation} route={route} />

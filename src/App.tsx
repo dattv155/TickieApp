@@ -18,10 +18,12 @@ import RootNavigator from 'src/navigators/RootNavigator/RootNavigator';
 import {Colors} from 'src/styles';
 import PushNotification from 'react-native-push-notification';
 import SplashScreen from 'react-native-splash-screen';
+import {LogBox} from 'react-native';
 
 const RootComponent: FC = () => {
   const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
+  LogBox.ignoreAllLogs();
 
   React.useEffect(() => {
     auth().onAuthStateChanged((userState) => {

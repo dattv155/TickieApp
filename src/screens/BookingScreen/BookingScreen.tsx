@@ -213,6 +213,7 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
         cinemaName: currentSelectedCinema,
         movieDate: data?.Day,
         showTime: currentSelectedShowtime,
+        moviePoster: movieInfo?.Poster,
       });
     }
   }, [
@@ -222,6 +223,7 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     currentSelectedShowtime,
     data,
     movieInfo.Name,
+    movieInfo.Poster,
     movieInfo.Type,
     navigation,
   ]);

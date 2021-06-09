@@ -5,6 +5,7 @@ import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout'
 import {StackScreenProps} from '@react-navigation/stack';
 import {
   Image,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -45,6 +46,8 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
     seatCost,
     listSelectCombo,
     comboCost,
+    totalCost,
+    moviePoster,
   } = route?.params;
 
   const handleGoToHomeScreen = React.useCallback(() => {
@@ -69,7 +72,11 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
       <DefaultLayout
         navigation={navigation}
         route={route}
-        left="back-button"
+        left={
+          <Pressable onPress={handleGoToHomeScreen} style={styles.backButton}>
+            <SvgIcon component={require('assets/icons/BackToHome.svg')} />
+          </Pressable>
+        }
         right={<HeaderIconPlaceholder />}
         title={
           <Text
@@ -107,7 +114,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                 style={styles.darkerLayer}
               />
               <Image
-                source={require('assets/images/mulan-poster.png')}
+                source={{uri: moviePoster}}
                 resizeMode="cover"
                 style={styles.imageView}
               />
@@ -142,7 +149,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                   label="Set Combo"
                   value={handleListCombo(listSelectCombo)}
                 />
-                <TextItemView label="Giá" value={seatCost + comboCost} />
+                <TextItemView label="Giá" value={totalCost} />
               </View>
 
               <SvgIcon

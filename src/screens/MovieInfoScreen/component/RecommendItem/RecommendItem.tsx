@@ -17,15 +17,15 @@ const RecommendItem: FC<PropsWithChildren<RecommendItemProps>> = (
     <>
       <View style={styles.recommendArea}>
         <Image
-          source={require('assets/images/mulan-poster.png')}
+          source={require('assets/images/mulan-poster.jpeg')}
           resizeMode="cover"
           style={styles.imageView}
         />
         <View style={styles.textArea}>
           <Text style={[atomicStyles.h7, atomicStyles.bold, styles.filmName]}>
-            Mulan
+            Mắt biếc
           </Text>
-          <Text style={[atomicStyles.h7, styles.filmType]}>Hài hước</Text>
+          <Text style={[atomicStyles.h7, styles.filmType]}>Tình cảm</Text>
         </View>
       </View>
     </>

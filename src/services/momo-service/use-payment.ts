@@ -6,11 +6,15 @@ import {MomoData} from 'src/models/MomoData';
 import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
 // @ts-ignore
 import RNMomosdk from 'react-native-momosdk';
+import {MovieBooking} from 'src/models/MovieBooking';
+import moment from 'moment';
 
 const RNMoMoPaymentModule = NativeModules.RNMomosdk;
 const EventEmitter = new NativeEventEmitter(RNMoMoPaymentModule);
 
-export function usePayment(): [
+export function usePayment(
+  allInfoInOne: MovieBooking,
+): [
   string,
   string,
   string,
@@ -32,7 +36,7 @@ export function usePayment(): [
     'Nhà cung cấp',
   );
   const [billDescription, setBillDescription] = React.useState<string>(
-    'Fast and Furious 8',
+    allInfoInOne.movieName,
   );
   const [amount, setAmount] = React.useState<number>(1000);
 
@@ -111,6 +115,7 @@ export function usePayment(): [
 
   const handleSendRequest = React.useCallback(async () => {
     if (!payment.processing) {
+      const now = moment().toDate().getTime().toString();
       let jsonData = new MomoData();
       jsonData.enviroment = enviroment; //"0": SANBOX , "1": PRODUCTION
       jsonData.action = 'gettoken';
@@ -120,7 +125,7 @@ export function usePayment(): [
       jsonData.merchantnamelabel = merchantNameLabel;
       jsonData.description = billDescription;
       jsonData.amount = amount;
-      jsonData.orderId = 'tannt123456789';
+      jsonData.orderId = allInfoInOne.movieName + now;
       jsonData.requestId = 'CykaBlyat';
       jsonData.orderLabel = 'Order Code';
       jsonData.appScheme = 'momocgv20170101'; // iOS App Only , get from Info.plist > key URL types > URL Schemes. Check Readme
@@ -137,6 +142,7 @@ export function usePayment(): [
       setPayment({description: '.....', processing: false});
     }
   }, [
+    allInfoInOne.movieName,
     amount,
     billDescription,
     merchantCode,

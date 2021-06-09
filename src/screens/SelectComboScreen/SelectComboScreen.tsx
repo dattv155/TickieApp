@@ -46,6 +46,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
     pickingSeats,
     listLabel,
     seatCost,
+    moviePoster,
   } = route?.params;
 
   const [inputVoucher, setInputVoucher] = React.useState('');
@@ -113,6 +114,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
       seatCost,
       listSelectCombo,
       comboCost,
+      moviePoster,
     });
   }, [
     cinemaName,
@@ -122,6 +124,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
     movieDate,
     movieFormat,
     movieName,
+    moviePoster,
     movieType,
     navigation,
     pickingSeats,
@@ -148,23 +151,23 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
               showsVerticalScrollIndicator={false}
             />
           </View>
-          <View style={styles.voucherContainer}>
-            <TextInput
-              style={[atomicStyles.h6]}
-              onChangeText={(text) => {
-                setInputVoucher(text);
-              }}
-              placeholder={translate('bookingScreen.comboSelect.enterCode')}
-            />
-            <View style={styles.line} />
-            <Text style={[atomicStyles.h7, atomicStyles.textGray]}>
-              {translate('bookingScreen.comboSelect.noVoucher')}
-              <Text style={[atomicStyles.bold, styles.textStyle]}>
-                {' '}
-                {translate('bookingScreen.comboSelect.getNow')}
-              </Text>
-            </Text>
-          </View>
+          {/*<View style={styles.voucherContainer}>*/}
+          {/*  <TextInput*/}
+          {/*    style={[atomicStyles.h6]}*/}
+          {/*    onChangeText={(text) => {*/}
+          {/*      setInputVoucher(text);*/}
+          {/*    }}*/}
+          {/*    placeholder={translate('bookingScreen.comboSelect.enterCode')}*/}
+          {/*  />*/}
+          {/*  <View style={styles.line} />*/}
+          {/*  <Text style={[atomicStyles.h7, atomicStyles.textGray]}>*/}
+          {/*    {translate('bookingScreen.comboSelect.noVoucher')}*/}
+          {/*    <Text style={[atomicStyles.bold, styles.textStyle]}>*/}
+          {/*      {' '}*/}
+          {/*      {translate('bookingScreen.comboSelect.getNow')}*/}
+          {/*    </Text>*/}
+          {/*  </Text>*/}
+          {/*</View>*/}
         </View>
         <View style={styles.summaryContainer}>
           <Text

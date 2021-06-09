@@ -16,6 +16,7 @@ import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout'
 import firestore from '@react-native-firebase/firestore';
 import {atomicStyles} from 'src/styles';
 import TitleComponent from 'src/screens/MovieInfoScreen/component/TitleComponent/TitleComponent';
+import LinearGradient from 'react-native-linear-gradient';
 
 /**
  * File: ActorDetailScreen.tsx
@@ -92,13 +93,21 @@ const ActorDetailScreen: FC<PropsWithChildren<ActorDetailScreenProps>> = (
         horizontal={false}>
         <View>
           {actor && (
-            <Image
-              source={{
-                uri: actor.images[0],
-              }}
-              resizeMode="cover"
-              style={styles.posterView}
-            />
+            <View>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#2c2c2c', '#000000']}
+                style={styles.darkerLayer}
+              />
+              <Image
+                source={{
+                  uri: actor.images[0],
+                }}
+                resizeMode="cover"
+                style={styles.posterView}
+              />
+            </View>
           )}
 
           <View style={[styles.infoArea]}>

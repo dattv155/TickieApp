@@ -88,17 +88,17 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
               {time}
             </Text>
           </Text>
-          <Text style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>
-            {translate('myTicket.seats')}:{' '}
-            <Text
-              style={[
-                atomicStyles.textBlue,
-                atomicStyles.bold,
-                styles.textStyle,
-              ]}>
-              {seat}
-            </Text>
-          </Text>
+          {/*<Text style={[atomicStyles.h6, styles.textStyle, atomicStyles.mb4px]}>*/}
+          {/*  {translate('myTicket.seats')}:{' '}*/}
+          {/*  <Text*/}
+          {/*    style={[*/}
+          {/*      atomicStyles.textBlue,*/}
+          {/*      atomicStyles.bold,*/}
+          {/*      styles.textStyle,*/}
+          {/*    ]}>*/}
+          {/*    {seat}*/}
+          {/*  </Text>*/}
+          {/*</Text>*/}
           <Pressable style={styles.miniButton} {...restProps}>
             <Text
               style={[

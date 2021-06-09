@@ -3,76 +3,78 @@
  * @created 2021-04-04 23:23:39
  * @author Huy-No1 <71492647+Huy-No1@users.noreply.github.com>
  */
- @import '../../../styles/atomic-styles';
- .container {
-    width: 100%;
-    align-self: center;
-    height: auto;
-    overflow: hidden;
- }
-.release {
-    position: absolute;
-    left: 5%;
-    height: 100%;
+@import '../../../styles/atomic-styles';
+.container {
+  width: 100%;
+  align-self: center;
+  height: auto;
+  overflow: hidden;
 }
- .box {
-    width: 40px;
-    height: 40px;
-    background-color: map-get($colors, 'third-gray');
-    border-radius: 50px;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 5.5%;
+.release {
+  position: absolute;
+  left: 5%;
+  height: 100%;
+}
+.box {
+  width: 40px;
+  height: 40px;
+  background-color: map-get($colors, 'third-gray');
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 5.5%;
 }
 .search {
-    width: 100%;
-    height: 40px;
-    background-color: map-get($colors, 'second-gray');
-    border-radius: 50px;
-    padding-left: 10px;
-    color: black,
+  width: 100%;
+  height: 40px;
+  background-color: map-get($colors, 'second-gray');
+  border-radius: 50px;
+  padding-left: 10px;
+  color: map-get($colors, 'black');
 }
 .line {
-    margin-top: 2%;
-    width: 90%;
-    height: 2px;
-    background-color: map-get($colors, 'line-gray');
-    padding: 0px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  margin-top: 2%;
+  width: 90%;
+  height: 2px;
+  background-color: map-get($colors, 'line-gray');
+  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .headContainer {
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-    height: 49px;
-    width: 100%;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  height: 49px;
+  width: 100%;
 }
 .textInput {
-    height: 49px;
-    background-color: map-get($colors, 'third-gray' );
-    border-radius: 50px;
-    padding-right: 50px;
-    padding-left: 15px;
+  height: 49px;
+  background-color: map-get($colors, 'third-gray' );
+  border-radius: 50px;
+  padding-right: 50px;
+  padding-left: 15px;
 }
 
-.viewanimated {
-    padding: 0;
-    position: absolute;
-    right: 5%;
-    overflow: hidden;
+.viewAnimated {
+  padding: 0;
+  position: absolute;
+  right: 5%;
+  overflow: hidden;
 }
-.viewanimated2 {
-    align-self: center;
-    width: 94%;
-    overflow: hidden;
-    padding-top: 10px;
-    padding-left: 2.5%;
+.viewAnimated2 {
+  //align-self: center;
+  width: 100%;
+  overflow: hidden;
+  //padding-left: 2.5%;
+  margin-top: 30px;
 }
-.viewitem {
-    align-items: center;
-    margin-bottom: 10px;
+.viewItem {
+  align-items: center;
+  margin-bottom: 10px;
+  width: 50%;
+  flex-direction: column;
 }
 
 .textStyle {

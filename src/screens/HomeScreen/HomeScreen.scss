@@ -8,10 +8,14 @@
 
 .containerView {
   height: 100%;
-  padding: 40px 20px 30% 20px;
+  padding: 40px 0 30% 0;
 }
 
 .button {
   border-width: 2px;
   border-color: map-get($colors, 'primary');
+}
+
+.rowContainer {
+  padding: 0 20px;
 }

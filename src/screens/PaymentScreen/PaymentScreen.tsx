@@ -7,13 +7,14 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import {StackScreenProps} from '@react-navigation/stack';
-import {atomicStyles} from 'src/styles';
+import {atomicStyles, Colors} from 'src/styles';
 import SuccessBookingScreen from 'src/screens/SuccessBookingScreen/SuccessBookingScreen';
 import RadioButton from 'src/components/RadioButton/RadioButton';
 import {PaymentMethod} from 'src/sample/paymentMethod';
@@ -39,6 +40,7 @@ import {momoService} from 'src/services/momo-service';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
+import {MovieBooking} from 'src/models/MovieBooking';
 
 /**
  * File: PaymentScreen.tsx
@@ -65,13 +67,28 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     seatCost,
     listSelectCombo,
     comboCost,
+    moviePoster,
   } = route?.params;
 
   const [, handleGetDay] = UseTimestamp();
 
   const [voucherSelected, setVoucherSelected] = React.useState<Voucher>(null);
 
-  const [totalCost, setTotalCost] = React.useState<number>(0);
+  const [totalCost, setTotalCost] = React.useState<number>(
+    seatCost + comboCost,
+  );
+
+  const allInfoInOne: MovieBooking = {
+    cinemaName: cinemaName,
+    combos: listSelectCombo,
+    date: movieDate,
+    filmType: movieFormat,
+    movieName: movieName,
+    position: pickingSeats,
+    time: showTime,
+    totalCost: totalCost,
+    movieInfoType: movieType,
+  };
 
   const [
     voucherModalVisible,
@@ -103,7 +120,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     handleSendRequest,
     handleChangePayment,
     paymentResponseStatus,
-  ] = momoService.usePayment();
+  ] = momoService.usePayment(allInfoInOne);
 
   const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
 
@@ -122,6 +139,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       seatCost,
       listSelectCombo,
       comboCost,
+      totalCost,
+      moviePoster,
     });
   }, [
     cinemaName,
@@ -130,10 +149,12 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     listSelectCombo,
     movieDate,
     movieName,
+    moviePoster,
     navigation,
     pickingSeats,
     seatCost,
     showTime,
+    totalCost,
   ]);
 
   const handleListCombo = React.useCallback((listCombo: SelectedCombo[]) => {
@@ -162,7 +183,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       time: showTime,
       combos: listSelectCombo,
       position: handleListPosSeat(pickingSeats),
-      totalCost: seatCost + comboCost,
+      totalCost: totalCost,
+      Poster: moviePoster,
     };
     await firestore()
       .collection('bookings')
@@ -170,15 +192,15 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       .set(data);
   }, [
     cinemaName,
-    comboCost,
     handleListPosSeat,
     listSelectCombo,
     movieDate,
     movieFormat,
     movieName,
+    moviePoster,
     pickingSeats,
-    seatCost,
     showTime,
+    totalCost,
   ]);
 
   React.useEffect(() => {
@@ -194,9 +216,9 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 
   const handlePay = React.useCallback(async () => {
     if (paymentMethodKey === 'momo') {
-      let newValue = 1000;
-      let amount = fomatNumberToMoney(newValue, null, '');
-      handleChangeAmount(newValue);
+      let newValue = totalCost;
+      let amount = fomatNumberToMoney(totalCost, null, '');
+      handleChangeAmount(totalCost);
       handleChangePayment({
         amount: newValue,
         textAmount: amount,
@@ -232,6 +254,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     movieName,
     paymentMethodKey,
     paymentResponseStatus,
+    totalCost,
     translate,
   ]);
 
@@ -251,8 +274,6 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   }, [paymentMethodKey, paymentResponseStatus, translate]);
 
   const confirmRef = React.useRef(null);
-
-  const fall = new Animated.Value<number>(1);
 
   const renderConfirm = () => (
     <SafeAreaView style={styles.bottomBoxContainer}>
@@ -290,217 +311,221 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     </SafeAreaView>
   );
 
+  const snapPoint: (string | number)[] = [250, 0];
+
+  const fall = React.useRef(new Animated.Value<number>(1)).current;
+
+  const animatedShadowOpacity = Animated.interpolate(fall, {
+    inputRange: [0, 1],
+    outputRange: [0.5, 0],
+  });
+
   return (
     <>
+      <DefaultLayout
+        navigation={navigation}
+        route={route}
+        left="back-button"
+        right={<HeaderIconPlaceholder />}
+        gradient={false}
+        customHeader={false}
+        bgWhite={true}
+        title={
+          <Text style={[atomicStyles.h2, atomicStyles.bold, styles.textStyle]}>
+            {translate('bookingScreen.paymentScreen.header')}
+          </Text>
+        }>
+        <StatusBar barStyle="dark-content" />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          horizontal={false}
+          style={styles.scrollView}>
+          <View style={styles.containerView}>
+            <View style={styles.information}>
+              <Image
+                source={{uri: moviePoster}}
+                resizeMode="cover"
+                style={styles.infoImage}
+              />
+              <View style={styles.info}>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
+                  ]}>
+                  {movieName}
+                </Text>
+                <Text style={[atomicStyles.h6, styles.infoType]}>
+                  {movieType}
+                </Text>
+                <Text style={[atomicStyles.h6, styles.infoType]}>
+                  {translate('bookingScreen.paymentScreen.cinema')}:{' '}
+                  <Text
+                    style={[
+                      atomicStyles.bold,
+                      atomicStyles.textBlue,
+                      styles.textStyle,
+                    ]}>
+                    {cinemaName}
+                  </Text>
+                </Text>
+                <Text style={[atomicStyles.h6, styles.infoType]}>
+                  {translate('bookingScreen.paymentScreen.movieFormat')}:{' '}
+                  <Text
+                    style={[
+                      atomicStyles.bold,
+                      atomicStyles.textBlue,
+                      styles.textStyle,
+                    ]}>
+                    {movieFormat}
+                  </Text>
+                </Text>
+              </View>
+            </View>
+            <View style={styles.detailArea}>
+              <View style={styles.detailBlock}>
+                <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                  {translate('bookingScreen.paymentScreen.day')}
+                </Text>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
+                  ]}>
+                  {handleGetDay(movieDate.seconds)}
+                </Text>
+              </View>
+              <View style={styles.detailBlock}>
+                <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                  {translate('bookingScreen.paymentScreen.time')}
+                </Text>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
+                  ]}>
+                  {showTime}
+                </Text>
+              </View>
+              <View style={styles.detailBlock}>
+                <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                  {translate('bookingScreen.paymentScreen.seats')}
+                </Text>
+                <Text
+                  style={[
+                    atomicStyles.h4,
+                    atomicStyles.bold,
+                    atomicStyles.textBlue,
+                    styles.textStyle,
+                  ]}>
+                  {listLabel}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.comboInfo}>
+              <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
+                {translate('bookingScreen.paymentScreen.comboSet')}
+              </Text>
+              <Text
+                style={[
+                  atomicStyles.h4,
+                  atomicStyles.bold,
+                  styles.comboDetail,
+                ]}>
+                {handleListCombo(listSelectCombo)}
+              </Text>
+            </View>
+            <View style={styles.paymentArea}>
+              <Text
+                style={[atomicStyles.h5, atomicStyles.bold, styles.textStyle]}>
+                {translate('bookingScreen.paymentScreen.selectPaymentMethod')}
+              </Text>
+              <View style={styles.paymentGroup}>
+                <RadioButton
+                  values={PaymentMethod}
+                  onSetMethodKey={setPaymentMethodKey}
+                />
+              </View>
+            </View>
+            <TouchableOpacity style={[styles.paymentGroup]}>
+              <LineBlock
+                label={'Chọn voucher'}
+                onPress={handleOpenModalVoucher}
+                right={voucherSelected?.code}
+              />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+
+        <View style={styles.summaryArea}>
+          <View style={styles.summary}>
+            <Text
+              style={[
+                atomicStyles.h3,
+                atomicStyles.bold,
+                atomicStyles.textBlue,
+                styles.textStyle,
+              ]}>
+              {translate('bookingScreen.paymentScreen.summary')}
+            </Text>
+            <Text
+              style={[
+                atomicStyles.h1,
+                atomicStyles.bold,
+                atomicStyles.textBlue,
+                styles.textStyle,
+              ]}>
+              {formatToCurrency(totalCost)} VND
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.paymentButton}
+            onPress={() => confirmRef.current.snapTo(0)}>
+            <Text
+              style={[
+                atomicStyles.h5,
+                atomicStyles.bold,
+                atomicStyles.textWhite,
+                styles.textStyle,
+              ]}>
+              {buttonTitle}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <VoucherListComponent
+          navigation={navigation}
+          route={route}
+          visible={voucherModalVisible}
+          handleSelectVoucher={handleSelectVoucher}
+          onClose={handleCloseModalVoucher}
+        />
+      </DefaultLayout>
       <BottomSheet
         ref={confirmRef}
-        snapPoints={[250, 0, 0]}
+        snapPoints={snapPoint}
         initialSnap={1}
         renderHeader={renderConfirm}
         callbackNode={fall}
         enabledGestureInteraction={true}
         enabledContentTapInteraction={false}
       />
-
-      <Pressable onPress={() => confirmRef.current.snapTo(1)}>
-        <Animated.View
-          style={{
-            opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-          }}>
-          <DefaultLayout
-            navigation={navigation}
-            route={route}
-            left="back-button"
-            right={<HeaderIconPlaceholder />}
-            gradient={false}
-            customHeader={false}
-            bgWhite={true}
-            title={
-              <Text
-                style={[atomicStyles.h2, atomicStyles.bold, styles.textStyle]}>
-                {translate('bookingScreen.paymentScreen.header')}
-              </Text>
-            }>
-            <StatusBar barStyle="dark-content" />
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              horizontal={false}
-              style={styles.scrollView}>
-              <View style={styles.containerView}>
-                <View style={styles.information}>
-                  <Image
-                    source={require('assets/images/mulan-poster.png')}
-                    resizeMode="cover"
-                    style={styles.infoImage}
-                  />
-                  <View style={styles.info}>
-                    <Text
-                      style={[
-                        atomicStyles.h4,
-                        atomicStyles.bold,
-                        atomicStyles.textBlue,
-                        styles.textStyle,
-                      ]}>
-                      {movieName}
-                    </Text>
-                    <Text style={[atomicStyles.h6, styles.infoType]}>
-                      {movieType}
-                    </Text>
-                    <Text style={[atomicStyles.h6, styles.infoType]}>
-                      {translate('bookingScreen.paymentScreen.cinema')}:{' '}
-                      <Text
-                        style={[
-                          atomicStyles.bold,
-                          atomicStyles.textBlue,
-                          styles.textStyle,
-                        ]}>
-                        {cinemaName}
-                      </Text>
-                    </Text>
-                    <Text style={[atomicStyles.h6, styles.infoType]}>
-                      {translate('bookingScreen.paymentScreen.movieFormat')}:{' '}
-                      <Text
-                        style={[
-                          atomicStyles.bold,
-                          atomicStyles.textBlue,
-                          styles.textStyle,
-                        ]}>
-                        {movieFormat}
-                      </Text>
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.detailArea}>
-                  <View style={styles.detailBlock}>
-                    <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
-                      {translate('bookingScreen.paymentScreen.day')}
-                    </Text>
-                    <Text
-                      style={[
-                        atomicStyles.h4,
-                        atomicStyles.bold,
-                        atomicStyles.textBlue,
-                        styles.textStyle,
-                      ]}>
-                      {handleGetDay(movieDate.seconds)}
-                    </Text>
-                  </View>
-                  <View style={styles.detailBlock}>
-                    <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
-                      {translate('bookingScreen.paymentScreen.time')}
-                    </Text>
-                    <Text
-                      style={[
-                        atomicStyles.h4,
-                        atomicStyles.bold,
-                        atomicStyles.textBlue,
-                        styles.textStyle,
-                      ]}>
-                      {showTime}
-                    </Text>
-                  </View>
-                  <View style={styles.detailBlock}>
-                    <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
-                      {translate('bookingScreen.paymentScreen.seats')}
-                    </Text>
-                    <Text
-                      style={[
-                        atomicStyles.h4,
-                        atomicStyles.bold,
-                        atomicStyles.textBlue,
-                        styles.textStyle,
-                      ]}>
-                      {listLabel}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.comboInfo}>
-                  <Text style={[atomicStyles.h6, atomicStyles.textGray]}>
-                    {translate('bookingScreen.paymentScreen.comboSet')}
-                  </Text>
-                  <Text
-                    style={[
-                      atomicStyles.h4,
-                      atomicStyles.bold,
-                      styles.comboDetail,
-                    ]}>
-                    {handleListCombo(listSelectCombo)}
-                  </Text>
-                </View>
-                <View style={styles.paymentArea}>
-                  <Text
-                    style={[
-                      atomicStyles.h5,
-                      atomicStyles.bold,
-                      styles.textStyle,
-                    ]}>
-                    {translate(
-                      'bookingScreen.paymentScreen.selectPaymentMethod',
-                    )}
-                  </Text>
-                  <View style={styles.paymentGroup}>
-                    <RadioButton
-                      values={PaymentMethod}
-                      onSetMethodKey={setPaymentMethodKey}
-                    />
-                  </View>
-                </View>
-                <TouchableOpacity style={[styles.paymentGroup]}>
-                  <LineBlock
-                    label={'Chọn voucher'}
-                    onPress={handleOpenModalVoucher}
-                    right={voucherSelected?.code}
-                  />
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-
-            <View style={styles.summaryArea}>
-              <View style={styles.summary}>
-                <Text
-                  style={[
-                    atomicStyles.h3,
-                    atomicStyles.bold,
-                    atomicStyles.textBlue,
-                    styles.textStyle,
-                  ]}>
-                  {translate('bookingScreen.paymentScreen.summary')}
-                </Text>
-                <Text
-                  style={[
-                    atomicStyles.h1,
-                    atomicStyles.bold,
-                    atomicStyles.textBlue,
-                    styles.textStyle,
-                  ]}>
-                  {formatToCurrency(totalCost)} VND
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={styles.paymentButton}
-                onPress={() => confirmRef.current.snapTo(0)}>
-                <Text
-                  style={[
-                    atomicStyles.h5,
-                    atomicStyles.bold,
-                    atomicStyles.textWhite,
-                    styles.textStyle,
-                  ]}>
-                  {buttonTitle}
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <VoucherListComponent
-              navigation={navigation}
-              route={route}
-              visible={voucherModalVisible}
-              handleSelectVoucher={handleSelectVoucher}
-              onClose={handleCloseModalVoucher}
-            />
-          </DefaultLayout>
-        </Animated.View>
-      </Pressable>
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: Colors.Black,
+            opacity: animatedShadowOpacity,
+          },
+        ]}
+      />
     </>
   );
 };

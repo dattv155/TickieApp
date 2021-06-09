@@ -219,9 +219,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                 {movieInfo?.Name}
               </Text>
               <View style={styles.rate}>
-                <Text style={[atomicStyles.text]}>
-                  {movieInfo.AverageScore}
-                </Text>
+                <Text style={[atomicStyles.text]}>{rate}</Text>
                 <SvgIcon component={require('assets/icons/star.svg')} />
               </View>
             </View>
@@ -264,8 +262,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-                <RecommendItem />
-                <RecommendItem />
                 <RecommendItem />
               </ScrollView>
             </View>

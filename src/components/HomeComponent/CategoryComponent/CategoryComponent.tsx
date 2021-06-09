@@ -19,8 +19,10 @@ import {convertTimestamp} from 'src/helpers/timestamp-helper';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.672);
-const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
+// const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.672);
+// const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.5);
+const ITEM_WIDTH = 252;
+const ITEM_HEIGHT = 336;
 
 const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
   props: PropsWithChildren<CategoryComponentProps>,
@@ -136,9 +138,10 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
         enableMomentum={true}
         lockScrollWhileSnapping={true}
         autoplay={true}
-        autoplayDelay={10000}
+        autoplayDelay={5000}
         autoplayInterval={5000}
         loop={true}
+        inactiveSlideScale={0.82}
       />
       <View style={styles.line} />
     </View>

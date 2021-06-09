@@ -3,6 +3,7 @@ import React from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './ChooseSeatScreen.scss';
 import {
+  Pressable,
   RefreshControl,
   ScrollView,
   StatusBar,
@@ -21,6 +22,7 @@ import {bookingService} from 'src/services/booking-service';
 import {formatToCurrency} from 'src/helpers/string-helper';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {useTranslation} from 'react-i18next/';
+import {showError} from 'src/helpers/toast';
 
 /**
  * File: ChooseSeatScreen.tsx
@@ -56,6 +58,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     cinemaName,
     movieDate,
     showTime,
+    moviePoster,
   } = route?.params;
 
   const [
@@ -88,6 +91,10 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
   }, [fetchData]);
 
   const handleGotoSelectComboScreen = React.useCallback(() => {
+    if (pickingSeats.length === 0) {
+      showError('Hãy chọn vị trí ngồi');
+      return;
+    }
     navigation.navigate(SelectComboScreen.displayName, {
       movieName,
       movieType,
@@ -98,6 +105,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
       pickingSeats,
       listLabel,
       seatCost,
+      moviePoster,
     });
   }, [
     cinemaName,
@@ -105,6 +113,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     movieDate,
     movieFormat,
     movieName,
+    moviePoster,
     movieType,
     navigation,
     pickingSeats,
@@ -112,13 +121,21 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     showTime,
   ]);
 
+  const handleGoBack = React.useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
   const [handleTimestamp] = UseTimestamp();
 
   return (
     <DefaultLayout
       navigation={navigation}
       route={route}
-      left="back-button"
+      left={
+        <Pressable onPress={handleGoBack} style={styles.backButton}>
+          <SvgIcon component={require('assets/icons/backIconRound.svg')} />
+        </Pressable>
+      }
       // right={<HeaderIconPlaceholder />}
       gradient={false}
       customHeader={false}

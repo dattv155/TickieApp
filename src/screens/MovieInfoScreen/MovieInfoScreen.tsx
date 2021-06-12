@@ -30,12 +30,12 @@ import firestore from '@react-native-firebase/firestore';
 import RateStar from './component/RateStar/RateStar';
 import CommentScreen from '../CommentScreen/CommentScreen';
 import ActorDetailScreen from 'src/screens/ActorDetailScreen/ActorDetailScreen';
-import {globalState} from 'src/app/global-state';
-import {MovieBooking} from 'src/models/MovieBooking';
 import {Comment} from 'src/models/Comment';
 import {Actor} from 'src/models/Actor';
 import LinearGradient from 'react-native-linear-gradient';
 import {showInfo} from 'src/helpers/toast';
+import {MovieBooking} from 'src/models/MovieBooking';
+import {globalState} from 'src/app/global-state';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -126,14 +126,10 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   React.useEffect(() => {
     navigation.addListener('focus', async () => {
       await fetchData();
-      const bookingData: MovieBooking = await globalState.useBookingData();
-      await globalState.setBookingData({
-        ...bookingData,
-        movieName: movieInfo?.Name,
-        movieInfoType: movieInfo?.Type,
-      });
+      // const bookingData = globalState.useBookingData();
+      // console.log(bookingData);
     });
-  }, [fetchData, movieInfo.Name, movieInfo.Type, navigation]);
+  }, [fetchData, navigation]);
 
   const handleGotoActorDetailScreen = React.useCallback(
     (actorID: number) => {

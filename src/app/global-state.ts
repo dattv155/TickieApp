@@ -27,7 +27,13 @@ export class GlobalState {
     });
   }
 
-  public async cleanNewBookingData() {
+  public async initialize() {
+    await React.setGlobal<GlobalState>({
+      bookingData: {},
+    });
+  }
+
+  public async resetNewBookingData() {
     await React.setGlobal<GlobalState>({
       bookingData: {},
     });

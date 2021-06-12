@@ -48,14 +48,19 @@ export function UseTimestamp(): [
     [getDayOfWeek],
   );
 
-  const handleGetDay = React.useCallback((timestamp: number) => {
-    const date = new Date(timestamp * 1000);
-    const day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
-    const month =
-      date.getMonth() >= 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
+  const handleGetDay = React.useCallback((timestamp: number): string => {
+    if (timestamp) {
+      const date = new Date(timestamp * 1000);
+      const day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+      const month =
+        date.getMonth() >= 9
+          ? date.getMonth() + 1
+          : '0' + (date.getMonth() + 1);
 
-    // return date.getFullYear() + '-' + month + '-' + day;
-    return day + '/' + month;
+      // return date.getFullYear() + '-' + month + '-' + day;
+      return day + '/' + month;
+    }
+    return '';
   }, []);
 
   return [handleTimestamp, handleGetDay];

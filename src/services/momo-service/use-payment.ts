@@ -6,39 +6,20 @@ import {MomoData} from 'src/models/MomoData';
 import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
 // @ts-ignore
 import RNMomosdk from 'react-native-momosdk';
-import {MovieBooking} from 'src/models/MovieBooking';
-import moment from 'moment';
+import {globalState} from 'src/app/global-state';
 
 const RNMoMoPaymentModule = NativeModules.RNMomosdk;
 const EventEmitter = new NativeEventEmitter(RNMoMoPaymentModule);
 
-export function usePayment(
-  allInfoInOne: MovieBooking,
-): [
-  string,
-  string,
-  string,
-  string,
-  number,
-  Payment,
-  (value: string) => void,
-  (value: string) => void,
-  (value: string) => void,
-  (value: string) => void,
+export function usePayment(): [
   (value: number) => void,
   () => void,
   (value: Payment) => void,
   string,
 ] {
-  const [merchantName, setMerchantName] = React.useState<string>('Tickie');
-  const [merchantCode, setMerchantCode] = React.useState<string>('CGV01');
-  const [merchantNameLabel, setMerchantNameLabel] = React.useState<string>(
-    'Nhà cung cấp',
-  );
-  const [billDescription, setBillDescription] = React.useState<string>(
-    allInfoInOne.movieName,
-  );
-  const [amount, setAmount] = React.useState<number>(1000);
+  const [bookingData] = globalState.useBookingData();
+
+  const [amount, setAmount] = React.useState<number>(0);
 
   const enviroment = '0'; //"1": production
 
@@ -50,22 +31,6 @@ export function usePayment(
     description: '',
     processing: false,
   });
-
-  const handleChangeMerchantName = React.useCallback((value: string) => {
-    setMerchantName(value);
-  }, []);
-
-  const handleChangeMerchantCode = React.useCallback((value: string) => {
-    setMerchantCode(value);
-  }, []);
-
-  const handleChangeMerchantNameLabel = React.useCallback((value: string) => {
-    setMerchantNameLabel(value);
-  }, []);
-
-  const handleChangeBillDescription = React.useCallback((value: string) => {
-    setBillDescription(value);
-  }, []);
 
   const handleChangeAmount = React.useCallback((value: number) => {
     setAmount(value);
@@ -82,25 +47,12 @@ export function usePayment(
   EventEmitter.addListener(
     'RCTMoMoNoficationCenterRequestTokenReceived',
     (response) => {
-      console.log('<MoMoPay>Listen.Event::' + JSON.stringify(response));
       try {
         if (response && response.status === 0) {
-          let fromapp = response.fromapp; //ALWAYS:: fromapp==momotransfer
           setPayment({
             description: JSON.stringify(response),
             processing: false,
           });
-          let momoToken = response.data;
-          let phonenumber = response.phonenumber;
-          let message = response.message;
-          let orderId = response.refOrderId; //your orderId
-          let requestId = response.refRequestId; //your requestId
-          //continue to submit momoToken,phonenumber to server
-          console.log('Momo Token ', momoToken);
-          console.log('phonenumber ', phonenumber);
-          console.log('message ', message);
-          console.log('order id ', orderId);
-          console.log('request id ', requestId);
         } else {
           setPayment({
             description: 'message: Get token fail',
@@ -115,25 +67,22 @@ export function usePayment(
 
   const handleSendRequest = React.useCallback(async () => {
     if (!payment.processing) {
-      const now = moment().toDate().getTime().toString();
       let jsonData = new MomoData();
       jsonData.enviroment = enviroment; //"0": SANBOX , "1": PRODUCTION
       jsonData.action = 'gettoken';
       jsonData.isDev = true; //SANBOX only , remove this key on PRODUCTION
-      jsonData.merchantname = merchantName;
-      jsonData.merchantcode = merchantCode;
-      jsonData.merchantnamelabel = merchantNameLabel;
-      jsonData.description = billDescription;
+      jsonData.merchantname = 'Tickie';
+      jsonData.merchantcode = 'TICKIE01';
+      jsonData.merchantnamelabel = 'Nhà cung cấp';
+      jsonData.description = bookingData.movieName;
       jsonData.amount = amount;
-      jsonData.orderId = allInfoInOne.movieName + now;
+      jsonData.orderId = bookingData.bookingId;
       jsonData.requestId = 'CykaBlyat';
       jsonData.orderLabel = 'Order Code';
       jsonData.appScheme = 'momocgv20170101'; // iOS App Only , get from Info.plist > key URL types > URL Schemes. Check Readme
-      console.log('data_request_payment ' + JSON.stringify(jsonData));
       if (Platform.OS === 'android') {
         let dataPayment = await RNMomosdk.requestPayment(jsonData);
-        momoHandleResponse(dataPayment);
-        console.log('data_request_payment ' + dataPayment.status);
+        await momoHandleResponse(dataPayment);
       } else {
         RNMomosdk.requestPayment(JSON.stringify(jsonData));
       }
@@ -142,31 +91,20 @@ export function usePayment(
       setPayment({description: '.....', processing: false});
     }
   }, [
-    allInfoInOne.movieName,
     amount,
-    billDescription,
-    merchantCode,
-    merchantName,
-    merchantNameLabel,
+    bookingData.bookingId,
+    bookingData.movieName,
     payment.processing,
   ]);
 
   const momoHandleResponse = async (response: any) => {
     try {
       if (response && response.status === 0) {
-        let fromapp = response.fromapp; //ALWAYS:: fromapp==momotransfer
         setPayment({
           description: JSON.stringify(response),
           processing: false,
         });
-        let momoToken = response.data;
-        let phonenumber = response.phonenumber;
-        let message = response.message;
         setPaymentResponse(response.message);
-        //continue to submit momoToken,phonenumber to server
-        console.log('Momo Token: ', momoToken);
-        console.log('phonenumber: ', phonenumber);
-        console.log('message: ', message);
       } else {
         setPayment({
           description: 'message: Get token fail',
@@ -179,16 +117,6 @@ export function usePayment(
   };
 
   return [
-    merchantName,
-    merchantCode,
-    merchantNameLabel,
-    billDescription,
-    amount,
-    payment,
-    handleChangeMerchantName,
-    handleChangeMerchantCode,
-    handleChangeMerchantNameLabel,
-    handleChangeBillDescription,
     handleChangeAmount,
     handleSendRequest,
     handleChangePayment,

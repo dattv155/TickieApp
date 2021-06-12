@@ -5,11 +5,11 @@
  * @format
  * @flow strict-local
  */
-
-import React, {FC} from 'react';
+import {name as appName} from 'app.json';
+import React, {FC, LazyExoticComponent, Suspense} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {navigationContainerRef} from 'src/config/navigation';
-import {StatusBar} from 'react-native';
+import {StatusBar, AppRegistry} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import nameof from 'ts-nameof.macro';
 import LoginNavigator from 'src/navigators/LoginNavigator/LoginNavigator';
@@ -19,11 +19,12 @@ import {Colors} from 'src/styles';
 import PushNotification from 'react-native-push-notification';
 import SplashScreen from 'react-native-splash-screen';
 import {LogBox} from 'react-native';
+import {globalState} from 'src/app/global-state';
 
 const RootComponent: FC = () => {
   const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
-  LogBox.ignoreAllLogs();
+  // LogBox.ignoreAllLogs();
 
   React.useEffect(() => {
     auth().onAuthStateChanged((userState) => {
@@ -116,5 +117,31 @@ const RootComponent: FC = () => {
 };
 
 RootComponent.displayName = nameof(RootComponent);
+//
+// const App: LazyExoticComponent<any> = React.lazy(async () => {
+//   await globalState.initialize();
+//
+//   return {
+//     default: RootComponent,
+//   };
+// });
+//
+// const AppEntry: FC = () => {
+//   React.useEffect(() => {
+//     SplashScreen.hide();
+//   }, []);
+//
+//   return (
+//     <Suspense fallback={null}>
+//       <App />
+//     </Suspense>
+//   );
+// };
+//
+// AppEntry.displayName = nameof(AppEntry);
+//
+// AppRegistry.registerComponent(appName, () => {
+//   return AppEntry;
+// });
 
 export default RootComponent;

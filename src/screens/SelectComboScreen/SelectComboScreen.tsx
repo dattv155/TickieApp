@@ -8,7 +8,6 @@ import {
   ListRenderItem,
   FlatList,
   ListRenderItemInfo,
-  TextInput,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -19,9 +18,10 @@ import {atomicStyles} from 'src/styles';
 import SummaryComponent from 'src/screens/SelectComboScreen/component/SummaryComponent/SummaryComponent';
 import PaymentScreen from 'src/screens/PaymentScreen/PaymentScreen';
 import {bookingService} from 'src/services/booking-service';
-import {SelectedCombo} from 'src/services/booking-service/use-combo';
 import {formatToCurrency} from 'src/helpers/string-helper';
 import {useTranslation} from 'react-i18next/';
+import {globalState} from 'src/app/global-state';
+import {ComboSet} from 'src/models/ComboSet';
 
 /**
  * File: SelectComboScreen.tsx
@@ -36,24 +36,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const {
-    movieName,
-    movieType,
-    movieFormat,
-    cinemaName,
-    movieDate,
-    showTime,
-    pickingSeats,
-    listLabel,
-    seatCost,
-    moviePoster,
-  } = route?.params;
-
-  const [inputVoucher, setInputVoucher] = React.useState('');
-
-  const [listSelectCombo, setListSelectCombo] = React.useState<SelectedCombo[]>(
-    [],
-  );
+  const [listSelectCombo, setListSelectCombo] = React.useState<ComboSet[]>([]);
 
   const [comboCost, setComboCost] = React.useState<number>(0);
 
@@ -62,7 +45,7 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
   );
 
   const handleListCombo = React.useCallback(
-    (comboSelected: SelectedCombo) => {
+    (comboSelected: ComboSet) => {
       const list = handleDeleteDuplicate(listSelectCombo, comboSelected);
 
       if (list > -1) {
@@ -101,36 +84,20 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
     [handleListCombo],
   );
 
-  const handleGotoPaymentScreen = React.useCallback(() => {
-    navigation.navigate(PaymentScreen.displayName, {
-      movieName,
-      movieType,
-      movieFormat,
-      cinemaName,
-      movieDate,
-      showTime,
-      pickingSeats,
-      listLabel,
-      seatCost,
-      listSelectCombo,
-      comboCost,
-      moviePoster,
+  const [bookingData] = globalState.useBookingData();
+
+  const handleGlobalState = React.useCallback(async () => {
+    await globalState.setBookingData({
+      ...bookingData,
+      combos: listSelectCombo,
+      comboCost: comboCost,
     });
-  }, [
-    cinemaName,
-    comboCost,
-    listLabel,
-    listSelectCombo,
-    movieDate,
-    movieFormat,
-    movieName,
-    moviePoster,
-    movieType,
-    navigation,
-    pickingSeats,
-    seatCost,
-    showTime,
-  ]);
+  }, [bookingData, comboCost, listSelectCombo]);
+
+  const handleGotoPaymentScreen = React.useCallback(async () => {
+    await handleGlobalState();
+    navigation.navigate(PaymentScreen.displayName);
+  }, [handleGlobalState, navigation]);
   return (
     <>
       <DefaultLayout

@@ -1,31 +1,16 @@
 import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {StackScreenProps} from '@react-navigation/stack';
-
-export interface Combo {
-  comboID: number;
-  name: string;
-  amount: number;
-  detail: {
-    type: string;
-    quantity: number;
-  }[];
-}
-
-export interface SelectedCombo {
-  comboID: number;
-  name: string;
-  count: number;
-  amount: number;
-}
+import {ComboSet} from 'src/models/ComboSet';
+import {ComboInfo} from 'src/models/ComboInfo';
 
 export function useCombo(
   navigation: StackScreenProps<any>['navigation'],
 ): [
-  Combo[],
-  (listComboSelected: SelectedCombo[], currentCombo: SelectedCombo) => number,
+  ComboInfo[],
+  (listComboSelected: ComboSet[], currentCombo: ComboSet) => number,
 ] {
-  const [comboList, setComboList] = React.useState<Combo[]>([]);
+  const [comboList, setComboList] = React.useState<ComboInfo[]>([]);
   const handleGetData = React.useCallback(async () => {
     return firestore()
       .collection('combos')
@@ -36,10 +21,7 @@ export function useCombo(
   }, []);
 
   const handleDeleteDuplicate = React.useCallback(
-    (
-      listComboSelected: SelectedCombo[],
-      currentCombo: SelectedCombo,
-    ): number => {
+    (listComboSelected: ComboSet[], currentCombo: ComboSet): number => {
       let index = listComboSelected.findIndex(function (selectedCombo) {
         return selectedCombo.comboID === currentCombo.comboID;
       });
@@ -55,7 +37,7 @@ export function useCombo(
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      const combo = (await handleGetData()) as Combo[];
+      const combo = (await handleGetData()) as ComboInfo[];
       setComboList(combo);
     });
   }, [handleGetData, navigation]);

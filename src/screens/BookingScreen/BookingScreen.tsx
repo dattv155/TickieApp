@@ -25,8 +25,8 @@ import {showError} from 'src/helpers/toast';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
 import {useTranslation} from 'react-i18next/';
-import {MovieBooking} from 'src/models/MovieBooking';
 import {globalState} from 'src/app/global-state';
+import auth from '@react-native-firebase/auth';
 
 /**
  * File: BookingScreen.tsx
@@ -191,29 +191,17 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     [currentSelectedCinema, currentSelectedShowtime, handleChooseCinema],
   );
 
-  const bookingData: MovieBooking = globalState.useBookingData();
+  const [bookingData] = globalState.useBookingData();
 
-  const handleGotoChooseSeatScreen = React.useCallback(async () => {
-    if (currentSelectedShowtime === '' || currentSelectedCinema === '') {
-      showError('Hãy chọn lịch chiếu');
-      return;
-    }
+  const handleGlobalState = React.useCallback(async () => {
     if (data) {
       await globalState.setBookingData({
         ...bookingData,
+        userId: auth().currentUser.uid,
         date: data?.Day,
-        filmType: currentFormat,
+        cinemaFormat: currentFormat,
         cinemaName: currentSelectedCinema,
         time: currentSelectedShowtime,
-      });
-      navigation.navigate(ChooseSeatScreen.displayName, {
-        movieName: movieInfo?.Name,
-        movieType: movieInfo?.Type,
-        movieFormat: currentFormat,
-        cinemaName: currentSelectedCinema,
-        movieDate: data?.Day,
-        showTime: currentSelectedShowtime,
-        moviePoster: movieInfo?.Poster,
       });
     }
   }, [
@@ -222,9 +210,22 @@ const BookingScreen: FC<PropsWithChildren<BookingScreenProps>> = (
     currentSelectedCinema,
     currentSelectedShowtime,
     data,
-    movieInfo.Name,
-    movieInfo.Poster,
-    movieInfo.Type,
+  ]);
+
+  const handleGotoChooseSeatScreen = React.useCallback(async () => {
+    if (currentSelectedShowtime === '' || currentSelectedCinema === '') {
+      showError('Hãy chọn lịch chiếu');
+      return;
+    }
+    if (data) {
+      await handleGlobalState();
+      navigation.navigate(ChooseSeatScreen.displayName);
+    }
+  }, [
+    currentSelectedCinema,
+    currentSelectedShowtime,
+    data,
+    handleGlobalState,
     navigation,
   ]);
 

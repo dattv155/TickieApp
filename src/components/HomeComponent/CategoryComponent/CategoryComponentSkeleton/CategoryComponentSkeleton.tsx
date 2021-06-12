@@ -23,8 +23,8 @@ const CategoryComponentSkeleton: FC<
     <SkeletonPlaceholder>
       <View
         style={{
-          height: ITEM_HEIGHT,
-          width: ITEM_WIDTH,
+          height: 336,
+          width: 252,
           borderRadius: 39,
         }}
       />

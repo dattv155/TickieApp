@@ -22,10 +22,9 @@ export function useCombo(
 
   const handleDeleteDuplicate = React.useCallback(
     (listComboSelected: ComboSet[], currentCombo: ComboSet): number => {
-      let index = listComboSelected.findIndex(function (selectedCombo) {
+      return listComboSelected.findIndex(function (selectedCombo) {
         return selectedCombo.comboID === currentCombo.comboID;
       });
-      return index;
       // if (index > -1) {
       //   let list = listComboSelected.splice(index, 1);
       //   return [...list];
@@ -36,10 +35,14 @@ export function useCombo(
   );
 
   React.useEffect(() => {
-    return navigation.addListener('focus', async () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       const combo = (await handleGetData()) as ComboInfo[];
       setComboList(combo);
     });
+
+    return function cleanup() {
+      unsubscribe();
+    };
   }, [handleGetData, navigation]);
 
   return [comboList, handleDeleteDuplicate];

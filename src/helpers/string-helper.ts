@@ -1,11 +1,10 @@
 import {ComboInfo} from 'src/models/ComboInfo';
 import {ComboSet} from 'src/models/ComboSet';
-import React from 'react';
 import {SeatPosition} from 'src/models/SeatPosition';
 import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 
 export function formatToCurrency(num: number): string {
-  return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+  return num?.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 }
 
 export function convertPosToLabel(pos: SeatPosition) {
@@ -17,7 +16,7 @@ export function convertPosToLabel(pos: SeatPosition) {
 
 export function convertListSeatsLabel(listPos: SeatPosition[]): string {
   let list = '';
-  listPos.map((pos) => {
+  listPos?.map((pos) => {
     list = list + convertPosToLabel(pos) + ', ';
   });
   return list.substring(0, list.length - 2);
@@ -25,7 +24,7 @@ export function convertListSeatsLabel(listPos: SeatPosition[]): string {
 
 export function handleDetailCombo(combo: ComboInfo): string {
   let detailText = '';
-  combo.detail.map((detail) => {
+  combo?.detail?.map((detail) => {
     detailText += detail.type + '(x' + detail.quantity + '); ';
   });
   return detailText;
@@ -40,4 +39,11 @@ export function handleListCombo(listCombo: ComboSet[]) {
     return text.substring(0, text.length - 2);
   }
   return text;
+}
+
+export function numberOfLines(title: string, lengthChar?: number) {
+  return (
+    title?.substr(0, lengthChar ?? 20) +
+    (title?.length > (lengthChar ?? 20) ? '...' : '')
+  );
 }

@@ -67,8 +67,9 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
       ...bookingData,
       position: pickingSeats,
       seatCost: seatCost,
+      listLabelSeats: listLabel,
     });
-  }, [bookingData, pickingSeats, seatCost]);
+  }, [bookingData, listLabel, pickingSeats, seatCost]);
 
   const handleGotoSelectComboScreen = React.useCallback(async () => {
     if (pickingSeats.length === 0) {

@@ -20,9 +20,9 @@ import SelectComboScreen from 'src/screens/SelectComboScreen/SelectComboScreen';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
 import {bookingService} from 'src/services/booking-service';
 import {formatToCurrency} from 'src/helpers/string-helper';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {useTranslation} from 'react-i18next/';
 import {showError} from 'src/helpers/toast';
+import {globalState} from 'src/app/global-state';
 
 /**
  * File: ChooseSeatScreen.tsx
@@ -30,19 +30,6 @@ import {showError} from 'src/helpers/toast';
  * @author TrongDat <trongdat1505@gmail.com>
  * @type {FC<PropsWithChildren<ChooseSeatScreenProps>>}
  */
-export interface Position {
-  row: number;
-  column: number;
-}
-export interface BookingData {
-  movieName: string;
-  date: FirebaseFirestoreTypes.Timestamp;
-  time: string;
-  cinemaName: string;
-  filmID: number;
-  filmType: string;
-  position: Position[];
-}
 
 const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
   props: PropsWithChildren<ChooseSeatScreenProps>,
@@ -51,15 +38,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const {
-    movieName,
-    movieType,
-    movieFormat,
-    cinemaName,
-    movieDate,
-    showTime,
-    moviePoster,
-  } = route?.params;
+  const [bookingData] = globalState.useBookingData();
 
   const [
     seatCost,
@@ -73,14 +52,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     isClear,
     handleClear,
     fetchData,
-  ] = bookingService.useBooking(
-    movieName,
-    movieDate,
-    movieFormat,
-    cinemaName,
-    showTime,
-    navigation,
-  );
+  ] = bookingService.useBooking();
 
   const [refreshing, setRefreshing] = React.useState<boolean>(false);
 
@@ -90,36 +62,22 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     await setRefreshing(false);
   }, [fetchData]);
 
-  const handleGotoSelectComboScreen = React.useCallback(() => {
+  const handleGlobalState = React.useCallback(async () => {
+    await globalState.setBookingData({
+      ...bookingData,
+      position: pickingSeats,
+      seatCost: seatCost,
+    });
+  }, [bookingData, pickingSeats, seatCost]);
+
+  const handleGotoSelectComboScreen = React.useCallback(async () => {
     if (pickingSeats.length === 0) {
       showError('Hãy chọn vị trí ngồi');
       return;
     }
-    navigation.navigate(SelectComboScreen.displayName, {
-      movieName,
-      movieType,
-      movieFormat,
-      cinemaName,
-      movieDate,
-      showTime,
-      pickingSeats,
-      listLabel,
-      seatCost,
-      moviePoster,
-    });
-  }, [
-    cinemaName,
-    listLabel,
-    movieDate,
-    movieFormat,
-    movieName,
-    moviePoster,
-    movieType,
-    navigation,
-    pickingSeats,
-    seatCost,
-    showTime,
-  ]);
+    await handleGlobalState();
+    navigation.navigate(SelectComboScreen.displayName);
+  }, [handleGlobalState, navigation, pickingSeats.length]);
 
   const handleGoBack = React.useCallback(() => {
     navigation.goBack();
@@ -154,13 +112,13 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
               atomicStyles.textBlue,
               styles.textStyle,
             ]}>
-            {movieName}
+            {bookingData.movieName}
           </Text>
           <Text style={[atomicStyles.h4, atomicStyles.bold, styles.textStyle]}>
-            {cinemaName}
+            {bookingData.cinemaName}
           </Text>
           <Text style={[atomicStyles.h5, styles.textStyle]}>
-            {handleTimestamp(movieDate.seconds)}, {showTime}
+            {handleTimestamp(bookingData.date.seconds)}, {bookingData.time}
           </Text>
         </View>
         <View style={styles.screen}>

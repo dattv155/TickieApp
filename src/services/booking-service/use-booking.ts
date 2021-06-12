@@ -4,18 +4,12 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 import {SEAT_PRICE} from 'src/config/consts';
-import {StackScreenProps} from '@react-navigation/stack';
 import {SeatPosition} from 'src/models/SeatPosition';
 import {MovieBooking} from 'src/models/MovieBooking';
+import {globalState} from 'src/app/global-state';
+import {useNavigation} from '@react-navigation/native';
 
-export function useBooking(
-  movieName: string,
-  movieDate: FirebaseFirestoreTypes.Timestamp,
-  movieFormat: string,
-  cinemaName: string,
-  showTime: string,
-  navigation: StackScreenProps<any>['navigation'],
-): [
+export function useBooking(): [
   number,
   SeatPosition[],
   Dispatch<SetStateAction<SeatPosition[]>>,
@@ -28,6 +22,10 @@ export function useBooking(
   () => void,
   () => Promise<void>,
 ] {
+  const navigation = useNavigation();
+
+  const [bookingData] = globalState.useBookingData();
+
   const [seatCost, setSeatCost] = React.useState<number>(0);
 
   const [selectedList, setSelectedList] = React.useState<SeatPosition[]>([]);
@@ -43,15 +41,20 @@ export function useBooking(
   const handleGetData = React.useCallback(async () => {
     return firestore()
       .collection('bookings')
-      .where('movieName', '==', movieName)
-      .where('date', '==', movieDate)
-      .where('filmType', '==', movieFormat)
-      .where('time', '==', showTime)
+      .where('movieName', '==', bookingData.movieName)
+      .where('date', '==', bookingData.date)
+      .where('cinemaFormat', '==', bookingData.cinemaFormat)
+      .where('time', '==', bookingData.time)
       .get()
       .then((documentData) => {
         return documentData.docs.map((item) => item.data());
       });
-  }, [movieDate, movieFormat, movieName, showTime]);
+  }, [
+    bookingData.cinemaFormat,
+    bookingData.date,
+    bookingData.movieName,
+    bookingData.time,
+  ]);
 
   const fetchData = React.useCallback(async () => {
     const result = (await handleGetData()) as MovieBooking[];
@@ -83,7 +86,6 @@ export function useBooking(
   const convertPosToLabel = React.useCallback((pos: SeatPosition) => {
     let labelRow = CinemaLayoutSmall[0].label.row[pos.row];
     let labelColumn = CinemaLayoutSmall[0].label.column[pos.column];
-    // console.log(pos.row);
     labelColumn = Number(labelColumn) > 9 ? labelColumn : '0' + labelColumn;
     return labelRow + labelColumn;
   }, []);

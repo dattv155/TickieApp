@@ -3,8 +3,10 @@ import nameof from 'ts-nameof.macro';
 import styles from './ComboComponent.scss';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
-import {Combo, SelectedCombo} from 'src/services/booking-service/use-combo';
 import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
+import {handleDetailCombo} from 'src/helpers/string-helper';
+import {ComboSet} from 'src/models/ComboSet';
+import {ComboInfo} from 'src/models/ComboInfo';
 
 /**
  * File: ComboComponent.tsx
@@ -44,17 +46,6 @@ const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
       }));
   }, [combo.amount, combo.comboID, combo.name, handleCombo, numCombo]);
 
-  const handleDetail = React.useCallback(
-    (details: {type: string; quantity: number}[]): string => {
-      let detailText = '';
-      details.map((detail) => {
-        detailText += detail.type + '(x' + detail.quantity + '); ';
-      });
-      return detailText;
-    },
-    [],
-  );
-
   return (
     <>
       <View style={styles.container}>
@@ -69,7 +60,7 @@ const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
             {combo.name}
           </Text>
           <Text style={[atomicStyles.h6, styles.detailText]}>
-            {handleDetail(combo.detail)}
+            {handleDetailCombo(combo)}
           </Text>
         </View>
         <View style={styles.countArea}>
@@ -112,9 +103,9 @@ const ComboComponent: FC<PropsWithChildren<ComboComponentProps>> = (
 
 export interface ComboComponentProps {
   //
-  combo: Combo;
+  combo: ComboInfo;
 
-  handleCombo?: (numCombo: SelectedCombo) => void;
+  handleCombo?: (numCombo: ComboSet) => void;
 }
 
 ComboComponent.defaultProps = {

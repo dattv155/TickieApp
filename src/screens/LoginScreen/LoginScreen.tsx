@@ -85,7 +85,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
     setLoading(false);
   };
 
-  const _onSignUpPressed = React.useCallback(() => {
+  const _onSignUpPressed = React.useCallback(async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
 
@@ -106,7 +106,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
     }
 
     if (password.value === rePassword) {
-      const response = signInUser({
+      const response = await signInUser({
         email: email.value,
         password: password.value,
       });

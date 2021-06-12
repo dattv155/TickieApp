@@ -20,8 +20,12 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import {useTranslation} from 'react-i18next';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import HomeScreen from 'src/screens/HomeScreen/HomeScreen';
-import {SelectedCombo} from 'src/services/booking-service/use-combo';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
+import {globalState} from 'src/app/global-state';
+import {
+  convertListSeatsLabel,
+  handleListCombo,
+} from 'src/helpers/string-helper';
 
 /**
  * File: SuccessBookingScreen.tsx
@@ -36,35 +40,18 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const {
-    movieName,
-    cinemaName,
-    movieDate,
-    showTime,
-    pickingSeats,
-    listLabel,
-    seatCost,
-    listSelectCombo,
-    comboCost,
-    totalCost,
-    moviePoster,
-  } = route?.params;
+  const [bookingData] = globalState.useBookingData();
 
-  const handleGoToHomeScreen = React.useCallback(() => {
+  const handleGoToHomeScreen = React.useCallback(async () => {
+    await globalState.resetNewBookingData();
     navigation.navigate(nameof(HomeScreen));
   }, [navigation]);
 
-  const handleListCombo = React.useCallback((listCombo: SelectedCombo[]) => {
-    let text = '';
-    listCombo.map((combo) => {
-      text = text + combo.count + ' ' + combo.name + ', ';
-    });
-    return text.substring(0, text.length - 2);
-  }, []);
-
   const [, handleGetDay] = UseTimestamp();
 
-  const dateAndShowTime = `${showTime} ${handleGetDay(movieDate)}`;
+  const dateAndShowTime = `${bookingData.time} ${handleGetDay(
+    bookingData.date.seconds,
+  )}`;
 
   return (
     <>
@@ -114,7 +101,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                 style={styles.darkerLayer}
               />
               <Image
-                source={{uri: moviePoster}}
+                source={{uri: bookingData.poster}}
                 resizeMode="cover"
                 style={styles.imageView}
               />
@@ -127,7 +114,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                       atomicStyles.bold,
                       styles.textStyle,
                     ]}>
-                    {movieName}
+                    {bookingData.movieName}
                   </Text>
                   <Text
                     style={[
@@ -136,20 +123,27 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                       // atomicStyles.bold,
                       styles.textStyle,
                     ]}>
-                    180 phút - IMAX
+                    {bookingData.movieTotalTime} phút -{' '}
+                    {bookingData.cinemaFormat}
                   </Text>
                 </View>
 
-                <TextItemView label="Mã vé" value="18022123214" />
+                <TextItemView label="Mã vé" value={bookingData.bookingId} />
                 <TextItemView label="Thời gian" value={dateAndShowTime} />
-                <TextItemView label="Rạp" value={cinemaName} />
-                <TextItemView label="Phòng chiếu" value="2B" />
-                <TextItemView label="Chỗ ngồi" value={listLabel} />
+                <TextItemView label="Rạp" value={bookingData.cinemaName} />
+                <TextItemView label="Phòng chiếu" value="5A" />
+                <TextItemView
+                  label="Chỗ ngồi"
+                  value={convertListSeatsLabel(bookingData.position)}
+                />
                 <TextItemView
                   label="Set Combo"
-                  value={handleListCombo(listSelectCombo)}
+                  value={handleListCombo(bookingData.combos)}
                 />
-                <TextItemView label="Giá" value={totalCost} />
+                <TextItemView
+                  label="Giá"
+                  value={bookingData.totalCost.toString()}
+                />
               </View>
 
               <SvgIcon

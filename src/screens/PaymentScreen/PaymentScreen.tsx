@@ -20,17 +20,18 @@ import RadioButton from 'src/components/RadioButton/RadioButton';
 import {PaymentMethod} from 'src/sample/paymentMethod';
 import {fomatNumberToMoney} from 'src/helpers/fomat-number-to-money';
 import Toast from 'react-native-simple-toast';
-import {SelectedCombo} from 'src/services/booking-service/use-combo';
-import {formatToCurrency} from 'src/helpers/string-helper';
+import {
+  convertListSeatsLabel,
+  formatToCurrency,
+  handleListCombo,
+} from 'src/helpers/string-helper';
 import {UseTimestamp} from 'src/hooks/use-timestamp';
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
 import {useTranslation} from 'react-i18next';
 import {pushNotificationFirestoreBookingSuccessful} from 'src/services/push-notification-firestore';
 import {LocalNotification} from 'src/services/local-push-notification';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import moment from 'moment';
-import {Position} from 'src/screens/ChooseSeatScreen/ChooseSeatScreen';
 import {showWarning} from 'src/helpers/toast';
 import LineBlock from 'src/components/morecules/LineBlock/LineBlock';
 import {useBoolean} from 'react3l-common';
@@ -41,6 +42,9 @@ import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import {MovieBooking} from 'src/models/MovieBooking';
+import {globalState} from 'src/app/global-state';
+import 'react-native-get-random-values';
+import {customAlphabet} from 'nanoid';
 
 /**
  * File: PaymentScreen.tsx
@@ -55,40 +59,15 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const {
-    movieName,
-    movieType,
-    movieFormat,
-    cinemaName,
-    movieDate,
-    showTime,
-    pickingSeats,
-    listLabel,
-    seatCost,
-    listSelectCombo,
-    comboCost,
-    moviePoster,
-  } = route?.params;
+  const [bookingData] = globalState.useBookingData();
 
   const [, handleGetDay] = UseTimestamp();
 
   const [voucherSelected, setVoucherSelected] = React.useState<Voucher>(null);
 
   const [totalCost, setTotalCost] = React.useState<number>(
-    seatCost + comboCost,
+    bookingData.seatCost + bookingData.comboCost,
   );
-
-  const allInfoInOne: MovieBooking = {
-    cinemaName: cinemaName,
-    combos: listSelectCombo,
-    date: movieDate,
-    filmType: movieFormat,
-    movieName: movieName,
-    position: pickingSeats,
-    time: showTime,
-    totalCost: totalCost,
-    movieInfoType: movieType,
-  };
 
   const [
     voucherModalVisible,
@@ -106,21 +85,11 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   );
 
   const [
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
     handleChangeAmount,
     handleSendRequest,
     handleChangePayment,
     paymentResponseStatus,
-  ] = momoService.usePayment(allInfoInOne);
+  ] = momoService.usePayment();
 
   const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
 
@@ -128,91 +97,40 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     translate('bookingScreen.paymentScreen.confirmPayment'),
   );
 
-  const handleGotoSuccessBookingScreen = React.useCallback(() => {
-    navigation.navigate(SuccessBookingScreen.displayName, {
-      movieName,
-      cinemaName,
-      movieDate,
-      showTime,
-      pickingSeats,
-      listLabel,
-      seatCost,
-      listSelectCombo,
-      comboCost,
-      totalCost,
-      moviePoster,
-    });
-  }, [
-    cinemaName,
-    comboCost,
-    listLabel,
-    listSelectCombo,
-    movieDate,
-    movieName,
-    moviePoster,
-    navigation,
-    pickingSeats,
-    seatCost,
-    showTime,
-    totalCost,
-  ]);
-
-  const handleListCombo = React.useCallback((listCombo: SelectedCombo[]) => {
-    let text = '';
-    listCombo.map((combo) => {
-      text = text + combo.count + ' ' + combo.name + ', ';
-    });
-    return text.substring(0, text.length - 2);
-  }, []);
-
-  const handleListPosSeat = React.useCallback((listPosition: number[][]) => {
-    let listPos: Position[] = [];
-    listPosition.map((pos) => {
-      listPos.push({row: pos[0], column: pos[1]});
-    }, []);
-    return listPos;
-  }, []);
+  const handleGotoSuccessBookingScreen = React.useCallback(async () => {
+    navigation.navigate(SuccessBookingScreen.displayName);
+  }, [navigation]);
 
   const handleSaveDataBooking = React.useCallback(async () => {
-    const data = {
-      userId: auth().currentUser.uid,
-      date: movieDate,
-      filmType: movieFormat,
-      movieName: movieName,
-      cinemaName: cinemaName,
-      time: showTime,
-      combos: listSelectCombo,
-      position: handleListPosSeat(pickingSeats),
+    const nanoid = customAlphabet('0123456789-', 15);
+    const dataSync: MovieBooking = {
+      ...bookingData,
+      voucher: voucherSelected,
       totalCost: totalCost,
-      Poster: moviePoster,
+      bookingMoment: moment().toISOString(true),
+      paymentMethod: paymentMethodKey,
+      bookingId: nanoid(),
     };
+
+    await globalState.setBookingData(dataSync);
+
     await firestore()
       .collection('bookings')
       .doc(moment().toISOString(true))
-      .set(data);
-  }, [
-    cinemaName,
-    handleListPosSeat,
-    listSelectCombo,
-    movieDate,
-    movieFormat,
-    movieName,
-    moviePoster,
-    pickingSeats,
-    showTime,
-    totalCost,
-  ]);
+      .set(dataSync);
+  }, [bookingData, paymentMethodKey, totalCost, voucherSelected]);
 
   React.useEffect(() => {
     if (voucherSelected) {
       setTotalCost(
-        ((seatCost + comboCost) * (100 - voucherSelected.discountPercent)) /
+        ((bookingData.seatCost + bookingData.comboCost) *
+          (100 - voucherSelected.discountPercent)) /
           100,
       );
     } else {
-      setTotalCost(seatCost + comboCost);
+      setTotalCost(bookingData.seatCost + bookingData.comboCost);
     }
-  }, [comboCost, seatCost, voucherSelected]);
+  }, [bookingData.comboCost, bookingData.seatCost, voucherSelected]);
 
   const handlePay = React.useCallback(async () => {
     if (paymentMethodKey === 'momo') {
@@ -227,9 +145,9 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       handleSendRequest();
       if (paymentResponseStatus === 'Successful') {
         await handleSaveDataBooking();
-        pushNotificationFirestoreBookingSuccessful(movieName);
-        LocalNotification(movieName);
-        handleGotoSuccessBookingScreen();
+        pushNotificationFirestoreBookingSuccessful(bookingData.movieName);
+        LocalNotification(bookingData.movieName);
+        await handleGotoSuccessBookingScreen();
       }
     } else if (paymentMethodKey === 'credit') {
       Toast.show('Đang phát triển');
@@ -237,21 +155,21 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       Toast.show('Đang phát triển');
     } else if (paymentMethodKey === 'offline') {
       await handleSaveDataBooking();
-      pushNotificationFirestoreBookingSuccessful(movieName);
-      LocalNotification(movieName);
-      handleGotoSuccessBookingScreen();
+      pushNotificationFirestoreBookingSuccessful(bookingData.movieName);
+      LocalNotification(bookingData.movieName);
+      await handleGotoSuccessBookingScreen();
     } else {
       showWarning(
         translate('bookingScreen.paymentScreen.pleaseChoosePaymentMethod'),
       );
     }
   }, [
+    bookingData.movieName,
     handleChangeAmount,
     handleChangePayment,
     handleGotoSuccessBookingScreen,
     handleSaveDataBooking,
     handleSendRequest,
-    movieName,
     paymentMethodKey,
     paymentResponseStatus,
     totalCost,
@@ -288,8 +206,8 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
       </View>
       <ButtonMain
         label={translate('bookingScreen.paymentScreen.yesPayment')}
-        onPress={() => {
-          handlePay();
+        onPress={async () => {
+          await handlePay();
           confirmRef.current.snapTo(1);
         }}
       />
@@ -343,7 +261,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
           <View style={styles.containerView}>
             <View style={styles.information}>
               <Image
-                source={{uri: moviePoster}}
+                source={{uri: bookingData.poster}}
                 resizeMode="cover"
                 style={styles.infoImage}
               />
@@ -355,10 +273,10 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                     atomicStyles.textBlue,
                     styles.textStyle,
                   ]}>
-                  {movieName}
+                  {bookingData.movieName}
                 </Text>
                 <Text style={[atomicStyles.h6, styles.infoType]}>
-                  {movieType}
+                  {bookingData.movieInfoType}
                 </Text>
                 <Text style={[atomicStyles.h6, styles.infoType]}>
                   {translate('bookingScreen.paymentScreen.cinema')}:{' '}
@@ -368,7 +286,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                       atomicStyles.textBlue,
                       styles.textStyle,
                     ]}>
-                    {cinemaName}
+                    {bookingData.cinemaName}
                   </Text>
                 </Text>
                 <Text style={[atomicStyles.h6, styles.infoType]}>
@@ -379,7 +297,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                       atomicStyles.textBlue,
                       styles.textStyle,
                     ]}>
-                    {movieFormat}
+                    {bookingData.cinemaFormat}
                   </Text>
                 </Text>
               </View>
@@ -396,7 +314,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                     atomicStyles.textBlue,
                     styles.textStyle,
                   ]}>
-                  {handleGetDay(movieDate.seconds)}
+                  {handleGetDay(bookingData?.date.seconds)}
                 </Text>
               </View>
               <View style={styles.detailBlock}>
@@ -410,7 +328,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                     atomicStyles.textBlue,
                     styles.textStyle,
                   ]}>
-                  {showTime}
+                  {bookingData.time}
                 </Text>
               </View>
               <View style={styles.detailBlock}>
@@ -424,7 +342,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                     atomicStyles.textBlue,
                     styles.textStyle,
                   ]}>
-                  {listLabel}
+                  {convertListSeatsLabel(bookingData.position)}
                 </Text>
               </View>
             </View>
@@ -438,7 +356,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
                   atomicStyles.bold,
                   styles.comboDetail,
                 ]}>
-                {handleListCombo(listSelectCombo)}
+                {handleListCombo(bookingData.combos)}
               </Text>
             </View>
             <View style={styles.paymentArea}>

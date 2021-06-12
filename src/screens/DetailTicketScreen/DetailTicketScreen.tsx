@@ -10,10 +10,11 @@ import TextItemView from 'src/screens/DetailTicketScreen/components/TextItemView
 import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/HeaderIconPlaceholder';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import moment from 'moment';
-import {formatToCurrency} from 'src/helpers/string-helper';
-import {SeatPosition} from 'src/models/SeatPosition';
-import {ComboSet} from 'src/models/ComboSet';
-import firestore from '@react-native-firebase/firestore';
+import {
+  convertListSeatsLabel,
+  formatToCurrency,
+  handleListCombo,
+} from 'src/helpers/string-helper';
 import {useTranslation} from 'react-i18next/';
 
 /**
@@ -27,54 +28,13 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
 ): ReactElement => {
   const {navigation, route} = props;
 
-  const {data} = route?.params;
+  const {movieTicket} = route?.params;
 
-  const timeDate = `${data.time} ${moment(data.date.toDate()).format('DD/MM')}`;
+  const timeDate = `${movieTicket?.time} ${moment(
+    movieTicket?.date?.toDate(),
+  ).format('DD/MM')}`;
 
   const [translate] = useTranslation();
-
-  const changeSeat = React.useCallback((column: number, row: number) => {
-    switch (row) {
-      case 1:
-        return 'A' + column;
-
-      case 2:
-        return 'B' + column;
-
-      case 3:
-        return 'C' + column;
-
-      case 4:
-        return 'D' + column;
-
-      case 5:
-        return 'E' + column;
-
-      case 6:
-        return 'F' + column;
-
-      case 7:
-        return 'G' + column;
-
-      case 8:
-        return 'H' + column;
-
-      case 9:
-        return 'I' + column;
-    }
-  }, []);
-
-  const [imageLink, setImageLink] = React.useState<string>(
-    'https://www.google.com/url?sa=i&url=http%3A%2F%2Fguicaniemtin.vn%2FDefault.aspx%3FPage%3Dket-noi-chuyen-mon-list%26cid%3D36&psig=AOvVaw27Ea1H7cMf6RlTRSXS6sdT&ust=1623263472710000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJCfqujViPECFQAAAAAdAAAAABAD',
-  );
-
-  firestore()
-    .collection('movie')
-    .where('Name', '==', data.movieName)
-    .get()
-    .then((documentData) => {
-      setImageLink(documentData.docs[0].data().Poster);
-    });
 
   return (
     <>
@@ -107,7 +67,7 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
               style={styles.darkerLayer}
             />
             <Image
-              source={{uri: imageLink}}
+              source={{uri: movieTicket?.poster}}
               resizeMode="cover"
               style={styles.imageView}
             />
@@ -120,7 +80,7 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
                     atomicStyles.bold,
                     styles.textStyle,
                   ]}>
-                  {data.movieName}
+                  {movieTicket?.movieName}
                 </Text>
                 <Text
                   style={[
@@ -129,13 +89,14 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
                     // atomicStyles.bold,
                     styles.textStyle,
                   ]}>
-                  180 phút - IMAX
+                  {movieTicket?.movieTotalTime} phút -{' '}
+                  {movieTicket?.cinemaFormat}
                 </Text>
               </View>
 
               <TextItemView
                 label={translate('movieDetail.code')}
-                value="18022123214"
+                value={movieTicket?.bookingId}
               />
               <TextItemView
                 label={translate('movieDetail.time')}
@@ -143,32 +104,20 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
               />
               <TextItemView
                 label={translate('movieDetail.cinema')}
-                value={data.cinemaName}
+                value={movieTicket?.cinemaName}
               />
-              <TextItemView label={translate('movieDetail.room')} value="2B" />
+              <TextItemView label={translate('movieDetail.room')} value="5A" />
               <TextItemView
                 label={translate('movieDetail.seats')}
-                value={data.position.map((pos: SeatPosition, index: number) => {
-                  return index === data.position.length - 1
-                    ? changeSeat(pos.column, pos.row)
-                    : changeSeat(pos.column, pos.row) + ', ';
-                })}
+                value={convertListSeatsLabel(movieTicket?.position)}
               />
               <TextItemView
                 label={translate('movieDetail.setCombo')}
-                value={
-                  data.combos.length > 1
-                    ? data.combos.map((combo: ComboSet) => {
-                        return combo.count + ' ' + combo.name + '\n';
-                      })
-                    : data.combos.length
-                    ? data.combos[0].count + ' ' + data.combos[0].name
-                    : ''
-                }
+                value={handleListCombo(movieTicket?.combos)}
               />
               <TextItemView
                 label={translate('movieDetail.price')}
-                value={formatToCurrency(data.totalCost) + ' VND'}
+                value={formatToCurrency(movieTicket?.totalCost) + ' VND'}
               />
             </View>
 
@@ -179,7 +128,10 @@ const DetailTicketScreen: FC<PropsWithChildren<DetailTicketScreenProps>> = (
 
             <SvgIcon
               component={require('assets/TicketFrame/BarCode.svg')}
-              style={[styles.barCode, data.combos.length > 1 && {top: 580}]}
+              style={[
+                styles.barCode,
+                movieTicket?.combos.length > 1 && {top: 580},
+              ]}
             />
           </View>
         </SafeAreaView>

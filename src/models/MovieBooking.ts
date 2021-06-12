@@ -15,6 +15,7 @@ export class MovieBooking extends Model {
   public date?: FirebaseFirestoreTypes.Timestamp;
   public time?: string;
   public position?: SeatPosition[];
+  public listLabelSeats?: string;
   public combos?: ComboSet[];
   public poster?: string;
   public voucher?: Voucher;

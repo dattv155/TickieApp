@@ -23,9 +23,15 @@ import {useTranslation} from 'react-i18next/';
 const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
   props: PropsWithChildren<TicketItemViewProps>,
 ): ReactElement => {
-  const {film, theater, time, seat, image, ...restProps} = props;
+  const {film, theater, time, seat, image, onDelete, ...restProps} = props;
 
   const [translate] = useTranslation();
+
+  const handleDelete = React.useCallback(() => {
+    if (typeof onDelete === 'function') {
+      onDelete();
+    }
+  }, [onDelete]);
 
   const rightSwipe = (progress: any, dragX: any) => {
     const scale = dragX.interpolate({
@@ -35,7 +41,7 @@ const TicketItemView: FC<PropsWithChildren<TicketItemViewProps>> = (
       extrapolate: 'clamp',
     });
     return (
-      <TouchableOpacity onPress={() => {}} activeOpacity={0.6}>
+      <TouchableOpacity onPress={handleDelete} activeOpacity={0.6}>
         <View style={[styles.buttonDelete]}>
           <Animated.Text
             style={[
@@ -123,6 +129,7 @@ export interface TicketItemViewProps extends PressableProps {
   time?: string;
   seat?: string;
   image?: any;
+  onDelete?: () => void;
 }
 
 TicketItemView.defaultProps = {

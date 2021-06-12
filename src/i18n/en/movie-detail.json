@@ -1,10 +1,11 @@
 {
-  "movieDetail.header": "Ticket Detail",
+  "movieDetail.title": "{{time}} minutes - {{format}}",
   "movieDetail.code": "Ticket Code",
   "movieDetail.time": "Time",
   "movieDetail.cinema": "Cinema",
   "movieDetail.room": "Room",
   "movieDetail.seats": "Seats",
   "movieDetail.setCombo": "Set Combo",
-  "movieDetail.price": "Price"
+  "movieDetail.price": "Price",
+  "movieDetail.header": "Ticket Detail"
 }

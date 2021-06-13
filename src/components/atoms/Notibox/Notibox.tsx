@@ -2,12 +2,13 @@ import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './Notibox.scss';
 import {atomicStyles} from '../../../styles';
-import {Pressable, Text, TouchableOpacity, View} from 'react-native';
+import {Animated, Pressable, Text, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {Notification} from 'src/models/Notification';
 import {useTranslation} from 'react-i18next/';
 import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
+import {Swipeable} from 'react-native-gesture-handler';
 
 /**
  * File: ./Notibox.tsx
@@ -17,13 +18,13 @@ import MyTicketScreen from 'src/screens/MyTicketScreen/MyTicketScreen';
 const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
   props: PropsWithChildren<NotiboxProps>,
 ): ReactElement => {
+  const {data, onDelete, navigation} = props;
+
   const [title, setTitle] = React.useState('');
 
   const [translate] = useTranslation();
 
   const [displayComp, setDisplay] = React.useState('none');
-
-  const {data, navigation} = props;
 
   const {type, span, content, day} = data;
 
@@ -73,45 +74,80 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
     }
   }, [props.data, translate, type]);
 
-  return (
-    <View style={[styles.box]}>
-      <TouchableOpacity
-        activeOpacity={0.1}
-        style={styles.touchable}
-        onPress={press}>
-        <View style={styles.bigwrapper}>
-          <View style={styles.title}>
-            <Text
-              style={[
-                atomicStyles.h5,
-                atomicStyles.bold,
-                styles.textStyle,
-                atomicStyles.textBlue,
-              ]}>
-              {title}
-            </Text>
-            <Text style={[styles.hour, atomicStyles.h7]}>
-              {moment(day.toDate()).format('hh:mm A')}
-            </Text>
-          </View>
-          <View style={styles.wrapper}>
-            <Text style={[styles.content, atomicStyles.h6]}>{content}</Text>
-          </View>
-          <View style={{display: displayComp}}>
-            <Text style={[atomicStyles.h6]}>{span}</Text>
-            {isBookingNoti && (
-              <Pressable
-                style={styles.button}
-                onPress={handleGoToMyTicketScreen}>
-                <Text style={[atomicStyles.h6, atomicStyles.textWhite]}>
-                  Vé của bạn
-                </Text>
-              </Pressable>
-            )}
-          </View>
+  const handleDelete = React.useCallback(() => {
+    if (typeof onDelete === 'function') {
+      onDelete();
+    }
+  }, [onDelete]);
+
+  const rightSwipe = (progress: any, dragX: any) => {
+    const scale = dragX.interpolate({
+      inputRange: [-100, 0], //
+      outputRange: [1, 0],
+
+      extrapolate: 'clamp',
+    });
+    return (
+      <TouchableOpacity onPress={handleDelete} activeOpacity={0.6}>
+        <View style={[styles.buttonDelete]}>
+          <Animated.Text
+            style={[
+              {transform: [{scale: scale}]},
+              styles.buttonDeleteText,
+              atomicStyles.h4,
+              atomicStyles.textWhite,
+            ]}>
+            {translate('myTicket.delete')}
+          </Animated.Text>
         </View>
       </TouchableOpacity>
-    </View>
+    );
+  };
+
+  return (
+    <Swipeable renderRightActions={rightSwipe}>
+      <View style={[styles.box]}>
+        <TouchableOpacity
+          activeOpacity={0.1}
+          style={styles.touchable}
+          onPress={press}>
+          <View style={styles.bigwrapper}>
+            <View style={styles.title}>
+              <Text
+                style={[
+                  atomicStyles.h5,
+                  atomicStyles.bold,
+                  styles.textStyle,
+                  atomicStyles.textBlue,
+                ]}>
+                {title}
+              </Text>
+              <Text style={[styles.hour, atomicStyles.h7]}>
+                {moment(day.toDate()).format('hh:mm A')}
+              </Text>
+            </View>
+            <View style={styles.wrapper}>
+              <Text style={[styles.content, atomicStyles.h6]}>{content}</Text>
+            </View>
+            <View
+              style={
+                displayComp === 'none' ? {display: 'none'} : {display: 'flex'}
+              }>
+              <Text style={[atomicStyles.h6]}>{span}</Text>
+              {isBookingNoti && (
+                <Pressable
+                  style={styles.button}
+                  onPress={handleGoToMyTicketScreen}>
+                  <Text style={[atomicStyles.h6, atomicStyles.textWhite]}>
+                    Vé của bạn
+                  </Text>
+                </Pressable>
+              )}
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </Swipeable>
   );
 };
 
@@ -120,6 +156,8 @@ export interface NotiboxProps {
   data?: Notification;
 
   navigation?: any;
+
+  onDelete?: () => void;
 }
 
 export interface Data {

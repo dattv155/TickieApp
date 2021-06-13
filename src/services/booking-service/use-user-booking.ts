@@ -36,6 +36,7 @@ export function useUserBooking(): [MovieBooking[], boolean, () => void] {
   }, [fetchData, navigation]);
 
   const onRefresh = React.useCallback(async () => {
+    setLoading(true);
     await fetchData();
     setLoading(false);
   }, [fetchData]);

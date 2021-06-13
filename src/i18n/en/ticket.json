@@ -1,0 +1,7 @@
+{
+  "ticket.confirmDelete": "Cancel booking ticket",
+  "ticket.makeSureDelete": "Canceling tickets will not be refunded!",
+  "ticket.deleteDetail": "",
+  "ticket.yesDelete": "Confirm",
+  "ticket.cancelDelete": "Cancel"
+}

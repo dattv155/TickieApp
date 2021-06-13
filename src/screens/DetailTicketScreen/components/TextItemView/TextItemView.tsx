@@ -3,6 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './TextItemView.scss';
 import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
+import {numberOfLines} from 'src/helpers/string-helper';
 
 /**
  * File: TextItemView.tsx
@@ -28,7 +29,7 @@ const TextItemView: FC<PropsWithChildren<TextItemViewProps>> = (
       <Text
         style={[atomicStyles.textWhite, atomicStyles.h6, styles.textWidth]}
         numberOfLines={2}>
-        {value}
+        {`${numberOfLines(value, 20)}`}
       </Text>
     </View>
   );

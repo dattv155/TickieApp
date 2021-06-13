@@ -43,9 +43,9 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const fetchData = React.useCallback(async () => {
-    var exp: Array<Obj> = [];
+    let exp: Array<Obj> = [];
 
-    var dataGeneral = await firestore()
+    let dataGeneral = await firestore()
       .collection('notification')
       .doc('general')
       .collection('1')
@@ -54,7 +54,7 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
 
     dataGeneral.forEach((item) => exp.push(item.data()));
 
-    var dataSpecific = await firestore()
+    let dataSpecific = await firestore()
       .collection('notification')
       .doc('specific')
       .collection('1')
@@ -74,13 +74,33 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
   }, []);
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      fetchData();
+    const unsubscribe = navigation.addListener('focus', async () => {
+      await fetchData();
     });
     return function cleanup() {
       unsubscribe();
     };
   }, [fetchData, navigation]);
+
+  const handleDeleteNotification = React.useCallback(
+    async (notification: Notification) => {
+      const notiDelete = await firestore()
+        .collection('notification')
+        .doc('specific')
+        .collection('1')
+        .where('notificationId', '==', notification.notificationId)
+        .get();
+
+      const batch = firestore().batch();
+
+      notiDelete.forEach((doc) => {
+        batch.delete(doc.ref);
+      });
+
+      await batch.commit();
+    },
+    [],
+  );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -101,17 +121,17 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
                   <NotificationScreenSkeleton />
                 </View>
               ))
-            : list.map((notifiation, index) => {
+            : list.map((notification, index) => {
                 let realDay;
-                if (notifiation.day.toDate().getDate() === today.getDate()) {
+                if (notification.day.toDate().getDate() === today.getDate()) {
                   realDay = 'Hôm nay';
                 } else if (
-                  notifiation.day.toDate().getDate() ===
+                  notification.day.toDate().getDate() ===
                   today.getDate() - 1
                 ) {
                   realDay = 'Hôm qua';
                 } else {
-                  realDay = moment(notifiation.day.toDate()).format(
+                  realDay = moment(notification.day.toDate()).format(
                     'DD/MM/YYYY',
                   );
                 }
@@ -129,7 +149,14 @@ const NotificationScreen: FC<PropsWithChildren<NotificationScreenProps>> = (
                         ? translate('notification.yesterday')
                         : realDay}
                     </Text>
-                    <Notibox data={notifiation} navigation={navigation} />
+                    <Notibox
+                      data={notification}
+                      navigation={navigation}
+                      onDelete={async () => {
+                        await handleDeleteNotification(notification);
+                        onRefresh();
+                      }}
+                    />
                   </View>
                 );
               })}

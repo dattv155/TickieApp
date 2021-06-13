@@ -7,4 +7,5 @@ export class Notification extends Model {
   public span?: string;
   public type?: string;
   public userId?: string;
+  public notificationId?: string;
 }

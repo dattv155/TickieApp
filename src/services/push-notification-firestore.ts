@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
+import 'react-native-get-random-values';
 import {nanoid} from 'nanoid';
 import moment from 'moment';
 import {Notification} from 'src/models/Notification';

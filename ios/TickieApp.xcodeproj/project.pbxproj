@@ -16,52 +16,14 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* TickieAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TickieAppTests.m */; };
+		7141B768267DA5B60022A082 /* TickieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141B767267DA5B60022A082 /* TickieApp.swift */; };
+		7141B76A267DB4BC0022A082 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7141B769267DB4BC0022A082 /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8F7F69E033AA42E5BAE34840 /* SVN-GilroyBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 475515A1BDAD48DEB8C7EBFA /* SVN-GilroyBold.otf */; };
 		C06EFA1942E27AF24498081D /* libPods-TickieApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2AEA00DBD0FFA8680966FF /* libPods-TickieApp-tvOS.a */; };
 		C8D3307D707FECC112B0AB5B /* libPods-TickieApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC91D507C6C125FB25FE7E24 /* libPods-TickieApp-tvOSTests.a */; };
 		DB285756095885E0AD718018 /* libPods-TickieApp-TickieAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B07BE598C6A1028E0426C39E /* libPods-TickieApp-TickieAppTests.a */; };
-		71B5456441FE446C96BDEDFB /* SVN-Gilroy Black Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5E392620A4CA4291B64BE07B /* SVN-Gilroy Black Italic.otf */; };
-		8492CF7DE0F749AEA79D07CF /* SVN-Gilroy Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 549D5E6EA1714542A2A1E76F /* SVN-Gilroy Black.otf */; };
-		DFF26C3ED0FD4F61BF90B0F6 /* SVN-Gilroy Bold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF12DE1C7DBF46E89692AA60 /* SVN-Gilroy Bold Italic.otf */; };
-		86192CA3C07B41F7A8BC9A74 /* SVN-Gilroy Heavy Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B3B86F3583C412F93EC1629 /* SVN-Gilroy Heavy Italic.otf */; };
-		434AA84ACC9044F2BB7FC3E8 /* SVN-Gilroy Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9D42606CC05D4EA98DE937E8 /* SVN-Gilroy Italic.otf */; };
-		CF3D0ACCA7784AC489734038 /* SVN-Gilroy Light Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE2DC8CEAC4247808ACE50A0 /* SVN-Gilroy Light Italic.otf */; };
-		E25A6C46A0144A2BB8B09980 /* SVN-Gilroy Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F34C26B5C5E498AAB2512EA /* SVN-Gilroy Light.otf */; };
-		8AC9E8D088C74EE8A08FFCB5 /* SVN-Gilroy Medium Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 96382955AEA847C5A11CAFBD /* SVN-Gilroy Medium Italic.otf */; };
-		1580977CAE9B46C888349E81 /* SVN-Gilroy SemiBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 87A97BF7C66A4C6C8778703F /* SVN-Gilroy SemiBold Italic.otf */; };
-		29B7C65013B74760A73CB05B /* SVN-Gilroy SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A01339663D34D33B4A2A74E /* SVN-Gilroy SemiBold.otf */; };
-		5D2F8996E61446E5875A8ABB /* SVN-Gilroy Thin Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3446C2BDDD194D3F92208A88 /* SVN-Gilroy Thin Italic.otf */; };
-		817327A9920546CFACC99CAE /* SVN-Gilroy Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 368CA39A82A240B997F83519 /* SVN-Gilroy Thin.otf */; };
-		27D227AC797749EEAEB531D5 /* SVN-Gilroy XBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7AA5FC089697458A9FC62FC0 /* SVN-Gilroy XBold Italic.otf */; };
-		AC1AD871326E488C836FBD69 /* SVN-Gilroy XBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 46B46148E3394054A5420717 /* SVN-Gilroy XBold.otf */; };
-		8D47E30581DD414D8234F2B8 /* SVN-Gilroy Xlight Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA6C69F86170466DBF8B99EC /* SVN-Gilroy Xlight Italic.otf */; };
-		EED0C9563BAE45639531FE0A /* SVN-Gilroy Xlight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 700AC9271B2746FDBB064E08 /* SVN-Gilroy Xlight.otf */; };
-		8F7F69E033AA42E5BAE34840 /* SVN-GilroyBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 475515A1BDAD48DEB8C7EBFA /* SVN-GilroyBold.otf */; };
-		A0749E165257410CA7F23F42 /* SVN-GilroyHeavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 32449F2E32B94C839A45F3B6 /* SVN-GilroyHeavy.otf */; };
 		E4D589B1152249069DA4490D /* SVN-GilroyLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 344C95C61F2948169C9A5CEC /* SVN-GilroyLight.otf */; };
-		CE5EAD783A7649C8980E4273 /* SVN-GilroyMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 428ADF2867ED44E6AF2CA547 /* SVN-GilroyMedium.otf */; };
-		E7A116189BE44DC8BB691100 /* SVN-GilroyRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C22762C08C4DA993F7A8FD /* SVN-GilroyRegular.otf */; };
-		02A50D68FC0546F9A695AFD4 /* times.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B127F4AA5964C4B83DB66D8 /* times.ttf */; };
-		71BE6B3E2C3149CBAE4DE101 /* timesbd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B568213BDC145498EF36151 /* timesbd.ttf */; };
-		9C2F265FD4BE4B9683284423 /* timesbi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCCAD8645C944B2B999C58E0 /* timesbi.ttf */; };
-		61AF5F6EFB99458D86CC4DB6 /* timesi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 714B7288D91041208D86F1D3 /* timesi.ttf */; };
-		86A474F32D214D5CBBE14B9C /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7721DFDA2BE4F59912EE20E /* AntDesign.ttf */; };
-		31B900186DE94E478F81C68A /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BC3D6782164AA9B9AE54A1 /* Entypo.ttf */; };
-		C61DA34C5725487480CA2E37 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35315BF7CECB444E982BFFEB /* EvilIcons.ttf */; };
-		3F6B7F53AFD044C5A6F20272 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6A241791E4B40AF9D83B5FB /* Feather.ttf */; };
-		2ECE2486883B4227988B0BD9 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFFA023CF4CF4D70AC634D6B /* FontAwesome.ttf */; };
-		037E3845833C406AAEE5171F /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F08ADB4268F4D98A8D06823 /* FontAwesome5_Brands.ttf */; };
-		A9C9D2E5415D4EECA4E86BD6 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B226AC3BBB0E4315B6977D00 /* FontAwesome5_Regular.ttf */; };
-		CE8F83CF55A04610B1E085D4 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81AA7AA63612442CB8E6F563 /* FontAwesome5_Solid.ttf */; };
-		350EE1BC857B4480AF87F1CF /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04367C8A1CEE4AC8BB173632 /* Fontisto.ttf */; };
-		92C646223AAD4B139787A866 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAEA73BF1B4D3182764704 /* Foundation.ttf */; };
-		A3714523108545F183D367CD /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E0039C64A26498B8242FBD8 /* Ionicons.ttf */; };
-		CCF2CCD5AE444DECB2CC2EB1 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 397ED4DE04894D929F6AB7C9 /* MaterialCommunityIcons.ttf */; };
-		A9DDAB7C82574902BDD084F4 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F26A48DBAA4299B66EA466 /* MaterialIcons.ttf */; };
-		4C493E5ECF3A4A3A8AF46B52 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D177CF9E0BEE45D4B10FC739 /* Octicons.ttf */; };
-		A7C7104089C946CEA95A391F /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FAE40435D5340B0B51D26AB /* SimpleLineIcons.ttf */; };
-		D102B271ABB5401D99A87B07 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31837AF5BF1E4CB09F606341 /* Zocial.ttf */; };
-		ACAE39C2B0F04F1BAE3A09FF /* SVN-GilroySemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4DB9BDDBDDF54506BBA74E76 /* SVN-GilroySemiBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,71 +48,74 @@
 		00E356EE1AD99517003FC87E /* TickieAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TickieAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* TickieAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TickieAppTests.m; sourceTree = "<group>"; };
+		04367C8A1CEE4AC8BB173632 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		0DBAEA73BF1B4D3182764704 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		0F34C26B5C5E498AAB2512EA /* SVN-Gilroy Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Light.otf"; path = "../assets/fonts/SVN-Gilroy Light.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* TickieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TickieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TickieApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = TickieApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TickieApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TickieApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TickieApp/main.m; sourceTree = "<group>"; };
+		1FAE40435D5340B0B51D26AB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		27C22762C08C4DA993F7A8FD /* SVN-GilroyRegular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyRegular.otf"; path = "../assets/fonts/SVN-GilroyRegular.otf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* TickieApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TickieApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* TickieApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TickieApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D23D4A80348A64F6FA67BF4 /* Pods-TickieApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-TickieApp-tvOSTests/Pods-TickieApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		31837AF5BF1E4CB09F606341 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		32449F2E32B94C839A45F3B6 /* SVN-GilroyHeavy.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyHeavy.otf"; path = "../assets/fonts/SVN-GilroyHeavy.otf"; sourceTree = "<group>"; };
+		3446C2BDDD194D3F92208A88 /* SVN-Gilroy Thin Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Thin Italic.otf"; path = "../assets/fonts/SVN-Gilroy Thin Italic.otf"; sourceTree = "<group>"; };
+		344C95C61F2948169C9A5CEC /* SVN-GilroyLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyLight.otf"; path = "../assets/fonts/SVN-GilroyLight.otf"; sourceTree = "<group>"; };
+		35315BF7CECB444E982BFFEB /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		368CA39A82A240B997F83519 /* SVN-Gilroy Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Thin.otf"; path = "../assets/fonts/SVN-Gilroy Thin.otf"; sourceTree = "<group>"; };
+		397ED4DE04894D929F6AB7C9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		3B3B86F3583C412F93EC1629 /* SVN-Gilroy Heavy Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Heavy Italic.otf"; path = "../assets/fonts/SVN-Gilroy Heavy Italic.otf"; sourceTree = "<group>"; };
+		3F08ADB4268F4D98A8D06823 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		428ADF2867ED44E6AF2CA547 /* SVN-GilroyMedium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyMedium.otf"; path = "../assets/fonts/SVN-GilroyMedium.otf"; sourceTree = "<group>"; };
+		46B46148E3394054A5420717 /* SVN-Gilroy XBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy XBold.otf"; path = "../assets/fonts/SVN-Gilroy XBold.otf"; sourceTree = "<group>"; };
+		475515A1BDAD48DEB8C7EBFA /* SVN-GilroyBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyBold.otf"; path = "../assets/fonts/SVN-GilroyBold.otf"; sourceTree = "<group>"; };
+		4A01339663D34D33B4A2A74E /* SVN-Gilroy SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy SemiBold.otf"; path = "../assets/fonts/SVN-Gilroy SemiBold.otf"; sourceTree = "<group>"; };
+		4DB9BDDBDDF54506BBA74E76 /* SVN-GilroySemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroySemiBold.otf"; path = "../assets/fonts/SVN-GilroySemiBold.otf"; sourceTree = "<group>"; };
+		549D5E6EA1714542A2A1E76F /* SVN-Gilroy Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Black.otf"; path = "../assets/fonts/SVN-Gilroy Black.otf"; sourceTree = "<group>"; };
+		5B568213BDC145498EF36151 /* timesbd.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = timesbd.ttf; path = ../assets/fonts/timesbd.ttf; sourceTree = "<group>"; };
+		5E392620A4CA4291B64BE07B /* SVN-Gilroy Black Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Black Italic.otf"; path = "../assets/fonts/SVN-Gilroy Black Italic.otf"; sourceTree = "<group>"; };
+		67BC3D6782164AA9B9AE54A1 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		6B127F4AA5964C4B83DB66D8 /* times.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = times.ttf; path = ../assets/fonts/times.ttf; sourceTree = "<group>"; };
 		6E2AEA00DBD0FFA8680966FF /* libPods-TickieApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TickieApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		700AC9271B2746FDBB064E08 /* SVN-Gilroy Xlight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Xlight.otf"; path = "../assets/fonts/SVN-Gilroy Xlight.otf"; sourceTree = "<group>"; };
+		7141B766267DA5B60022A082 /* TickieApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TickieApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		7141B767267DA5B60022A082 /* TickieApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickieApp.swift; sourceTree = "<group>"; };
+		7141B769267DB4BC0022A082 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		714B7288D91041208D86F1D3 /* timesi.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = timesi.ttf; path = ../assets/fonts/timesi.ttf; sourceTree = "<group>"; };
+		7AA5FC089697458A9FC62FC0 /* SVN-Gilroy XBold Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy XBold Italic.otf"; path = "../assets/fonts/SVN-Gilroy XBold Italic.otf"; sourceTree = "<group>"; };
+		7E0039C64A26498B8242FBD8 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		81AA7AA63612442CB8E6F563 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TickieApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		87A97BF7C66A4C6C8778703F /* SVN-Gilroy SemiBold Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy SemiBold Italic.otf"; path = "../assets/fonts/SVN-Gilroy SemiBold Italic.otf"; sourceTree = "<group>"; };
 		9130666BDFFC516FE40CED0F /* Pods-TickieApp-TickieAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp-TickieAppTests.release.xcconfig"; path = "Target Support Files/Pods-TickieApp-TickieAppTests/Pods-TickieApp-TickieAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		946666A72C8101CCC9AB0999 /* Pods-TickieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp.debug.xcconfig"; path = "Target Support Files/Pods-TickieApp/Pods-TickieApp.debug.xcconfig"; sourceTree = "<group>"; };
 		94EF6A809878C0747BE8974B /* Pods-TickieApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-TickieApp-tvOS/Pods-TickieApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		96382955AEA847C5A11CAFBD /* SVN-Gilroy Medium Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Medium Italic.otf"; path = "../assets/fonts/SVN-Gilroy Medium Italic.otf"; sourceTree = "<group>"; };
+		9D42606CC05D4EA98DE937E8 /* SVN-Gilroy Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Italic.otf"; path = "../assets/fonts/SVN-Gilroy Italic.otf"; sourceTree = "<group>"; };
+		A6A241791E4B40AF9D83B5FB /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		A6E824DF4799AD35702CE274 /* libPods-TickieApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TickieApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA6C69F86170466DBF8B99EC /* SVN-Gilroy Xlight Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Xlight Italic.otf"; path = "../assets/fonts/SVN-Gilroy Xlight Italic.otf"; sourceTree = "<group>"; };
 		AE4171925D27FE95E78E616B /* Pods-TickieApp-TickieAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp-TickieAppTests.debug.xcconfig"; path = "Target Support Files/Pods-TickieApp-TickieAppTests/Pods-TickieApp-TickieAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B07BE598C6A1028E0426C39E /* libPods-TickieApp-TickieAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TickieApp-TickieAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B226AC3BBB0E4315B6977D00 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		BCCAD8645C944B2B999C58E0 /* timesbi.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = timesbi.ttf; path = ../assets/fonts/timesbi.ttf; sourceTree = "<group>"; };
+		BE2DC8CEAC4247808ACE50A0 /* SVN-Gilroy Light Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Light Italic.otf"; path = "../assets/fonts/SVN-Gilroy Light Italic.otf"; sourceTree = "<group>"; };
 		C74E99D5CF518D71AAC1B3BB /* Pods-TickieApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-TickieApp-tvOSTests/Pods-TickieApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		CFFA023CF4CF4D70AC634D6B /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		D177CF9E0BEE45D4B10FC739 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		D7721DFDA2BE4F59912EE20E /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		DAD983EBFAC0A3250FE65DE8 /* Pods-TickieApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-TickieApp-tvOS/Pods-TickieApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E2F26A48DBAA4299B66EA466 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		EC91D507C6C125FB25FE7E24 /* libPods-TickieApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TickieApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EDD4060C0B55984DA5363168 /* Pods-TickieApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickieApp.release.xcconfig"; path = "Target Support Files/Pods-TickieApp/Pods-TickieApp.release.xcconfig"; sourceTree = "<group>"; };
-		5E392620A4CA4291B64BE07B /* SVN-Gilroy Black Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Black Italic.otf"; path = "../assets/fonts/SVN-Gilroy Black Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		549D5E6EA1714542A2A1E76F /* SVN-Gilroy Black.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Black.otf"; path = "../assets/fonts/SVN-Gilroy Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		EF12DE1C7DBF46E89692AA60 /* SVN-Gilroy Bold Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Bold Italic.otf"; path = "../assets/fonts/SVN-Gilroy Bold Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3B3B86F3583C412F93EC1629 /* SVN-Gilroy Heavy Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Heavy Italic.otf"; path = "../assets/fonts/SVN-Gilroy Heavy Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		9D42606CC05D4EA98DE937E8 /* SVN-Gilroy Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Italic.otf"; path = "../assets/fonts/SVN-Gilroy Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BE2DC8CEAC4247808ACE50A0 /* SVN-Gilroy Light Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Light Italic.otf"; path = "../assets/fonts/SVN-Gilroy Light Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0F34C26B5C5E498AAB2512EA /* SVN-Gilroy Light.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Light.otf"; path = "../assets/fonts/SVN-Gilroy Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		96382955AEA847C5A11CAFBD /* SVN-Gilroy Medium Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Medium Italic.otf"; path = "../assets/fonts/SVN-Gilroy Medium Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		87A97BF7C66A4C6C8778703F /* SVN-Gilroy SemiBold Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy SemiBold Italic.otf"; path = "../assets/fonts/SVN-Gilroy SemiBold Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4A01339663D34D33B4A2A74E /* SVN-Gilroy SemiBold.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy SemiBold.otf"; path = "../assets/fonts/SVN-Gilroy SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3446C2BDDD194D3F92208A88 /* SVN-Gilroy Thin Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Thin Italic.otf"; path = "../assets/fonts/SVN-Gilroy Thin Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		368CA39A82A240B997F83519 /* SVN-Gilroy Thin.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Thin.otf"; path = "../assets/fonts/SVN-Gilroy Thin.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7AA5FC089697458A9FC62FC0 /* SVN-Gilroy XBold Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy XBold Italic.otf"; path = "../assets/fonts/SVN-Gilroy XBold Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		46B46148E3394054A5420717 /* SVN-Gilroy XBold.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy XBold.otf"; path = "../assets/fonts/SVN-Gilroy XBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		AA6C69F86170466DBF8B99EC /* SVN-Gilroy Xlight Italic.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Xlight Italic.otf"; path = "../assets/fonts/SVN-Gilroy Xlight Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		700AC9271B2746FDBB064E08 /* SVN-Gilroy Xlight.otf */ = {isa = PBXFileReference; name = "SVN-Gilroy Xlight.otf"; path = "../assets/fonts/SVN-Gilroy Xlight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		475515A1BDAD48DEB8C7EBFA /* SVN-GilroyBold.otf */ = {isa = PBXFileReference; name = "SVN-GilroyBold.otf"; path = "../assets/fonts/SVN-GilroyBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		32449F2E32B94C839A45F3B6 /* SVN-GilroyHeavy.otf */ = {isa = PBXFileReference; name = "SVN-GilroyHeavy.otf"; path = "../assets/fonts/SVN-GilroyHeavy.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		344C95C61F2948169C9A5CEC /* SVN-GilroyLight.otf */ = {isa = PBXFileReference; name = "SVN-GilroyLight.otf"; path = "../assets/fonts/SVN-GilroyLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		428ADF2867ED44E6AF2CA547 /* SVN-GilroyMedium.otf */ = {isa = PBXFileReference; name = "SVN-GilroyMedium.otf"; path = "../assets/fonts/SVN-GilroyMedium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		27C22762C08C4DA993F7A8FD /* SVN-GilroyRegular.otf */ = {isa = PBXFileReference; name = "SVN-GilroyRegular.otf"; path = "../assets/fonts/SVN-GilroyRegular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6B127F4AA5964C4B83DB66D8 /* times.ttf */ = {isa = PBXFileReference; name = "times.ttf"; path = "../assets/fonts/times.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5B568213BDC145498EF36151 /* timesbd.ttf */ = {isa = PBXFileReference; name = "timesbd.ttf"; path = "../assets/fonts/timesbd.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BCCAD8645C944B2B999C58E0 /* timesbi.ttf */ = {isa = PBXFileReference; name = "timesbi.ttf"; path = "../assets/fonts/timesbi.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		714B7288D91041208D86F1D3 /* timesi.ttf */ = {isa = PBXFileReference; name = "timesi.ttf"; path = "../assets/fonts/timesi.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D7721DFDA2BE4F59912EE20E /* AntDesign.ttf */ = {isa = PBXFileReference; name = "AntDesign.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		67BC3D6782164AA9B9AE54A1 /* Entypo.ttf */ = {isa = PBXFileReference; name = "Entypo.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		35315BF7CECB444E982BFFEB /* EvilIcons.ttf */ = {isa = PBXFileReference; name = "EvilIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A6A241791E4B40AF9D83B5FB /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CFFA023CF4CF4D70AC634D6B /* FontAwesome.ttf */ = {isa = PBXFileReference; name = "FontAwesome.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3F08ADB4268F4D98A8D06823 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Brands.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B226AC3BBB0E4315B6977D00 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Regular.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		81AA7AA63612442CB8E6F563 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Solid.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		04367C8A1CEE4AC8BB173632 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0DBAEA73BF1B4D3182764704 /* Foundation.ttf */ = {isa = PBXFileReference; name = "Foundation.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7E0039C64A26498B8242FBD8 /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		397ED4DE04894D929F6AB7C9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E2F26A48DBAA4299B66EA466 /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D177CF9E0BEE45D4B10FC739 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1FAE40435D5340B0B51D26AB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		31837AF5BF1E4CB09F606341 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4DB9BDDBDDF54506BBA74E76 /* SVN-GilroySemiBold.otf */ = {isa = PBXFileReference; name = "SVN-GilroySemiBold.otf"; path = "../assets/fonts/SVN-GilroySemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EF12DE1C7DBF46E89692AA60 /* SVN-Gilroy Bold Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy Bold Italic.otf"; path = "../assets/fonts/SVN-Gilroy Bold Italic.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,58 +198,8 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Libraries;
-			sourceTree = "<group>";
-		};
-		83CBB9F61A601CBA00E9B192 = {
-			isa = PBXGroup;
-			children = (
-				13B07FAE1A68108700A75B9A /* TickieApp */,
-				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* TickieAppTests */,
-				83CBBA001A601CBA00E9B192 /* Products */,
-				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				8870E4F539A1D8F1E77B3527 /* Pods */,
-				38EBE701DC464D40AFDF0100 /* Resources */,
-			);
-			indentWidth = 2;
-			sourceTree = "<group>";
-			tabWidth = 2;
-			usesTabs = 0;
-		};
-		83CBBA001A601CBA00E9B192 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				13B07F961A680F5B00A75B9A /* TickieApp.app */,
-				00E356EE1AD99517003FC87E /* TickieAppTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* TickieApp-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* TickieApp-tvOSTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8870E4F539A1D8F1E77B3527 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				946666A72C8101CCC9AB0999 /* Pods-TickieApp.debug.xcconfig */,
-				EDD4060C0B55984DA5363168 /* Pods-TickieApp.release.xcconfig */,
-				AE4171925D27FE95E78E616B /* Pods-TickieApp-TickieAppTests.debug.xcconfig */,
-				9130666BDFFC516FE40CED0F /* Pods-TickieApp-TickieAppTests.release.xcconfig */,
-				DAD983EBFAC0A3250FE65DE8 /* Pods-TickieApp-tvOS.debug.xcconfig */,
-				94EF6A809878C0747BE8974B /* Pods-TickieApp-tvOS.release.xcconfig */,
-				2D23D4A80348A64F6FA67BF4 /* Pods-TickieApp-tvOSTests.debug.xcconfig */,
-				C74E99D5CF518D71AAC1B3BB /* Pods-TickieApp-tvOSTests.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		38EBE701DC464D40AFDF0100 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				5E392620A4CA4291B64BE07B /* SVN-Gilroy Black Italic.otf */,
 				549D5E6EA1714542A2A1E76F /* SVN-Gilroy Black.otf */,
@@ -331,7 +246,58 @@
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				7141B769267DB4BC0022A082 /* GoogleService-Info.plist */,
+				7141B767267DA5B60022A082 /* TickieApp.swift */,
+				13B07FAE1A68108700A75B9A /* TickieApp */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				00E356EF1AD99517003FC87E /* TickieAppTests */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				8870E4F539A1D8F1E77B3527 /* Pods */,
+				38EBE701DC464D40AFDF0100 /* Resources */,
+				7141B766267DA5B60022A082 /* TickieApp-Bridging-Header.h */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* TickieApp.app */,
+				00E356EE1AD99517003FC87E /* TickieAppTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* TickieApp-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* TickieApp-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8870E4F539A1D8F1E77B3527 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				946666A72C8101CCC9AB0999 /* Pods-TickieApp.debug.xcconfig */,
+				EDD4060C0B55984DA5363168 /* Pods-TickieApp.release.xcconfig */,
+				AE4171925D27FE95E78E616B /* Pods-TickieApp-TickieAppTests.debug.xcconfig */,
+				9130666BDFFC516FE40CED0F /* Pods-TickieApp-TickieAppTests.release.xcconfig */,
+				DAD983EBFAC0A3250FE65DE8 /* Pods-TickieApp-tvOS.debug.xcconfig */,
+				94EF6A809878C0747BE8974B /* Pods-TickieApp-tvOS.release.xcconfig */,
+				2D23D4A80348A64F6FA67BF4 /* Pods-TickieApp-tvOSTests.debug.xcconfig */,
+				C74E99D5CF518D71AAC1B3BB /* Pods-TickieApp-tvOSTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -367,6 +333,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				34D9F44264AF202A4783551C /* [CP] Copy Pods Resources */,
+				AFFB39001D82CB5A4702C4BD /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -429,7 +396,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1250;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -477,48 +444,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				71B5456441FE446C96BDEDFB /* SVN-Gilroy Black Italic.otf in Resources */,
-				8492CF7DE0F749AEA79D07CF /* SVN-Gilroy Black.otf in Resources */,
-				DFF26C3ED0FD4F61BF90B0F6 /* SVN-Gilroy Bold Italic.otf in Resources */,
-				86192CA3C07B41F7A8BC9A74 /* SVN-Gilroy Heavy Italic.otf in Resources */,
-				434AA84ACC9044F2BB7FC3E8 /* SVN-Gilroy Italic.otf in Resources */,
-				CF3D0ACCA7784AC489734038 /* SVN-Gilroy Light Italic.otf in Resources */,
-				E25A6C46A0144A2BB8B09980 /* SVN-Gilroy Light.otf in Resources */,
-				8AC9E8D088C74EE8A08FFCB5 /* SVN-Gilroy Medium Italic.otf in Resources */,
-				1580977CAE9B46C888349E81 /* SVN-Gilroy SemiBold Italic.otf in Resources */,
-				29B7C65013B74760A73CB05B /* SVN-Gilroy SemiBold.otf in Resources */,
-				5D2F8996E61446E5875A8ABB /* SVN-Gilroy Thin Italic.otf in Resources */,
-				817327A9920546CFACC99CAE /* SVN-Gilroy Thin.otf in Resources */,
-				27D227AC797749EEAEB531D5 /* SVN-Gilroy XBold Italic.otf in Resources */,
-				AC1AD871326E488C836FBD69 /* SVN-Gilroy XBold.otf in Resources */,
-				8D47E30581DD414D8234F2B8 /* SVN-Gilroy Xlight Italic.otf in Resources */,
-				EED0C9563BAE45639531FE0A /* SVN-Gilroy Xlight.otf in Resources */,
+				7141B76A267DB4BC0022A082 /* GoogleService-Info.plist in Resources */,
 				8F7F69E033AA42E5BAE34840 /* SVN-GilroyBold.otf in Resources */,
-				A0749E165257410CA7F23F42 /* SVN-GilroyHeavy.otf in Resources */,
 				E4D589B1152249069DA4490D /* SVN-GilroyLight.otf in Resources */,
-				CE5EAD783A7649C8980E4273 /* SVN-GilroyMedium.otf in Resources */,
-				E7A116189BE44DC8BB691100 /* SVN-GilroyRegular.otf in Resources */,
-				02A50D68FC0546F9A695AFD4 /* times.ttf in Resources */,
-				71BE6B3E2C3149CBAE4DE101 /* timesbd.ttf in Resources */,
-				9C2F265FD4BE4B9683284423 /* timesbi.ttf in Resources */,
-				61AF5F6EFB99458D86CC4DB6 /* timesi.ttf in Resources */,
-				86A474F32D214D5CBBE14B9C /* AntDesign.ttf in Resources */,
-				31B900186DE94E478F81C68A /* Entypo.ttf in Resources */,
-				C61DA34C5725487480CA2E37 /* EvilIcons.ttf in Resources */,
-				3F6B7F53AFD044C5A6F20272 /* Feather.ttf in Resources */,
-				2ECE2486883B4227988B0BD9 /* FontAwesome.ttf in Resources */,
-				037E3845833C406AAEE5171F /* FontAwesome5_Brands.ttf in Resources */,
-				A9C9D2E5415D4EECA4E86BD6 /* FontAwesome5_Regular.ttf in Resources */,
-				CE8F83CF55A04610B1E085D4 /* FontAwesome5_Solid.ttf in Resources */,
-				350EE1BC857B4480AF87F1CF /* Fontisto.ttf in Resources */,
-				92C646223AAD4B139787A866 /* Foundation.ttf in Resources */,
-				A3714523108545F183D367CD /* Ionicons.ttf in Resources */,
-				CCF2CCD5AE444DECB2CC2EB1 /* MaterialCommunityIcons.ttf in Resources */,
-				A9DDAB7C82574902BDD084F4 /* MaterialIcons.ttf in Resources */,
-				4C493E5ECF3A4A3A8AF46B52 /* Octicons.ttf in Resources */,
-				A7C7104089C946CEA95A391F /* SimpleLineIcons.ttf in Resources */,
-				D102B271ABB5401D99A87B07 /* Zocial.ttf in Resources */,
-				ACAE39C2B0F04F1BAE3A09FF /* SVN-GilroySemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +503,9 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TickieApp/Pods-TickieApp-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -592,9 +523,14 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -612,6 +548,8 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Cpp.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -691,6 +629,9 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TickieApp-TickieAppTests/Pods-TickieApp-TickieAppTests-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -708,9 +649,14 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -728,11 +674,23 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Cpp.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TickieApp-TickieAppTests/Pods-TickieApp-TickieAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		AFFB39001D82CB5A4702C4BD /* [CP-User] [RNFB] Core Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] [RNFB] Core Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\n\n  # config.admob_delay_app_measurement_init\n  _ADMOB_DELAY_APP_MEASUREMENT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"admob_delay_app_measurement_init\")\n  if [[ $_ADMOB_DELAY_APP_MEASUREMENT == \"true\" ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADDelayAppMeasurementInit\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"YES\")\n  fi\n\n  # config.admob_ios_app_id\n  _ADMOB_IOS_APP_ID=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"admob_ios_app_id\")\n  if [[ $_ADMOB_IOS_APP_ID ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADApplicationIdentifier\")\n    _PLIST_ENTRY_TYPES+=(\"string\")\n    _PLIST_ENTRY_VALUES+=(\"$_ADMOB_IOS_APP_ID\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
 		};
 		F94B21017D1D49FDFEA74A6C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -810,6 +768,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				7141B768267DA5B60022A082 /* TickieApp.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -851,6 +810,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AE4171925D27FE95E78E616B /* Pods-TickieApp-TickieAppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -874,6 +834,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9130666BDFFC516FE40CED0F /* Pods-TickieApp-TickieAppTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = TickieAppTests/Info.plist;
@@ -897,6 +858,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TickieApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -907,6 +869,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = TickieApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "TickieApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -920,6 +883,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TickieApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -929,6 +893,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = TickieApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "TickieApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

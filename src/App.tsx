@@ -9,17 +9,18 @@ import {name as appName} from 'app.json';
 import React, {FC, LazyExoticComponent, Suspense} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {navigationContainerRef} from 'src/config/navigation';
-import {StatusBar, AppRegistry} from 'react-native';
+import {StatusBar, AppRegistry, Platform} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import nameof from 'ts-nameof.macro';
 import LoginNavigator from 'src/navigators/LoginNavigator/LoginNavigator';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import RootNavigator from 'src/navigators/RootNavigator/RootNavigator';
 import {Colors} from 'src/styles';
-import PushNotification from 'react-native-push-notification';
 import SplashScreen from 'react-native-splash-screen';
 import {LogBox} from 'react-native';
 import {globalState} from 'src/app/global-state';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const RootComponent: FC = () => {
   const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null);
@@ -50,7 +51,7 @@ const RootComponent: FC = () => {
         // process the notification
 
         // (required) Called when a remote is received or opened, or local notification is opened
-        // notification.finish(PushNotificationIOS.FetchResult.NoData);
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
 
       // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)

@@ -1,15 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 import {name as appName} from 'app.json';
 import React, {FC, LazyExoticComponent, Suspense} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {navigationContainerRef} from 'src/config/navigation';
-import {StatusBar, AppRegistry, Platform} from 'react-native';
+import {StatusBar, AppRegistry} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import nameof from 'ts-nameof.macro';
 import LoginNavigator from 'src/navigators/LoginNavigator/LoginNavigator';
@@ -21,6 +14,9 @@ import {LogBox} from 'react-native';
 import {globalState} from 'src/app/global-state';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {enableScreens} from 'react-native-screens';
+
+enableScreens();
 
 const RootComponent: FC = () => {
   const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null);
@@ -118,31 +114,31 @@ const RootComponent: FC = () => {
 };
 
 RootComponent.displayName = nameof(RootComponent);
-//
-// const App: LazyExoticComponent<any> = React.lazy(async () => {
-//   await globalState.initialize();
-//
-//   return {
-//     default: RootComponent,
-//   };
-// });
-//
-// const AppEntry: FC = () => {
-//   React.useEffect(() => {
-//     SplashScreen.hide();
-//   }, []);
-//
-//   return (
-//     <Suspense fallback={null}>
-//       <App />
-//     </Suspense>
-//   );
-// };
-//
-// AppEntry.displayName = nameof(AppEntry);
-//
-// AppRegistry.registerComponent(appName, () => {
-//   return AppEntry;
-// });
+
+const App: LazyExoticComponent<any> = React.lazy(async () => {
+  await globalState.initialize();
+
+  return {
+    default: RootComponent,
+  };
+});
+
+const AppEntry: FC = () => {
+  React.useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
+  return (
+    <Suspense fallback={null}>
+      <App />
+    </Suspense>
+  );
+};
+
+AppEntry.displayName = nameof(AppEntry);
+
+AppRegistry.registerComponent(appName, () => {
+  return AppEntry;
+});
 
 export default RootComponent;

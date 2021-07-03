@@ -16,10 +16,9 @@ const ReviewList: FC<PropsWithChildren<ReviewListProps>> = (
   props: PropsWithChildren<ReviewListProps>,
 ): ReactElement => {
   const {item} = props;
-  const avatar =
-    item.avatar === null
-      ? require('assets/images/defaultAvatar.png')
-      : {uri: item.avatar};
+  const avatar = !item.avatar
+    ? require('assets/images/defaultAvatar.png')
+    : {uri: item.avatar};
   return (
     <>
       <View style={[styles.containerReview, atomicStyles.pb10px]}>

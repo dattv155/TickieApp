@@ -153,8 +153,8 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
     [handleGotoActorDetailScreen],
   );
 
-  const renderListImage: ListRenderItem<any> = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>) => {
+  const renderListImage: ListRenderItem<string> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<string>) => {
       return (
         <Image
           key={index}
@@ -187,7 +187,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   return (
     <View>
       <StatusBar barStyle="light-content" />
-      <ScrollView style={styles.containerView}>
+      <ScrollView style={styles.containerView} nestedScrollEnabled>
         <Pressable onPress={handleGoBack} style={styles.backButton}>
           <SvgIcon component={require('assets/icons/backIconMovieInfo.svg')} />
         </Pressable>

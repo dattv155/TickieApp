@@ -1,21 +1,19 @@
 import {SeatPosition} from 'src/models/SeatPosition';
+import {COLUMN_SIZE} from 'src/config/consts';
 
-export function getIndexOfPosition(pos: SeatPosition, numOfColumn: number) {
-  return numOfColumn * pos.row + pos.column;
+export function getIndexOfPosition(pos: SeatPosition) {
+  return COLUMN_SIZE * pos.row + pos.column;
 }
 
-export function convertIndexToPosition(
-  indexPosition: number,
-  numOfColumn: number,
-) {
+export function convertIndexToPosition(indexPosition: number) {
   let pos: SeatPosition = {row: 0, column: 0};
-  if (indexPosition < numOfColumn - 1) {
+  if (indexPosition < COLUMN_SIZE - 1) {
     pos.row = 0;
     pos.column = indexPosition;
     return pos;
   }
-  for (let indexColumn = 1; indexColumn < numOfColumn; indexColumn++) {
-    const indexRow = (indexPosition - indexColumn) / numOfColumn;
+  for (let indexColumn = 0; indexColumn < COLUMN_SIZE; indexColumn++) {
+    const indexRow = (indexPosition - indexColumn) / COLUMN_SIZE;
     if (Number.isInteger(indexRow)) {
       pos.row = indexRow;
       pos.column = indexColumn;
@@ -26,14 +24,10 @@ export function convertIndexToPosition(
 }
 
 export function indexOfPositions(
-  listPosition: SeatPosition[],
   positionIndex: number,
-  numOfColumn: number,
+  listPosition: SeatPosition[],
 ) {
-  const position: SeatPosition = convertIndexToPosition(
-    positionIndex,
-    numOfColumn,
-  );
+  const position: SeatPosition = convertIndexToPosition(positionIndex);
   return listPosition.findIndex((pos) => {
     return pos.row === position.row && pos.column === position.column;
   });

@@ -8,6 +8,11 @@ import {SeatPosition} from 'src/models/SeatPosition';
 import {MovieBooking} from 'src/models/MovieBooking';
 import {globalState} from 'src/app/global-state';
 import {useNavigation} from '@react-navigation/native';
+import {
+  convertIndexToPosition,
+  indexOfPositions,
+} from 'src/helpers/position-helper';
+import {useBoolean} from 'react3l-common';
 
 export function useBooking(): [
   number,
@@ -18,9 +23,10 @@ export function useBooking(): [
   (seatList: SeatPosition[]) => void,
   () => void,
   SeatPosition[],
-  React.MutableRefObject<boolean>,
+  boolean,
   () => void,
   () => Promise<void>,
+  (indexSeat: number) => void,
 ] {
   const navigation = useNavigation();
 
@@ -34,9 +40,7 @@ export function useBooking(): [
 
   const [listLabel, setListLabel] = React.useState<string>('');
 
-  // const [isClear, setClear] = React.useState<boolean>(false);
-
-  const isClear = React.useRef<boolean>(false);
+  const [isClear, setClear] = React.useState<boolean>(false);
 
   const handleGetData = React.useCallback(async () => {
     return firestore()
@@ -84,8 +88,8 @@ export function useBooking(): [
   }, []);
 
   const convertPosToLabel = React.useCallback((pos: SeatPosition) => {
-    let labelRow = CinemaLayoutSmall[0].label.row[pos.row];
-    let labelColumn = CinemaLayoutSmall[0].label.column[pos.column];
+    let labelRow = CinemaLayoutSmall.label.row[pos.row];
+    let labelColumn = CinemaLayoutSmall.label.column[pos.column];
     labelColumn = Number(labelColumn) > 9 ? labelColumn : '0' + labelColumn;
     return labelRow + labelColumn;
   }, []);
@@ -106,7 +110,6 @@ export function useBooking(): [
     handlePickedSeats([]);
     setPickingSeats([]);
     setSeatCost(0);
-    isClear.current = true;
   }, [handlePickedSeats]);
 
   React.useEffect(() => {
@@ -116,8 +119,28 @@ export function useBooking(): [
   }, [convertListLabel, pickingSeats]);
 
   const handleClear = React.useCallback(() => {
-    isClear.current = false;
-  }, []);
+    setClear(true);
+    setPickingSeats([]);
+  }, [setClear]);
+
+  const handlePickingSeat = React.useCallback(
+    (indexSeat: number) => {
+      setClear(false);
+      const index = indexOfPositions(indexSeat, pickingSeats);
+      const seatPos = convertIndexToPosition(indexSeat);
+      if (index === -1) {
+        setPickingSeats([...pickingSeats, seatPos]);
+      } else {
+        setPickingSeats((list) =>
+          list.filter(
+            (item) =>
+              item.row !== seatPos.row || item.column !== seatPos.column,
+          ),
+        );
+      }
+    },
+    [pickingSeats],
+  );
 
   return [
     seatCost,
@@ -131,5 +154,6 @@ export function useBooking(): [
     isClear,
     handleClear,
     fetchData,
+    handlePickingSeat,
   ];
 }

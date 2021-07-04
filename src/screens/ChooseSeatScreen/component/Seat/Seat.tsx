@@ -14,49 +14,21 @@ import {SeatState} from 'src/config/seat-state';
 const Seat: FC<PropsWithChildren<SeatProps>> = (
   props: PropsWithChildren<SeatProps>,
 ): ReactElement => {
-  const {state, handleSeat, positionRow, positionColumn, isChoose} = props;
+  const {state} = props;
 
-  // return (
-  //   <>
-  //     <View style={styles.container}>
-  //       {state === SeatState.NO_SEAT && <View style={styles.noSeat} />}
-  //       {state === SeatState.OCCUPIED_SEAT && (
-  //         <SvgIcon component={require('assets/icons/seat/OccupiedSeat.svg')} />
-  //       )}
-  //       {state === SeatState.AVAILABLE_SEAT && (
-  //         <SvgIcon component={require('assets/icons/seat/BlankSeat.svg')} />
-  //       )}
-  //       {state === SeatState.SELECTING_SEAT && (
-  //         <SvgIcon component={require('assets/icons/seat/SelectedSeat.svg')} />
-  //       )}
-  //     </View>
-  //   </>
-  // );
   return (
     <>
       <View style={styles.container}>
-        {state !== 0 ? (
-          <View>
-            {state === 2 ? (
-              <SvgIcon
-                component={require('assets/icons/seat/OccupiedSeat.svg')}
-              />
-            ) : (
-              <View>
-                {!isChoose ? (
-                  <SvgIcon
-                    component={require('assets/icons/seat/BlankSeat.svg')}
-                  />
-                ) : (
-                  <SvgIcon
-                    component={require('assets/icons/seat/SelectedSeat.svg')}
-                  />
-                )}
-              </View>
-            )}
-          </View>
-        ) : (
+        {state === SeatState.NO_SEAT ? (
           <View style={styles.noSeat} />
+        ) : state === SeatState.OCCUPIED_SEAT ? (
+          <SvgIcon component={require('assets/icons/seat/OccupiedSeat.svg')} />
+        ) : state === SeatState.SELECTING_SEAT ? (
+          <SvgIcon component={require('assets/icons/seat/SelectedSeat.svg')} />
+        ) : (
+          state === SeatState.AVAILABLE_SEAT && (
+            <SvgIcon component={require('assets/icons/seat/BlankSeat.svg')} />
+          )
         )}
       </View>
     </>
@@ -66,14 +38,6 @@ const Seat: FC<PropsWithChildren<SeatProps>> = (
 export interface SeatProps {
   //
   state?: number;
-
-  handleSeat?: (rowNumber: number, columnNumber: number) => void;
-
-  positionRow?: number;
-
-  positionColumn?: number;
-
-  isChoose?: boolean;
 }
 
 Seat.defaultProps = {

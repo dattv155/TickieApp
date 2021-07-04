@@ -8,8 +8,8 @@ export function formatToCurrency(num: number): string {
 }
 
 export function convertPosToLabel(pos: SeatPosition) {
-  let labelRow = CinemaLayoutSmall[0].label.row[pos.row];
-  let labelColumn = CinemaLayoutSmall[0].label.column[pos.column];
+  let labelRow = CinemaLayoutSmall.label.row[pos.row];
+  let labelColumn = CinemaLayoutSmall.label.column[pos.column];
   labelColumn = Number(labelColumn) > 9 ? labelColumn : '0' + labelColumn;
   return labelRow + labelColumn;
 }

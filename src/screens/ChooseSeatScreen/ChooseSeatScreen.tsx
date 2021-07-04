@@ -52,6 +52,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
     isClear,
     handleClear,
     fetchData,
+    handlePickingSeat,
   ] = bookingService.useBooking();
 
   const [refreshing, setRefreshing] = React.useState<boolean>(false);
@@ -104,7 +105,8 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
         style={styles.containerView}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
+        }
+        nestedScrollEnabled={true}>
         <View style={styles.title}>
           <Text
             style={[
@@ -129,8 +131,8 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
         <View style={styles.seatsArea}>
           <SmallTheater
             selectedList={selectedList}
-            handleSelectPickedSeats={handlePickedSeats}
-            handleClear={handleClear}
+            onPickingSeat={handlePickingSeat}
+            isClear={isClear}
           />
         </View>
 
@@ -191,7 +193,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
               </View>
               <TouchableOpacity
                 style={styles.clearSeatsButton}
-                onPress={handleClearPickedSeats}>
+                onPress={handleClear}>
                 <SvgIcon component={require('assets/icons/Clear.svg')} />
               </TouchableOpacity>
             </View>

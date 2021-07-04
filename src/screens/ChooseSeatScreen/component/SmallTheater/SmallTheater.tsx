@@ -73,15 +73,17 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
     [cinemaLayout, onPickingSeat],
   );
 
-  // React.useLayoutEffect(() => {
-  //   if (isClear) {
-  //     cinemaLayout.map((item, index) => {
-  //       if (item === SeatState.SELECTING_SEAT) {
-  //         handleSelectSeat(index);
-  //       }
-  //     });
-  //   }
-  // }, [cinemaLayout, handleSelectSeat, isClear]);
+  React.useLayoutEffect(() => {
+    if (isClear) {
+      cinemaLayout.map((item, index) => {
+        if (item === SeatState.SELECTING_SEAT) {
+          const newLayout = [...cinemaLayout];
+          newLayout[index] = SeatState.AVAILABLE_SEAT;
+          setCinemaLayout(newLayout);
+        }
+      });
+    }
+  }, [cinemaLayout, handleSelectSeat, isClear]);
 
   const renderListSeats: ListRenderItem<number> = React.useCallback(
     ({item, index}: ListRenderItemInfo<number>) => {

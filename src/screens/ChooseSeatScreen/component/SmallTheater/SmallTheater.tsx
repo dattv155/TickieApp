@@ -4,7 +4,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './SmallTheater.scss';
 import Seat from 'src/screens/ChooseSeatScreen/component/Seat/Seat';
 import type {ListRenderItem, ListRenderItemInfo} from 'react-native';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
 import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 import {SeatPosition} from 'src/models/SeatPosition';
@@ -56,26 +56,31 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
     };
   }, [layout.size.column, layout.size.row, selectedList]);
 
+  const handleChangeValue = React.useCallback(
+    (seatIndex: number, state: SeatState) => {
+      const newLayout = [...cinemaLayout];
+      newLayout[seatIndex] = state;
+      setCinemaLayout(newLayout);
+    },
+    [cinemaLayout],
+  );
+
   const handleSelectSeat = React.useCallback(
     (seatIndex: number) => {
       if (cinemaLayout[seatIndex] === SeatState.AVAILABLE_SEAT) {
-        const newLayout = [...cinemaLayout];
-        newLayout[seatIndex] = SeatState.SELECTING_SEAT;
-        setCinemaLayout(newLayout);
+        handleChangeValue(seatIndex, SeatState.SELECTING_SEAT);
         onPickingSeat(seatIndex);
       } else if (cinemaLayout[seatIndex] === SeatState.SELECTING_SEAT) {
-        const newLayout = [...cinemaLayout];
-        newLayout[seatIndex] = SeatState.AVAILABLE_SEAT;
-        setCinemaLayout(newLayout);
+        handleChangeValue(seatIndex, SeatState.AVAILABLE_SEAT);
         onPickingSeat(seatIndex);
       }
     },
-    [cinemaLayout, onPickingSeat],
+    [cinemaLayout, handleChangeValue, onPickingSeat],
   );
 
   React.useLayoutEffect(() => {
     if (isClear) {
-      cinemaLayout.map((item, index) => {
+      cinemaLayout.forEach((item, index) => {
         if (item === SeatState.SELECTING_SEAT) {
           const newLayout = [...cinemaLayout];
           newLayout[index] = SeatState.AVAILABLE_SEAT;
@@ -83,7 +88,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
         }
       });
     }
-  }, [cinemaLayout, handleSelectSeat, isClear]);
+  }, [cinemaLayout, isClear]);
 
   const renderListSeats: ListRenderItem<number> = React.useCallback(
     ({item, index}: ListRenderItemInfo<number>) => {
@@ -127,6 +132,19 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
     [],
   );
 
+  const renderFooter = React.useCallback(() => {
+    return (
+      <FlatList
+        key={'='}
+        data={layout.label.column}
+        renderItem={renderLabelRow}
+        horizontal={true}
+        keyExtractor={(item, index) => item.toString() + index.toString()}
+        contentContainerStyle={styles.labelRowContainer}
+      />
+    );
+  }, [layout.label.column, renderLabelRow]);
+
   const getItemLayout = React.useCallback(
     (data, index) => ({length: ITEM_WIDTH, offset: ITEM_WIDTH * index, index}),
     [],
@@ -141,7 +159,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
             data={layout.label.row}
             renderItem={renderLabelColumn}
             horizontal={true}
-            keyExtractor={(item, index) => item.toString() + index.toString()}
+            keyExtractor={(item, index) => index.toString()}
             contentContainerStyle={styles.labelContainer}
           />
         </View>
@@ -155,6 +173,8 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
             getItemLayout={getItemLayout}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
+            ListFooterComponent={renderFooter}
+            ListFooterComponentStyle={styles.footerStyle}
           />
         </View>
 
@@ -164,20 +184,10 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
             data={layout.label.row}
             renderItem={renderLabelColumn}
             horizontal={true}
-            keyExtractor={(item, index) => item.toString() + index.toString()}
+            keyExtractor={(item, index) => index.toString()}
             contentContainerStyle={styles.labelContainer}
           />
         </View>
-      </View>
-      <View>
-        <FlatList
-          key={'='}
-          data={layout.label.column}
-          renderItem={renderLabelRow}
-          horizontal={true}
-          keyExtractor={(item, index) => item.toString() + index.toString()}
-          contentContainerStyle={styles.labelRowContainer}
-        />
       </View>
     </View>
   );

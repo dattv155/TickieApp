@@ -3,7 +3,6 @@ import firestore from '@react-native-firebase/firestore';
 import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 import {SEAT_PRICE} from 'src/config/consts';
 import {SeatPosition} from 'src/models/SeatPosition';
-import {MovieBooking} from 'src/models/MovieBooking';
 import {globalState} from 'src/app/global-state';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -44,7 +43,7 @@ export function useBooking(): [
       .where('time', '==', bookingData.time)
       .get()
       .then((documentData) => {
-        return documentData.docs.map((item) => item.data());
+        return documentData.docs.map((item) => item.data().position);
       });
   }, [
     bookingData.cinemaFormat,
@@ -54,16 +53,9 @@ export function useBooking(): [
   ]);
 
   const fetchData = React.useCallback(async () => {
-    const result = (await handleGetData()) as MovieBooking[];
+    const result = (await handleGetData()).flat() as SeatPosition[];
 
-    const selected: SeatPosition[] = [];
-    result.map((item) => {
-      item.position.map((pos) => {
-        selected.push(pos);
-      });
-    });
-
-    setSelectedList(selected);
+    setSelectedList(result);
   }, [handleGetData, setSelectedList]);
 
   React.useEffect(() => {

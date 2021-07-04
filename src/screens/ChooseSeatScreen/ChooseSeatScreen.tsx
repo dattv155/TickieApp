@@ -43,11 +43,7 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
   const [
     seatCost,
     selectedList,
-    setSelectedList,
     listLabel,
-    handleGetData,
-    handlePickedSeats,
-    handleClearPickedSeats,
     pickingSeats,
     isClear,
     handleClear,
@@ -164,41 +160,44 @@ const ChooseSeatScreen: FC<PropsWithChildren<ChooseSeatScreenProps>> = (
         </View>
       </ScrollView>
       <View style={styles.summaryArea}>
-        <Text
-          style={[
-            atomicStyles.h2,
-            atomicStyles.bold,
-            atomicStyles.textBlue,
-            styles.textStyle,
-            styles.summaryTitle,
-          ]}>
-          {translate('bookingScreen.seatChoose.chooseSeat')}
-        </Text>
-        {!!listLabel && (
-          <View style={styles.seatSummary}>
-            <Text style={[atomicStyles.h4, styles.seatSummaryTitle]}>
-              {translate('bookingScreen.seatChoose.seatsPicked')}
-            </Text>
+        <View>
+          <Text
+            style={[
+              atomicStyles.h2,
+              atomicStyles.bold,
+              atomicStyles.textBlue,
+              styles.textStyle,
+              styles.summaryTitle,
+            ]}>
+            {translate('bookingScreen.seatChoose.chooseSeat')}
+          </Text>
+          {!!listLabel && (
+            <View style={styles.seatSummary}>
+              <Text style={[atomicStyles.h4, styles.seatSummaryTitle]}>
+                {translate('bookingScreen.seatChoose.seatsPicked')}
+              </Text>
 
-            <View style={styles.totalSeatArea}>
-              <View style={styles.seatPickingView}>
-                <Text
-                  style={[
-                    atomicStyles.h5,
-                    atomicStyles.bold,
-                    styles.seatPickingText,
-                  ]}>
-                  {listLabel}
-                </Text>
+              <View style={styles.totalSeatArea}>
+                <View style={styles.seatPickingView}>
+                  <Text
+                    style={[
+                      atomicStyles.h5,
+                      atomicStyles.bold,
+                      styles.seatPickingText,
+                    ]}>
+                    {listLabel}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.clearSeatsButton}
+                  onPress={handleClear}>
+                  <SvgIcon component={require('assets/icons/Clear.svg')} />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={styles.clearSeatsButton}
-                onPress={handleClear}>
-                <SvgIcon component={require('assets/icons/Clear.svg')} />
-              </TouchableOpacity>
             </View>
-          </View>
-        )}
+          )}
+        </View>
+
         <View style={styles.summaryTotal}>
           <View style={styles.costSummary}>
             <Text style={[atomicStyles.h5]}>

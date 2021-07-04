@@ -1,7 +1,5 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore';
+import React from 'react';
+import firestore from '@react-native-firebase/firestore';
 import {CinemaLayoutSmall} from 'src/sample/cinemaLayout';
 import {SEAT_PRICE} from 'src/config/consts';
 import {SeatPosition} from 'src/models/SeatPosition';
@@ -12,16 +10,11 @@ import {
   convertIndexToPosition,
   indexOfPositions,
 } from 'src/helpers/position-helper';
-import {useBoolean} from 'react3l-common';
 
 export function useBooking(): [
   number,
   SeatPosition[],
-  Dispatch<SetStateAction<SeatPosition[]>>,
   string,
-  () => Promise<FirebaseFirestoreTypes.DocumentData[]>,
-  (seatList: SeatPosition[]) => void,
-  () => void,
   SeatPosition[],
   boolean,
   () => void,
@@ -83,10 +76,6 @@ export function useBooking(): [
     };
   }, [fetchData, navigation]);
 
-  const handlePickedSeats = React.useCallback((seatList: SeatPosition[]) => {
-    setPickingSeats([...seatList]);
-  }, []);
-
   const convertPosToLabel = React.useCallback((pos: SeatPosition) => {
     let labelRow = CinemaLayoutSmall.label.row[pos.row];
     let labelColumn = CinemaLayoutSmall.label.column[pos.column];
@@ -104,13 +93,6 @@ export function useBooking(): [
     },
     [convertPosToLabel],
   );
-
-  const handleClearPickedSeats = React.useCallback(() => {
-    setListLabel('');
-    handlePickedSeats([]);
-    setPickingSeats([]);
-    setSeatCost(0);
-  }, [handlePickedSeats]);
 
   React.useEffect(() => {
     let list = convertListLabel(pickingSeats);
@@ -145,11 +127,7 @@ export function useBooking(): [
   return [
     seatCost,
     selectedList,
-    setSelectedList,
     listLabel,
-    handleGetData,
-    handlePickedSeats,
-    handleClearPickedSeats,
     pickingSeats,
     isClear,
     handleClear,

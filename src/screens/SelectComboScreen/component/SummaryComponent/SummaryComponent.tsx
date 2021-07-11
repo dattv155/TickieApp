@@ -1,9 +1,9 @@
 import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import nameof from 'ts-nameof.macro';
 import styles from './SummaryComponent.scss';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {atomicStyles} from 'src/styles';
-import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
+import {ComboSet} from 'src/models/ComboSet';
 
 /**
  * File: SummaryComponent.tsx
@@ -14,19 +14,19 @@ import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 const SummaryComponent: FC<PropsWithChildren<SummaryComponentProps>> = (
   props: PropsWithChildren<SummaryComponentProps>,
 ): ReactElement => {
-  const {count, nameCombo} = props;
-  const handleClearButton = React.useCallback(() => {}, []);
+  const {combo} = props;
+
   return (
     <>
       <View style={styles.container}>
         <Text style={[atomicStyles.h5, styles.text]}>
-          {count} {nameCombo}
+          {combo.count} {combo.name}
         </Text>
-        <TouchableOpacity
-          style={styles.clearButton}
-          onPress={handleClearButton}>
-          <SvgIcon component={require('assets/icons/Clear.svg')} />
-        </TouchableOpacity>
+        {/*<TouchableOpacity*/}
+        {/*  style={styles.clearButton}*/}
+        {/*  onPress={handleClearButton}>*/}
+        {/*  <SvgIcon component={require('assets/icons/Clear.svg')} />*/}
+        {/*</TouchableOpacity>*/}
       </View>
     </>
   );
@@ -34,8 +34,7 @@ const SummaryComponent: FC<PropsWithChildren<SummaryComponentProps>> = (
 
 export interface SummaryComponentProps {
   //
-  count?: number;
-  nameCombo?: string;
+  combo?: ComboSet;
 }
 
 SummaryComponent.defaultProps = {

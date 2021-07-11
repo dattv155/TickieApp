@@ -352,11 +352,16 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
               </Text>
               <Text
                 style={[
+                  atomicStyles.text,
                   atomicStyles.h4,
                   atomicStyles.bold,
-                  styles.comboDetail,
+                  bookingData.combos.length > 0
+                    ? styles.comboDetail
+                    : styles.noCombo,
                 ]}>
-                {handleListCombo(bookingData.combos)}
+                {bookingData.combos.length > 0
+                  ? handleListCombo(bookingData.combos)
+                  : translate('bookingScreen.paymentScreen.noCombo')}
               </Text>
             </View>
             <View style={styles.paymentArea}>
@@ -373,7 +378,7 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
             </View>
             <TouchableOpacity style={[styles.paymentGroup]}>
               <LineBlock
-                label={'Chọn voucher'}
+                label={translate('bookingScreen.paymentScreen.selectVoucher')}
                 onPress={handleOpenModalVoucher}
                 right={voucherSelected?.code}
               />

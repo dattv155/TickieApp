@@ -21,7 +21,6 @@ import {bookingService} from 'src/services/booking-service';
 import {formatToCurrency} from 'src/helpers/string-helper';
 import {useTranslation} from 'react-i18next/';
 import {globalState} from 'src/app/global-state';
-import {ComboSet} from 'src/models/ComboSet';
 
 /**
  * File: SelectComboScreen.tsx
@@ -36,53 +35,12 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const [listSelectCombo, setListSelectCombo] = React.useState<ComboSet[]>([]);
-
-  const [comboCost, setComboCost] = React.useState<number>(0);
-
-  const [comboList, handleDeleteDuplicate] = bookingService.useCombo(
-    navigation,
-  );
-
-  const handleListCombo = React.useCallback(
-    (comboSelected: ComboSet) => {
-      const list = handleDeleteDuplicate(listSelectCombo, comboSelected);
-
-      if (list > -1) {
-        setListSelectCombo((prevs) =>
-          prevs.map((prev) => {
-            return prev.comboID === comboSelected.comboID
-              ? {...prev, count: comboSelected.count}
-              : prev;
-          }),
-        );
-      } else {
-        setListSelectCombo((prevs) => [...prevs, comboSelected]);
-      }
-    },
-    [handleDeleteDuplicate, listSelectCombo],
-  );
-
-  React.useEffect(() => {
-    let cost = 0;
-    listSelectCombo.map((select) => {
-      cost = cost + select.count * select.amount;
-    });
-    setComboCost(cost);
-  }, [listSelectCombo]);
-
-  const renderComboItem: ListRenderItem<any> = React.useCallback(
-    ({item, index}: ListRenderItemInfo<any>) => {
-      return (
-        <ComboComponent
-          combo={item}
-          key={index}
-          handleCombo={handleListCombo}
-        />
-      );
-    },
-    [handleListCombo],
-  );
+  const [
+    comboList,
+    listSelectCombo,
+    handleSelectCombo,
+    comboCost,
+  ] = bookingService.useCombo();
 
   const [bookingData] = globalState.useBookingData();
 
@@ -98,6 +56,20 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
     await handleGlobalState();
     navigation.navigate(PaymentScreen.displayName);
   }, [handleGlobalState, navigation]);
+
+  const renderComboItem: ListRenderItem<any> = React.useCallback(
+    ({item, index}: ListRenderItemInfo<any>) => {
+      return (
+        <ComboComponent
+          combo={item}
+          key={index}
+          handleCombo={handleSelectCombo}
+        />
+      );
+    },
+    [handleSelectCombo],
+  );
+
   return (
     <>
       <DefaultLayout
@@ -118,23 +90,6 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
               showsVerticalScrollIndicator={false}
             />
           </View>
-          {/*<View style={styles.voucherContainer}>*/}
-          {/*  <TextInput*/}
-          {/*    style={[atomicStyles.h6]}*/}
-          {/*    onChangeText={(text) => {*/}
-          {/*      setInputVoucher(text);*/}
-          {/*    }}*/}
-          {/*    placeholder={translate('bookingScreen.comboSelect.enterCode')}*/}
-          {/*  />*/}
-          {/*  <View style={styles.line} />*/}
-          {/*  <Text style={[atomicStyles.h7, atomicStyles.textGray]}>*/}
-          {/*    {translate('bookingScreen.comboSelect.noVoucher')}*/}
-          {/*    <Text style={[atomicStyles.bold, styles.textStyle]}>*/}
-          {/*      {' '}*/}
-          {/*      {translate('bookingScreen.comboSelect.getNow')}*/}
-          {/*    </Text>*/}
-          {/*  </Text>*/}
-          {/*</View>*/}
         </View>
         <View style={styles.summaryContainer}>
           <Text
@@ -147,20 +102,15 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
             {translate('bookingScreen.comboSelect.selectSetCombo')}
           </Text>
           <View style={styles.comboArea}>
-            <Text style={[atomicStyles.h4]}>
-              {' '}
+            <Text style={[atomicStyles.h4, styles.text]}>
               {translate('bookingScreen.comboSelect.setCombo')}
             </Text>
-            <View>
+            <View style={styles.listSelectedCombo}>
               {listSelectCombo.map((selectedCombo, index) => {
-                return selectedCombo.count > 0 ? (
-                  <SummaryComponent
-                    key={index + selectedCombo.count}
-                    count={selectedCombo.count}
-                    nameCombo={selectedCombo.name}
-                  />
-                ) : (
-                  <View />
+                return (
+                  selectedCombo.count > 0 && (
+                    <SummaryComponent key={index} combo={selectedCombo} />
+                  )
                 );
               })}
             </View>
@@ -168,7 +118,6 @@ const SelectComboScreen: FC<PropsWithChildren<SelectComboScreenProps>> = (
           <View style={styles.summaryTotal}>
             <View style={styles.costSummary}>
               <Text style={[atomicStyles.h5]}>
-                {' '}
                 {translate('bookingScreen.comboSelect.summary')}
               </Text>
               <Text

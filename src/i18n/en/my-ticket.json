@@ -1,6 +1,6 @@
 {
-  "myTicket.header": "My Ticket",
   "myTicket.delete": "Delete",
+  "myTicket.header": "My Ticket",
   "myTicket.cinema": "Cinema",
   "myTicket.time": "Time",
   "myTicket.seats": "Seats",

@@ -33,9 +33,9 @@ import ActorDetailScreen from 'src/screens/ActorDetailScreen/ActorDetailScreen';
 import {Comment} from 'src/models/Comment';
 import {Actor} from 'src/models/Actor';
 import LinearGradient from 'react-native-linear-gradient';
-import {showInfo} from 'src/helpers/toast';
-import {MovieBooking} from 'src/models/MovieBooking';
-import {globalState} from 'src/app/global-state';
+import {showInfo, showWarning} from 'src/helpers/toast';
+import {MovieInfo} from 'src/models/MovieInfo';
+import {globalState} from 'src/app';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -54,14 +54,27 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   const [mark, setMark] = React.useState(false);
 
   const handleMarkFilm = React.useCallback(() => {
+    showWarning('Đang phát triển');
     setMark(!mark);
   }, [mark]);
 
-  const handleGotoBookingScreen = React.useCallback(() => {
+  const handleGlobalState = React.useCallback(async (movieInfo: MovieInfo) => {
+    await globalState.resetNewBookingData();
+
+    await globalState.setBookingData({
+      movieName: movieInfo?.Name,
+      movieInfoType: movieInfo?.Type,
+      movieTotalTime: movieInfo?.Duration,
+      poster: movieInfo?.Poster,
+    });
+  }, []);
+
+  const handleGotoBookingScreen = React.useCallback(async () => {
+    await handleGlobalState(movieInfo);
     navigation.navigate(BookingScreen.displayName, {
       movieInfo,
     });
-  }, [movieInfo, navigation]);
+  }, [handleGlobalState, movieInfo, navigation]);
 
   const handleGotoCommentScreen = React.useCallback(() => {
     navigation.navigate(CommentScreen.displayName, {
@@ -126,8 +139,6 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   React.useEffect(() => {
     navigation.addListener('focus', async () => {
       await fetchData();
-      // const bookingData = globalState.useBookingData();
-      // console.log(bookingData);
     });
   }, [fetchData, navigation]);
 

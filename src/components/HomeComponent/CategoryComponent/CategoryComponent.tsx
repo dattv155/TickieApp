@@ -16,9 +16,6 @@ import CategoryComponentSkeleton from 'src/components/HomeComponent/CategoryComp
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {MovieInfo} from 'src/models/MovieInfo';
 import {convertTimestamp} from 'src/helpers/timestamp-helper';
-import {globalState} from 'src/app/global-state';
-import auth from '@react-native-firebase/auth';
-import {MovieBooking} from 'src/models/MovieBooking';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const SLIDER_HEIGHT = Dimensions.get('window').height;
@@ -40,31 +37,13 @@ const CategoryComponent: FC<PropsWithChildren<CategoryComponentProps>> = (
 
   const [index, setIndex] = React.useState<number>(0);
 
-  const [bookingData] = globalState.useBookingData();
-
-  const handleGlobalState = React.useCallback(
-    async (movieInfo: MovieInfo) => {
-      await globalState.resetNewBookingData();
-
-      await globalState.setBookingData({
-        ...bookingData,
-        movieName: movieInfo?.Name,
-        movieInfoType: movieInfo?.Type,
-        movieTotalTime: movieInfo?.Duration,
-        poster: movieInfo?.Poster,
-      });
-    },
-    [bookingData],
-  );
-
   const handleGotoMovieScreen = React.useCallback(
     async (movieInfo: MovieInfo) => {
-      await handleGlobalState(movieInfo);
       navigation.navigate(MovieInfoScreen.displayName, {
         movieInfo,
       });
     },
-    [handleGlobalState, navigation],
+    [navigation],
   );
 
   const renderItem = ({item, index}: any) => {

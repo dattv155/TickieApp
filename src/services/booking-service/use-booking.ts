@@ -34,6 +34,11 @@ export function useBooking(): [
 
   const [isClear, setClear] = React.useState<boolean>(false);
 
+  const handleClear = React.useCallback(() => {
+    setClear(true);
+    setPickingSeats([]);
+  }, [setClear]);
+
   const handleGetData = React.useCallback(async () => {
     return firestore()
       .collection('bookings')
@@ -60,13 +65,16 @@ export function useBooking(): [
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
+      if (pickingSeats) {
+        handleClear();
+      }
       await fetchData();
     });
 
     return function cleanup() {
       unsubscribe();
     };
-  }, [fetchData, navigation]);
+  }, [fetchData, handleClear, navigation, pickingSeats]);
 
   const convertPosToLabel = React.useCallback((pos: SeatPosition) => {
     let labelRow = CinemaLayoutSmall.label.row[pos.row];
@@ -91,11 +99,6 @@ export function useBooking(): [
     setListLabel(list);
     setSeatCost(pickingSeats.length * SEAT_PRICE);
   }, [convertListLabel, pickingSeats]);
-
-  const handleClear = React.useCallback(() => {
-    setClear(true);
-    setPickingSeats([]);
-  }, [setClear]);
 
   const handlePickingSeat = React.useCallback(
     (indexSeat: number) => {

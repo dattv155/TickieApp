@@ -16,6 +16,7 @@ const VoucherBlock: FC<PropsWithChildren<VoucherBlockProps>> = (
   props: PropsWithChildren<VoucherBlockProps>,
 ): ReactElement => {
   const [translate] = useTranslation();
+
   const {item, index, currentValue, onChange, onSelected} = props;
 
   const handleSelected = React.useCallback(() => {
@@ -39,7 +40,9 @@ const VoucherBlock: FC<PropsWithChildren<VoucherBlockProps>> = (
             {item.detail}
           </Text>
           <Text style={[atomicStyles.h6, styles.textDetail]}>
-            <Text style={[atomicStyles.bold]}>Điều kiện: </Text>
+            <Text style={[atomicStyles.bold]}>
+              {translate('bookingScreen.paymentScreen.voucherCondition')}
+            </Text>
             {item.condition}
           </Text>
         </View>
@@ -48,11 +51,10 @@ const VoucherBlock: FC<PropsWithChildren<VoucherBlockProps>> = (
             <Text
               style={[
                 atomicStyles.h6,
-                atomicStyles.bold,
                 atomicStyles.textDark,
                 atomicStyles.textCenter,
               ]}>
-              Đã chọn
+              {translate('bookingScreen.paymentScreen.selectedVoucher')}
             </Text>
           </TouchableOpacity>
         ) : (
@@ -64,7 +66,7 @@ const VoucherBlock: FC<PropsWithChildren<VoucherBlockProps>> = (
                 atomicStyles.textWhite,
                 atomicStyles.textCenter,
               ]}>
-              Dùng Voucher
+              {translate('bookingScreen.paymentScreen.unSelectVoucher')}
             </Text>
           </TouchableOpacity>
         )}

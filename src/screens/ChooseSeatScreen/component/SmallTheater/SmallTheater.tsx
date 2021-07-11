@@ -11,6 +11,7 @@ import {SeatPosition} from 'src/models/SeatPosition';
 import {CinemaLayout} from 'src/models/CinemaLayout';
 import {SeatState} from 'src/config/seat-state';
 import {getIndexOfPosition} from 'src/helpers/position-helper';
+import {globalState} from 'src/app';
 
 /**
  * File: SmallTheater.tsx
@@ -25,6 +26,8 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
   props: PropsWithChildren<SmallTheaterProps>,
 ): ReactElement => {
   const {selectedList, onPickingSeat, isClear} = props;
+
+  const [bookingData] = globalState.useBookingData();
 
   const layout: CinemaLayout = React.useMemo(() => {
     return CinemaLayoutSmall;
@@ -54,7 +57,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
     return () => {
       canceled = true;
     };
-  }, [layout.size.column, layout.size.row, selectedList]);
+  }, [bookingData.position, layout.size.column, layout.size.row, selectedList]);
 
   const handleChangeValue = React.useCallback(
     (seatIndex: number, state: SeatState) => {
@@ -78,7 +81,7 @@ const SmallTheater: FC<PropsWithChildren<SmallTheaterProps>> = (
     [cinemaLayout, handleChangeValue, onPickingSeat],
   );
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (isClear) {
       cinemaLayout.forEach((item, index) => {
         if (item === SeatState.SELECTING_SEAT) {

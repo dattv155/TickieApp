@@ -7,16 +7,15 @@
 
 .container {
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
   border: 0.5px solid map-get($colors, 'blue');
   border-radius: 7px;
-  width: 140px;
-  margin: 3px;
-  //padding: 0 13px;
+  width: 100%;
+  padding: 2px 12px;
+  margin: 4px 0;
 }
 .text {
-  margin-left: 13px;
   font-weight: 500;
 }
 .clearButton {

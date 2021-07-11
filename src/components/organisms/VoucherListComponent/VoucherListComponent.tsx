@@ -11,17 +11,18 @@ import {selectOneService} from 'src/services/select-one-service';
 import VoucherBlock from 'src/components/morecules/VoucherBlock/VoucherBlock';
 import {Voucher} from 'src/models/Voucher';
 import {ListVoucher} from 'src/sample/listVoucher';
+import {useTranslation} from 'react-i18next';
 /**
  * File: VoucherListComponent.tsx
  * @created 2021-05-25 03:02:48
  * @author TrongDat <trongdat1505@gmail.com>
  * @type {FC<PropsWithChildren<VoucherListComponentProps>>}
  */
-const list: Array<number> = [1, 5, 10, 20, 30];
-
 const VoucherListComponent: FC<PropsWithChildren<VoucherListComponentProps>> = (
   props: PropsWithChildren<VoucherListComponentProps>,
 ): ReactElement => {
+  const [translate] = useTranslation();
+
   const {visible, navigation, route, onClose, handleSelectVoucher} = props;
 
   const [idFilter, handleChange] = selectOneService.useIdFilter({
@@ -41,7 +42,7 @@ const VoucherListComponent: FC<PropsWithChildren<VoucherListComponentProps>> = (
         navigation={navigation}
         route={route}
         left={
-          <Pressable onPress={onClose} style={[atomicStyles.pl8px]}>
+          <Pressable onPress={onClose} style={[atomicStyles.p8px]}>
             <LeftIcon color={Colors.Blue} />
           </Pressable>
         }
@@ -49,7 +50,7 @@ const VoucherListComponent: FC<PropsWithChildren<VoucherListComponentProps>> = (
         title={
           <Text
             style={[atomicStyles.textDark, atomicStyles.h3, atomicStyles.bold]}>
-            Chọn voucher
+            {translate('bookingScreen.paymentScreen.selectVoucher')}
           </Text>
         }
         gradient={false}

@@ -12,18 +12,18 @@
   justify-content: space-between;
   height: 64px;
   margin: 18px 0;
-  //background-color: map-get($colors, 'white');
+  background-color: map-get($colors, 'white');
 
 }
 .infoArea {
-
+  width: 60%;
 }
 .name {
 
 }
 .detailText {
   font-weight: 500;
-  width: 226px;
+  width: 100%;
 }
 .description {
 
@@ -32,6 +32,8 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  width: 40%;
+  padding-left: 18px;
 }
 .buttonSelectNumber {
   flex-direction: row;
@@ -79,5 +81,5 @@
 }
 
 .textStyle {
-  font-weight: 100;
+
 }

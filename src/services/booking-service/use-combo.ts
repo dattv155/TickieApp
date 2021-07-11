@@ -1,16 +1,23 @@
 import React from 'react';
 import firestore from '@react-native-firebase/firestore';
-import {StackScreenProps} from '@react-navigation/stack';
 import {ComboSet} from 'src/models/ComboSet';
 import {ComboInfo} from 'src/models/ComboInfo';
+import {useNavigation} from '@react-navigation/native';
 
-export function useCombo(
-  navigation: StackScreenProps<any>['navigation'],
-): [
+export function useCombo(): [
   ComboInfo[],
-  (listComboSelected: ComboSet[], currentCombo: ComboSet) => number,
+  ComboSet[],
+  (comboSelected: ComboSet) => void,
+  number,
 ] {
+  const navigation = useNavigation();
+
   const [comboList, setComboList] = React.useState<ComboInfo[]>([]);
+
+  const [listSelectCombo, setListSelectCombo] = React.useState<ComboSet[]>([]);
+
+  const [comboCost, setComboCost] = React.useState<number>(0);
+
   const handleGetData = React.useCallback(async () => {
     return firestore()
       .collection('combos')
@@ -20,18 +27,33 @@ export function useCombo(
       });
   }, []);
 
-  const handleDeleteDuplicate = React.useCallback(
-    (listComboSelected: ComboSet[], currentCombo: ComboSet): number => {
-      return listComboSelected.findIndex(function (selectedCombo) {
-        return selectedCombo.comboID === currentCombo.comboID;
-      });
-      // if (index > -1) {
-      //   let list = listComboSelected.splice(index, 1);
-      //   return [...list];
-      // }
-      // return [...listComboSelected];
+  const handleSelectCombo = React.useCallback(
+    (comboSelected: ComboSet) => {
+      const list = listSelectCombo.findIndex(
+        (selectedCombo) => selectedCombo.comboID === comboSelected.comboID,
+      );
+
+      if (list > -1) {
+        if (comboSelected.count === 0) {
+          setListSelectCombo((list) =>
+            list.filter(
+              (item: ComboSet) => item.comboID !== comboSelected.comboID,
+            ),
+          );
+        } else {
+          setListSelectCombo((prevs) =>
+            prevs.map((prev) => {
+              return prev.comboID === comboSelected.comboID
+                ? {...prev, count: comboSelected.count}
+                : prev;
+            }),
+          );
+        }
+      } else {
+        setListSelectCombo((prev) => [...prev, comboSelected]);
+      }
     },
-    [],
+    [listSelectCombo],
   );
 
   React.useEffect(() => {
@@ -45,5 +67,13 @@ export function useCombo(
     };
   }, [handleGetData, navigation]);
 
-  return [comboList, handleDeleteDuplicate];
+  React.useEffect(() => {
+    let cost = 0;
+    listSelectCombo.map((select) => {
+      cost = cost + select.count * select.amount;
+    });
+    setComboCost(cost);
+  }, [listSelectCombo]);
+
+  return [comboList, listSelectCombo, handleSelectCombo, comboCost];
 }

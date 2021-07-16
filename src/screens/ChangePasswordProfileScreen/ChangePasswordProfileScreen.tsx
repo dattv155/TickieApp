@@ -124,9 +124,7 @@ const ChangePasswordProfileScreen: FC<
             <LoginInputPassword
               title={translate('accountInfo.changePassword.reNewPass')}
               keyboardType="default"
-              placeholder={translate(
-                'accountInfo.changePassword.reEnterNewPass',
-              )}
+              placeholder={translate('accountInfo.changePassword.reNewPass')}
               onChangeText={(password: string) => {
                 setReNewPassword(password);
               }}

@@ -92,10 +92,7 @@ const RootComponent: FC = () => {
   if (!user) {
     return (
       <SafeAreaProvider>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={Colors.Light_Gray}
-        />
+        <StatusBar barStyle="dark-content" backgroundColor={Colors.White} />
         <NavigationContainer ref={navigationContainerRef}>
           <LoginNavigator />
         </NavigationContainer>

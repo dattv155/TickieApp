@@ -5,6 +5,7 @@ import Toast from 'react-native-simple-toast';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 // @ts-ignore
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
+import {showError, showInfo} from 'src/helpers/toast';
 
 export const logoutUser = () => {
   auth().signOut();
@@ -237,16 +238,16 @@ export const changePassword = async (
         user
           .updatePassword(newPassword)
           .then(() => {
-            Toast.show('Cập nhật mật khẩu mới thành công');
+            showInfo('Cập nhật mật khẩu mới thành công');
           })
           .catch((e) => {
-            Toast.show(e.toString());
+            showError(e.toString());
           });
       })
       .catch((e) => {
-        Toast.show(e.toString());
+        showError(e.toString());
       });
   } catch (e) {
-    Toast.show(e.toString());
+    showError(e.toString());
   }
 };

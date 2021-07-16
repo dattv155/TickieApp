@@ -7,10 +7,10 @@ import HeaderIconPlaceholder from 'src/components/atoms/HeaderIconPlaceholder/He
 import {atomicStyles} from 'src/styles';
 import DefaultLayout from 'src/components/templates/DefaultLayout/DefaultLayout';
 import ButtonMain from 'src/components/atoms/ButtonMain/ButtonMain';
-import {changePassword} from 'src/services/firebase-service';
 import {useTranslation} from 'react-i18next/';
 import LoginInputPassword from 'src/components/atoms/LoginInputPassword/LoginInputPassword';
-import {showWarning} from 'src/helpers/toast';
+import {showError, showInfo, showWarning} from 'src/helpers/toast';
+import auth from '@react-native-firebase/auth';
 
 /**
  * File: ChangePasswordProfileScreen.tsx
@@ -33,6 +33,14 @@ const ChangePasswordProfileScreen: FC<
 
   const [reNewPassword, setReNewPassword] = React.useState<string>('');
 
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const reauthenticate = (currentPassword: string) => {
+    var user = auth().currentUser;
+    var cred = auth.EmailAuthProvider.credential(user.email, currentPassword);
+    return user.reauthenticateWithCredential(cred);
+  };
+
   const handleChangePassword = React.useCallback(async () => {
     if (currentPassword === '' && newPassword === '') {
       showWarning(translate('accountInfo.changePassword.emptyInput'));
@@ -40,8 +48,28 @@ const ChangePasswordProfileScreen: FC<
     }
 
     if (newPassword === reNewPassword) {
-      await changePassword(currentPassword, newPassword);
-      await navigation.goBack();
+      try {
+        reauthenticate(currentPassword)
+          .then(() => {
+            setLoading(true);
+            var user = auth().currentUser;
+            user
+              .updatePassword(newPassword)
+              .then(async () => {
+                await setLoading(false);
+                await showInfo('Cập nhật mật khẩu mới thành công');
+                await navigation.goBack();
+              })
+              .catch((e) => {
+                showError(e.toString());
+              });
+          })
+          .catch((e) => {
+            showError(e.toString());
+          });
+      } catch (e) {
+        showError(e.toString());
+      }
     } else {
       showWarning(
         translate('accountInfo.changePassword.reNewPasswordNotMatch'),
@@ -108,6 +136,7 @@ const ChangePasswordProfileScreen: FC<
         <ButtonMain
           onPress={handleChangePassword}
           label={translate('accountInfo.changePassword.changePassword')}
+          loading={loading}
         />
       </SafeAreaView>
     </DefaultLayout>

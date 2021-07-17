@@ -25,8 +25,8 @@ export const signInUser = async ({email, password}: AuthDetails) => {
             email: email,
             phoneNumber: '',
             dateOfBirth: new Date(),
-            gender: '',
-            province: '',
+            gender: 'Khác',
+            province: 'Hà Nội',
             userImg: '',
             createAt: firestore.Timestamp.fromDate(new Date()),
           });

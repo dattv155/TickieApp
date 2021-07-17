@@ -277,7 +277,7 @@ const ProfilePage: FC<PropsWithChildren<ProfilePageProps>> = (
                     fontWeight: '100',
                   },
                 ]}>
-                {fullname}
+                {fullname ? fullname : 'Người dùng'}
               </Text>
 
               <Text

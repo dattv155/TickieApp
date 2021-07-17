@@ -11,7 +11,7 @@ const RNMoMoPaymentModule = NativeModules.RNMomosdk;
 const EventEmitter = new NativeEventEmitter(RNMoMoPaymentModule);
 
 export const MomoPayment = {
-  getPayment(): [
+  useGetPayment(): [
     string,
     string,
     string,

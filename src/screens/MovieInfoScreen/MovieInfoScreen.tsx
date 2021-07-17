@@ -22,8 +22,6 @@ import ActorComponent from 'src/screens/MovieInfoScreen/component/ActorComponent
 import RecommendItem from 'src/screens/MovieInfoScreen/component/RecommendItem/RecommendItem';
 import ReviewList from 'src/screens/MovieInfoScreen/component/ReviewList/ReviewList';
 import {ListReview} from 'src/sample/listReview';
-import UnMark from 'src/screens/MovieInfoScreen/component/MarkComponent/UnMark/UnMark';
-import Mark from 'src/screens/MovieInfoScreen/component/MarkComponent/Mark/Mark';
 import BookingScreen from 'src/screens/BookingScreen/BookingScreen';
 import FilmRate from './component/FilmRate/FilmRate';
 import firestore from '@react-native-firebase/firestore';
@@ -33,9 +31,10 @@ import ActorDetailScreen from 'src/screens/ActorDetailScreen/ActorDetailScreen';
 import {Comment} from 'src/models/Comment';
 import {Actor} from 'src/models/Actor';
 import LinearGradient from 'react-native-linear-gradient';
-import {showInfo, showWarning} from 'src/helpers/toast';
+import {showInfo} from 'src/helpers/toast';
 import {MovieInfo} from 'src/models/MovieInfo';
 import {globalState} from 'src/app';
+import {ShareDialog, ShareLinkContent} from 'react-native-fbsdk';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -51,12 +50,19 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
 
   const {movieInfo} = route?.params;
 
-  const [mark, setMark] = React.useState(false);
+  const shareLinkContent: ShareLinkContent = {
+    contentType: 'link',
+    contentUrl: movieInfo?.Poster,
+    quote:
+      'Hãy truy cập ngay Tickie để có thể trải nghiệm những bộ phim yêu thích một cách nhanh và tiện lợi nhất!',
+    commonParameters: {
+      hashtag: '#Trải_nghiệm_cùng_Tickie',
+    },
+  };
 
   const handleMarkFilm = React.useCallback(() => {
-    showWarning('Đang phát triển');
-    setMark(!mark);
-  }, [mark]);
+    ShareDialog.show(shareLinkContent);
+  }, [shareLinkContent]);
 
   const handleGlobalState = React.useCallback(async (movieInfo: MovieInfo) => {
     await globalState.resetNewBookingData();
@@ -347,7 +353,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
       </ScrollView>
       <View style={styles.bookingView}>
         <TouchableOpacity onPress={handleMarkFilm} style={styles.markButton}>
-          {!mark ? <UnMark /> : <Mark />}
+          <SvgIcon component={require('assets/icons/ShareIcon.svg')} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.bookingButton}

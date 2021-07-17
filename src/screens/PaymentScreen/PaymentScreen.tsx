@@ -85,11 +85,10 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
   );
 
   const [
-    handleChangeAmount,
     handleSendRequest,
     handleChangePayment,
     paymentResponseStatus,
-  ] = momoService.usePayment();
+  ] = momoService.usePayment(totalCost);
 
   const [paymentMethodKey, setPaymentMethodKey] = React.useState<string>('');
 
@@ -136,13 +135,12 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     if (paymentMethodKey === 'momo') {
       let newValue = totalCost;
       let amount = fomatNumberToMoney(totalCost, null, '');
-      handleChangeAmount(totalCost);
       handleChangePayment({
         amount: newValue,
         textAmount: amount,
         description: '',
       });
-      handleSendRequest();
+      handleSendRequest(totalCost, bookingData.movieName);
       if (paymentResponseStatus === 'Successful') {
         await handleSaveDataBooking();
         pushNotificationFirestoreBookingSuccessful(bookingData.movieName);
@@ -165,7 +163,6 @@ const PaymentScreen: FC<PropsWithChildren<PaymentScreenProps>> = (
     }
   }, [
     bookingData.movieName,
-    handleChangeAmount,
     handleChangePayment,
     handleGotoSuccessBookingScreen,
     handleSaveDataBooking,

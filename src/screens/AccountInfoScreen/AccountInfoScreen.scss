@@ -5,14 +5,12 @@
  */
 
 @import "src/styles/mixins";
-@import "src/styles/atomic-styles";
 
 .textStyle {
   font-weight: 100;
 }
 .screenContainer {
-  padding: 0 20px;
-  padding-top: 40px;
+  padding: 40px 20px 0 20px;
   height: 100%;
 }
 //view block
@@ -83,3 +81,18 @@
   margin-top: 5px;
 }
 
+.modalContainer {
+  width: 100%;
+  background-color: map-get($colors, "white");
+  padding: 16px 24px 50px 24px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 10px;
+
+}
+
+.pickerStyle {
+  background-color: map-get($colors, "white");
+  width: 300px;
+  height: 150px;
+}

@@ -1,0 +1,28 @@
+/**
+ * Styles for Component.tsx
+ * @created 2021-07-17 00:18:35
+ * @author Ngo Tien Tan <ngotientan811@gmail.com>
+ */
+
+@import "src/styles/mixins";
+
+
+
+.swipeDown {
+  height: 5px;
+  width: 20%;
+  border-radius: 10px;
+  background: map-get($colors, "line-gray");
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+.modalContainer {
+  width: 100%;
+  background-color: map-get($colors, "white");
+  padding: 16px 24px 50px 24px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 10px;
+
+}

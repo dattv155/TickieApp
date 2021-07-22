@@ -15,6 +15,9 @@ target 'TickieApp' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+
+  pod 'react-native-fbsdk-next', :path => '../node_modules/react-native-fbsdk-next'
+
   target 'TickieAppTests' do
     inherit! :complete
     # Pods for testing

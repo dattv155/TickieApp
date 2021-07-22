@@ -2,7 +2,7 @@ import {name as appName} from 'app.json';
 import React, {FC, LazyExoticComponent, Suspense} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {navigationContainerRef} from 'src/config/navigation';
-import {StatusBar, AppRegistry} from 'react-native';
+import {AppRegistry, StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import nameof from 'ts-nameof.macro';
 import LoginNavigator from 'src/navigators/LoginNavigator/LoginNavigator';
@@ -10,8 +10,8 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import RootNavigator from 'src/navigators/RootNavigator/RootNavigator';
 import {Colors} from 'src/styles';
 import SplashScreen from 'react-native-splash-screen';
-import {LogBox} from 'react-native';
 import {globalState} from 'src/app/global-state';
+// @ts-ignore
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {enableScreens} from 'react-native-screens';
@@ -36,13 +36,13 @@ const RootComponent: FC = () => {
   React.useEffect(() => {
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function (token) {
-        console.log('TOKEN:', token);
-      },
+      // onRegister: function (token) {
+      //   console.log('TOKEN:', token);
+      // },
 
       // (required) Called when a remote is received or opened, or local notification is opened
-      onNotification: function (notification) {
-        console.log('NOTIFICATION:', notification);
+      onNotification: function (notification: any) {
+        // console.log('NOTIFICATION:', notification);
 
         // process the notification
 
@@ -51,17 +51,16 @@ const RootComponent: FC = () => {
       },
 
       // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
-      onAction: function (notification) {
-        console.log('ACTION:', notification.action);
-        console.log('NOTIFICATION:', notification);
-
-        // process the action
-      },
+      // onAction: function (notification) {
+      // console.log('ACTION:', notification.action);
+      // console.log('NOTIFICATION:', notification);
+      // process the action
+      // },
 
       // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-      onRegistrationError: function (err) {
-        console.error(err.message, err);
-      },
+      // onRegistrationError: function (err) {
+      //   console.error(err.message, err);
+      // },
 
       // IOS ONLY (optional): default: all - Permissions to register.
       permissions: {

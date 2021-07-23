@@ -18,17 +18,22 @@ const ButtonLink: FC<PropsWithChildren<ButtonLinkProps>> = (
   const {label, icon, onPress} = props;
   return (
     <TouchableOpacity style={styles.buttonIconStyle} onPress={onPress}>
-      {icon ? <SvgIcon component={icon} /> : <View style={styles.none} />}
-      <Text
-        style={[
-          atomicStyles.h5,
-          atomicStyles.text,
-          styles.textStyle,
-          atomicStyles.textGray,
-          icon ? styles.none : styles.noIcon,
-        ]}>
-        {label}
-      </Text>
+      <View style={styles.iconContainer}>
+        {icon ? <SvgIcon component={icon} /> : <View style={styles.none} />}
+      </View>
+
+      <View style={styles.labelContainer}>
+        <Text
+          style={[
+            atomicStyles.h5,
+            atomicStyles.text,
+            styles.textStyle,
+            atomicStyles.textGray,
+            icon ? styles.none : styles.noIcon,
+          ]}>
+          {label}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };

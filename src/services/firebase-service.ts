@@ -4,9 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-simple-toast';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {showError, showInfo} from 'src/helpers/toast';
-import {AccessToken, LoginManager, Settings} from 'react-native-fbsdk-next';
-
-Settings.initializeSDK();
+import {AccessToken, LoginManager} from 'react-native-fbsdk';
 
 export const logoutUser = () => {
   auth().signOut();
@@ -79,14 +77,17 @@ export const logInByGoogle = async () => {
       .then(() => {
         //   //Once the user creation has happened successfully, we can add the currentUser into firestore
         //   //with the appropriate details.
-        console.log('current User', auth().currentUser);
         firestore()
           .collection('users')
           .doc(auth().currentUser.uid)
 
           .set({
-            fname: '',
-            lname: '',
+            uid: auth().currentUser.uid,
+            fullname: auth().currentUser.displayName,
+            phoneNumber: '',
+            dateOfBirth: new Date(),
+            gender: 'Khác',
+            province: 'Hà Nội',
             email: auth().currentUser.email,
             createdAt: firestore.Timestamp.fromDate(new Date()),
             userImg: null,
@@ -132,8 +133,6 @@ export const loginByFacebook = async () => {
       data.accessToken,
     );
 
-    console.log(data.accessToken);
-
     // Sign-in the user with the credential
     await auth()
       .signInWithCredential(facebookCredential)
@@ -146,8 +145,12 @@ export const loginByFacebook = async () => {
           .collection('users')
           .doc(auth().currentUser.uid)
           .set({
-            fname: '',
-            lname: '',
+            uid: auth().currentUser.uid,
+            fullname: '',
+            phoneNumber: '',
+            dateOfBirth: new Date(),
+            gender: 'Khác',
+            province: 'Hà Nội',
             email: auth().currentUser.email,
             createdAt: firestore.Timestamp.fromDate(new Date()),
             userImg: null,

@@ -8066,10 +8066,10 @@ react-native-device-info@^8.0.7:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.0.7.tgz#c04f5dd50a977da21305b99088c0b42b588d07f9"
   integrity sha512-CSGosqvESXWKTfYa+6gYd3HRQOkJm6C+TSXfaipat4Q0BzUHWWNaS5M5z7x72hg6FRk25rJ4zxSmSCQvizHzzQ==
 
-react-native-fbsdk-next@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-4.3.0.tgz#750952a9c2159a7eed830846a3814ab8ce03ba0c"
-  integrity sha512-wJUSgM6hq/gImnp/HflTI5750GNADtxCEEhDD6lXJDPuNfAPfAXi54XcAVa5nbijJMCBr+z3wFZ/gF8PrqdxTQ==
+react-native-fbsdk@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-3.0.0.tgz#07ef41758bb17a0acaff744008af625a45ef9a01"
+  integrity sha512-i0JocuzLlGk13J0xFDjm8GlX7SADAL2kh/syE/HOn5HHdW+PFjC31MNj5AtzIw2TicHXpHGO6VPKNfdWFbxboA==
 
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"

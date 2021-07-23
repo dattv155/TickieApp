@@ -39,8 +39,6 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
 
   const [translate] = useTranslation();
 
-  const handleGoToHomeScreen = React.useCallback(() => {}, []);
-
   const handleGoToForgotPasswordScreen = React.useCallback(() => {
     navigation.navigate(ForgotPasswordScreen.displayName);
   }, [navigation]);
@@ -205,12 +203,12 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
           <ButtonLink
             label={translate('loginScreen.signupFB')}
             icon={require('assets/icons/FBIcon.svg')}
-            onPress={handleGoToHomeScreen}
+            onPress={loginByFacebook}
           />
           <ButtonLink
             label={translate('loginScreen.signupGoogle')}
             icon={require('assets/icons/GoogleIcon.svg')}
-            onPress={handleGoToHomeScreen}
+            onPress={logInByGoogle}
           />
         </KeyboardAvoidingView>
       </SafeAreaView>

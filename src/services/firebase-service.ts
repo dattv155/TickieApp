@@ -29,43 +29,43 @@ export const signInUser = async ({email, password}: AuthDetails) => {
             createAt: firestore.Timestamp.fromDate(new Date()),
           })
           .catch(() => {
-            showWarning('Something went wrong with added user to firestore');
+            showWarning('Không tạo được người dùng trong Firebase');
           });
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
-          showWarning('E-mail already in use.');
+          showWarning('E-mail đã được sử dụng.');
         } else if (error.code === 'auth/invalid-email') {
-          showWarning('Invalid e-mail address format.');
+          showWarning('Email sai cấu trúc.');
         } else if (error.code === 'auth/weak-password') {
-          showWarning('Password is too weak.');
+          showWarning('Mật khẩu yếu (Mật khẩu cần 6 ký tự trở lên).');
         } else if (error.code === 'auth/too-many-requests') {
-          showWarning('Too many request. Try again in a minute.');
+          showWarning('Đăng nhập quá nhiều lần. Hãy thử lại trong giây lát.');
         } else {
-          showWarning('Check your internet connection.');
+          showWarning('Hãy kiểm tra Internet của bạn.');
         }
       });
     return {};
   } catch (error) {
     if (error.code === 'auth/email-already-in-use') {
       return {
-        error: 'E-mail already in use.',
+        error: 'E-mail đã được sử dụng.',
       };
     } else if (error.code === 'auth/invalid-email') {
       return {
-        error: 'Invalid e-mail address format.',
+        error: 'Email sai cấu trúc.',
       };
     } else if (error.code === 'auth/weak-password') {
       return {
-        error: 'Password is too weak.',
+        error: 'Mật khẩu yếu (Mật khẩu cần 6 ký tự trở lên).',
       };
     } else if (error.code === 'auth/too-many-requests') {
       return {
-        error: 'Too many request. Try again in a minute.',
+        error: 'Đăng nhập quá nhiều lần. Hãy thử lại trong giây lát.',
       };
     }
     return {
-      error: 'Check your internet connection.',
+      error: 'Hãy kiểm tra Internet của bạn.',
     };
   }
 };
@@ -107,12 +107,12 @@ export const logInByGoogle = async () => {
           })
           //   //ensure we catch any errors at this stage to advise us if something does go wrong
           .catch(() => {
-            showWarning('Something went wrong with added user to firestore: ');
+            showWarning('Không tạo được người dùng trong Firebase');
           });
       })
       //we need to catch the whole sign up process if it fails too.
       .catch(() => {
-        showWarning('Something went wrong with Google sign up: ');
+        showWarning('Đăng nhập Google lỗi.');
       });
   } catch (e) {
     showWarning(e.toString());
@@ -128,14 +128,14 @@ export const loginByFacebook = async () => {
     ]);
 
     if (result.isCancelled) {
-      return {error: 'User cancelled the login process'};
+      // return {error: 'User cancelled the login process'};
     }
 
     // Once signed in, get the users AccesToken
     const data = await AccessToken.getCurrentAccessToken();
 
     if (!data) {
-      return {error: 'Something went wrong obtaining access token'};
+      return {error: 'Lỗi: Không lấy được Token'};
     }
 
     // Create a Firebase credential with the AccessToken
@@ -167,7 +167,7 @@ export const loginByFacebook = async () => {
           })
           //ensure we catch any errors at this stage to advise us if something does go wrong
           .catch(() => {
-            showWarning('Something went wrong with added user to firestore');
+            showWarning('Không tạo được người dùng trong Firebase');
           });
       })
       //we need to catch the whole sign up process if it fails too.
@@ -177,7 +177,7 @@ export const loginByFacebook = async () => {
         }
       });
   } catch (e) {
-    showWarning(e.toString);
+    showWarning('Đăng nhập Facebook bị lỗi.');
   }
 };
 
@@ -188,23 +188,23 @@ export const loginUser = async ({email, password}: AuthDetails) => {
   } catch (error) {
     if (error.code === 'auth/invalid-email') {
       return {
-        error: 'Invalid email address format.',
+        error: 'Địa chỉ email không chính xác.',
       };
     } else if (error.code === 'auth/user-not-found') {
       return {
-        error: 'User not found.',
+        error: 'Tài khoản không tồn tại.',
       };
     } else if (error.code === 'auth/wrong-password') {
       return {
-        error: 'Invalid email address or password.',
+        error: 'Địa chỉ email hoặc mật khẩu không chính xác.',
       };
     } else if (error.code === 'auth/too-many-requests') {
       return {
-        error: 'Too many request. Try again in a minute.',
+        error: 'Đăng nhập quá nhiều lần. Hãy thử lại trong giây lát.',
       };
     }
     return {
-      error: 'Check your internet connection.',
+      error: 'Hãy kiểm tra Internet của bạn.',
     };
   }
 };

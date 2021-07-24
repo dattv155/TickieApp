@@ -56,7 +56,6 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
   const [email, setEmail] = React.useState({value: '', error: ''});
   const [password, setPassword] = React.useState({value: '', error: ''});
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [error, setError] = React.useState('');
   const [rePassword, setRePassword] = React.useState<string>('');
 
   const _onLoginPressed = async () => {
@@ -77,7 +76,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
     });
 
     if (response.error) {
-      setError(response.error);
+      await showWarning(response.error);
     }
 
     setLoading(false);
@@ -110,7 +109,7 @@ const LoginScreen: FC<PropsWithChildren<LoginScreenProps>> = (
       });
 
       if (response.error) {
-        setError(response.error);
+        await showWarning(response.error);
       }
       setLoading(false);
     } else {

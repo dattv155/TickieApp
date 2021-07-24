@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">TickieApp</string>
     <string name="facebook_app_id">899652144215070</string>
-    <string name="facebook_client_token">f94eb313b09d180c815a169919b12677</string>
 </resources>

@@ -1,10 +1,9 @@
 import auth from '@react-native-firebase/auth';
 import {AuthDetails} from '../types';
 import firestore from '@react-native-firebase/firestore';
-import Toast from 'react-native-simple-toast';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {showError, showInfo} from 'src/helpers/toast';
-import {AccessToken, LoginManager} from 'react-native-fbsdk';
+import {showError, showInfo, showWarning} from 'src/helpers/toast';
+import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 
 export const logoutUser = () => {
   auth().signOut();
@@ -28,32 +27,46 @@ export const signInUser = async ({email, password}: AuthDetails) => {
             province: 'Hà Nội',
             userImg: '',
             createAt: firestore.Timestamp.fromDate(new Date()),
+          })
+          .catch(() => {
+            showWarning('Something went wrong with added user to firestore');
           });
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          showWarning('E-mail already in use.');
+        } else if (error.code === 'auth/invalid-email') {
+          showWarning('Invalid e-mail address format.');
+        } else if (error.code === 'auth/weak-password') {
+          showWarning('Password is too weak.');
+        } else if (error.code === 'auth/too-many-requests') {
+          showWarning('Too many request. Try again in a minute.');
+        } else {
+          showWarning('Check your internet connection.');
+        }
       });
     return {};
   } catch (error) {
-    switch (error.code) {
-      case 'auth/email-already-in-use':
-        return {
-          error: 'E-mail already in use.',
-        };
-      case 'auth/invalid-email':
-        return {
-          error: 'Invalid e-mail address format.',
-        };
-      case 'auth/weak-password':
-        return {
-          error: 'Password is too weak.',
-        };
-      case 'auth/too-many-requests':
-        return {
-          error: 'Too many request. Try again in a minute.',
-        };
-      default:
-        return {
-          error: 'Check your internet connection.',
-        };
+    if (error.code === 'auth/email-already-in-use') {
+      return {
+        error: 'E-mail already in use.',
+      };
+    } else if (error.code === 'auth/invalid-email') {
+      return {
+        error: 'Invalid e-mail address format.',
+      };
+    } else if (error.code === 'auth/weak-password') {
+      return {
+        error: 'Password is too weak.',
+      };
+    } else if (error.code === 'auth/too-many-requests') {
+      return {
+        error: 'Too many request. Try again in a minute.',
+      };
     }
+    return {
+      error: 'Check your internet connection.',
+    };
   }
 };
 
@@ -93,19 +106,16 @@ export const logInByGoogle = async () => {
             userImg: null,
           })
           //   //ensure we catch any errors at this stage to advise us if something does go wrong
-          .catch((error) => {
-            Toast.show(
-              'Something went wrong with added user to firestore: ',
-              error,
-            );
+          .catch(() => {
+            showWarning('Something went wrong with added user to firestore: ');
           });
       })
       //we need to catch the whole sign up process if it fails too.
-      .catch((error) => {
-        Toast.show('Something went wrong with sign up: ', error);
+      .catch(() => {
+        showWarning('Something went wrong with Google sign up: ');
       });
   } catch (e) {
-    Toast.show(e.toString());
+    showWarning(e.toString());
   }
 };
 
@@ -156,20 +166,18 @@ export const loginByFacebook = async () => {
             userImg: null,
           })
           //ensure we catch any errors at this stage to advise us if something does go wrong
-          .catch((error) => {
-            Toast.show(
-              'Something went wrong with added user to firestore: ',
-              error,
-            );
+          .catch(() => {
+            showWarning('Something went wrong with added user to firestore');
           });
-        return {};
       })
       //we need to catch the whole sign up process if it fails too.
       .catch((error) => {
-        Toast.show('Something went wrong with sign up: ', error);
+        if (error.code === 'auth/account-exists-with-different-credential') {
+          showWarning('Tài khoản được đã được sử dụng!');
+        }
       });
   } catch (e) {
-    Toast.show(e.toString);
+    showWarning(e.toString);
   }
 };
 
@@ -178,25 +186,26 @@ export const loginUser = async ({email, password}: AuthDetails) => {
     await auth().signInWithEmailAndPassword(email, password);
     return {};
   } catch (error) {
-    switch (error.code) {
-      case 'auth/invalid-email':
-        return {
-          error: 'Invalid email address format.',
-        };
-      case 'auth/user-not-found':
-      case 'auth/wrong-password':
-        return {
-          error: 'Invalid email address or password.',
-        };
-      case 'auth/too-many-requests':
-        return {
-          error: 'Too many request. Try again in a minute.',
-        };
-      default:
-        return {
-          error: 'Check your internet connection.',
-        };
+    if (error.code === 'auth/invalid-email') {
+      return {
+        error: 'Invalid email address format.',
+      };
+    } else if (error.code === 'auth/user-not-found') {
+      return {
+        error: 'User not found.',
+      };
+    } else if (error.code === 'auth/wrong-password') {
+      return {
+        error: 'Invalid email address or password.',
+      };
+    } else if (error.code === 'auth/too-many-requests') {
+      return {
+        error: 'Too many request. Try again in a minute.',
+      };
     }
+    return {
+      error: 'Check your internet connection.',
+    };
   }
 };
 

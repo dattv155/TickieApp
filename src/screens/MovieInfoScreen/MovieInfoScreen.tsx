@@ -34,7 +34,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {showInfo} from 'src/helpers/toast';
 import {MovieInfo} from 'src/models/MovieInfo';
 import {globalState} from 'src/app';
-import {ShareDialog, ShareLinkContent} from 'react-native-fbsdk';
+import {ShareDialog} from 'react-native-fbsdk-next';
+import {ShareLinkContent} from 'react-native-fbsdk-next/types/models/FBShareLinkContent';
 
 /**
  * File: MovieInfoScreen.tsx

@@ -103,7 +103,7 @@ export const logInByGoogle = async () => {
             province: 'Hà Nội',
             email: auth().currentUser.email,
             createdAt: firestore.Timestamp.fromDate(new Date()),
-            userImg: null,
+            userImg: auth().currentUser.photoURL,
           })
           //   //ensure we catch any errors at this stage to advise us if something does go wrong
           .catch(() => {
@@ -156,14 +156,14 @@ export const loginByFacebook = async () => {
           .doc(auth().currentUser.uid)
           .set({
             uid: auth().currentUser.uid,
-            fullname: '',
+            fullname: auth().currentUser.displayName,
             phoneNumber: '',
             dateOfBirth: new Date(),
             gender: 'Khác',
             province: 'Hà Nội',
             email: auth().currentUser.email,
             createdAt: firestore.Timestamp.fromDate(new Date()),
-            userImg: null,
+            userImg: auth().currentUser.photoURL,
           })
           //ensure we catch any errors at this stage to advise us if something does go wrong
           .catch(() => {

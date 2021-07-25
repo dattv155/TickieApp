@@ -17,6 +17,7 @@ import firestore from '@react-native-firebase/firestore';
 import {atomicStyles} from 'src/styles';
 import TitleComponent from 'src/screens/MovieInfoScreen/component/TitleComponent/TitleComponent';
 import LinearGradient from 'react-native-linear-gradient';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: ActorDetailScreen.tsx
@@ -41,6 +42,8 @@ const ActorDetailScreen: FC<PropsWithChildren<ActorDetailScreenProps>> = (
   const {navigation, route} = props;
 
   const {actorID} = route?.params;
+
+  const [translate] = useTranslation();
 
   const handleGetData = React.useCallback(async () => {
     return firestore()
@@ -133,7 +136,7 @@ const ActorDetailScreen: FC<PropsWithChildren<ActorDetailScreenProps>> = (
                     atomicStyles.textBlue,
                     atomicStyles.bold,
                   ]}>
-                  Sinh ngày:{' '}
+                  {translate('cast.DOB')}{' '}
                   <Text style={[atomicStyles.text]}>{actor?.birthday}</Text>
                 </Text>
                 <Text
@@ -143,7 +146,7 @@ const ActorDetailScreen: FC<PropsWithChildren<ActorDetailScreenProps>> = (
                     atomicStyles.bold,
                     styles.textCountry,
                   ]}>
-                  Quốc tịch:{' '}
+                  {translate('cast.Nationality')}{' '}
                   <Text style={[atomicStyles.text]}>{actor?.country}</Text>
                 </Text>
               </View>
@@ -154,7 +157,10 @@ const ActorDetailScreen: FC<PropsWithChildren<ActorDetailScreenProps>> = (
               {actor?.description}
             </Text>
             <View style={styles.actorView}>
-              <TitleComponent title={'Hình ảnh'} hideShowMore={true} />
+              <TitleComponent
+                title={translate('cast.images')}
+                hideShowMore={true}
+              />
               <FlatList
                 data={actor?.images}
                 renderItem={renderListImage}

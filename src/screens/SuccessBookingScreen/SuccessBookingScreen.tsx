@@ -60,7 +60,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
               styles.textStyle,
               atomicStyles.textBlue,
             ]}>
-            {translate('Chúc mừng')}
+            {translate('success.congrat')}
           </Text>
         }
         gradient={false}
@@ -74,7 +74,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
                 atomicStyles.bold,
                 styles.textStyle,
               ]}>
-              {translate('Bạn đã đặt vé thành công!')}
+              {translate('success.bookingSuccess')}
             </Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -82,7 +82,7 @@ const SuccessBookingScreen: FC<PropsWithChildren<SuccessBookingScreenProps>> = (
             <View style={{height: '60%'}}>
               <ButtonMain
                 onPress={handleGoToHomeScreen}
-                label={translate('Trở về Trang chủ')}
+                label={translate('success.backToMainScreen')}
               />
             </View>
           </ScrollView>

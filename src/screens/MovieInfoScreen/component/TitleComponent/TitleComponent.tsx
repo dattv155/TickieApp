@@ -3,8 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './TitleComponent.scss';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {atomicStyles} from 'src/styles';
-import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
-
+import {useTranslation} from 'react-i18next/';
 /**
  * File: TitleComponent.tsx
  * @created 2021-03-24 14:43:42
@@ -15,6 +14,8 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
   props: PropsWithChildren<TitleComponentProps>,
 ): ReactElement => {
   const {title, isReviewArea, hideShowMore} = props;
+
+  const [translate] = useTranslation();
 
   const handleGotoDetailTitle = React.useCallback(() => {}, []);
 
@@ -37,7 +38,7 @@ const TitleComponent: FC<PropsWithChildren<TitleComponentProps>> = (
                   atomicStyles.textBlue,
                   {fontWeight: '100'},
                 ]}>
-                Xem thêm
+                {translate('movie.more')}
               </Text>
             </TouchableOpacity>
           )}

@@ -3,6 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './CommentScreen.scss';
 import {
   Image,
+  Keyboard,
   SafeAreaView,
   Text,
   TextInput,
@@ -10,7 +11,6 @@ import {
   View,
 } from 'react-native';
 import {atomicStyles} from 'src/styles';
-
 import SvgIcon from 'src/components/atoms/SvgIcon/SvgIcon';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -83,8 +83,12 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
     await firestore().collection('comment').add(data);
   };
 
+  const handleHideKeyboard = React.useCallback(() => {
+    Keyboard.dismiss();
+  }, []);
+
   return (
-    <>
+    <TouchableOpacity activeOpacity={1} onPress={handleHideKeyboard}>
       <DefaultLayout
         navigation={navigation}
         route={route}
@@ -201,7 +205,7 @@ const CommentScreen: FC<PropsWithChildren<CommentScreenProps>> = (
           </View>
         </SafeAreaView>
       </DefaultLayout>
-    </>
+    </TouchableOpacity>
   );
 };
 

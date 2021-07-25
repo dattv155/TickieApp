@@ -139,7 +139,7 @@ const Notibox: FC<PropsWithChildren<NotiboxProps>> = (
                   style={styles.button}
                   onPress={handleGoToMyTicketScreen}>
                   <Text style={[atomicStyles.h6, atomicStyles.textWhite]}>
-                    Vé của bạn
+                    {translate('myTicket.yourTicket')}
                   </Text>
                 </Pressable>
               )}

@@ -3,6 +3,7 @@ import nameof from 'ts-nameof.macro';
 import styles from './Voucher.scss';
 import {Image, Text, View} from 'react-native';
 import {atomicStyles} from '../../../styles';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: Voucher.tsx
@@ -10,8 +11,10 @@ import {atomicStyles} from '../../../styles';
  * @type {FC<PropsWithChildren<VoucherProps>>}
  */
 const Voucher: FC<PropsWithChildren<VoucherProps>> = (
-  props: PropsWithChildren<VoucherProps>,
+  _props: PropsWithChildren<VoucherProps>,
 ): ReactElement => {
+  const [translate] = useTranslation();
+
   const listVoucher = [
     {
       title: 'Giảm 20% giá trị đơn hàng',
@@ -55,7 +58,7 @@ const Voucher: FC<PropsWithChildren<VoucherProps>> = (
                 styles.textStyle,
                 atomicStyles.mt4px,
               ]}>
-              Điều kiện:{' '}
+              {translate('voucher.condition')}{' '}
             </Text>
             <Text style={[atomicStyles.h7, atomicStyles.mt2px]}>
               {item.subtitle}

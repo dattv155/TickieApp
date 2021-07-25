@@ -36,6 +36,7 @@ import {MovieInfo} from 'src/models/MovieInfo';
 import {globalState} from 'src/app';
 import {ShareDialog} from 'react-native-fbsdk-next';
 import {ShareLinkContent} from 'react-native-fbsdk-next/types/models/FBShareLinkContent';
+import {useTranslation} from 'react-i18next/';
 
 /**
  * File: MovieInfoScreen.tsx
@@ -50,6 +51,8 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
   const {navigation, route} = props;
 
   const {movieInfo} = route?.params;
+
+  const [translate] = useTranslation();
 
   const shareLinkContent: ShareLinkContent = {
     contentType: 'link',
@@ -242,7 +245,8 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                 {movieInfo?.Type}
               </Text>
               <Text style={[atomicStyles.text, styles.time]}>
-                Thời lượng: {movieInfo?.Duration} phút
+                {translate('movie.time')} {''}
+                {movieInfo?.Duration} {translate('movie.minute')}
               </Text>
             </View>
             <Text
@@ -250,7 +254,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
               {movieInfo?.Description}
             </Text>
             <View style={styles.actorView}>
-              <TitleComponent title={'Diễn viên'} />
+              <TitleComponent title={translate('movie.actor')} />
               <FlatList
                 data={movieInfo?.Actor}
                 renderItem={renderListActor}
@@ -261,7 +265,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
             </View>
 
             <View style={styles.actorView}>
-              <TitleComponent title={'Hình ảnh'} />
+              <TitleComponent title={translate('movie.image')} />
               <FlatList
                 data={movieInfo?.Image}
                 renderItem={renderListImage}
@@ -272,7 +276,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
             </View>
 
             <View style={styles.actorView}>
-              <TitleComponent title={'Gợi ý'} />
+              <TitleComponent title={translate('movie.suggestion')} />
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
@@ -281,7 +285,10 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
             </View>
 
             <View style={styles.actorView}>
-              <TitleComponent title={'Đánh giá'} isReviewArea={true} />
+              <TitleComponent
+                title={translate('movie.review')}
+                isReviewArea={true}
+              />
               <View style={[styles.danhgia]}>
                 <Text
                   style={[
@@ -299,7 +306,8 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                     atomicStyles.textGray,
                     atomicStyles.mt8px,
                   ]}>
-                  Dựa trên {list?.length} đánh giá
+                  {translate('movie.baseOn')} {list?.length}{' '}
+                  {translate('movie.reviews')}
                 </Text>
                 <FilmRate data={list} />
                 <TouchableOpacity
@@ -315,7 +323,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                           fontWeight: '100',
                         },
                       ]}>
-                      Đánh giá của bạn
+                      {translate('movie.yourReview')}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -343,7 +351,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
                         atomicStyles.bold,
                         {fontWeight: '100'},
                       ]}>
-                      Xem thêm
+                      {translate('movie.more')}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -361,7 +369,7 @@ const MovieInfoScreen: FC<PropsWithChildren<MovieInfoScreenProps>> = (
           onPress={handleGotoBookingScreen}>
           <Text
             style={[atomicStyles.h3, atomicStyles.bold, styles.bookingText]}>
-            Đặt phim
+            {translate('movie.bookMovie')}
           </Text>
         </TouchableOpacity>
       </View>
